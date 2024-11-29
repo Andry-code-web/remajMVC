@@ -1,0 +1,50 @@
+<%- include('../layouts/main') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>Contacto</h2>
+            </div>
+            <div class="card-body">
+                <form action="/contacto" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="asunto" class="form-label">Asunto</label>
+                        <input type="text" class="form-control" id="asunto" name="asunto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="contact-info mt-5">
+            <h3>Información de Contacto</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Dirección</h4>
+                    <p>Av. Principal 123<br>Lima, Perú</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Teléfono</h4>
+                    <p>(01) 123-4567<br>+51 987 654 321</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Email</h4>
+                    <p>info@remajud.com<br>soporte@remajud.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

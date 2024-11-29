@@ -4,7 +4,10 @@ const moment = require('moment');
 exports.getAllAuctions = async (req, res) => {
   try {
     const auctions = await Auction.getAll();
-    res.render('auctions/index', { auctions });
+    res.render('layouts/main', { 
+      content: 'auctions/index',
+      auctions
+    });
   } catch (error) {
     res.status(500).render('error', { error: error.message });
   }

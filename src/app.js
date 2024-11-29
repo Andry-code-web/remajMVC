@@ -3,6 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
+const morgan = require("morgan");
 require('dotenv').config();
 
 const app = express();
@@ -12,12 +13,18 @@ const io = socketIO(server);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res, path) => {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+}));
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false
 }));
+app.use(morgan("dev"));
 
 // View engine
 app.set('view engine', 'ejs');
@@ -42,7 +49,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5050;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -1,0 +1,35 @@
+<%- include('../layouts/main') %>
+
+<section class="hero-banner">
+    <div class="banner-content">
+        <h1>Bienvenido a RemajuD</h1>
+        <p>La mejor plataforma de subastas de inmuebles en tiempo real</p>
+    </div>
+</section>
+
+<section class="categories mt-5">
+    <h2>Categorías</h2>
+    <div class="row">
+        <% const categories = ['departamento', 'casa', 'terreno', 'local', 'cochera']; %>
+        <% categories.forEach(category => { %>
+            <div class="col-md-4 mb-4">
+                <div class="category-card">
+                    <img src="/images/categories/<%= category %>.jpg" alt="<%= category %>">
+                    <h3><%= category.charAt(0).toUpperCase() + category.slice(1) %></h3>
+                    <a href="/remates?categoria=<%= category %>" class="btn btn-primary">Ver Más</a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</section>
+
+<section class="featured-auctions mt-5">
+    <h2>Subastas Destacadas</h2>
+    <div class="row">
+        <% featuredAuctions.forEach(auction => { %>
+            <div class="col-md-4 mb-4">
+                <%- include('../partials/auction-card', { auction }) %>
+            </div>
+        <% }); %>
+    </div>
+</section>

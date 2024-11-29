@@ -6,4 +6,4 @@ const auth = require('../middleware/auth');
 router.get('/', auctionController.getAllAuctions);
 router.get('/:id', auth, auctionController.getAuctionDetails);
 
-module.exports = router;
+module.exports = router;  

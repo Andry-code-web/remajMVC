@@ -13,6 +13,20 @@ exports.getAllAuctions = async (req, res) => {
   }
 };
 
+
+exports.getAllAuctions = async (req, res) => {
+  try {
+    const auctions = await Auction.getAll();
+    res.render('layouts/main', { 
+      content: 'auctions/mapa',
+      auctions
+    });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
+
+
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auction = await Auction.getById(req.params.id);

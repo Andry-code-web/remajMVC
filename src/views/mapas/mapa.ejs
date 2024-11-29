@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CDN DE ICONOS REMIX -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+
+    <title>REMAJUD</title>
+    <!-- Incluimos el CSS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/mapas/mapas.css">
+
+    <!-- ESTILOS GLOBALES -->
+    <link rel="stylesheet" href="/css/globales/globales.css">
+
+</head>
+
+<body>
+
+    <!-- COMPONENTE HEADER -->
+    <%- include('componentes/header') %>
+        <!-- BOTON NAVEGADOR -->
+        <%- include("componentes/btn_menu.ejs") %>
+
+
+            <div class="container_mapa">
+                <div class="left-panel">
+                    <h1>REMAJUD</h1>
+                    <div class="informacion-carta">
+                        <div class="informacion-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <div>
+                                <h3>Arequipa Sede Principal</h3>
+                                <p>Av. Ejercito 1234, Cayma</p>
+                                <p>Arequipa, Perú</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-informacion">
+                            <a href="tel:+51954123456">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                    </path>
+                                </svg>
+                                +51 954 123 456
+                            </a>
+                            <a href="mailto:contacto@remajud.com">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                contacto@remajud.com
+                            </a>
+                            <a href="https://www.remajud.com">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path
+                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                    </path>
+                                </svg>
+                                www.remajud.com
+                            </a>
+
+                            <a href="https://maps.app.goo.gl/zEHbFhvqQbqwF2uS6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Como llegar?
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+                    <div id="map"></div>
+                </div>
+            </div>
+
+            <script src="/js/componentes/script_btn_menu.js"></script>
+            <script src="/js/componentes/header_ocultar.js"></script>
+
+            <!-- Incluimos Leaflet JS -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const arequipaLocation = [-16.389278, -71.548194];
+
+                    // Inicializamos el mapa
+                    const map = L.map('map').setView(arequipaLocation, 14);
+
+                    // Agregamos el mapa base
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 100,
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    // Agregamos el marcador
+                    L.marker(arequipaLocation).addTo(map);
+
+                    // Manejador del scroll
+                    const handleScroll = (e) => {
+                        if (!e.ctrlKey) {
+                            e.preventDefault();
+                            showAlert();
+                        }
+                    };
+                    document.getElementById('map').addEventListener('wheel', handleScroll, {
+                        passive: false
+                    });
+
+                    function showAlert() {
+                        // Removemos alertas anteriores si existen
+                        const existingAlert = document.querySelector('.alert');
+                        if (existingAlert) {
+                            existingAlert.remove();
+                        }
+                        document.body.appendChild(alertElement);
+                        setTimeout(() => {
+                            alertElement.remove();
+                        }, 3000);
+                    }
+                });
+            </script>
+            <script>
+                window.addEventListener('scroll', () => {
+                    const header = document.getElementById('header');
+                    const banner = document.getElementById('banner');
+                    const cartas = document.getElementById('cartas');
+                    const contactos = document.getElementById('contactos');
+                    const bannerBottom = banner.getBoundingClientRect().bottom;
+                    const cartasBottom = cartas.getBoundingClientRect().bottom;
+                    const contactosTop = contactos.getBoundingClientRect().top;
+                    if (bannerBottom > 0) {
+                        header.style.color = '#0a0000';
+                    } else if (cartasBottom > 0) {
+                        header.style.color = '#fffcfc';
+                    } else if (contactosTop < window.innerHeight) {
+                        header.style.color = '#0a0000';
+                    } else {
+                        header.style.color = 'black';
+                    }
+                });
+            </script>
+</body>
+
+</html>

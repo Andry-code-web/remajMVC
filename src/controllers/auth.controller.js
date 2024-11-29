@@ -2,6 +2,16 @@ const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+exports.register_vista = async (req, res) =>{
+  try {
+    res.render('layouts/main',{
+      content: 'auth/register'
+    });
+  } catch (error) {
+    console.error('No se encontro la vista: ', error);
+  }
+}
+
 exports.register = async (req, res) => {
   try {
     const userId = await User.create(req.body);

@@ -5,7 +5,13 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "watch:css": "sass --watch public/styles:public/css",
+    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:clientes_admin",
+    "build:inicio": "sass public/styles/inicio.scss public/css/inicio/inicio.css",
+    "build:remates": "sass public/styles/remates.scss public/css/remates/remates.css",
+    "build:mapas": "sass public/styles/mapas.scss public/css/mapas/mapas.css",
+    "build:admin": "sass public/styles/admin.scss public/css/admin/admin.css"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -33,6 +33,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Routes
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
+app.use('/mapas', require('./routes/mapa.routes'));
+
 
 // Socket.IO
 io.on('connection', (socket) => {

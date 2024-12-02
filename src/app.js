@@ -33,7 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Routes
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
-
+app.use('/btn_menu', require('./routes/btn_menu.routes'));
 // Socket.IO
 io.on('connection', (socket) => {
   socket.on('join-auction', (auctionId) => {
@@ -53,3 +53,4 @@ const PORT = process.env.PORT || 5050;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+

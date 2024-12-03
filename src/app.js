@@ -34,6 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
 app.use('/mapas', require('./routes/mapa.routes'));
+app.use('/admin', require('./routes/admin.routes'));
 
 
 // Socket.IO

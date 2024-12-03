@@ -4,6 +4,6 @@ const auctionController = require('../controllers/auction.controller');
 const auth = require('../middleware/auth');
 
 router.get('/', auctionController.getAllAuctions);
-router.get('/:id', auth, auctionController.getAuctionDetails);
+router.get('/:id', auctionController.getAuctionDetails);
 
 module.exports = router;

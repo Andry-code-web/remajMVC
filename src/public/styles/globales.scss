@@ -1,0 +1,155 @@
+@use 'variables' as *;
+
+/* HEADER */
+.navbar {
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .navbar.hidden {
+    transform: translateY(-100%);
+  }
+  
+  .links_redireccion {
+    color: inherit; /* Hereda el color del contenedor */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Suaviza el cambio */
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .logo-icon {
+    font-size: 28px;
+    color: #00665e;
+  }
+  
+  .titulo_logo {
+    font-family: "fuentePrincipal";
+    font-size: 2.8rem;
+  }
+
+  header .titulo_logo a{
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .iconos_header {
+    display: flex;
+    gap: 2rem;
+  }
+
+/* BOTON */
+
+
+/* FOOTER */
+footer {
+    width: 100%;
+    height: 70vh;
+    padding: 5.1666666667vw 2.7777777778vw 30px;
+    background-color: #0a0000;
+    color: #fffcfc;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .contenedor_links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .paginas_navegacion {
+    column-gap: 2.7777777778vw;
+    width: 55.5555555556vw;
+    margin-bottom: calc(5.5555555556vw - 0.32em);
+    columns: 26.3888888889vw 2;
+  }
+  
+  .paginas_navegacion li {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+  
+  .paginas_navegacion li a {
+    text-decoration: none;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    font-size: 1.7vw;
+  }
+  
+  .btn_subir {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+  }
+  
+  .btn_subir i {
+    color: #fffcfc;
+    font-size: 3rem;
+  }
+  
+  .contenedor_redes {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .div_redes {
+    display: flex;
+    gap: 2.5rem;
+  }
+  
+  .div_redes a {
+    text-decoration: none;
+  }
+  
+  .div_redes a i {
+    font-size: 3.5rem;
+    color: #fffcfc;
+  }
+  
+  .politicas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 1em;
+    justify-content: flex-end;
+    max-width: calc(50% - 45px - 30px);
+  }
+  
+  .politicas a {
+    font-size: 1.5rem;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    text-decoration: none;
+  }
+  
+  .politicas a {
+    font-size: 1.5rem;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    text-decoration: none;
+  }
+  
+  /*# sourceMappingURL=globales.css.map */
+  

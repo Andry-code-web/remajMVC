@@ -1,38 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<header id="header" class="navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">RemajuD</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/auctions/">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/remates">Remates</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contacto">Contacto</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <% if (locals.user) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/me/likes">Mis Me Gusta</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Cerrar Sesión</a>
-                    </li>
-                <% } else { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Iniciar Sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/register">Registro</a>
-                    </li>
-                <% } %>
-            </ul>
+      <!-- Logo -->
+      <div class="logo">
+        <h1 class="titulo_logo">
+          <a href="/"> remajud</a>
+        </h1>
+      </div>
+      <!-- Enlaces de navegación -->
+      <nav class="nav-links">
+        <div class="iconos_header" style="font-size: 2rem;">
+          <a href="/" class="links_redireccion">
+            <i class="ri-home-line"></i>
+          </a>
+          <a href="/remates/" class="links_redireccion">
+            <i class="ri-book-shelf-line"></i>
+          </a>
+          <a href="/contacto/" class="links_redireccion">
+            <i class="ri-customer-service-2-line"></i>
+          </a>
         </div>
+      </nav>
+      <!-- Usuario -->
+      <nav class="nav-links">
+        <div class="iconos_header usuario" style="font-size: 2rem;">
+          <% if (locals.user) { %>
+            <a href="/me/likes" class="links_redireccion">
+              <i class="ri-heart-line"></i>
+            </a>
+            <a href="/logout" class="links_redireccion">
+              <i class="ri-logout-circle-line"></i>
+            </a>
+          <% } else { %>
+            <a href="/login" class="links_redireccion">
+              <i class="ri-login-box-line"></i>
+            </a>
+            <a href="/auth/register" class="links_redireccion">
+              <i class="ri-user-add-line"></i>
+            </a>
+          <% } %>
+        </div>
+      </nav>
     </div>
-</nav>
+  </header>
+  

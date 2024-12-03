@@ -104,7 +104,7 @@
             <input type="text" class="form-input" placeholder="DEPARTAMENTO" name="departamento" required>
             <input type="text" class="form-input" placeholder="PROVINCIA" name="provincia" required>
             <input type="text" class="form-input" placeholder="DISTRITO" name="distrito" required>
-            <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="dirección" required>
+            <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
           </div>
           <button type="button" class="submit-btn anterior"> ANTERIOR</button>
           <button type="button" class="submit-btn siguiente">SIGUIENTE →</button>
@@ -121,10 +121,9 @@
           <p>Últimos detalles de su cuenta.</p>
         </div>
         <form>
-          <input type="text clas" class="form-input" placeholder="USUARIO" name="usuario" required>
+          <input type="text" class="form-input" placeholder="USUARIO" name="usuario" required>
           <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
-          <input type="email" class="form-input" placeholder="EMAIL" name="email" required>
-          <input type="email" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
+          <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones">
           <button type="button" class="submit-btn anterior"> ANTERIOR</button>
           <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
         </form>
@@ -136,46 +135,56 @@
   <script type="module" src="/js/componentes/network.js"></script>
 
   <script>
-    document.querySelector(".finalizar").addEventListener("click", async (e) => {
-      e.preventDefault();
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".finalizar").addEventListener("click", async (e) => {
+        e.preventDefault();
 
-      const datos = {
-        nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value,
-        email: document.querySelector("[name='EMAIL']").value,
-        confirmar_email: document.querySelector("[name='confirmar_email']").value,
-        estado_civil: document.querySelector("[name='estado_civil']").value,
-        fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
-        sexo: document.querySelector("[name='sexo']").value,
-        dni: document.querySelector("[name='dni']").value,
-        celular: document.querySelector("[name='celular']").value,
-        departamento: document.querySelector("[name='departamento']").value,
-        provincia: document.querySelector("[name='provincia']").value,
-        distrito: document.querySelector("[name='distrito']").value,
-        direccion: document.querySelector("[name='dirección']").value,
-        usuario: document.querySelector("[name='usuario']").value,
-        contrasena: document.querySelector("[name='contrasena']").value,
-      };
+        const datos = {
+          nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value.trim(),
+          correo: document.querySelector("[name='EMAIL']").value.trim(),
+          confirmar_correo: document.querySelector("[name='confirmar_email']").value.trim(),
+          estado_civil: document.querySelector("[name='estado_civil']").value,
+          fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
+          sexo: document.querySelector("[name='sexo']").value,
+          dni: document.querySelector("[name='dni']").value.trim(),
+          celular: document.querySelector("[name='celular']").value.trim(),
+          departamento: document.querySelector("[name='departamento']").value.trim(),
+          provincia: document.querySelector("[name='provincia']").value.trim(),
+          distrito: document.querySelector("[name='distrito']").value.trim(),
+          direccion: document.querySelector("[name='direccion']").value.trim(),
+          usuario: document.querySelector("[name='usuario']").value.trim(),
+          contrasena: document.querySelector("[name='contrasena']").value.trim(),
+          condiciones: document.querySelector("[name='terminos_condiciones']").checked,
+        };
 
-      try {
-        const response = await fetch("/auth/registrar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(datos),
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-          alert("Registro exitoso. Bienvenido a REMAJUD!");
-          window.location.href = "/login";
-        } else {
-          alert("Error en el registro: " + result.message);
+        // Validar campos obligatorios
+        const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== 'condiciones');
+        if (camposVacios.length > 0) {
+          alert(`Por favor, complete todos los campos: ${camposVacios.map(([key]) => key).join(', ')}`);
+          return;
         }
-      } catch (error) {
-        console.error("Error al enviar el formulario:", error);
-        alert("Hubo un problema al registrar los datos.");
-      }
+
+        try {
+          const response = await fetch("/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert("Registro exitoso. Bienvenido a REMAJUD!");
+            window.location.href = "/login";
+          } else {
+            alert("Error en el registro: " + result.message);
+          }
+        } catch (error) {
+          console.error("Error al enviar el formulario:", error);
+          alert("Hubo un problema al registrar los datos.");
+        }
+      });
     });
   </script>
 </body>

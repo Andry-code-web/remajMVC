@@ -13,11 +13,7 @@ const io = socketIO(server);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'), {
-  setHeaders: (res, path) => {
-    res.setHeader('Cache-Control', 'no-store');
-  }
-}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',

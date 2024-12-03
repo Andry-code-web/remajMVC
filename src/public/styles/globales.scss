@@ -1,385 +1,155 @@
 @use 'variables' as *;
 
-/* Asegúrate de que el botón no cubra la card */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-
-/* BOTON MENU */
-
-.styles_container_01 {
+/* HEADER */
+.navbar {
+    padding: 15px 20px;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-.styles_container_02 {
+    right: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .navbar.hidden {
+    transform: translateY(-100%);
+  }
+  
+  .links_redireccion {
+    color: inherit; /* Hereda el color del contenedor */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Suaviza el cambio */
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  
+  .logo {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .logo-icon {
+    font-size: 28px;
+    color: #00665e;
+  }
+  
+  .titulo_logo {
+    font-family: "fuentePrincipal";
+    font-size: 2.8rem;
+  }
 
-.styles_container_03 {
+  header .titulo_logo a{
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .iconos_header {
+    display: flex;
+    gap: 2rem;
+  }
+
+/* BOTON */
+
+
+/* FOOTER */
+footer {
+    width: 100%;
+    height: 70vh;
+    padding: 5.1666666667vw 2.7777777778vw 30px;
+    background-color: #0a0000;
+    color: #fffcfc;
     position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-#menu_toggle {
-    width: 100px;
-    height: 100px;
-    position: fixed;
-    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .contenedor_links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .paginas_navegacion {
+    column-gap: 2.7777777778vw;
+    width: 55.5555555556vw;
+    margin-bottom: calc(5.5555555556vw - 0.32em);
+    columns: 26.3888888889vw 2;
+  }
+  
+  .paginas_navegacion li {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+  
+  .paginas_navegacion li a {
+    text-decoration: none;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    font-size: 1.7vw;
+  }
+  
+  .btn_subir {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
     background: none;
     border: none;
-    color: transparent;
-    border-radius: 50%;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2), 0px 8px 15px rgba(255, 255, 255, 0.1);
-    transition: left 0.5s ease, top 0.5s ease, box-shadow 0.3s ease-in-out;
-    animation: glow 1.5s ease-in-out infinite alternate;
-    z-index: 1000;
-    opacity: 1;
-    outline: none;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.text_buton {
-    font-family: $fuenteSecundaria;
-    color: white;
-    font-size: 14px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-}
-
-@keyframes glow {
-    0% {
-        box-shadow: 0 0 5px rgba(14, 2, 2, 0.4), 0 0 10px rgba(57, 61, 61, 0.5), 0 0 15px rgba(130, 150, 150, 0.7);
-    }
-
-    100% {
-        box-shadow: 0 0 10px rgba(46, 43, 43, 0.4), 0 0 20px rgba(59, 66, 66, 0.8), 0 0 30px rgba(75, 65, 65, 0.986);
-    }
-}
-
-#menu_toggle:hover {
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3), 0px 12px 20px rgba(43, 39, 39, 0.2);
-}
-
-#menu_toggle img {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.card {
-    position: fixed;
-    pointer-events: auto;
-    width: 350px;
-    height: 700px;
-    border-radius: 0.5rem;
-    background: #212121;
-    box-shadow: 5px 5px 15px rgba(25, 25, 25, 0.788);
-    padding: 20px;
-    display: none;
-    z-index: 999;
-    color: white;
-    font-family: 'Arial', sans-serif;
-    transition: opacity 0.5s ease-in-out, left 0.3s ease, top 0.3s ease;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
-}
-
-.close_button {
-    position: absolute;
-    background-color: #e74c3c;
-    border-radius: 50%;
-    padding: 10px;
-    cursor: pointer;
-    color: white;
-    font-size: 20px;
-    z-index: 2;
-    transition: transform 0.2s ease, opacity 0.3s ease;
-}
-
-.close_button:hover {
-    background-color: #c0392b;
-    transform: scale(1.1);
-}
-
-.titulo_tablero {
-    font-family: $fuenteSecundaria;
-    font-size: 3.1vw;
-    font-weight: 500;
-    margin-top: 5rem;
-}
-
-.main_menu {
-    font-family: $fuenteSecundaria;
-    font-size: 35px;
-    line-height: 1.0;
-    margin-bottom: 1px;
-    text-align: center;
-    position: relative;
-}
-
-.main_menu div {
-    margin-bottom: 5px;
-    cursor: pointer;
-    padding: 5px 5px;
-    border-radius: 5px;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.sub_menu {
-    font-family: "fuenteparrafos";
-    font-size: 20px;
-    line-height: 1;
-    text-align: center;
-    position: relative;
+  }
+  
+  .btn_subir i {
+    color: #fffcfc;
+    font-size: 3rem;
+  }
+  
+  .contenedor_redes {
     display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 4.5rem;
-}
-
-.sub_menu a {
-    margin-bottom: 5px;
-    cursor: pointer;
-    padding: 15px 10px;
-    border-radius: 5px;
-    position: relative;
-    transition: color 0.3s ease;
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    font-size: 1.1rem;
-}
-
-.sub_menu a::before {
-    content: '';
-    position: absolute;
-    left: 90px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.6s ease, transform 0.4s ease;
-}
-
-.sub_menu a:hover::before {
-    opacity: 1;
-    transform: translateY(-50%) scale(1.15);
-}
-
-.login_formulario {
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: block;
-    font-weight: bold;
-    font-size: x-large;
-    text-align: center;
-}
-
-.card_formulario {
-    justify-content: center;
-    align-items: center;
-    min-height: 350px;
-    width: 300px;
-    flex-direction: column;
-    gap: 45px;
-    background: transparent;
-    border-radius: 8px;
-    padding: 1px;
-    border: none;
-    margin-top: -3rem;
+    justify-content: space-between;
+  }
+  
+  .div_redes {
     display: flex;
-}
-
-.inputBox {
-    position: relative;
-    width: 250px;
-}
-
-.inputBox input {
-    width: 100%;
-    height: 50px;
-    padding: 12px;
-    outline: none;
-    border: none;
-    color: $colorsecundario;
-    font-size: 1em;
-    background: transparent;
-    border-left: 2px solid $colorsecundario;
-    border-bottom: 2px solid $colorsecundario;
-    transition: 0.1s;
-    border-radius: 8px;
-}
-
-.inputBox span {
-    font-family: $fuenteParrafos;
-    margin-top: 5px;
-    position: absolute;
-    left: 0;
-    transform: translateY(-4px);
-    margin-left: 10px;
-    padding: 10px;
-    pointer-events: none;
-    font-size: 12px;
-    color: $colorsecundario;
-    text-transform: uppercase;
-    transition: 0.5s;
-    letter-spacing: 3px;
-    border-radius: 8px;
-}
-
-.inputBox input:valid~span,
-.inputBox input:focus~span {
-    font-family: $fuenteParrafos;
-    transform: translateX(113px) translateY(-15px);
-    font-size: 0.9rem;
-    padding: 5px 10px;
-    background: $colorsecundario;
-    letter-spacing: 0.2em;
-    color: $colorterciario;
-    background-color: $colorsecundario;
-}
-
-.inputBox input:valid,
-.inputBox input:focus {
-    border: 2px solid #888;
-    border-radius: 8px;
-    background: transparent;
-}
-
-.enlace_subrayado {
-    font-family: $fuenteParrafos;
-    font-size: 16px;
-    color: $colorsecundario;
+    gap: 2.5rem;
+  }
+  
+  .div_redes a {
     text-decoration: none;
-    position: relative;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: -30px;
-    display: inline-block;
-}
-
-.enlace_subrayado::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 50%;
-    height: 1px;
-    background-color: $colorsecundario;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-}
-
-.enlace_subrayado::before {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    right: 0;
-    width: 50%;
-    height: 1px;
-    background-color: $colorsecundario;
-    transform: scaleX(0);
-    transform-origin: bottom left;
-    transition: transform 0.3s ease-out;
-}
-
-.enlace_subrayado:hover::after,
-.enlace_subrayado:hover::before {
-    transform: scaleX(1);
-    transform-origin: center center;
-}
-
-.card_formulario .enlace_subrayado+.enlace_subrayado {
-    margin-top: 1em;
-}
-
-.enlace_subrayado:hover::after {
-    animation: growLine 0.5s forwards;
-}
-
-.enlace_subrayado:hover::before {
-    animation: growLine 0.5s forwards;
-}
-
-@keyframes growLine {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 50%;
-    }
-}
-
-.titulo_dinamico {
-    transition: all 0.3s ease-in-out;
-    text-align: center;
-}
-
-.inicio_sesion {
-    font-family: $fuenteSecundaria;
-    font-size: 50px;
-    color: $colorsecundario;
-    margin-bottom: 3.5rem;
-}
-
-.flecha-regreso {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
-    color: #000;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    display: none;
-}
-
-.flecha-regreso:hover {
-    color: $colorsecundario;
-}
-
-.card_formulario {
-    position: relative;
-}
-
-#flecha_regreso svg {
-    transition: transform 0.6s ease;
-}
-
-#flecha_regreso:hover svg {
-    transform: scale(1.1);
-    stroke: $colorsecundario;
-}
-
-.g-recaptcha {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: block;
-    transform: scale(0.9);
-    transform-origin: 0 0;
-    margin-left: auto;
-    z-index: 2;
-    margin-right: auto;
-}
+  }
+  
+  .div_redes a i {
+    font-size: 3.5rem;
+    color: #fffcfc;
+  }
+  
+  .politicas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 1em;
+    justify-content: flex-end;
+    max-width: calc(50% - 45px - 30px);
+  }
+  
+  .politicas a {
+    font-size: 1.5rem;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    text-decoration: none;
+  }
+  
+  .politicas a {
+    font-size: 1.5rem;
+    color: #fffcfc;
+    font-family: "fuenteSecundaria";
+    text-decoration: none;
+  }
+  
+  /*# sourceMappingURL=globales.css.map */
+  

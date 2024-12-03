@@ -1,69 +1,93 @@
-<%- include('../layouts/main') %>
+<div class="auction-detail container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="property-info card mb-4">
+        <div class="card-body">
+          <h2><%= auction.categoria.charAt(0).toUpperCase() + auction.categoria.slice(1) %> en <%= auction.ubicacion %></h2>
+          
+          <div class="current-bid" id="current-bid">
+            Oferta Actual: S/. <%= auction.precios.toLocaleString() %>
+          </div>
+          
+          <% if(auction.estado === 'en_curso') { %>
+            <div class="bid-controls">
+              <form id="bid-form" class="bid-form">
+                <div class="input-group">
+                  <input type="number" id="bid-amount" 
+                         min="<%= auction.precios + 1000 %>" 
+                         step="1000" 
+                         class="form-control" 
+                         placeholder="Ingrese su oferta">
+                  <button type="submit" class="btn btn-primary">Ofertar</button>
+                </div>
+              </form>
+              
+              <form id="quick-bid-form" class="quick-bid-form">
+                <button type="submit" class="btn btn-success w-100">
+                  Oferta Rápida (+S/. 1,000)
+                </button>
+              </form>
+            </div>
 
-<div class="auction-detail">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="property-images mb-4">
-                <!-- Carrusel de imágenes -->
-                <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <% auction.images.forEach((image, index) => { %>
-                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                <img src="<%= image %>" class="d-block w-100" alt="Propiedad">
-                            </div>
-                        <% }); %>
-                    </div>
-                    <!-- Controles del carrusel -->
-                </div>
+            <div class="progress-container">
+              <div id="auction-progress" class="auction-progress"></div>
+              <div id="countdown-display" class="countdown-display"></div>
             </div>
-            
-            <div class="property-info">
-                <h2><%= auction.categoria.charAt(0).toUpperCase() + auction.categoria.slice(1) %> en <%= auction.ubicacion %></h2>
-                <p class="price">Precio Base: S/. <%= auction.precios.toLocaleString() %></p>
-                <div class="description">
-                    <%= auction.descripcion %>
-                </div>
-                
-                <div class="features mt-4">
-                    <h3>Características</h3>
-                    <ul class="list-unstyled">
-                        <% if(auction.N_habitacion) { %>
-                            <li>Habitaciones: <%= auction.N_habitacion %></li>
-                        <% } %>
-                        <!-- Más características -->
-                    </ul>
-                </div>
-            </div>
+          <% } %>
+          
+          <div class="description">
+            <%= auction.descripcion %>
+          </div>
+          
+          <div class="features mt-4">
+            <h3>Características</h3>
+            <ul class="list-unstyled">
+              <% if(auction.N_habitacion) { %>
+                <li>Habitaciones: <%= auction.N_habitacion %></li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h3>Chat de la Subasta</h3>
+          <div class="auction-status">
+            <span class="status <%= auction.estado %>">
+              <%= auction.statusMessage %>
+            </span>
+          </div>
         </div>
         
-        <div class="col-md-4">
-            <div class="auction-status card mb-4">
-                <div class="card-body">
-                    <h3>Estado de la Subasta</h3>
-                    <p class="status <%= auction.estado %>"><%= auction.statusMessage %></p>
-                    <% if(auction.estado === 'en_curso') { %>
-                        <div class="bid-section">
-                            <h4>Última Oferta: S/. <%= currentBid.toLocaleString() %></h4>
-                            <form id="bidForm">
-                                <input type="number" class="form-control mb-2" id="bidAmount" 
-                                       min="<%= currentBid + 1000 %>" step="1000">
-                                <button type="submit" class="btn btn-primary w-100">Hacer Oferta</button>
-                            </form>
-                        </div>
-                    <% } %>
-                </div>
-            </div>
-            
-            <div class="chat-section card">
-                <div class="card-body">
-                    <h3>Chat de la Subasta</h3>
-                    <div id="chatMessages" class="chat-messages">
-                        <!-- Mensajes del chat -->
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        
+        <form id="message-form" class="chat-input">
+          <input type="text" id="message-input" 
+                 placeholder="Escribe un mensaje..." 
+                 <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
+          <button type="submit" <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
+            <i class="ri-send-plane-line"></i>
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-<script src="/js/auction-detail.js"></script>
+<link rel="stylesheet" href="/css/auction.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="module">
+  import AuctionChat from '/js/auction-chat.js';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const chat = new AuctionChat(
+      '<%= auction.id %>', 
+      '<%= user.id %>', 
+      '<%= auction.precios %>'
+    );
+  });
+</script>

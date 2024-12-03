@@ -13,11 +13,7 @@ const io = socketIO(server);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'), {
-  setHeaders: (res, path) => {
-    res.setHeader('Cache-Control', 'no-store');
-  }
-}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
@@ -33,7 +29,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Routes
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
-app.use('/btn_menu', require('./routes/btn_menu.routes'));
+app.use('/', require('./routes/home.routes'));
+app.use('/contacto', require('./routes/contacto.routes'));
 
 // Socket.IO
 io.on('connection', (socket) => {

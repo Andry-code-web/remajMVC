@@ -1,27 +1,183 @@
-<%- include('../layouts/main') %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h2>Registro de Usuario</h2>
-            </div>
-            <div class="card-body">
-                <form action="/auth/register" method="POST">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="nombres_apellidos" class="form-label">Nombres y Apellidos</label>
-                            <input type="text" class="form-control" id="nombres_apellidos" name="nombres_apellidos" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="dni" class="form-label">DNI</label>
-                            <input type="text" class="form-control" id="dni" name="dni" required>
-                        </div>
-                    </div>
-                    <!-- Resto de campos del formulario -->
-                    <button type="submit" class="btn btn-primary">Registrarse</button>
-                </form>
-            </div>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMAJUD - Registro</title>
+  <link rel="stylesheet" href="/css/registro/registro.css">
+</head>
+
+<body>
+  <!-- Títulos principales fijos -->
+  <div class="fixed-titles">
+    <h1>BIENVENIDO</h1>
+    <h1>REMAJUD</h1>
+  </div>
+  <div class="progress-indicator">
+    <div class="progress-active-line"></div>
+    <div class="progress-active-dot"></div>
+    <div class="progress-dots">
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
     </div>
-</div>
+  </div>
+  <div class="container_formulario">
+    <div class="seccion seccion1 active">
+      <div class="texto_grande">
+        <h2 class="subtitle">REGISTRO</h2>
+      </div>
+      <div class="form-section1">
+        <div class="form-header">
+          <h3>Registro de Usuario</h3>
+          <p>Por favor, ingrese sus datos.</p>
+        </div>
+        <form>
+          <!-- Fila de Nombres y Apellidos -->
+          <div class="row">
+            <input type="text" class="form-input" placeholder="NOMBRES Y APELLIDOS" name="nombre_apellidos" required>
+          </div>
+
+          <!-- Fila de Email -->
+          <div class="row">
+            <input type="email" class="form-input" placeholder="EMAIL" name="EMAIL" required>
+          </div>
+
+          <!-- Fila de Confirmar Email -->
+          <div class="row">
+            <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
+          </div>
+
+          <!-- Fila de Estado Civil, Fecha de Nacimiento y Sexo -->
+          <div class="row">
+            <div class="col">
+              <select class="form-input" name="estado_civil" required>
+                <option value="" disabled selected>ESTADO CIVIL</option>
+                <option value="soltero">Soltero(a)</option>
+                <option value="casado">Casado(a)</option>
+                <option value="divorciado">Divorciado(a)</option>
+                <option value="viudo">Viudo(a)</option>
+              </select>
+            </div>
+            <div class="col">
+              <input type="date" class="form-input" placeholder="FECHA NACIMIENTO" name="fecha_nacimiento" required>
+            </div>
+            <div class="col">
+              <select class="form-input" name="sexo" required>
+                <option value="" disabled selected>SEXO</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Fila de DNI y Celular -->
+          <div class="row">
+            <div class="col">
+              <input type="number" class="form-input" placeholder="DNI" name="dni" required>
+            </div>
+            <div class="col">
+              <input type="number" class="form-input" placeholder="CELULAR" name="celular" required>
+            </div>
+          </div>
+
+          <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
+        </form>
+      </div>
+    </div>
+
+
+
+    <canvas id="particleCanvas"></canvas>
+    <div class="seccion seccion2">
+      <div class="texto_grande">
+        <h2 class="subtitle">UBICACIÓN</h2>
+      </div>
+      <div class="form-section">
+        <div class="form-header">
+          <h3>Detalles de Ubicación</h3>
+          <p>Ingrese su dirección.</p>
+        </div>
+        <form class="row3">
+          <div class="col3">
+            <input type="text" class="form-input" placeholder="DEPARTAMENTO" name="departamento" required>
+            <input type="text" class="form-input" placeholder="PROVINCIA" name="provincia" required>
+            <input type="text" class="form-input" placeholder="DISTRITO" name="distrito" required>
+            <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="dirección" required>
+          </div>
+          <button type="button" class="submit-btn anterior"> ANTERIOR</button>
+          <button type="button" class="submit-btn siguiente">SIGUIENTE →</button>
+        </form>
+      </div>
+    </div>
+    <div class="seccion seccion3">
+      <div class="texto_grande">
+        <h2 class="subtitle">USUARIO</h2>
+      </div>
+      <div class="form-section">
+        <div class="form-header">
+          <h3>Información de Usuario</h3>
+          <p>Últimos detalles de su cuenta.</p>
+        </div>
+        <form>
+          <input type="text clas" class="form-input" placeholder="USUARIO" name="usuario" required>
+          <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
+          <input type="email" class="form-input" placeholder="EMAIL" name="email" required>
+          <input type="email" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
+          <button type="button" class="submit-btn anterior"> ANTERIOR</button>
+          <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/componentes/script_formulario.js"></script>
+  <script type="module" src="/js/componentes/network.js"></script>
+
+  <script>
+    document.querySelector(".finalizar").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const datos = {
+        nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value,
+        email: document.querySelector("[name='EMAIL']").value,
+        confirmar_email: document.querySelector("[name='confirmar_email']").value,
+        estado_civil: document.querySelector("[name='estado_civil']").value,
+        fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
+        sexo: document.querySelector("[name='sexo']").value,
+        dni: document.querySelector("[name='dni']").value,
+        celular: document.querySelector("[name='celular']").value,
+        departamento: document.querySelector("[name='departamento']").value,
+        provincia: document.querySelector("[name='provincia']").value,
+        distrito: document.querySelector("[name='distrito']").value,
+        direccion: document.querySelector("[name='dirección']").value,
+        usuario: document.querySelector("[name='usuario']").value,
+        contrasena: document.querySelector("[name='contrasena']").value,
+      };
+
+      try {
+        const response = await fetch("/auth/registrar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datos),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert("Registro exitoso. Bienvenido a REMAJUD!");
+          window.location.href = "/login";
+        } else {
+          alert("Error en el registro: " + result.message);
+        }
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        alert("Hubo un problema al registrar los datos.");
+      }
+    });
+  </script>
+</body>
+
+</html>

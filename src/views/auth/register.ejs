@@ -133,7 +133,7 @@
 
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
-
+  
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".finalizar").addEventListener("click", async (e) => {
@@ -156,7 +156,7 @@
           contrasena: document.querySelector("[name='contrasena']").value.trim(),
           condiciones: document.querySelector("[name='terminos_condiciones']").checked,
         };
-
+        
         // Validar campos obligatorios
         const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== 'condiciones');
         if (camposVacios.length > 0) {

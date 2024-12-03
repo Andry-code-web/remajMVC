@@ -21,6 +21,7 @@
     "build:globales": "sass src/public/styles/globales.scss src/public/css/globales/globales.css",
     "dev:server": "nodemon app.js"
   },
+  
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.6",

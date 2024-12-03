@@ -36,7 +36,6 @@ app.use('/auctions', require('./routes/auction.routes'));
 app.use('/mapas', require('./routes/mapa.routes'));
 app.use('/admin', require('./routes/admin.routes'));
 
-
 // Socket.IO
 io.on('connection', (socket) => {
   socket.on('join-auction', (auctionId) => {

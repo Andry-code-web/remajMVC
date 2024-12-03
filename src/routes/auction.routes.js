@@ -5,7 +5,4 @@ const auth = require('../middleware/auth');
 
 router.get('/', auctionController.getAllAuctions);
 router.get('/:id', auth, auctionController.getAuctionDetails);
-
-router.get('/mapa', auctionController.getAllAuctions);
-
 module.exports = router;

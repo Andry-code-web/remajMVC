@@ -5,13 +5,27 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+
+    "dev": "concurrently \"npm run build:all\" \"npm run dev:server\"",
+
     "watch:css": "sass --watch public/styles:public/css",
-    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:clientes_admin",
-    "build:inicio": "sass public/styles/inicio.scss public/css/inicio/inicio.css",
-    "build:remates": "sass public/styles/remates.scss public/css/remates/remates.css",
-    "build:mapas": "sass public/styles/mapas.scss public/css/mapas/mapas.css",
-    "build:admin": "sass public/styles/admin.scss public/css/admin/admin.css"
+
+    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail",
+
+    "build:layout_main": "sass src/public/styles/main_layout.scss src/public/css/main_layout/main_layout.css",
+
+    "build:inicio": "sass src/public/styles/inicio.scss src/public/css/inicio/inicio.css",
+    "build:remates": "sass src/public/styles/remates.scss src/public/css/remates/remates.css",
+    "build:contactos": "sass src/public/styles/contactos.scss src/public/css/contactos/contactos.css",
+    "build:subastas": "sass src/public/styles/subastas.scss src/public/css/subasta/subastas.css",
+    "build:registro": "sass src/public/styles/registro.scss src/public/css/registro/registro.css",
+    "build:mapas": "sass src/public/styles/mapa.scss src/public/css/mapa/mapa.css",
+    "build:admin": "sass src/public/styles/admin.scss src/public/css/admin/admin.css",
+    "build:auction_detail": "sass src/public/styles/auction_detail.scss src/public/css/auction_detail/auction_detail.css",
+
+    "build:globales": "sass src/public/styles/globales.scss src/public/css/globales/globales.css",
+
+    "dev:server": "nodemon app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,4 +1,5 @@
 const Auction = require('../models/auction.model');
+const Bid = require('../models/bid.model');
 const moment = require('moment');
 
 exports.getAllAuctions = async (req, res) => {
@@ -49,8 +50,16 @@ exports.getAuctionDetails = async (req, res) => {
       auction.statusMessage = 'Subasta próximamente';
     }
 
+    const highestBid = await Bid.getHighestBid(auction.id);
+    if (highestBid) {
+      auction.precios = highestBid.monto_oferta;
+    }
+
     await Auction.updateStatus(auction.id, auction.estado);
-    res.render('auctions/detail', { auction });
+    res.render('auctions/details', { 
+      auction,
+      user: req.session.user
+    });
   } catch (error) {
     res.status(500).render('error', { error: error.message });
   }

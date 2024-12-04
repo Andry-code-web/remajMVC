@@ -10,24 +10,30 @@
           </div>
           
           <% if(auction.estado === 'en_curso') { %>
-            <div class="bid-controls">
-              <form id="bid-form" class="bid-form">
-                <div class="input-group">
-                  <input type="number" id="bid-amount" 
-                         min="<%= auction.precios + 1000 %>" 
-                         step="1000" 
-                         class="form-control" 
-                         placeholder="Ingrese su oferta">
-                  <button type="submit" class="btn btn-primary">Ofertar</button>
-                </div>
-              </form>
-              
-              <form id="quick-bid-form" class="quick-bid-form">
-                <button type="submit" class="btn btn-success w-100">
-                  Oferta Rápida (+S/. 1,000)
-                </button>
-              </form>
-            </div>
+            <% if(user && user.id) { %>
+              <div class="bid-controls">
+                <form id="bid-form" class="bid-form">
+                  <div class="input-group">
+                    <input type="number" id="bid-amount" 
+                           min="<%= auction.precios + 1000 %>" 
+                           step="1000" 
+                           class="form-control" 
+                           placeholder="Ingrese su oferta">
+                    <button type="submit" class="btn btn-primary">Ofertar</button>
+                  </div>
+                </form>
+                
+                <form id="quick-bid-form" class="quick-bid-form">
+                  <button type="submit" class="btn btn-success w-100">
+                    Oferta Rápida (+S/. 1,000)
+                  </button>
+                </form>
+              </div>
+            <% } else { %>
+              <div class="alert alert-info">
+                <a href="/auth/login">Inicia sesión</a> para participar en esta subasta
+              </div>
+            <% } %>
 
             <div class="progress-container">
               <div id="auction-progress" class="auction-progress"></div>
@@ -64,14 +70,20 @@
         
         <div class="chat-messages" id="chat-messages"></div>
         
-        <form id="message-form" class="chat-input">
-          <input type="text" id="message-input" 
-                 placeholder="Escribe un mensaje..." 
-                 <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-          <button type="submit" <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-            <i class="ri-send-plane-line"></i>
-          </button>
-        </form>
+        <% if(user && user.id) { %>
+          <form id="message-form" class="chat-input">
+            <input type="text" id="message-input" 
+                   placeholder="Escribe un mensaje..." 
+                   <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
+            <button type="submit" <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
+              <i class="ri-send-plane-line"></i>
+            </button>
+          </form>
+        <% } else { %>
+          <div class="alert alert-info">
+            <a href="/auth/login">Inicia sesión</a> para participar en el chat
+          </div>
+        <% } %>
       </div>
     </div>
   </div>
@@ -84,10 +96,13 @@
   import AuctionChat from '/js/auction-chat.js';
   
   document.addEventListener('DOMContentLoaded', () => {
-    const chat = new AuctionChat(
-      '<%= auction.id %>', 
-      '<%= user.id %>', 
-      <%= auction.precios %>
-    );
+    const userId = '<%= user ? user.id : null %>';
+    if (userId) {
+      const chat = new AuctionChat(
+        '<%= auction.id %>', 
+        userId,
+        <%= auction.precios %>
+      );
+    }
   });
 </script>

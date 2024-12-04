@@ -153,7 +153,7 @@
           distrito: document.querySelector("[name='distrito']").value.trim(),
           direccion: document.querySelector("[name='direccion']").value.trim(),
           usuario: document.querySelector("[name='usuario']").value.trim(),
-          contrasena: document.querySelector("[name='contrasena']").value.trim(),
+          contrasena: document.querySelector("[name='contrasena']").value,
           condiciones: document.querySelector("[name='terminos_condiciones']").checked,
         };
 
@@ -176,7 +176,7 @@
           const result = await response.json();
           if (response.ok) {
             alert("Registro exitoso. Bienvenido a REMAJUD!");
-            window.location.href = "/login";
+            window.location.href = "/auth/login";
           } else {
             alert("Error en el registro: " + result.message);
           }

@@ -181,6 +181,8 @@ body {
   padding: 20px;
   border-radius: 8px;
   transition: transform 0.3s;
+  flex-direction: column;
+  text-align: center;
 }
 
 .amenity-item:hover {
@@ -191,11 +193,13 @@ body {
   width: 40px;
   height: 40px;
   color: #3498db;
+  margin-bottom: 10px;
 }
 
 .amenity-name {
   font-size: 1.1em;
   color: #2c3e50;
+  margin: 5px 0;
 }
 
 #map {
@@ -219,6 +223,12 @@ body {
 .message .time {
   font-size: 0.8em;
   color: #666;
+}
+
+.amenity-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 i {

@@ -18,8 +18,8 @@
       <div class="section">
         <h2 class="section-title">Galería de Imágenes</h2>
         <i>
-          <input checked type="radio" name="s" style="background-image: url('/img/3e4fd791f54c8bee5565036c2094309d.jpg');"
-            title="Imagen 1">
+          <input checked type="radio" name="s"
+            style="background-image: url('/img/3e4fd791f54c8bee5565036c2094309d.jpg');" title="Imagen 1">
           <input type="radio" name="s" style="background-image: url('/img/casa_1.jfif');" title="Imagen 2">
           <input type="radio" name="s" style="background-image: url('/img/casa2.jfif');" title="Imagen 3">
           <input type="radio" name="s" style="background-image: url('/img/casa3.jfif');" title="Imagen 4">
@@ -32,45 +32,58 @@
       <div class="details-grid">
         <div class="detail-item">
           <div class="detail-value">
-            Habitaciones 
+            Habitaciones
           </div>
-          <div class="detail-label"><%= auction.N_habitacion %></div>
+          <div class="detail-label">
+            <%= auction.N_habitacion %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
             Baños
           </div>
-          <div class="detail-label"><%= auction.N_banos %></div>
+          <div class="detail-label">
+            <%= auction.N_banos %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
-            Mt 2 
+            Mt 2
           </div>
-          <div class="detail-label"><%= auction.tamaño_propiedad %></div>
+          <div class="detail-label">
+            <%= auction.tamaño_propiedad %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
             Cocina
           </div>
-          <div class="detail-label"><%= auction.cocina %></div>
+          <div class="detail-label">
+            <%= auction.cocina %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
-            Categoría 
+            Categoría
           </div>
-          <div class="detail-label"><%= auction.categoria %></div>
+          <div class="detail-label">
+            <%= auction.categoria %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
             Piscina
           </div>
-          <div class="detail-label"> <%= auction.pisina %></div>
+          <div class="detail-label">
+            <%= auction.pisina %>
+          </div>
         </div>
         <div class="detail-item">
           <div class="detail-value">
             Precio oferta
           </div>
-          <div class="detail-label"> $<%= auction.precios.toLocaleString() %></div>
+          <div class="detail-label"> $<%= auction.precios.toLocaleString() %>
+          </div>
         </div>
       </div>
     </div>
@@ -96,60 +109,52 @@
       <div class="amenities-grid">
         <div class="amenity-item">
           <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 3h18v18H3zM3 9h18M3 15h18M12 3v18" />
+            <path d="M8 21h8M12 3v3M5 8h3M16 8h3M8 15h8M8 11h8M12 19v-2" />
           </svg>
-          <span class="amenity-name">Cocina > </span>
-          <span class="amenity-name">
-            <%= auction.cocina %>
-          </span>
+          <div class="amenity-text">
+            <span class="amenity-name">Cocina</span>
+            <span class="amenity-name">
+              <%= auction.cocina %>
+            </span>
+          </div>
         </div>
         <div class="amenity-item">
           <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7-7H4a2 2 0 0 0-2 2v4" />
-            <path d="M14 3v5h5M4 12.5C4 16.09 6.91 19 10.5 19S17 16.09 17 12.5 13.09 6 10.5 6 4 8.91 4 12.5z" />
-            <path d="M7 15.5c1.5-2 3.5-2 5 0" />
+            <path d="M4 20h16M4 4h16M6 6v14M20 6v14M10 10h4v8h-4z" />
           </svg>
-          <span class="amenity-name">Piscina > </span>
-          <span class="amenity-name">
-            <%= auction.pisina %>
-          </span>
+          <div class="amenity-text">
+            <span class="amenity-name">Piscina</span>
+            <span class="amenity-name">
+              <%= auction.pisina %>
+            </span>
+          </div>
         </div>
         <div class="amenity-item">
           <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
-            <circle cx="12" cy="12" r="6" />
-            <circle cx="12" cy="12" r="2" />
+            <path d="M2 2h20v20H2zM6 6h12v12H6zM10 10h4v4h-4z" />
           </svg>
-          <span class="amenity-name">Lavandería ></span>
-          <span class="amenity-name">
-            <%= auction.lavanderia %>
-          </span>
-        </div>
-        <div class="amenity-item">
-          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="6" width="20" height="12" rx="2" ry="2" />
-            <path d="M4 6h16M4 18h16" />
-            <path d="M6 10h12M6 14h12" />
-          </svg>
-          <span class="amenity-name">Piscina > </span>
-          <span class="amenity-name">
-            <%= auction.pisina %>
-          </span>
+          <div class="amenity-text">
+            <span class="amenity-name">Lavandería</span>
+            <span class="amenity-name">
+              <%= auction.lavanderia %>
+            </span>
+          </div>
         </div>
         <div class="amenity-item">
           <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path
               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-            <path d="M12 14c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-            <path d="M12 18c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
           </svg>
-          <span class="amenity-name">Jardín > </span>
-          <span class="amenity-name">
-            <%= auction.jardin %>
-          </span>
+          <div class="amenity-text">
+            <span class="amenity-name">Jardín</span>
+            <span class="amenity-name">
+              <%= auction.jardin %>
+            </span>
+          </div>
         </div>
       </div>
     </div>
+
 
     <div class="section">
       <h2 class="section-title">Ubicación</h2>

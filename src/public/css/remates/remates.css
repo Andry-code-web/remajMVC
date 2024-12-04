@@ -1,3 +1,252 @@
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+.banner_remates {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: url("/img/banner_remates.jpg") no-repeat center center/cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay h1 {
+  color: #fffcfc;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.banner_filtro {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.contenedor_filtro {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.div1 {
+  grid-column: span 3;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.contenedor_inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.contenedor_inputs label {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.contenedor_inputs i {
+  margin-right: 10px;
+}
+
+.contenedor_inputs input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.div7 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 3;
+}
+
+.div7 button {
+  padding: 10px 20px;
+  background-color: #00665e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.div7 button i {
+  margin-left: 10px;
+}
+
+.div7 button:hover {
+  background-color: #004d40;
+}
+
+@media (max-width: 768px) {
+  .parent {
+    grid-template-columns: 1fr;
+  }
+  .div1, .div7 {
+    grid-column: span 1;
+  }
+}
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 350px;
+  margin: 20px;
+  text-align: center;
+  position: relative;
+  top: 111%;
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
+.image-container .foto_casa {
+  transition: transform 0.5s ease;
+}
+
+.image-container:hover .foto_casa {
+  transform: scale(1.2);
+}
+
+.etiqueta_imagen {
+  border-radius: 20px;
+  background: #fffcfc;
+  color: #0a0000;
+  font-size: 13px;
+  line-height: 120%;
+  padding: 4px 12px;
+  position: absolute;
+  z-index: 99;
+  top: 16px;
+  left: 16px;
+  transition: all 0.3s ease-in;
+  text-decoration: none;
+}
+
+.etiqueta_imagen:hover {
+  background-color: #00665e;
+  color: white;
+}
+
+.enlaces_carta {
+  text-decoration: none;
+}
+
+.card-content h2 {
+  color: #0a0000;
+}
+
+.info_img {
+  position: absolute;
+  z-index: 1;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 46%;
+  max-width: 50%;
+}
+
+.info_img_tex {
+  position: absolute;
+  z-index: 2;
+  bottom: 4px;
+  left: 50%;
+  top: 47%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.card-content .address {
+  color: #777;
+  margin: 10px 0;
+}
+
+.card-content .price {
+  color: #e67e22;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.card-content .details {
+  color: #555;
+  margin: 10px 0;
+}
+
+.card-content .view-detail {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #00665e;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.card-content .view-detail:hover {
+  background-color: #004d40;
+}
 
 /*# sourceMappingURL=remates.css.map */

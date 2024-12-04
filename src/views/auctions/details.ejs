@@ -1,87 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="auction-detail container-fluid">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="property-info card mb-4">
-        <div class="card-body">
-          <h2><%= auction.categoria.charAt(0).toUpperCase() + auction.categoria.slice(1) %> en <%= auction.ubicacion %></h2>
-          
-          <div class="current-bid" id="current-bid">
-            Oferta Actual: S/. <%= auction.precios.toLocaleString() %>
-          </div>
-          
-          <% if(auction.estado === 'en_curso') { %>
-            <div class="bid-controls">
-              <form id="bid-form" class="bid-form">
-                <div class="input-group">
-                  <input type="number" id="bid-amount" 
-                         min="<%= auction.precios + 1000 %>" 
-                         step="1000" 
-                         class="form-control" 
-                         placeholder="Ingrese su oferta">
-                  <button type="submit" class="btn btn-primary">Ofertar</button>
-                </div>
-              </form>
-              
-              <form id="quick-bid-form" class="quick-bid-form">
-                <button type="submit" class="btn btn-success w-100">
-                  Oferta Rápida (+S/. 1,000)
-                </button>
-              </form>
-            </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles de la Propiedad</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
+</head>
 
-            <div class="progress-container">
-              <div id="auction-progress" class="auction-progress"></div>
-              <div id="countdown-display" class="countdown-display"></div>
-            </div>
-          <% } %>
+<body>
+  <div class="container">
+    <div class="property-header">
+      <h1 class="property-title">
+        <%= auction.ubicacion %>
+      </h1>
+      <div class="section">
+        <h2 class="section-title">Galería de Imágenes</h2>
+        <i>
+          <input checked type="radio" name="s" style="background-image: url('/img/3e4fd791f54c8bee5565036c2094309d.jpg');"
+            title="Imagen 1">
+          <input type="radio" name="s" style="background-image: url('/img/casa_1.jfif');" title="Imagen 2">
+          <input type="radio" name="s" style="background-image: url('/img/casa2.jfif');" title="Imagen 3">
+          <input type="radio" name="s" style="background-image: url('/img/casa3.jfif');" title="Imagen 4">
+        </i>
+      </div>
+      <p class="property-address">
+        <%= auction.descripcion %>
+      </p>
 
-          <div class="description">
-            <%= auction.descripcion %>
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-value">
+            Habitaciones 
           </div>
-          
-          <div class="features mt-4">
-            <h3>Características</h3>
-            <ul class="list-unstyled">
-              <% if(auction.N_habitacion) { %>
-                <li>Habitaciones: <%= auction.N_habitacion %></li>
-                <li>cochera: <%= auction.cochera %></li>
-                <li>Descripción del inmueble: <%= auction.descripcion %></li>
-                <li>Categoría: <%= auction.categoria %></li>
-                <li>Terreno: <%= auction.terreno %></li>
-              <% } %>
-            </ul>
+          <div class="detail-label"><%= auction.N_habitacion %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Baños
           </div>
+          <div class="detail-label"><%= auction.N_banos %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Mt 2 
+          </div>
+          <div class="detail-label"><%= auction.tamaño_propiedad %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Cocina
+          </div>
+          <div class="detail-label"><%= auction.cocina %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Categoría 
+          </div>
+          <div class="detail-label"><%= auction.categoria %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Piscina
+          </div>
+          <div class="detail-label"> <%= auction.pisina %></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value">
+            Precio oferta
+          </div>
+          <div class="detail-label"> $<%= auction.precios.toLocaleString() %></div>
         </div>
       </div>
     </div>
-    
-    <div class="col-md-4">
-      <div class="chat-container">
-        <div class="chat-header">
-          <h3>Chat de la Subasta</h3>
-          <div class="auction-status">
-            <span class="status <%= auction.estado %>">
-              <%= auction.statusMessage %>
-            </span>
-          </div>
-        </div>
-        
-        <div class="chat-messages" id="chat-messages"></div>
-        
-        <form id="message-form" class="chat-input">
-          <input type="text" id="message-input" 
-                 placeholder="Escribe un mensaje..." 
-                 <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-          <button type="submit" <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-            <i class="ri-send-plane-line"></i>
-          </button>
-        </form>
+
+    <div class="section">
+      <h2 class="section-title">Chat de Subastas</h2>
+      <div class="chat-container" id="chat-messages"></div>
+      <div class="chat-input">
+        <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
+        <button onclick="sendBid()">Enviar Oferta</button>
       </div>
     </div>
+
+    <div class="section">
+      <h2 class="section-title">Sobre la Propiedad</h2>
+      <p>
+        <%= auction.descripcion %>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">CARACTERÍSTICAS</h2>
+      <div class="amenities-grid">
+        <div class="amenity-item">
+          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h18v18H3zM3 9h18M3 15h18M12 3v18" />
+          </svg>
+          <span class="amenity-name">Cocina > </span>
+          <span class="amenity-name">
+            <%= auction.cocina %>
+          </span>
+        </div>
+        <div class="amenity-item">
+          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7-7H4a2 2 0 0 0-2 2v4" />
+            <path d="M14 3v5h5M4 12.5C4 16.09 6.91 19 10.5 19S17 16.09 17 12.5 13.09 6 10.5 6 4 8.91 4 12.5z" />
+            <path d="M7 15.5c1.5-2 3.5-2 5 0" />
+          </svg>
+          <span class="amenity-name">Piscina > </span>
+          <span class="amenity-name">
+            <%= auction.pisina %>
+          </span>
+        </div>
+        <div class="amenity-item">
+          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="2" />
+          </svg>
+          <span class="amenity-name">Lavandería ></span>
+          <span class="amenity-name">
+            <%= auction.lavanderia %>
+          </span>
+        </div>
+        <div class="amenity-item">
+          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="6" width="20" height="12" rx="2" ry="2" />
+            <path d="M4 6h16M4 18h16" />
+            <path d="M6 10h12M6 14h12" />
+          </svg>
+          <span class="amenity-name">Piscina > </span>
+          <span class="amenity-name">
+            <%= auction.pisina %>
+          </span>
+        </div>
+        <div class="amenity-item">
+          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+            <path d="M12 14c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+            <path d="M12 18c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+          </svg>
+          <span class="amenity-name">Jardín > </span>
+          <span class="amenity-name">
+            <%= auction.jardin %>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Ubicación</h2>
+      <div id="map"></div>
+    </div>
+
   </div>
-</div>
 
-<link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var auctionDescription = "<%= auction.ubicacion %>";
+  </script>
+
+  <script>
+    // Chat de subastas
+    const chatMessages = document.getElementById('chat-messages');
+    const bidInput = document.getElementById('bid-input');
+
+    function sendBid() {
+      const bid = bidInput.value;
+      if (bid.trim() === '') return;
+
+      const now = new Date();
+      const message = document.createElement('div');
+      message.className = 'message';
+      message.innerHTML = `
+                <span class="user">Usuario:</span>
+                <span class="bid">$${bid}</span>
+                <span class="time">${now.toLocaleTimeString()}</span>
+            `;
+
+      chatMessages.appendChild(message);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      bidInput.value = '';
+    }
+
+    bidInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendBid();
+    });
+
+    // Crear el mapa y establecer la vista inicial
+    const map = L.map('map').setView([-16.389278, -71.548194], 13);
+
+    // Añadir la capa de tiles de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Añadir un marcador en el mapa
+    L.marker([-16.389278, -71.548194])
+      .addTo(map)
+      .bindPopup(auctionDescription)
+      .openPopup();
+  </script>
+</body>
+
+</html>

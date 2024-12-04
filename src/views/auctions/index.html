@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conversión de Coordenadas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="map" style="height: 500px;"></div>
+
+  <form id="coordinate-form">
+    <label for="coordinates">Coordenadas (DMS):</label>
+    <input type="text" id="coordinates" name="coordinates" placeholder="16°23'21.4\"S 71°32'53.5\"W" required>
+    <button type="submit">Convertir</button>
+  </form>
+
+  <div>
+    <label for="decimal-coordinates">Coordenadas Decimales:</label>
+    <input type="text" id="decimal-coordinates" name="decimal-coordinates" readonly>
+  </div>
+
+  <script>
+    // Crear el mapa y establecer la vista inicial
+    const map = L.map('map').setView([0, 0], 2);
+
+    // Añadir la capa de tiles de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Función para convertir DMS a decimales
+    function dmsToDecimal(dms) {
+      const [latDMS, lonDMS] = dms.split(' ');
+
+      const latMatch = latDMS.match(/(\d+)°(\d+)'(\d+\.\d+)"([NSEW])/);
+      const lonMatch = lonDMS.match(/(\d+)°(\d+)'(\d+\.\d+)"([NSEW])/);
+
+      const latDegrees = parseFloat(latMatch[1]);
+      const latMinutes = parseFloat(latMatch[2]);
+      const latSeconds = parseFloat(latMatch[3]);
+      const latDirection = latMatch[4];
+
+      const lonDegrees = parseFloat(lonMatch[1]);
+      const lonMinutes = parseFloat(lonMatch[2]);
+      const lonSeconds = parseFloat(lonMatch[3]);
+      const lonDirection = lonMatch[4];
+
+      const latDecimal = latDegrees + latMinutes / 60 + latSeconds / 3600;
+      const lonDecimal = lonDegrees + lonMinutes / 60 + lonSeconds / 3600;
+
+      return {
+        lat: latDirection === 'S' ? -latDecimal : latDecimal,
+        lon: lonDirection === 'W' ? -lonDecimal : lonDecimal
+      };
+    }
+
+    // Manejar el envío del formulario
+    document.getElementById('coordinate-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const coordinatesDMS = document.getElementById('coordinates').value;
+      const { lat, lon } = dmsToDecimal(coordinatesDMS);
+
+      // Mostrar las coordenadas decimales en el campo de texto
+      document.getElementById('decimal-coordinates').value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+
+      // Centrar el mapa en las nuevas coordenadas
+      map.setView([lat, lon], 13);
+
+      // Añadir un marcador en el mapa
+      L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup(`${lat.toFixed(6)}, ${lon.toFixed(6)}`)
+        .openPopup();
+    });
+  </script>
+</body>
+</html>

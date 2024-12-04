@@ -1,24 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RemajuD - Subastas de Inmuebles</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RemajuD - Subastas de Inmuebles</title>
+  <!-- CDN DE ICONOS REMIX -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <!-- ESTILOS COMPONENTES -->
+
+  <!-- ESTILOS GLOBALES -->
+  <link rel="stylesheet" href="/css/globales/globales.css">
+
+  <!-- ESTILOS DE DISEÑO main -->
+  <link rel="stylesheet" href="/css/main_layout/main_layout.css"> 
+
+  <!-- ESTILOS PAGINAS -->
+   <!-- inicio -->
+  <link rel="stylesheet" href="/css/inicio/inicio.css">
+
+   <!-- remates -->
+    <link rel="stylesheet" href="/css/remates/remates.css">
+
+    <!-- detalles -->
+     
+
 </head>
+
 <body>
-    <%- include('../partials/navbar') %>
-    
-    <main class="container mt-4">
-        <%- include('../' + content) %>
-    </main>
-    
+  <%- include('../partials/navbar') %>
 
-    <%- include('../partials/footer') %>
+  <main class="">
+    <%- include('../' + content) %>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/main.js"></script>
+
+  <%- include('../partials/footer') %>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/main.js"></script>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      const banner = document.getElementById('banner');
+      const categorias = document.getElementById('categorias');
+      const subastas = document.getElementById('subastas');
+      const bannerBottom = banner.getBoundingClientRect().bottom;
+      const categoriasBottom = categorias.getBoundingClientRect().bottom;
+      const subastasTop = subastas.getBoundingClientRect().top;
+      if (bannerBottom > 0) {
+        header.style.color = '#fffcfc';
+      } else if (categoriasBottom > 0) {
+        header.style.color = '#0a0000';
+      } else if (subastasTop < window.innerHeight) {
+        header.style.color = '#0a0000';
+      } else {
+        header.style.color = 'black';
+      }
+    });
+  </script>
+
+  <script>
+    let lastScrollPosition = 0;
+    const navbar = document.querySelector('.navbar');
+
+    window.addEventListener('scroll', function() {
+      const currentScrollPosition = window.pageYOffset;
+
+      if (currentScrollPosition > lastScrollPosition) {
+        navbar.classList.add('hidden');
+      } else {
+        navbar.classList.remove('hidden');
+      }
+
+      lastScrollPosition = currentScrollPosition;
+    });
+  </script>
 </body>
+
 </html>

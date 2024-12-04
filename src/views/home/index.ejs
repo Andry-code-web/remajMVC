@@ -1,35 +1,163 @@
-<%- include('../layouts/main') %>
-
-<section class="hero-banner">
-    <div class="banner-content">
-        <h1>Bienvenido a RemajuD</h1>
-        <p>La mejor plataforma de subastas de inmuebles en tiempo real</p>
+<section class="banner" id="banner">
+  <div class="banner_contenedor">
+    <div class="banner_video">
+      <video src="/img/video1.mp4" autoplay muted loop></video>
     </div>
+    <div class="banner_info_filtro">
+      <div class="banner_info">
+        <h1>Remajud remates inmobiliarios</h1>
+        <p>Remates en todo el Perú</p>
+      </div>
+      <div class="banner_filtro">
+        <div class="contenedor_filtro">
+          <form action="" method="post">
+
+            <div class="parent">
+              <div class="div1">
+                <p>
+                  ENCUENTRA TU REMATE MAS RAPIDO
+                </p>
+              </div>
+              <div class="div2 contenedor_inputs">
+                <label for="">
+                  <i class="ri-map-line"></i>
+                  Ciudad
+                </label>
+                <input type="text">
+              </div>
+              <div class="div3 contenedor_inputs">
+                <label for="">
+                  <i class="ri-map-pin-2-line"></i>
+                  Departamanto
+                </label>
+                <input type="text">
+              </div>
+              <div class="div4 contenedor_inputs">
+                <label for="">
+                  <i class="ri-map-pin-user-line"></i>
+                  Distrito
+                </label>
+                <input type="text">
+              </div>
+              <div class="div5 contenedor_inputs">
+                <label for="">
+                  <i class="ri-money-dollar-circle-line"></i>
+                  Precio
+                </label>
+                <input type="number">
+              </div>
+              <div class="div6 contenedor_inputs">
+                <label for="">
+                  <i class="ri-menu-search-line"></i>
+                  Categoria
+                </label>
+                <input type="text">
+              </div>
+              <div class="div7">
+                <button type="submit">
+                  <i class="ri-search-2-line"></i>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="categories mt-5">
-    <h2>Categorías</h2>
-    <div class="row">
-        <% const categories = ['departamento', 'casa', 'terreno', 'local', 'cochera']; %>
-        <% categories.forEach(category => { %>
-            <div class="col-md-4 mb-4">
-                <div class="category-card">
-                    <img src="/images/categories/<%= category %>.jpg" alt="<%= category %>">
-                    <h3><%= category.charAt(0).toUpperCase() + category.slice(1) %></h3>
-                    <a href="/remates?categoria=<%= category %>" class="btn btn-primary">Ver Más</a>
-                </div>
-            </div>
-        <% }); %>
+<section class="categoria" id="categorias">
+  <div class="contenedor_categorias">
+    <h2>NUESTRAS CATEGORIAS</h2>
+    <div class="categorias">
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/casa.png" alt="">
+        </div>
+        <p>Casas</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/departamento.png" alt="">
+        </div>
+        <p>Departamanetos</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/cochera.png" alt="">
+        </div>
+        <p>Cocheras</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/terreno.png" alt="">
+        </div>
+        <p>Terrenos</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/local.png" alt="">
+        </div>
+        <p>Locales Comerciales</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/terraza.png" alt="">
+        </div>
+        <p>Azoteas</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/terreno_rural.png" alt="">
+        </div>
+        <p>Terreno Rural</p>
+      </a>
+      <a href="#" class="cate_remates">
+        <div class="img_categorias">
+          <img src="/img/oficina.png" alt="">
+        </div>
+        <p>Oficina</p>
+      </a>
     </div>
+  </div>
 </section>
 
-<section class="featured-auctions mt-5">
-    <h2>Subastas Destacadas</h2>
-    <div class="row">
-        <% featuredAuctions.forEach(auction => { %>
-            <div class="col-md-4 mb-4">
-                <%- include('../partials/auction-card', { auction }) %>
-            </div>
-        <% }); %>
+<section class="subastas" id="subastas">
+
+  <div class="contenedor_card_subastas">
+    <% remates.forEach(remate => {%>
+    <div class="carta">
+      <div class="imagen-contenedor">
+        <img src="/img/casa_1.jfif" alt="" class="imagen-propiedad">
+        <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
+      </div>
+      <div class="contenido">
+        <div class="label"><%= remate.categoria %></div>
+        <h2 class="nombre_proyecto">Edificio los canarios</h2>
+
+        <div class="label">Dirección</div>
+        <p class="direccion"><%= remate.ubicacion %></p>
+
+        <div class="detalles">
+          <div class="detalles-item">
+            <div class="label">M2</div>
+            <div class="detalles-valor"><%= remate.tamaño_propiedad %></div>
+          </div>
+          <div class="detalles-item">
+            <div class="label">N° Pisos</div>
+            <div class="detalles-valor"><%= remate.pisos %></div>
+          </div>
+          <div class="detalles-item">
+            <div class="label">N° de cuartos</div>
+            <div class="detalles-valor"><%= remate.N_habitacion %></div>
+          </div>
+        </div>
+
+        <div class="label">Precio</div>
+        <div class="precio"><%= remate.precios %></div>
+      </div>
     </div>
+    <% }); %>
+  </div>
 </section>

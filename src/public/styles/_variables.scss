@@ -1,0 +1,24 @@
+$fuentePrincipal: 'fuentePrincipal';
+$fuenteSecundaria: 'fuenteSecundaria';
+$fuenteParrafos: 'fuenteparrafos';
+$colorprimario:#d00000;
+$colorsecundario:#fffcfc;
+$colorterciario:#0a0000;
+$complemento1:#e25427;
+$complemento2:#00665e;
+
+@font-face {
+    font-family: 'fuentePrincipal';
+    src: url('/fonts/Expressa-DemiBold.otf') format('opentype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'fuenteSecundaria';
+    src: url('/fonts/font_sang/SangBleuKingdomTrial-Light.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'fuenteParrafos';
+    src: url('/fonts/GHEA Zartonk W05 ExtraBold.ttf') format('truetype');
+}

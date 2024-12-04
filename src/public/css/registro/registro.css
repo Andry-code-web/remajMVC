@@ -33,6 +33,10 @@ body {
   background-color: var(--bg-dark);
   color: var(--primary-color);
   transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+  -moz-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+  -ms-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #particleCanvas {

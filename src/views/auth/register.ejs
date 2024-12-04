@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REMAJUD - Registro</title>
-  <link rel="stylesheet" href="/css/registro/registro.css">
-</head>
-
-<body>
   <!-- Títulos principales fijos -->
   <div class="fixed-titles">
     <h1>BIENVENIDO</h1>
@@ -130,7 +120,7 @@
       </div>
     </div>
   </div>
-
+  <link rel="stylesheet" href="/css/registro/registro.css">
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
   
@@ -153,7 +143,7 @@
           distrito: document.querySelector("[name='distrito']").value.trim(),
           direccion: document.querySelector("[name='direccion']").value.trim(),
           usuario: document.querySelector("[name='usuario']").value.trim(),
-          contrasena: document.querySelector("[name='contrasena']").value.trim(),
+          contrasena: document.querySelector("[name='contrasena']").value,
           condiciones: document.querySelector("[name='terminos_condiciones']").checked,
         };
         
@@ -176,7 +166,7 @@
           const result = await response.json();
           if (response.ok) {
             alert("Registro exitoso. Bienvenido a REMAJUD!");
-            window.location.href = "/login";
+            window.location.href = "/auth/login";
           } else {
             alert("Error en el registro: " + result.message);
           }
@@ -187,6 +177,3 @@
       });
     });
   </script>
-</body>
-
-</html>

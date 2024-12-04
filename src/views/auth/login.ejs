@@ -1,25 +1,79 @@
-<%- include('../layouts/main') %>
-
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h2>Iniciar Sesión</h2>
-            </div>
-            <div class="card-body">
-                <form action="/auth/login" method="POST">
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="contrasena" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                </form>
-                <p class="mt-3">¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
-            </div>
-        </div>
-    </div>
+<div class="contenido_login" id="contenedor_login">
+  <canvas id="particleCanvas"></canvas>
+  <div class="login-box">
+    <h1>Iniciar Sesión</h1>
+    <form id="loginForm">
+      <div class="user-box">
+        <input type="text" id="usuario" name="usuario" required>
+        <label for="usuario">Nombre de usuario</label>
+      </div>
+      <div class="user-box">
+        <input type="password" id="contrasena" name="contrasena" required>
+        <label for="contrasena">Contraseña</label>
+      </div>
+      <button type="submit" class="submit-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+        Iniciar sesión
+      </button>
+    </form>
+    <p class="register-link">¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
+  </div>
 </div>
+
+<script type="module" src="/js/network_login.js"></script>
+
+<link rel="stylesheet" href="/css/login/login.css">
+
+<script type="module">
+  import {
+    NetworkAnimationL
+  } from '../../js/network_login.js';
+  const canvas = document.getElementById("particleCanvas");
+  const networkAnimationL = new NetworkAnimationL(canvas);
+
+  // Handle form submission
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch('/auth/loginP', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('header');
+    const banner = document.getElementById('contenedor_login');
+    const bannerBottom = banner.getBoundingClientRect().bottom;
+    if (bannerBottom > 0) {
+      header.style.color = '#fffcfc';
+    } else if (categoriasBottom > 0) {
+      header.style.color = '#0a0000';
+    } else if (subastasTop < window.innerHeight) {
+      header.style.color = '#0a0000';
+    } else {
+      header.style.color = 'black';
+    }
+  });
+</script>

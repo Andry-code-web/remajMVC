@@ -29,13 +29,14 @@
 </head>
 
 <body>
-  <%- include('../partials/navbar') %>
+  <main>
+    <%- include('../partials/btn_flotante') %>
 
+  </main>
+  <%- include('../partials/navbar') %>
   <main class="">
     <%- include('../' + content) %>
   </main>
-
-
   <%- include('../partials/footer') %>
 
   <script src="/socket.io/socket.io.js"></script>

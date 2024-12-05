@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalles de la Propiedad</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
+
 </head>
 
 <body>
@@ -15,160 +17,164 @@
       <h1 class="property-title">
         <%= auction.ubicacion %>
       </h1>
-      <div class="section">
-        <h2 class="section-title">Galería de Imágenes</h2>
-        <i>
-          <input checked type="radio" name="s"
-            style="background-image: url('/img/3e4fd791f54c8bee5565036c2094309d.jpg');" title="Imagen 1">
-          <input type="radio" name="s" style="background-image: url('/img/casa_1.jfif');" title="Imagen 2">
-          <input type="radio" name="s" style="background-image: url('/img/casa2.jfif');" title="Imagen 3">
-          <input type="radio" name="s" style="background-image: url('/img/casa3.jfif');" title="Imagen 4">
-        </i>
-      </div>
       <p class="property-address">
-        <%= auction.descripcion %>
+        <%= auction.categoria %>
       </p>
+    </div>
 
+    <div class="main-content">
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="/img/3e4fd791f54c8bee5565036c2094309d.jpg" alt="Imagen 1"></div>
+          <div class="carousel-item"><img src="/img/casa.png" alt="Imagen 2"></div>
+          <div class="carousel-item"><img src="/img/casa2.jfif" alt="Imagen 3"></div>
+          <div class="carousel-item"><img src="/img/casa3.jfif" alt="Imagen 4"></div>
+        </div>
+        <a href="#" class="carousel-control prev">&lt;</a>
+        <a href="#" class="carousel-control next">&gt;</a>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Sobre la Propiedad</h2>
+        <p>
+          <%= auction.descripcion %>
+        </p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Ubicación</h2>
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <div class="sidebar">
       <div class="details-grid">
         <div class="detail-item">
-          <div class="detail-value">
-            Habitaciones
-          </div>
+          <i class="fas fa-bed detail-icon"></i>
+          <div class="detail-value">Habitaciones</div>
           <div class="detail-label">
             <%= auction.N_habitacion %>
           </div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">
-            Baños
-          </div>
+          <i class="fas fa-bath detail-icon"></i>
+          <div class="detail-value">Baños</div>
           <div class="detail-label">
             <%= auction.N_banos %>
           </div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">
-            Mt 2
-          </div>
+          <i class="fas fa-vector-square detail-icon"></i>
+          <div class="detail-value">Tamaño</div>
           <div class="detail-label">
-            <%= auction.tamaño_propiedad %>
+            <%= auction.tamano %>ft²
           </div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">
-            Cocina
-          </div>
+          <i class="fas fa-utensils detail-icon"></i>
+          <div class="detail-value">Cocina</div>
           <div class="detail-label">
             <%= auction.cocina %>
           </div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">
-            Categoría
-          </div>
+          <i class="fas fa-warehouse detail-icon"></i>
+          <div class="detail-value">Garaje</div>
           <div class="detail-label">
-            <%= auction.categoria %>
+            <%= auction.cochera %>
           </div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">
-            Piscina
-          </div>
+          <i class="fas fa-tag detail-icon"></i>
+          <div class="detail-value">Precios oferta</div>
           <div class="detail-label">
-            <%= auction.pisina %>
-          </div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-value">
-            Precio oferta
-          </div>
-          <div class="detail-label"> $<%= auction.precios.toLocaleString() %>
+            <%= auction.precios %>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <h2 class="section-title">Chat de Subastas</h2>
-      <div class="chat-container" id="chat-messages"></div>
-      <div class="chat-input">
-        <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
-        <button onclick="sendBid()">Enviar Oferta</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2 class="section-title">Sobre la Propiedad</h2>
-      <p>
-        <%= auction.descripcion %>
-      </p>
-    </div>
-
-    <div class="section">
-      <h2 class="section-title">CARACTERÍSTICAS</h2>
-      <div class="amenities-grid">
-        <div class="amenity-item">
-          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 21h8M12 3v3M5 8h3M16 8h3M8 15h8M8 11h8M12 19v-2" />
-          </svg>
-          <div class="amenity-text">
-            <span class="amenity-name">Cocina</span>
-            <span class="amenity-name">
-              <%= auction.cocina %>
-            </span>
-          </div>
-        </div>
-        <div class="amenity-item">
-          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 20h16M4 4h16M6 6v14M20 6v14M10 10h4v8h-4z" />
-          </svg>
-          <div class="amenity-text">
-            <span class="amenity-name">Piscina</span>
-            <span class="amenity-name">
-              <%= auction.pisina %>
-            </span>
-          </div>
-        </div>
-        <div class="amenity-item">
-          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 2h20v20H2zM6 6h12v12H6zM10 10h4v4h-4z" />
-          </svg>
-          <div class="amenity-text">
-            <span class="amenity-name">Lavandería</span>
-            <span class="amenity-name">
-              <%= auction.lavanderia %>
-            </span>
-          </div>
-        </div>
-        <div class="amenity-item">
-          <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-          </svg>
-          <div class="amenity-text">
-            <span class="amenity-name">Jardín</span>
-            <span class="amenity-name">
-              <%= auction.jardin %>
-            </span>
-          </div>
+      <div class="section">
+        <h2 class="section-title">Chat de Subastas</h2>
+        <div class="chat-container" id="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
+          <button onclick="sendBid()">Enviar Oferta</button>
         </div>
       </div>
     </div>
-
-
-    <div class="section">
-      <h2 class="section-title">Ubicación</h2>
-      <div id="map"></div>
-    </div>
-
   </div>
+
+
+  <section class="related-properties">
+    <div class="container">
+        <div class="section-header">
+            <div class="header-content">
+                <div class="properties-label">PROPERTIES</div>
+                <h2 class="section-title">Related Properties</h2>
+                <p class="section-description">Lorem ipsum dolor sit amet consectetur. Accumsan lacus neque nunc convallis eleifend vitae et felis potenti.</p>
+            </div>
+            <a href="#" class="view-all-btn">
+                View Properties
+                <i class="fas fa-building"></i>
+            </a>
+        </div>
+
+        <!-- Single Property Card - This can be repeated with database loop -->
+        <div class="property-card">
+            <div class="property-image">
+                <img src="/placeholder.svg?height=200&width=350" alt="Urban Oasis Homes">
+                <a href="#" class="view-detail-btn">View Detail</a>
+                <div class="property-status">For Sale</div>
+            </div>
+            <div class="property-content">
+                <h3 class="property-title">Urban Oasis Homes</h3>
+                <div class="property-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    101 Serene Avenue, Maplewood Gardens
+                </div>
+                <div class="property-price">$90,000</div>
+                <div class="property-details">
+                    <div class="detail-item">
+                        <i class="fas fa-bed"></i>
+                        4 Bedrooms
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-bath"></i>
+                        2 Baths
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-vector-square"></i>
+                        360 Sqft
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script>
-    var auctionDescription = "<%= auction.ubicacion %>";
-  </script>
+    // Carrusel de imágenes
+    const carousel = document.querySelector('.carousel-inner');
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
 
-  <script>
+    function showSlide(index) {
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    document.querySelector('.carousel-control.prev').addEventListener('click', (e) => {
+      e.preventDefault();
+      currentIndex = (currentIndex - 1 + items.length) % items.length;
+      showSlide(currentIndex);
+    });
+
+    document.querySelector('.carousel-control.next').addEventListener('click', (e) => {
+      e.preventDefault();
+      currentIndex = (currentIndex + 1) % items.length;
+      showSlide(currentIndex);
+    });
+
     // Chat de subastas
     const chatMessages = document.getElementById('chat-messages');
     const bidInput = document.getElementById('bid-input');
@@ -179,7 +185,6 @@
 
       const now = new Date();
       const message = document.createElement('div');
-      message.className = 'message';
       message.innerHTML = `
                 <span class="user">Usuario:</span>
                 <span class="bid">$${bid}</span>
@@ -195,18 +200,15 @@
       if (e.key === 'Enter') sendBid();
     });
 
-    // Crear el mapa y establecer la vista inicial
-    const map = L.map('map').setView([-16.389278, -71.548194], 13);
+    // Mapa interactivo con OpenStreetMap y Leaflet
+    const map = L.map('map').setView([-16.389278, -71.548194], 13); // Coordenadas de ejemplo (Arequipa, Perú)
 
-    // Añadir la capa de tiles de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Añadir un marcador en el mapa
-    L.marker([-16.389278, -71.548194])
-      .addTo(map)
-      .bindPopup(auctionDescription)
+    L.marker([-16.389278, -71.548194]).addTo(map)
+      .bindPopup('123 Harmony Avenue, City Heights')
       .openPopup();
   </script>
 </body>

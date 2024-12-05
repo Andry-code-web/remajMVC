@@ -172,4 +172,181 @@ body {
   background-color: #333;
 }
 
+.auction-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.auction-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.lot-id {
+  color: #666;
+  font-size: 14px;
+}
+
+.lot-title {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.timer {
+  margin-top: 10px;
+  color: #666;
+}
+
+.navigation {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.nav-btn.active {
+  color: #2196F3;
+  border-bottom: 2px solid #2196F3;
+}
+
+.user-info {
+  display: flex;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  gap: 20px;
+}
+
+.user-info .label {
+  color: #666;
+}
+
+.user-info .value {
+  font-weight: bold;
+}
+
+.best-offer {
+  background: #FFF9E6;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crown-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crown {
+  font-size: 20px;
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.bid-section {
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.bid-input {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  position: absolute;
+  left: 10px;
+  color: #666;
+}
+
+#bidAmount {
+  width: 100%;
+  padding: 12px 12px 12px 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.bid-button {
+  padding: 12px 30px;
+  background: #FF5722;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bid-button:hover {
+  background: #F4511E;
+}
+
+/* New styles for classification table */
+.content-section {
+  display: none;
+  padding: 20px;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.classification-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.classification-table th,
+.classification-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.classification-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #666;
+}
+
+.classification-table tr:last-child td {
+  border-bottom: none;
+}
+
+.classification-table .position {
+  width: 60px;
+  text-align: center;
+}
+
+.classification-table .amount {
+  text-align: right;
+  font-weight: bold;
+}
+
+.classification-table tr:first-child td {
+  color: #2196F3;
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=auction_detail.css.map */

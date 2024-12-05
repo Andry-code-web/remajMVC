@@ -42,60 +42,142 @@
     </div>
 
     <div class="sidebar" id="chatdesubastas">
-      <div class="section">
-        <h2 class="section-title">Chat de Subastas</h2>
-        <div class="chat-container" id="chat-messages"></div>
-        <div class="chat-input">
-          <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
-          <button onclick="sendBid()">Enviar Oferta</button>
-        </div>
-      </div>
 
-      <div class="details-grid">
-        <div class="detail-item">
-          <i class="fas fa-bed detail-icon"></i>
-          <div class="detail-value">Habitaciones</div>
-          <div class="detail-label">
-            <%= auction.N_habitacion %>
+
+      <!--  aca va el codigo chatb subasta  -->
+      <div class="auction-container">
+        <header class="auction-header">
+          <div class="lot-info">
+            <span class="lot-id"> <%= auction.categoria %></span>
+            <h1 class="lot-title"> <%= auction.ubicacion %></h1>
+          </div>
+          <div class="timer">
+            <span>Finaliza en: </span>
+            <span id="countdown">05:38:48</span>
+          </div>
+        </header>
+
+        <nav class="navigation">
+          <button class="nav-btn active" data-section="panel">Panel</button>
+          <button class="nav-btn" data-section="classification">Clasificación</button>
+        </nav>
+
+        <div id="panel" class="content-section active">
+          <div class="user-info">
+            <div class="user">
+              <span class="label">Usuario:</span>
+              <span class="value">2NE4WZO</span>
+            </div>
+            <div class="offers">
+              <span class="label">Mis Ofertas: </span>
+              <span class="value">0</span>
+            </div>
+          </div>
+
+          <div class="best-offer">
+            <div class="crown-label">
+              <span class="crown">👑</span>
+              <span>Mejor Oferta</span>
+            </div>
+            <div class="amount">USD$ <%= auction.monto_venta %></div>
+          </div>
+
+          <div class="bid-section">
+            <div class="bid-input">
+              <span class="currency">$</span>
+              <input type="number" id="bidAmount" value="9140">
+            </div>
+            <button class="bid-button">Ofertar</button>
           </div>
         </div>
-        <div class="detail-item">
-          <i class="fas fa-bath detail-icon"></i>
-          <div class="detail-value">Baños</div>
-          <div class="detail-label">
-            <%= auction.N_banos %>
-          </div>
-        </div>
-        <div class="detail-item">
-          <i class="fas fa-vector-square detail-icon"></i>
-          <div class="detail-value">Tamaño</div>
-          <div class="detail-label">
-            <%= auction.tamaño_propiedad %> ft²
-          </div>
-        </div>
-        <div class="detail-item">
-          <i class="fas fa-utensils detail-icon"></i>
-          <div class="detail-value">Cocina</div>
-          <div class="detail-label">
-            <%= auction.cocina %>
-          </div>
-        </div>
-        <div class="detail-item">
-          <i class="fas fa-warehouse detail-icon"></i>
-          <div class="detail-value">Garaje</div>
-          <div class="detail-label">
-            <%= auction.cochera %>
-          </div>
-        </div>
-        <div class="detail-item">
-          <i class="fas fa-tag detail-icon"></i>
-          <div class="detail-value">Precio oferta</div>
-          <div class="detail-label">
-            <%= auction.precios %>
-          </div>
+
+        
+        <div id="classification" class="content-section">
+          <table class="classification-table">
+            <thead>
+              <tr>
+                <th class="position">#</th>
+                <th>Usuario</th>
+                <th class="amount">Oferta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="position">1</td>
+                <td>USER123</td>
+                <td class="amount">USD$ 9,040.00</td>
+              </tr>
+              <tr>
+                <td class="position">2</td>
+                <td>BIDDER456</td>
+                <td class="amount">USD$ 8,950.00</td>
+              </tr>
+              <tr>
+                <td class="position">3</td>
+                <td>AUTO789</td>
+                <td class="amount">USD$ 8,800.00</td>
+              </tr>
+              <tr>
+                <td class="position">4</td>
+                <td>CAR2024</td>
+                <td class="amount">USD$ 8,500.00</td>
+              </tr>
+              <tr>
+                <td class="position">5</td>
+                <td>DEALER365</td>
+                <td class="amount">USD$ 8,200.00</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+
+    <div class="details-grid">
+      <div class="detail-item">
+        <i class="fas fa-bed detail-icon"></i>
+        <div class="detail-value">Habitaciones</div>
+        <div class="detail-label">
+          <%= auction.N_habitacion %>
+        </div>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-bath detail-icon"></i>
+        <div class="detail-value">Baños</div>
+        <div class="detail-label">
+          <%= auction.N_banos %>
+        </div>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-vector-square detail-icon"></i>
+        <div class="detail-value">Tamaño</div>
+        <div class="detail-label">
+          <%= auction.tamaño_propiedad %> ft²
+        </div>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-utensils detail-icon"></i>
+        <div class="detail-value">Cocina</div>
+        <div class="detail-label">
+          <%= auction.cocina %>
+        </div>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-warehouse detail-icon"></i>
+        <div class="detail-value">Garaje</div>
+        <div class="detail-label">
+          <%= auction.cochera %>
+        </div>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-tag detail-icon"></i>
+        <div class="detail-value">Precio oferta</div>
+        <div class="detail-label">
+          <%= auction.precios %>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 
   <section class="related-properties">
@@ -146,9 +228,9 @@
     </div>
   </section>
 
-<!--   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+  <!--   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
 
- <!--  <script>
+  <!--  <script>
     en este escript se verificara si el chat de subastas esta en actividad, en sus tres estados
     en caso de no ser activa basandonos en la base de datos que es  <%= auction.estado %> 
     existen 3 estados activo , en_curso , finalizado, en el caso de activo se dejara la vista de subasta y de estar en curso estara igual, pero en el caso de estar finalizado se bloqueara el chat de subasta
@@ -201,6 +283,109 @@
       if (e.key === 'Enter') sendBid();
     });
   </script>
+
+
+  <script>
+    // Timer Class
+    class Timer {
+      constructor(element) {
+        this.element = element;
+        this.time = {
+          hours: 5,
+          minutes: 38,
+          seconds: 48
+        };
+        this.start();
+      }
+
+      start() {
+        this.interval = setInterval(() => {
+          this.updateTime();
+          this.render();
+        }, 1000);
+      }
+
+      updateTime() {
+        if (this.time.seconds > 0) {
+          this.time.seconds--;
+        } else {
+          if (this.time.minutes > 0) {
+            this.time.minutes--;
+            this.time.seconds = 59;
+          } else {
+            if (this.time.hours > 0) {
+              this.time.hours--;
+              this.time.minutes = 59;
+              this.time.seconds = 59;
+            } else {
+              clearInterval(this.interval);
+              // Auction ended
+            }
+          }
+        }
+      }
+
+      render() {
+        this.element.textContent = `${String(this.time.hours).padStart(2, '0')}:${String(this.time.minutes).padStart(2, '0')}:${String(this.time.seconds).padStart(2, '0')}`;
+      }
+    }
+
+    // Main Application Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize timer
+      const timerElement = document.getElementById('countdown');
+      const timer = new Timer(timerElement);
+
+      // Navigation buttons
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const contentSections = document.querySelectorAll('.content-section');
+
+      navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Update navigation buttons
+          navButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          // Show corresponding content section
+          const sectionId = button.getAttribute('data-section');
+          contentSections.forEach(section => {
+            section.classList.remove('active');
+            if (section.id === sectionId) {
+              section.classList.add('active');
+            }
+          });
+        });
+      });
+
+      // Bid functionality
+      const bidButton = document.querySelector('.bid-button');
+      const bidInput = document.getElementById('bidAmount');
+
+      bidButton.addEventListener('click', () => {
+        const amount = parseFloat(bidInput.value);
+        const currentBest = 9040.00;
+
+        if (amount <= currentBest) {
+          alert('La oferta debe ser mayor que la oferta actual');
+          return;
+        }
+
+        // Here you would typically send the bid to a server
+        alert(`Oferta de $${amount} registrada`);
+      });
+
+      // Input validation
+      bidInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        if (value < 0) {
+          e.target.value = 0;
+        }
+      });
+    });
+  </script>
+
+
+
 </body>
 
 </html>

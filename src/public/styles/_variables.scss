@@ -7,6 +7,21 @@ $colorterciario:#0a0000;
 $complemento1:#e25427;
 $complemento2:#00665e;
 
+/*Varibles de registro y login*/
+$primary-color: #FFE5D0; //color principal de la aplicación/
+$bg-dark: #000000; //color de fondo oscuro/
+$bg-light: #ffffff; //color de fondo claro/
+$glow-color: #FFE5D0; //color de iluminación/
+$dark-glow: rgba(0, 0, 0, 0.7); //color de iluminación oscuro/
+
+$primario: $primary-color; // Alias para consistencia en diseño
+$fondo-dark: $bg-dark; // Alias para usar con contexto oscuro
+$fondo-light: $bg-light; // Alias para usar con contexto claro
+$glow: $glow-color; // Color para efectos brillantes
+$glow-dark: $dark-glow; // Brillo oscuro
+
+
+
 @font-face {
     font-family: 'fuentePrincipal';
     src: url('/fonts/Expressa-DemiBold.otf') format('opentype');
@@ -22,3 +37,4 @@ $complemento2:#00665e;
     font-family: 'fuenteParrafos';
     src: url('/fonts/GHEA Zartonk W05 ExtraBold.ttf') format('truetype');
 }
+

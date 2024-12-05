@@ -18,20 +18,18 @@ body {
     background-color: var(--bg-dark);
     color: var(--primary-color);
     transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    -moz-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    -ms-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    -o-transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 #particleCanvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
 }
+
 .fixed-titles {
     position: fixed;
     top: 35%;
@@ -41,6 +39,7 @@ body {
     padding-left: 8rem;
     transition: all 0.5s ease;
 }
+
 .fixed-titles h1 {
     font-size: 6rem;
     font-weight: 700;
@@ -50,15 +49,17 @@ body {
     transition: all 0.5s ease;
     margin-left: 3rem;
 }
+
 .container_formulario {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    height: 100vh;  /* Ensures it takes full height without shifting */
+    height: 100vh;  
     overflow: hidden;
 }
+
 .progress-indicator {
     position: fixed;
     left: 4rem;
@@ -74,6 +75,7 @@ body {
     align-items: center;
     transition: all 0.5s ease;
 }
+
 .progress-dots {
     position: absolute;
     top: 0;
@@ -84,6 +86,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
+
 .progress-dot {
     width: 6px;
     height: 6px;
@@ -92,6 +95,7 @@ body {
     position: relative;
     transition: all 0.5s ease;
 }
+
 .progress-active-line {
     position: absolute;
     width: 2px;
@@ -106,6 +110,7 @@ body {
         0 0 10px var(--glow-color),
         0 0 15px var(--glow-color);
 }
+
 .progress-active-dot {
     position: absolute;
     width: 10px;
@@ -121,6 +126,7 @@ body {
         0 0 10px var(--glow-color),
         0 0 15px var(--glow-color);
 }
+
 .progress-dot {
     width: 6px;
     height: 6px;
@@ -129,6 +135,7 @@ body {
     position: relative;
     transition: all 0.5s ease;
 }
+
 .progress-dot.active {
     background: var(--glow-color);
     box-shadow: 
@@ -136,6 +143,7 @@ body {
         0 0 10px var(--glow-color),
         0 0 15px var(--glow-color);
 }
+
 /* Estilos específicos para la sección 2 */
 .seccion2 ~ .progress-indicator {
     background: rgba(0, 0, 0, 0.1);
@@ -300,7 +308,7 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-left: 13rem;
 }
 .form-header {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 .form-header h3 {
     font-size: 1.5rem;
@@ -368,6 +376,130 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-top: -1rem;
     margin-bottom: 1rem;
 }
+
+/*Terminos y condiciones*/
+
+.checkbox-wrapper {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-label {
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+
+.terms-link {
+    font-size: 17px;
+    margin-left: 0.4rem;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+}
+.checkbox-label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox:checked + .checkbox-label:before {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.custom-checkbox:checked + .checkbox-label:after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+}
+
+/*effect link*/
+.terms-link {
+    font-size: 17px;
+    margin-left: 0.4rem;
+    color: #ffffff;
+    text-decoration: none;
+    text-shadow: 
+        0 0 5px #ffffff,
+        0 0 10px #ffffff,
+        0 0 15px #ffffff,
+        0 0 20px #ffffff;
+    transition: all 0.3s ease;
+}
+
+.terms-link:hover {
+    color: #ffffff;
+    text-shadow: 
+        0 0 7px #ffffff,
+        0 0 12px #ffffff,
+        0 0 17px #ffffff,
+        0 0 22px #ffffff,
+        0 0 25px #ffffff;
+}
+
+.terms-link:active {
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px #ffffff,
+        0 0 15px #ffffff,
+        0 0 20px #ffffff,
+        0 0 25px #ffffff,
+        0 0 30px #ffffff;
+}
+
+
+@keyframes glow {
+    0% {
+        text-shadow: none;
+    }
+    50% {
+        text-shadow: 
+            0 0 5px rgba(59, 130, 246, 0.8),
+            0 0 10px rgba(59, 130, 246, 0.6),
+            0 0 15px rgba(59, 130, 246, 0.4),
+            0 0 20px rgba(59, 130, 246, 0.2);
+    }
+    100% {
+        text-shadow: 
+            0 0 5px rgba(59, 130, 246, 0.5),
+            0 0 10px rgba(59, 130, 246, 0.4),
+            0 0 15px rgba(59, 130, 246, 0.3),
+            0 0 20px rgba(59, 130, 246, 0.2);
+    }
+}
+
 @media (max-width: 768px) {
     .row2, .row {
         flex-direction: column;

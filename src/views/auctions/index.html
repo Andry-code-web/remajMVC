@@ -1,78 +1,571 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-  <title>Conversión de Coordenadas</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-</head>
-<body>
-  <div id="map" style="height: 500px;"></div>
-
-  <form id="coordinate-form">
-    <label for="coordinates">Coordenadas (DMS):</label>
-    <input type="text" id="coordinates" name="coordinates" placeholder="16°23'21.4\"S 71°32'53.5\"W" required>
-    <button type="submit">Convertir</button>
-  </form>
-
-  <div>
-    <label for="decimal-coordinates">Coordenadas Decimales:</label>
-    <input type="text" id="decimal-coordinates" name="decimal-coordinates" readonly>
-  </div>
-
-  <script>
-    // Crear el mapa y establecer la vista inicial
-    const map = L.map('map').setView([0, 0], 2);
-
-    // Añadir la capa de tiles de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Función para convertir DMS a decimales
-    function dmsToDecimal(dms) {
-      const [latDMS, lonDMS] = dms.split(' ');
-
-      const latMatch = latDMS.match(/(\d+)°(\d+)'(\d+\.\d+)"([NSEW])/);
-      const lonMatch = lonDMS.match(/(\d+)°(\d+)'(\d+\.\d+)"([NSEW])/);
-
-      const latDegrees = parseFloat(latMatch[1]);
-      const latMinutes = parseFloat(latMatch[2]);
-      const latSeconds = parseFloat(latMatch[3]);
-      const latDirection = latMatch[4];
-
-      const lonDegrees = parseFloat(lonMatch[1]);
-      const lonMinutes = parseFloat(lonMatch[2]);
-      const lonSeconds = parseFloat(lonMatch[3]);
-      const lonDirection = lonMatch[4];
-
-      const latDecimal = latDegrees + latMinutes / 60 + latSeconds / 3600;
-      const lonDecimal = lonDegrees + lonMinutes / 60 + lonSeconds / 3600;
-
-      return {
-        lat: latDirection === 'S' ? -latDecimal : latDecimal,
-        lon: lonDirection === 'W' ? -lonDecimal : lonDecimal
-      };
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    // Manejar el envío del formulario
-    document.getElementById('coordinate-form').addEventListener('submit', function(event) {
-      event.preventDefault();
+    .card {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
 
-      const coordinatesDMS = document.getElementById('coordinates').value;
-      const { lat, lon } = dmsToDecimal(coordinatesDMS);
+    .timer {
+      background: #c1474d;
+      color: white;
+      padding: 15px;
+    }
 
-      // Mostrar las coordenadas decimales en el campo de texto
-      document.getElementById('decimal-coordinates').value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+    .timer-label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
 
-      // Centrar el mapa en las nuevas coordenadas
-      map.setView([lat, lon], 13);
+    .timer-value {
+      font-size: 24px;
+      text-align: center;
+    }
 
-      // Añadir un marcador en el mapa
-      L.marker([lat, lon])
-        .addTo(map)
-        .bindPopup(`${lat.toFixed(6)}, ${lon.toFixed(6)}`)
-        .openPopup();
-    });
-  </script>
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .stats span {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .status {
+      color: #c1474d;
+      text-align: center;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    .final-offer {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .final-offer-label {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .final-offer-value {
+      color: #28a745;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .base-price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      color: #333;
+    }
+
+    .base-price-value {
+      color: #000;
+      font-weight: bold;
+    }
+
+    .status-banner {
+      background: #999;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      font-size: 16px;
+      margin: 15px;
+    }
+
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 15px;
+    }
+
+    .button {
+      background: #000;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .participation-note {
+      padding: 15px;
+      color: #333;
+      font-size: 14px;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="timer">
+      <div class="timer-label">CIERRA EN:</div>
+      <div class="timer-value">0d 0h 0m 0s</div>
+    </div>
+
+    <div class="stats">
+      <span>VISTAS 2170</span>
+      <span>LIKES 2</span>
+    </div>
+
+    <div class="status">¡Subasta Finalizada!</div>
+
+    <div class="final-offer">
+      <div class="final-offer-label">Oferta Final:</div>
+      <div class="final-offer-value">US$ 5,500.00</div>
+    </div>
+
+    <div class="base-price">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 16v-4"></path>
+        <path d="M12 8h.01"></path>
+      </svg>
+      <span>Precio base:</span>
+      <span class="base-price-value">US$5,000.00</span>
+    </div>
+
+    <div class="status-banner">SUBASTA FINALIZADA</div>
+
+    <div class="buttons-grid">
+      <button class="button">Mínimo de participantes 2</button>
+      <button class="button">Con Precio Reserva</button>
+      <button class="button">Opción a Visitas previa cita</button>
+      <button class="button">Sin Comisión</button>
+    </div>
+
+    <div class="participation-note">
+      ⓘ Participa en 10 subastas por $500.
+    </div>
+  </div>
+
+  <!DOCTYPE html>
+  <html lang="es">
+
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .timer {
+        background: #c1474d;
+        color: white;
+        padding: 15px;
+      }
+
+      .timer-label {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .timer-value {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .stats span {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .dates {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .date-group {
+        text-align: center;
+      }
+
+      .date-label {
+        margin-bottom: 5px;
+      }
+
+      .status {
+        color: #c1474d;
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
+      }
+
+      .current-offer {
+        text-align: center;
+        padding: 10px;
+      }
+
+      .current-offer-label {
+        font-size: 16px;
+        color: #333;
+      }
+
+      .current-offer-value {
+        color: #28a745;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .base-price {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 15px;
+        color: #333;
+      }
+
+      .base-price-value {
+        color: #000;
+        font-weight: bold;
+      }
+
+      .join-button {
+        background: #ff0000;
+        color: white;
+        border: none;
+        padding: 15px;
+        width: calc(100% - 30px);
+        margin: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 15px;
+      }
+
+      .button {
+        background: #000;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .participation-note {
+        padding: 15px;
+        color: #333;
+        font-size: 14px;
+        border-top: 1px solid #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="timer">
+        <div class="timer-label">CIERRA EN:</div>
+        <div class="timer-value">0d 0h 0m 0s</div>
+      </div>
+
+      <div class="stats">
+        <span>VISTAS 2172</span>
+        <span>LIKES 2</span>
+      </div>
+
+      <div class="dates">
+        <div class="date-group">
+          <div class="date-label">Fecha Cierre:</div>
+          <div>04/12/2024 para<br>las 09:00:00</div>
+        </div>
+        <div class="date-group">
+          <div class="date-label">Fecha Apertura:</div>
+          <div>08/11/2024 a<br>las 12:33:10</div>
+        </div>
+      </div>
+
+      <div class="status">¡Subasta en Curso!</div>
+
+      <div class="current-offer">
+        <div class="current-offer-label">Oferta Actual:</div>
+        <div class="current-offer-value">US$ 5,000.00</div>
+      </div>
+
+      <div class="base-price">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+        <span>Precio base:</span>
+        <span class="base-price-value">US$5,000.00</span>
+      </div>
+
+      <button class="join-button">UNIRME</button>
+
+      <div class="buttons-grid">
+        <button class="button">Mínimo de participantes 2</button>
+        <button class="button">Con Precio Reserva</button>
+        <button class="button">Opción a Visitas previa cita</button>
+        <button class="button">Sin Comisión</button>
+      </div>
+
+      <div class="participation-note">
+        ⓘ Participa en 10 subastas por $500.
+      </div>
+    </div>
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Subasta en Vivo</title>
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, sans-serif;
+        }
+
+        .auction-container {
+          max-width: 400px;
+          margin: 20px auto;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+        }
+
+        .timer-header {
+          background: #c74545;
+          color: white;
+          padding: 15px;
+          text-align: center;
+        }
+
+        .timer-header h2 {
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+
+        .timer {
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        .bids-container {
+          padding: 15px;
+          min-height: 300px;
+          max-height: 400px;
+          overflow-y: auto;
+        }
+
+        .bid-entry {
+          background: #ff0000;
+          color: white;
+          padding: 10px 15px;
+          margin: 5px 0;
+          border-radius: 25px;
+          display: flex;
+          align-items: center;
+        }
+
+        .bid-entry::before {
+          content: "→";
+          margin-right: 10px;
+        }
+
+        .input-container {
+          padding: 10px;
+          border-top: 1px solid #eee;
+        }
+
+        .input-group {
+          margin-bottom: 10px;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          margin-bottom: 10px;
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          background: #c74545;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+
+        button:hover {
+          background: #b13e3e;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="auction-container">
+        <div class="timer-header">
+          <h2>CIERRA EN:</h2>
+          <div class="timer" id="countdown">0d 0h 0m 0s</div>
+        </div>
+        <div class="bids-container" id="bidsContainer">
+          <!-- Bids will be added here dynamically -->
+        </div>
+        <div class="input-container">
+          <div class="input-group">
+            <input type="number" id="bidAmount" placeholder="5,600" min="0" step="100">
+            <button onclick="submitBid()">Enviar</button>
+          </div>
+          <div class="input-group">
+            <input type="text" id="offerInput" placeholder="Ingresa tu oferta">
+            <button onclick="submitOffer()">Enviar Puja</button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Initial bids array
+        let bids = [];
+
+        // Function to add a new bid
+        function addBid(username, amount) {
+          const bid = {
+            username,
+            amount: parseFloat(amount)
+          };
+          bids.push(bid);
+          updateBidsDisplay();
+        }
+
+        // Function to update the bids display
+        function updateBidsDisplay() {
+          const container = document.getElementById('bidsContainer');
+          container.innerHTML = '';
+
+          bids.sort((a, b) => b.amount - a.amount);
+
+          bids.forEach(bid => {
+            const bidElement = document.createElement('div');
+            bidElement.className = 'bid-entry';
+            bidElement.textContent = `${bid.username}: $${bid.amount.toFixed(2)}`;
+            container.appendChild(bidElement);
+          });
+        }
+
+        // Function to submit a new bid
+        function submitBid() {
+          const amountInput = document.getElementById('bidAmount');
+          const amount = parseFloat(amountInput.value);
+
+          if (amount && amount > 0) {
+            // In a real application, you would want to generate a random username
+            // or get it from a logged-in user
+            const username = 'Usuario' + Math.floor(Math.random() * 1000);
+            addBid(username, amount);
+            amountInput.value = '';
+          }
+        }
+
+        // Function to submit an offer
+        function submitOffer() {
+          const offerInput = document.getElementById('offerInput');
+          const offerText = offerInput.value.trim();
+
+          if (offerText) {
+            // Here you would typically send the offer to a server
+            console.log('Offer submitted:', offerText);
+            offerInput.value = '';
+          }
+        }
+
+        // Countdown timer functionality
+        function updateTimer(endTime) {
+          const timerElement = document.getElementById('countdown');
+
+          function update() {
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            if (distance <= 0) {
+              timerElement.textContent = '0d 0h 0m 0s';
+              return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+          }
+
+          // Update immediately and then every second
+          update();
+          setInterval(update, 1000);
+        }
+
+        // Set the end time to 24 hours from now
+        const endTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+        updateTimer(endTime);
+      </script>
+    </body>
+
+    </html>
+  </body>
+
+  </html>
 </body>
+
 </html>

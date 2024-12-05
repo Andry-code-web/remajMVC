@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
-
 </head>
 
 <body>
@@ -40,14 +39,18 @@
           <%= auction.descripcion %>
         </p>
       </div>
-
-      <div class="section">
-        <h2 class="section-title">Ubicación</h2>
-        <div id="map"></div>
-      </div>
     </div>
 
-    <div class="sidebar">
+    <div class="sidebar" id="chatdesubastas">
+      <div class="section">
+        <h2 class="section-title">Chat de Subastas</h2>
+        <div class="chat-container" id="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
+          <button onclick="sendBid()">Enviar Oferta</button>
+        </div>
+      </div>
+
       <div class="details-grid">
         <div class="detail-item">
           <i class="fas fa-bed detail-icon"></i>
@@ -67,7 +70,7 @@
           <i class="fas fa-vector-square detail-icon"></i>
           <div class="detail-value">Tamaño</div>
           <div class="detail-label">
-            <%= auction.tamano %>ft²
+            <%= auction.tamaño_propiedad %> ft²
           </div>
         </div>
         <div class="detail-item">
@@ -86,73 +89,71 @@
         </div>
         <div class="detail-item">
           <i class="fas fa-tag detail-icon"></i>
-          <div class="detail-value">Precios oferta</div>
+          <div class="detail-value">Precio oferta</div>
           <div class="detail-label">
             <%= auction.precios %>
           </div>
         </div>
       </div>
-
-      <div class="section">
-        <h2 class="section-title">Chat de Subastas</h2>
-        <div class="chat-container" id="chat-messages"></div>
-        <div class="chat-input">
-          <input type="text" id="bid-input" placeholder="Ingrese su oferta...">
-          <button onclick="sendBid()">Enviar Oferta</button>
-        </div>
-      </div>
     </div>
   </div>
 
-
   <section class="related-properties">
     <div class="container">
-        <div class="section-header">
-            <div class="header-content">
-                <div class="properties-label">PROPERTIES</div>
-                <h2 class="section-title">Related Properties</h2>
-                <p class="section-description">Lorem ipsum dolor sit amet consectetur. Accumsan lacus neque nunc convallis eleifend vitae et felis potenti.</p>
-            </div>
-            <a href="#" class="view-all-btn">
-                View Properties
-                <i class="fas fa-building"></i>
-            </a>
+      <div class="section-header">
+        <div class="header-content">
+          <div class="properties-label">PROPERTIES</div>
+          <h2 class="section-title">Related Properties</h2>
+          <p class="section-description">Lorem ipsum dolor sit amet consectetur. Accumsan lacus neque nunc convallis
+            eleifend vitae et felis potenti.</p>
         </div>
+        <a href="#" class="view-all-btn">
+          View Properties
+          <i class="fas fa-building"></i>
+        </a>
+      </div>
 
-        <!-- Single Property Card - This can be repeated with database loop -->
-        <div class="property-card">
-            <div class="property-image">
-                <img src="/placeholder.svg?height=200&width=350" alt="Urban Oasis Homes">
-                <a href="#" class="view-detail-btn">View Detail</a>
-                <div class="property-status">For Sale</div>
-            </div>
-            <div class="property-content">
-                <h3 class="property-title">Urban Oasis Homes</h3>
-                <div class="property-address">
-                    <i class="fas fa-map-marker-alt"></i>
-                    101 Serene Avenue, Maplewood Gardens
-                </div>
-                <div class="property-price">$90,000</div>
-                <div class="property-details">
-                    <div class="detail-item">
-                        <i class="fas fa-bed"></i>
-                        4 Bedrooms
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-bath"></i>
-                        2 Baths
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-vector-square"></i>
-                        360 Sqft
-                    </div>
-                </div>
-            </div>
+      <!-- Single Property Card - This can be repeated with database loop -->
+      <div class="property-card">
+        <div class="property-image">
+          <img src="/placeholder.svg?height=200&width=350" alt="Urban Oasis Homes">
+          <a href="#" class="view-detail-btn">View Detail</a>
+          <div class="property-status">For Sale</div>
         </div>
+        <div class="property-content">
+          <h3 class="property-title">Urban Oasis Homes</h3>
+          <div class="property-address">
+            <i class="fas fa-map-marker-alt"></i>
+            101 Serene Avenue, Maplewood Gardens
+          </div>
+          <div class="property-price">$90,000</div>
+          <div class="property-details">
+            <div class="detail-item">
+              <i class="fas fa-bed"></i>
+              4 Bedrooms
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-bath"></i>
+              2 Baths
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-vector-square"></i>
+              360 Sqft
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!--   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+
+ <!--  <script>
+    en este escript se verificara si el chat de subastas esta en actividad, en sus tres estados
+    en caso de no ser activa basandonos en la base de datos que es  <%= auction.estado %> 
+    existen 3 estados activo , en_curso , finalizado, en el caso de activo se dejara la vista de subasta y de estar en curso estara igual, pero en el caso de estar finalizado se bloqueara el chat de subasta
+    y no dejara hacer el envio de subastas
+  </script> -->
   <script>
     // Carrusel de imágenes
     const carousel = document.querySelector('.carousel-inner');
@@ -199,17 +200,6 @@
     bidInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') sendBid();
     });
-
-    // Mapa interactivo con OpenStreetMap y Leaflet
-    const map = L.map('map').setView([-16.389278, -71.548194], 13); // Coordenadas de ejemplo (Arequipa, Perú)
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.marker([-16.389278, -71.548194]).addTo(map)
-      .bindPopup('123 Harmony Avenue, City Heights')
-      .openPopup();
   </script>
 </body>
 

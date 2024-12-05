@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 No Encontrado</title>
+    <link rel="stylesheet" href="/css/errores/errores.css">
+    <!-- CDN DE ICONOS REMIX -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- ESTILOS GLOBALES -->
+    <link rel="stylesheet" href="/css/globales/globales.css">
+</head>
+
+<body>
+    
+
+    <div class="container_errores">
+        <%- include('../partials/navbar') %>
+        <h1 class="error">404 - Parece que hubo un problema con la solicitud que realizaste.</h1>
+
+        <p class=" causas_error"> Por favor, verifica que la dirección URL esté correctamente escrita o inténtalo de nuevo.
+            Si el problema persiste, contáctanos para ayudarte.</p>
+        <a href="/" class="btn_errores">Volver al Inicio</a>
+      
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

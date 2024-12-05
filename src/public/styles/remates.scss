@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-.banner_remates {
+.banner_remates2 {
     position: relative;
     width: 100%;
     height: 400px;
@@ -29,11 +29,6 @@
     color: #fffcfc;
     font-size: 3rem;
     font-weight: bold;
-}
-
-.banner_filtro {
-    background-color: #f8f8f8;
-    padding: 20px;
 }
 
 .contenedor_filtro {
@@ -83,33 +78,6 @@ form {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-}
-
-.div7 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: span 3;
-}
-
-.div7 button {
-    padding: 10px 20px;
-    background-color: #00665e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.div7 button i {
-    margin-left: 10px;
-}
-
-.div7 button:hover {
-    background-color: #004d40;
 }
 
 @media (max-width: 768px) {

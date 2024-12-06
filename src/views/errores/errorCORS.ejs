@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REMAJUD ERROR500</title>
+    <title>REMAJUD ERROR CORS</title>
     <link rel="stylesheet" href="/css/errores/errores.css">
     <!-- CDN DE ICONOS REMIX -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
@@ -14,15 +14,14 @@
 
 <body>
     <%- include('../partials/navbar') %>
-        <div class="container_errores">
-
-            <h1 class="error">500 - Ups, algo salió mal en nuestro lado</h1>
-            <p class=" causas_error">Estamos trabajando para solucionar el problema lo más pronto posible.
-                Por favor, intenta de nuevo en unos momentos.
-                Si el error persiste, contáctanos para ayudarte.</p>
+    <div class="container_errores">
+        
+            <h1 class="error">CORS - Ups, algo salió mal.</h1>
+            <p class=" causas_error">Por razones de seguridad, no pudimos cargar algunos recursos
+                necesarios. Por favor, intenta de nuevo más tarde o contacta con el soporte técnico.</p>
             <a href="/" class="btn_errores">Volver al Inicio</a>
-        </div>
-        <%- include('../partials/footer') %>
+    </div>
+    <%- include('../partials/footer') %>
 </body>
 
 </html>

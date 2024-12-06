@@ -1,108 +1,234 @@
-<div class="auction-detail container-fluid">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="property-info card mb-4">
-        <div class="card-body">
-          <h2><%= auction.categoria.charAt(0).toUpperCase() + auction.categoria.slice(1) %> en <%= auction.ubicacion %></h2>
-          
-          <div class="current-bid" id="current-bid">
-            Oferta Actual: S/. <%= auction.precios.toLocaleString() %>
-          </div>
-          
-          <% if(auction.estado === 'en_curso') { %>
-            <% if(user && user.id) { %>
-              <div class="bid-controls">
-                <form id="bid-form" class="bid-form">
-                  <div class="input-group">
-                    <input type="number" id="bid-amount" 
-                           min="<%= auction.precios + 1000 %>" 
-                           step="1000" 
-                           class="form-control" 
-                           placeholder="Ingrese su oferta">
-                    <button type="submit" class="btn btn-primary">Ofertar</button>
-                  </div>
-                </form>
-                
-                <form id="quick-bid-form" class="quick-bid-form">
-                  <button type="submit" class="btn btn-success w-100">
-                    Oferta Rápida (+S/. 1,000)
-                  </button>
-                </form>
-              </div>
-            <% } else { %>
-              <div class="alert alert-info">
-                <a href="/auth/login">Inicia sesión</a> para participar en esta subasta
-              </div>
-            <% } %>
+<div class="container_detalles">
+  <div class="property-header">
+    <h1 class="property-title">
+      <%= auction.ubicacion %>
+    </h1>
+    <p class="property-address">
+      <%= auction.categoria %>
+    </p>
+  </div>
 
-            <div class="progress-container">
-              <div id="auction-progress" class="auction-progress"></div>
-              <div id="countdown-display" class="countdown-display"></div>
-            </div>
-          <% } %>
-          
-          <div class="description">
-            <%= auction.descripcion %>
-          </div>
-          
-          <div class="features mt-4">
-            <h3>Características</h3>
-            <ul class="list-unstyled">
-              <% if(auction.N_habitacion) { %>
-                <li>Habitaciones: <%= auction.N_habitacion %></li>
-              <% } %>
-            </ul>
-          </div>
-        </div>
+  <div class="main-content">
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item"><img src="/img/3e4fd791f54c8bee5565036c2094309d.jpg" alt="Imagen 1"></div>
+        <div class="carousel-item"><img src="/img/casa.png" alt="Imagen 2"></div>
+        <div class="carousel-item"><img src="/img/casa2.jfif" alt="Imagen 3"></div>
+        <div class="carousel-item"><img src="/img/casa3.jfif" alt="Imagen 4"></div>
+      </div>
+      <a href="#" class="carousel-control prev">&lt;</a>
+      <a href="#" class="carousel-control next">&gt;</a>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Sobre la Propiedad</h2>
+      <p>
+        <%= auction.descripcion %>
+      </p>
+    </div>
+  </div>
+
+  <div class="sidebar" id="chatdesubastas">
+
+
+    <!--  aca va el codigo chatb subasta  -->
+
+    <%- include('chat') %>
+
+  </div>
+
+  <div class="details-grid">
+    <div class="detail-item">
+      <i class="fas fa-bed detail-icon"></i>
+      <div class="detail-value">Habitaciones</div>
+      <div class="detail-label">
+        <%= auction.N_habitacion %>
       </div>
     </div>
-    
-    <div class="col-md-4">
-      <div class="chat-container">
-        <div class="chat-header">
-          <h3>Chat de la Subasta</h3>
-          <div class="auction-status">
-            <span class="status <%= auction.estado %>">
-              <%= auction.statusMessage %>
-            </span>
-          </div>
-        </div>
-        
-        <div class="chat-messages" id="chat-messages"></div>
-        
-        <% if(user && user.id) { %>
-          <form id="message-form" class="chat-input">
-            <input type="text" id="message-input" 
-                   placeholder="Escribe un mensaje..." 
-                   <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-            <button type="submit" <%= auction.estado !== 'en_curso' ? 'disabled' : '' %>>
-              <i class="ri-send-plane-line"></i>
-            </button>
-          </form>
-        <% } else { %>
-          <div class="alert alert-info">
-            <a href="/auth/login">Inicia sesión</a> para participar en el chat
-          </div>
-        <% } %>
+    <div class="detail-item">
+      <i class="fas fa-bath detail-icon"></i>
+      <div class="detail-value">Baños</div>
+      <div class="detail-label">
+        <%= auction.N_banos %>
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-vector-square detail-icon"></i>
+      <div class="detail-value">Tamaño</div>
+      <div class="detail-label">
+        <%= auction.tamaño_propiedad %> ft²
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-utensils detail-icon"></i>
+      <div class="detail-value">Cocina</div>
+      <div class="detail-label">
+        <%= auction.cocina %>
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-warehouse detail-icon"></i>
+      <div class="detail-value">Garaje</div>
+      <div class="detail-label">
+        <%= auction.cochera %>
+      </div>
+    </div>
+    <div class="detail-item">
+      <i class="fas fa-tag detail-icon"></i>
+      <div class="detail-value">Precio oferta</div>
+      <div class="detail-label">
+        <%= auction.precios %>
       </div>
     </div>
   </div>
 </div>
 
-<link rel="stylesheet" href="/css/auction.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script type="module">
-  import AuctionChat from '/js/auction-chat.js';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const userId = '<%= user ? user.id : null %>';
-    if (userId) {
-      const chat = new AuctionChat(
-        '<%= auction.id %>', 
-        userId,
-        <%= auction.precios %>
-      );
+<link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
+<link rel="stylesheet" href="/css/chat/chat_subasta.css">
+
+<script>
+  // Carrusel de imágenes
+  const carousel = document.querySelector('.carousel-inner');
+  const items = carousel.querySelectorAll('.carousel-item');
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  document.querySelector('.carousel-control.prev').addEventListener('click', (e) => {
+    e.preventDefault();
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    showSlide(currentIndex);
+  });
+
+  document.querySelector('.carousel-control.next').addEventListener('click', (e) => {
+    e.preventDefault();
+    currentIndex = (currentIndex + 1) % items.length;
+    showSlide(currentIndex);
+  });
+
+  // Chat de subastas
+  const chatMessages = document.getElementById('chat-messages');
+  const bidInput = document.getElementById('bid-input');
+
+  function sendBid() {
+    const bid = bidInput.value;
+    if (bid.trim() === '') return;
+
+    const now = new Date();
+    const message = document.createElement('div');
+    message.innerHTML = `
+                <span class="user">Usuario:</span>
+                <span class="bid">$${bid}</span>
+                <span class="time">${now.toLocaleTimeString()}</span>
+            `;
+
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    bidInput.value = '';
+  }
+
+  bidInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendBid();
+  });
+</script>
+
+<script>
+  // Timer Class
+  class Timer {
+    constructor(element) {
+      this.element = element;
+      this.time = {
+        hours: 5,
+        minutes: 38,
+        seconds: 48
+      };
+      this.start();
     }
+
+    start() {
+      this.interval = setInterval(() => {
+        this.updateTime();
+        this.render();
+      }, 1000);
+    }
+
+    updateTime() {
+      if (this.time.seconds > 0) {
+        this.time.seconds--;
+      } else {
+        if (this.time.minutes > 0) {
+          this.time.minutes--;
+          this.time.seconds = 59;
+        } else {
+          if (this.time.hours > 0) {
+            this.time.hours--;
+            this.time.minutes = 59;
+            this.time.seconds = 59;
+          } else {
+            clearInterval(this.interval);
+            // Auction ended
+          }
+        }
+      }
+    }
+
+    render() {
+      this.element.textContent = `${String(this.time.hours).padStart(2, '0')}:${String(this.time.minutes).padStart(2, '0')}:${String(this.time.seconds).padStart(2, '0')}`;
+    }
+  }
+
+  // Main Application Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize timer
+    const timerElement = document.getElementById('countdown');
+    const timer = new Timer(timerElement);
+
+    // Navigation buttons
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    navButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update navigation buttons
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Show corresponding content section
+        const sectionId = button.getAttribute('data-section');
+        contentSections.forEach(section => {
+          section.classList.remove('active');
+          if (section.id === sectionId) {
+            section.classList.add('active');
+          }
+        });
+      });
+    });
+
+    // Bid functionality
+    const bidButton = document.querySelector('.bid-button');
+    const bidInput = document.getElementById('bidAmount');
+
+    bidButton.addEventListener('click', () => {
+      const amount = parseFloat(bidInput.value);
+      const currentBest = 9040.00;
+
+      if (amount <= currentBest) {
+        alert('La oferta debe ser mayor que la oferta actual');
+        return;
+      }
+
+      // Here you would typically send the bid to a server
+      alert(`Oferta de $${amount} registrada`);
+    });
+
+    // Input validation
+    bidInput.addEventListener('input', (e) => {
+      const value = e.target.value;
+      if (value < 0) {
+        e.target.value = 0;
+      }
+    });
   });
 </script>

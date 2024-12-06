@@ -13,8 +13,9 @@ exports.getAuctionDetails = async (req, res) => {
 
     auction.statusMessage = getStatusMessage(auction.estado);
     
-    res.render('auctions/details', {
+    res.render('layouts/main', {
       auction,
+      content:'auctions/details',
       user: res.locals.user || { id: null }
     });
   } catch (error) {

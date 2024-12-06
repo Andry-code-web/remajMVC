@@ -36,33 +36,35 @@ exports.getAlladmin = async (req, res) => {
 // Crear un nuevo remate
 exports.crearRemate = async (req, res) => {
   try {
-      // Extraer datos del formulario
-      const {
-          ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera, 
-          balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-      } = req.body;
+    // Extraer datos del formulario
+    const {
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+    } = req.body;
 
-      // Crear un nuevo remate en la base de datos
-      const remateId = await createRemate([
-          ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-          balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, 1
-      ]);
+    console.log(req.body.tamaño_propiedad);
 
-      // Procesar imágenes y anexos
-      if (req.files["photo"]) {
-          const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
-          await agregarImagenes(imagenes);
-      }
+    // Crear un nuevo remate en la base de datos
+    const remateId = await createRemate([
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, 1
+    ]);
 
-      if (req.files["anexos"]) {
-          const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-          await agregarAnexos(anexos);
-      }
+    // Procesar imágenes y anexos
+    if (req.files["photo"]) {
+      const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
+      await agregarImagenes(imagenes);
+    }
 
-      res.status(200).json({ message: "Remate creado exitosamente" });
+    if (req.files["anexos"]) {
+      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
+      await agregarAnexos(anexos);
+    }
+
+    res.status(200).json({ message: "Remate creado exitosamente" });
   } catch (error) {
-      console.error("Error al crear el remate:", error);
-      res.status(500).json({ message: "Hubo un problema al crear el remate" });
+    console.error("Error al crear el remate:", error);
+    res.status(500).json({ message: "Hubo un problema al crear el remate" });
   }
 };
 

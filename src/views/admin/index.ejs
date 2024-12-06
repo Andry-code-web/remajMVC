@@ -133,7 +133,7 @@
           <i class="bi bi-x"></i>
         </button>
       </div>
-      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data" onsubmit="guardarNuevoRemate(event)">
+      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data">
         <div class="form-grid">
           <div class="form-group">
             <label for="ubicacion">
@@ -211,6 +211,13 @@
               <option value="en_curso">En Curso</option>
               <option value="finalizado">Finalizado</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label for="tamaño_propiedad">
+              <i class="bi bi-bounding-box"></i>
+              Tamaño de la propiedad
+            </label>
+            <input type="number" id="tamaño_propiedad" name="tamaño_propiedad" required>
           </div>
         </div>
 

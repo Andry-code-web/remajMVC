@@ -1,0 +1,357 @@
+<div class="active-auction-card">
+    <div class="active-auction-header">
+        <div class="active-property-type">casa</div>
+        <h2 class="active-property-location">Cusco, Perú</h2>
+        <div class="active-timer">Inicia en: <span id="active-countdown">01:30:00</span></div>
+    </div>
+
+    <div class="active-tabs">
+        <button class="active-tab active" data-tab="active-panel">Panel</button>
+        <button class="active-tab" data-tab="active-classification">Clasificación</button>
+    </div>
+
+    <div id="active-panel" class="active-content-section active">
+        <!-- remate activo -->
+
+        <div class="active-panel-content" style="display: none;">
+            <div class="active-user-info">
+                <div class="active-user">
+                    <span class="active-label">Usuario:</span>
+                    <span class="active-value">2NE4WZO</span>
+                </div>
+                <div class="active-offers">
+                    <span class="active-label">Mis Ofertas:</span>
+                    <span class="active-value">0</span>
+                </div>
+            </div>
+
+            <div class="active-best-offer">
+                <div class="active-crown-label">
+                    <span class="active-crown">👑</span>
+                    <span>Precio Inicial</span>
+                </div>
+                <div class="active-amount">USD$ 125000</div>
+            </div>
+
+            <div class="active-bid-controls">
+                <button class="active-join-button">Unirse a la subasta</button>
+            </div>
+        </div>
+        <!-- Remate finalizado -->
+        <div class="finished-panel-content" style="display: none;">
+            <div class="finished-user-info">
+                <div class="finished-user">
+                    <span class="finished-label">Usuario:</span>
+                    <span class="finished-value">2NE4WZO</span>
+                </div>
+                <div class="finished-offers">
+                    <span class="finished-label">Mis Ofertas:</span>
+                    <span class="finished-value">0</span>
+                </div>
+            </div>
+
+            <div class="finished-best-offer">
+                <div class="finished-crown-label">
+                    <span class="finished-crown">👑</span>
+                    <span>Oferta Ganadora</span>
+                </div>
+                <div class="finished-amount">USD$ 125000</div>
+            </div>
+
+            <div class="finished-bid-controls">
+                <div class="finished-input-wrapper">
+                    <span class="finished-currency">$</span>
+                    <input type="number" class="finished-bid-input" value="125000" disabled>
+                </div>
+                <button class="finished-bid-button" disabled>Ofertar</button>
+            </div>
+        </div>
+        <!-- Remate en progreso -->
+        <div class="in_process_panel_content" style="display: block;">
+            <div class="progress-user-info">
+                <div class="progress-user">
+                    <span class="progress-label">Usuario:</span>
+                    <span class="progress-value">2NE4WZO</span>
+                </div>
+                <div class="progress-offers">
+                    <span class="progress-label">Mis Ofertas: </span>
+                    <span class="progress-value">0</span>
+                </div>
+            </div>
+
+            <div class="progress-best-offer">
+                <div class="progress-crown-label">
+                    <span class="progress-crown">👑</span>
+                    <span>Mejor Oferta</span>
+                </div>
+                <div class="progress-amount">USD$ <%= auction.monto_venta %>
+                </div>
+            </div>
+
+            <div class="progress-bid-section">
+                <div class="progress-bid-input">
+                    <span class="progress-currency">$</span>
+                    <input type="number" id="progress-bidAmount" value="<%= auction.monto_venta %>">
+                </div>
+                <button class="progress-bid-button">Ofertar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="active-classification" class="active-content-section">
+        <div class="active-panel-content">
+            <table class="active-classification-table">
+                <thead>
+                    <tr>
+                        <th class="position">#</th>
+                        <th>Usuario</th>
+                        <th class="amount">Oferta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="position">1</td>
+                        <td>USER123</td>
+                        <td class="amount">USD$ 125,000</td>
+                    </tr>
+                    <tr>
+                        <td class="position">2</td>
+                        <td>BIDDER456</td>
+                        <td class="amount">USD$ 124,500</td>
+                    </tr>
+                    <tr>
+                        <td class="position">3</td>
+                        <td>AUTO789</td>
+                        <td class="amount">USD$ 124,000</td>
+                    </tr>
+                    <tr>
+                        <td class="position">4</td>
+                        <td>CAR2024</td>
+                        <td class="amount">USD$ 123,500</td>
+                    </tr>
+                    <tr>
+                        <td class="position">5</td>
+                        <td>DEALER365</td>
+                        <td class="amount">USD$ 123,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- script activo  -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.active-tab');
+        const contentSections = document.querySelectorAll('.active-content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contentSections.forEach(cs => cs.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        const joinButton = document.querySelector('.active-join-button');
+        joinButton.addEventListener('click', () => {
+            alert('Serás redirigido a la página de registro de la subasta');
+        });
+    });
+</script>
+
+<!-- script remate finalizado  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.finished-tab');
+        const contentSections = document.querySelectorAll('.finished-content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contentSections.forEach(cs => cs.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    });
+</script>
+
+<!-- script remate en progreso  -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.progress-nav-btn');
+        const contentSections = document.querySelectorAll('.progress-content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const sectionId = tab.getAttribute('data-section');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contentSections.forEach(cs => cs.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+    });
+</script>
+<script>
+    // Carrusel de imágenes
+    const carousel = document.querySelector('.carousel-inner');
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    document.querySelector('.carousel-control.prev').addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showSlide(currentIndex);
+    });
+
+    document.querySelector('.carousel-control.next').addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+    });
+
+    // Chat de subastas
+    const chatMessages = document.getElementById('chat-messages');
+    const bidInput = document.getElementById('bid-input');
+
+    function sendBid() {
+        const bid = bidInput.value;
+        if (bid.trim() === '') return;
+
+        const now = new Date();
+        const message = document.createElement('div');
+        message.innerHTML = `
+                <span class="user">Usuario:</span>
+                <span class="bid">$${bid}</span>
+                <span class="time">${now.toLocaleTimeString()}</span>
+            `;
+
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        bidInput.value = '';
+    }
+
+    bidInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBid();
+    });
+</script>
+
+
+<script>
+    // Timer Class
+    class Timer {
+        constructor(element) {
+            this.element = element;
+            this.time = {
+                hours: 5,
+                minutes: 38,
+                seconds: 48
+            };
+            this.start();
+        }
+
+        start() {
+            this.interval = setInterval(() => {
+                this.updateTime();
+                this.render();
+            }, 1000);
+        }
+
+        updateTime() {
+            if (this.time.seconds > 0) {
+                this.time.seconds--;
+            } else {
+                if (this.time.minutes > 0) {
+                    this.time.minutes--;
+                    this.time.seconds = 59;
+                } else {
+                    if (this.time.hours > 0) {
+                        this.time.hours--;
+                        this.time.minutes = 59;
+                        this.time.seconds = 59;
+                    } else {
+                        clearInterval(this.interval);
+                        // Auction ended
+                    }
+                }
+            }
+        }
+
+        render() {
+            this.element.textContent = `${String(this.time.hours).padStart(2, '0')}:${String(this.time.minutes).padStart(2, '0')}:${String(this.time.seconds).padStart(2, '0')}`;
+        }
+    }
+
+    // Main Application Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize timer
+        const timerElement = document.getElementById('countdown');
+        const timer = new Timer(timerElement);
+
+        // Navigation buttons
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update navigation buttons
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Show corresponding content section
+                const sectionId = button.getAttribute('data-section');
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Bid functionality
+        const bidButton = document.querySelector('.bid-button');
+        const bidInput = document.getElementById('bidAmount');
+
+        bidButton.addEventListener('click', () => {
+            const amount = parseFloat(bidInput.value);
+            const currentBest = 9040.00;
+
+            if (amount <= currentBest) {
+                alert('La oferta debe ser mayor que la oferta actual');
+                return;
+            }
+
+            // Here you would typically send the bid to a server
+            alert(`Ofe rta de $${amount} registrada`);
+        });
+
+        // Input validation
+        bidInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value < 0) {
+                e.target.value = 0;
+            }
+        });
+    });
+</script>

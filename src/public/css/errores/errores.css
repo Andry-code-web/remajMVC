@@ -19,7 +19,7 @@
 
 .container_errores {
   text-align: center;
-  padding: 390px;
+  padding: 324px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,14 +30,16 @@
 }
 
 h1.error {
+  font-family: "fuentePrincipal";
   font-size: 96px;
   color: #0a0000;
   margin-bottom: 20px;
 }
 
 p.causas_error {
+  font-family: "fuenteSecundaria";
   font-size: 1.5rem;
-  color: rgba(10, 0, 0, 0.5490196078);
+  color: rgba(10, 0, 0, 0.6352941176);
   margin-bottom: 20px;
 }
 
@@ -47,8 +49,9 @@ a.btn_errores {
   color: #fff;
   background-color: #0a0000;
   text-decoration: none;
-  border-radius: 5px;
-  font-size: 1em;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  font-family: "fuenteparrafos";
 }
 
 a.btn_errores:hover {

@@ -3,7 +3,9 @@ const User = require('../models/user.model');
 // Controlador para error 400
 const geterror400 = async (req, res) => {
     try {
-        res.render('errores/error400');
+        res.render('errores/error400', {
+            errores: 'errores/error400'
+        });
     } catch (error) {
         res.status(500).render('errores/error400', {
             error: error.message
@@ -14,7 +16,9 @@ const geterror400 = async (req, res) => {
 // Controlador para error 401
 const geterror401 = async (req, res) => {
     try {
-        res.render('errores/error401');
+        res.render('errores/error401', {
+            errores: 'errores/error401'
+        });
     } catch (error) {
         res.status(500).render('errores/error401', {
             error: error.message
@@ -25,7 +29,9 @@ const geterror401 = async (req, res) => {
 // Controlador para error 403
 const geterror403 = async (req, res) => {
     try {
-        res.render('errores/error403');
+        res.render('errores/error403', {
+            errores: 'errores/error403'
+        });
     } catch (error) {
         res.status(500).render('errores/error403', {
             error: error.message
@@ -36,7 +42,9 @@ const geterror403 = async (req, res) => {
 // Controlador para error 404
 const geterror404 = async (req, res) => {
     try {
-        res.render('errores/error404');
+        res.render('errores/error404', {
+            errores: 'errores/error404'
+        });
     } catch (error) {
         res.status(500).render('errores/error404', {
             error: error.message
@@ -47,7 +55,9 @@ const geterror404 = async (req, res) => {
 // Controlador para error 500
 const geterror500 = async (req, res) => {
     try {
-        res.render('errores/error500');
+        res.render('errores/error500', {
+            errores: 'errores/error500'
+        });
     } catch (error) {
         res.status(500).render('errores/error500', {
             error: error.message
@@ -58,7 +68,9 @@ const geterror500 = async (req, res) => {
 // Controlador para error 502
 const geterror502 = async (req, res) => {
     try {
-        res.render('errores/error502');
+        res.render('errores/error502', {
+            errores: 'errores/error502'
+        });
     } catch (error) {
         res.status(500).render('errores/error502', {
             error: error.message
@@ -68,7 +80,9 @@ const geterror502 = async (req, res) => {
 // Controlador para error 503
 const geterror503 = async (req, res) => {
     try {
-        res.render('errores/error503');
+        res.render('errores/error503', {
+            errores: 'errores/error503'
+        });
     } catch (error) {
         res.status(500).render('errores/error503', {
             error: error.message
@@ -78,7 +92,9 @@ const geterror503 = async (req, res) => {
 // Controlador para error 504
 const geterror504 = async (req, res) => {
     try {
-        res.render('errores/error504');
+        res.render('errores/error504', {
+            errores: 'errores/error504'
+        });
     } catch (error) {
         res.status(500).render('errores/error504', {
             error: error.message
@@ -89,7 +105,10 @@ const geterror504 = async (req, res) => {
 // Controlador para error 304
 const geterror304 = async (req, res) => {
     try {
-        res.render('errores/error304');
+        res.render('errores/error304', {
+            errores: 'errores/error304'
+        }
+        );
     } catch (error) {
         res.status(500).render('errores/error304', {
             error: error.message
@@ -100,7 +119,9 @@ const geterror304 = async (req, res) => {
 // Controlador para error 204
 const geterror204 = async (req, res) => {
     try {
-        res.render('errores/error204');
+        res.render('errores/error204', {
+            errores: 'errores/error204'
+        });
     } catch (error) {
         res.status(500).render('errores/error204', {
             error: error.message
@@ -111,7 +132,9 @@ const geterror204 = async (req, res) => {
 // Controlador para error CORS
 const geterrorCORS = async (req, res) => {
     try {
-        res.render('errores/errorCORS');
+        res.render('errores/errorCORS', {
+            errores: 'errores/errorCORS'
+        });
     } catch (error) {
         res.status(500).render('errores/errorCORS', {
             error: error.message
@@ -122,7 +145,9 @@ const geterrorCORS = async (req, res) => {
 //Controlador para error SSL
 const geterrorSSL = async (req, res) => {
     try {
-        res.render('errores/errorSSL');
+        res.render('errores/errorSSL', {
+            errores: 'errores/error204'
+        });
     } catch (error) {
         res.status(500).render('errores/errorSSL', {
             error: error.message

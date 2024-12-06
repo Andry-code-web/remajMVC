@@ -48,8 +48,12 @@
       <div class="auction-container">
         <header class="auction-header">
           <div class="lot-info">
-            <span class="lot-id"> <%= auction.categoria %></span>
-            <h1 class="lot-title"> <%= auction.ubicacion %></h1>
+            <span class="lot-id">
+              <%= auction.categoria %>
+            </span>
+            <h1 class="lot-title">
+              <%= auction.ubicacion %>
+            </h1>
           </div>
           <div class="timer">
             <span>Finaliza en: </span>
@@ -79,19 +83,20 @@
               <span class="crown">👑</span>
               <span>Mejor Oferta</span>
             </div>
-            <div class="amount">USD$ <%= auction.monto_venta %></div>
+            <div class="amount">USD$ <%= auction.monto_venta %>
+            </div>
           </div>
 
           <div class="bid-section">
             <div class="bid-input">
               <span class="currency">$</span>
-              <input type="number" id="bidAmount" value="9140">
+              <input type="number" id="bidAmount" value="<%= auction.monto_venta %>">
             </div>
             <button class="bid-button">Ofertar</button>
           </div>
         </div>
 
-        
+
         <div id="classification" class="content-section">
           <table class="classification-table">
             <thead>
@@ -228,14 +233,13 @@
     </div>
   </section>
 
-  <!--   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
-
   <!--  <script>
     en este escript se verificara si el chat de subastas esta en actividad, en sus tres estados
     en caso de no ser activa basandonos en la base de datos que es  <%= auction.estado %> 
     existen 3 estados activo , en_curso , finalizado, en el caso de activo se dejara la vista de subasta y de estar en curso estara igual, pero en el caso de estar finalizado se bloqueara el chat de subasta
     y no dejara hacer el envio de subastas
   </script> -->
+
   <script>
     // Carrusel de imágenes
     const carousel = document.querySelector('.carousel-inner');
@@ -383,8 +387,6 @@
       });
     });
   </script>
-
-
 
 </body>
 

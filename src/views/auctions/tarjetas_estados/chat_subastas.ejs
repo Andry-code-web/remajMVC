@@ -1,0 +1,880 @@
+<!-- subasta activa -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subasta Activa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .auction-card {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .auction-header {
+            padding: 16px;
+        }
+
+        .property-type {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .property-location {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 8px 0;
+        }
+
+        .timer {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .tab.active {
+            color: #2196F3;
+            border-bottom: 2px solid #2196F3;
+        }
+
+        .panel-content {
+            padding: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user,
+        .offers {
+            display: flex;
+            gap: 8px;
+        }
+
+        .label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .value {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .best-offer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #e3f2fd;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .crown-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .crown {
+            font-size: 18px;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .join-button {
+            width: 100%;
+            padding: 12px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .join-button:hover {
+            background: #1976D2;
+        }
+
+        .classification-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .classification-table th,
+        .classification-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .classification-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .classification-table .position {
+            width: 40px;
+            text-align: center;
+        }
+
+        .classification-table .amount {
+            text-align: right;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auction-card">
+        <div class="auction-header">
+            <div class="property-type">casa</div>
+            <h2 class="property-location">Cusco, Perú</h2>
+            <div class="timer">Inicia en: <span id="countdown">01:30:00</span></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="panel">Panel</button>
+            <button class="tab" data-tab="classification">Clasificación</button>
+        </div>
+
+        <div id="panel" class="content-section active">
+            <div class="panel-content">
+                <div class="user-info">
+                    <div class="user">
+                        <span class="label">Usuario:</span>
+                        <span class="value">2NE4WZO</span>
+                    </div>
+                    <div class="offers">
+                        <span class="label">Mis Ofertas:</span>
+                        <span class="value">0</span>
+                    </div>
+                </div>
+
+                <div class="best-offer">
+                    <div class="crown-label">
+                        <span class="crown">👑</span>
+                        <span>Precio Inicial</span>
+                    </div>
+                    <div class="amount">USD$ 125000</div>
+                </div>
+
+                <div class="bid-controls">
+                    <button class="join-button">Unirse a la subasta</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="classification" class="content-section">
+            <div class="panel-content">
+                <table class="classification-table">
+                    <thead>
+                        <tr>
+                            <th class="position">#</th>
+                            <th>Usuario</th>
+                            <th class="amount">Oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="position">1</td>
+                            <td>USER123</td>
+                            <td class="amount">USD$ 125,000</td>
+                        </tr>
+                        <tr>
+                            <td class="position">2</td>
+                            <td>BIDDER456</td>
+                            <td class="amount">USD$ 124,500</td>
+                        </tr>
+                        <tr>
+                            <td class="position">3</td>
+                            <td>AUTO789</td>
+                            <td class="amount">USD$ 124,000</td>
+                        </tr>
+                        <tr>
+                            <td class="position">4</td>
+                            <td>CAR2024</td>
+                            <td class="amount">USD$ 123,500</td>
+                        </tr>
+                        <tr>
+                            <td class="position">5</td>
+                            <td>DEALER365</td>
+                            <td class="amount">USD$ 123,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contentSections.forEach(cs => cs.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            const joinButton = document.querySelector('.join-button');
+            joinButton.addEventListener('click', () => {
+                alert('Serás redirigido a la página de registro de la subasta');
+            });
+        });
+    </script>
+</body>
+
+</html>
+<!-- subasta finalizado-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subasta Finalizada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .auction-card {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .auction-header {
+            padding: 16px;
+        }
+
+        .property-type {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .property-location {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 8px 0;
+        }
+
+        .timer {
+            color: #ff0000;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .tab.active {
+            color: #2196F3;
+            border-bottom: 2px solid #2196F3;
+        }
+
+        .panel-content {
+            padding: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user,
+        .offers {
+            display: flex;
+            gap: 8px;
+        }
+
+        .label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .value {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .best-offer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .crown-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .crown {
+            font-size: 18px;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .bid-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .currency {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .bid-input {
+            width: 100%;
+            padding: 10px 10px 10px 24px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .bid-button {
+            padding: 10px 24px;
+            background-color: #cccccc;
+            color: #666666;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .classification-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .classification-table th,
+        .classification-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .classification-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .classification-table .position {
+            width: 40px;
+            text-align: center;
+        }
+
+        .classification-table .amount {
+            text-align: right;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auction-card">
+        <div class="auction-header">
+            <div class="property-type">casa</div>
+            <h2 class="property-location">Cusco, Perú</h2>
+            <div class="timer">Finalizado</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="panel">Panel</button>
+            <button class="tab" data-tab="classification">Clasificación</button>
+        </div>
+
+        <div id="panel" class="content-section active">
+            <div class="panel-content">
+                <div class="user-info">
+                    <div class="user">
+                        <span class="label">Usuario:</span>
+                        <span class="value">2NE4WZO</span>
+                    </div>
+                    <div class="offers">
+                        <span class="label">Mis Ofertas:</span>
+                        <span class="value">0</span>
+                    </div>
+                </div>
+
+                <div class="best-offer">
+                    <div class="crown-label">
+                        <span class="crown">👑</span>
+                        <span>Oferta Ganadora</span>
+                    </div>
+                    <div class="amount">USD$ 125000</div>
+                </div>
+
+                <div class="bid-controls">
+                    <div class="input-wrapper">
+                        <span class="currency">$</span>
+                        <input type="number" class="bid-input" value="125000" disabled>
+                    </div>
+                    <button class="bid-button" disabled>Ofertar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="classification" class="content-section">
+            <div class="panel-content">
+                <table class="classification-table">
+                    <thead>
+                        <tr>
+                            <th class="position">#</th>
+                            <th>Usuario</th>
+                            <th class="amount">Oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="position">1</td>
+                            <td>USER123</td>
+                            <td class="amount">USD$ 125,000</td>
+                        </tr>
+                        <tr>
+                            <td class="position">2</td>
+                            <td>BIDDER456</td>
+                            <td class="amount">USD$ 124,500</td>
+                        </tr>
+                        <tr>
+                            <td class="position">3</td>
+                            <td>AUTO789</td>
+                            <td class="amount">USD$ 124,000</td>
+                        </tr>
+                        <tr>
+                            <td class="position">4</td>
+                            <td>CAR2024</td>
+                            <td class="amount">USD$ 123,500</td>
+                        </tr>
+                        <tr>
+                            <td class="position">5</td>
+                            <td>DEALER365</td>
+                            <td class="amount">USD$ 123,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contentSections.forEach(cs => cs.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- subasta en curso  -->
+
+<!--  aca va el codigo chatb subasta  -->
+
+
+<style>
+    .auction-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .auction-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .lot-id {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .lot-title {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+
+    .timer {
+        margin-top: 10px;
+        color: #666;
+    }
+
+    .navigation {
+        display: flex;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-btn {
+        flex: 1;
+        padding: 15px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #666;
+    }
+
+    .nav-btn.active {
+        color: #2196F3;
+        border-bottom: 2px solid #2196F3;
+    }
+
+    .user-info {
+        display: flex;
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        gap: 20px;
+    }
+
+    .user-info .label {
+        color: #666;
+    }
+
+    .user-info .value {
+        font-weight: bold;
+    }
+
+    .best-offer {
+        background: #FFF9E6;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .crown-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .crown {
+        font-size: 20px;
+    }
+
+    .amount {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .bid-section {
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .bid-input {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .currency {
+        position: absolute;
+        left: 10px;
+        color: #666;
+    }
+
+    #bidAmount {
+        width: 100%;
+        padding: 12px 12px 12px 30px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .bid-button {
+        padding: 12px 30px;
+        background: #FF5722;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .bid-button:hover {
+        background: #F4511E;
+    }
+
+    /* New styles for classification table */
+    .content-section {
+        display: none;
+        padding: 20px;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    .classification-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .classification-table th,
+    .classification-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .classification-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        color: #666;
+    }
+
+    .classification-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .classification-table .position {
+        width: 60px;
+        text-align: center;
+    }
+
+    .classification-table .amount {
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .classification-table tr:first-child td {
+        color: #2196F3;
+        font-weight: bold;
+    }
+</style>
+
+
+<div class="auction-container">
+    <header class="auction-header">
+        <div class="lot-info">
+            <span class="lot-id">
+                <%= auction.categoria %>
+            </span>
+            <h1 class="lot-title">
+                <%= auction.ubicacion %>
+            </h1>
+        </div>
+        <div class="timer">
+            <span>Finaliza en: </span>
+            <span id="countdown">05:38:48</span>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <button class="nav-btn active" data-section="panel">Panel</button>
+        <button class="nav-btn" data-section="classification">Clasificación</button>
+    </nav>
+
+    <div id="panel" class="content-section active">
+        <div class="user-info">
+            <div class="user">
+                <span class="label">Usuario:</span>
+                <span class="value">2NE4WZO</span>
+            </div>
+            <div class="offers">
+                <span class="label">Mis Ofertas: </span>
+                <span class="value">0</span>
+            </div>
+        </div>
+
+        <div class="best-offer">
+            <div class="crown-label">
+                <span class="crown">👑</span>
+                <span>Mejor Oferta</span>
+            </div>
+            <div class="amount">USD$ <%= auction.monto_venta %>
+            </div>
+        </div>
+
+        <div class="bid-section">
+            <div class="bid-input">
+                <span class="currency">$</span>
+                <input type="number" id="bidAmount" value="<%= auction.monto_venta %>">
+            </div>
+            <button class="bid-button">Ofertar</button>
+        </div>
+    </div>
+
+
+    <div id="classification" class="content-section">
+        <table class="classification-table">
+            <thead>
+                <tr>
+                    <th class="position">#</th>
+                    <th>Usuario</th>
+                    <th class="amount">Oferta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="position">1</td>
+                    <td>USER123</td>
+                    <td class="amount">USD$ 9,040.00</td>
+                </tr>
+                <tr>
+                    <td class="position">2</td>
+                    <td>BIDDER456</td>
+                    <td class="amount">USD$ 8,950.00</td>
+                </tr>
+                <tr>
+                    <td class="position">3</td>
+                    <td>AUTO789</td>
+                    <td class="amount">USD$ 8,800.00</td>
+                </tr>
+                <tr>
+                    <td class="position">4</td>
+                    <td>CAR2024</td>
+                    <td class="amount">USD$ 8,500.00</td>
+                </tr>
+                <tr>
+                    <td class="position">5</td>
+                    <td>DEALER365</td>
+                    <td class="amount">USD$ 8,200.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

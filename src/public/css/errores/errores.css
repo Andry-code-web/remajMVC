@@ -36,8 +36,8 @@ h1.error {
 }
 
 p.causas_error {
-  font-size: 1.2em;
-  color: #666;
+  font-size: 1.5rem;
+  color: rgba(10, 0, 0, 0.5490196078);
   margin-bottom: 20px;
 }
 
@@ -45,18 +45,14 @@ a.btn_errores {
   display: inline-block;
   padding: 10px 20px;
   color: #fff;
-  background-color: #007bff;
+  background-color: #0a0000;
   text-decoration: none;
   border-radius: 5px;
   font-size: 1em;
 }
 
 a.btn_errores:hover {
-  background-color: #b36500;
-}
-
-a.btn_errores:hover {
-  background-color: #b36500;
+  background-color: rgba(10, 2, 0, 0.6);
 }
 
 /*# sourceMappingURL=errores.css.map */

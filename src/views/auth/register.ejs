@@ -134,25 +134,26 @@
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
 
-  <!-- <script>
+  <script>
     document.addEventListener('scroll', () => {
       const seccion1 = document.getElementById('seccion1');
       const seccion2 = document.getElementById('seccion2');
       const seccion3 = document.getElementById('seccion3');
       const body = document.body;
-      
-      if (seccion1.getBoundingClientRect() > 0) {
-        body.style.backgroundColor = '#000000'; 
-      } else if (seccion2.getBoundingClientRect() > 0) {
-        body.style.backgroundColor = '#ffffff'; 
-      } else if (seccion3.getBoundingClientRect() > 0) {
-        body.style.backgroundColor = '#000000'; 
+
+      if (seccion1.getBoundingClientRect().top <= window.innerHeight) {
+        body.style.backgroundColor = '#000000';
+      } else if (seccion2.getBoundingClientRect().top <= window.innerHeight) {
+        body.style.backgroundColor = '#ffffff';
+      } else if (seccion3.getBoundingClientRect().top <= window.innerHeight) {
+        body.style.backgroundColor = '#000000';
       } else {
-        body.style.backgroundColor = '#ffffff'; 
+        body.style.backgroundColor = '#ffffff';
       }
     });
 
-  </script> -->
+</script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".finalizar").addEventListener("click", async (e) => {
@@ -205,4 +206,5 @@
         }
       });
     });
+    
   </script>

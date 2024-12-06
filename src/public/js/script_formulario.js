@@ -1,4 +1,5 @@
 import NetworkAnimation from "./network.js";
+import { colors } from "./colors.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("particleCanvas");
@@ -34,15 +35,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Actualizar colores del título fijo y navbar
     const updateColors = (index) => {
-        if (index === 1) { // Sección específica (ubicación)
-            fixedTitles.style.color = "#000000";
-            navbar.style.color = "#000000";
-            document.documentElement.style.setProperty('--glow-color', '#000000');
+        const currentColor = index === 1 ? colors.glowBlack : colors.glowColor;
+        
+        // Actualizar colores de la barra de progreso
+        document.documentElement.style.setProperty('--progress-color', currentColor);
+        document.documentElement.style.setProperty('--progress-shadow', `0 0 5px ${currentColor}, 0 0 10px ${currentColor}, 0 0 15px ${currentColor}`);
+        
+        // Actualizar colores del título y navbar
+        if (index === 1) {
+            fixedTitles.style.color = colors.bgDark;
+            navbar && (navbar.style.color = colors.bgDark);
         } else {
-            fixedTitles.style.color = "";
-            navbar.style.color = "#FFE5D0";
-            document.documentElement.style.setProperty('--glow-color', '#FFE5D0');
+            fixedTitles.style.color = colors.primaryColor;
+            navbar && (navbar.style.color = colors.primaryColor);
         }
+    };
+
+    // Cambiar el color de fondo de cada sección
+    const changeBackgroundColor = (index) => {
+        secciones.forEach((seccion, i) => {
+            if (i === index) {
+                seccion.style.backgroundColor = i === 1 ? colors.bgLight : colors.bgDark;
+            }
+        });
     };
 
     // Animar la transición entre secciones
@@ -56,11 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateColors(currentIndex);
             updateProgress(currentIndex);
+            changeBackgroundColor(currentIndex);
 
             const subtitle = nextSection.querySelector(".subtitle");
             if (subtitle) {
                 subtitle.style.animation = "none";
-                subtitle.offsetHeight; // Forzar el reflujo para reiniciar la animación
+                subtitle.offsetHeight;
                 subtitle.style.animation = "glitchAnimation 0.5s ease-out forwards";
             }
         }
@@ -126,4 +142,5 @@ document.addEventListener("DOMContentLoaded", () => {
     secciones[currentIndex].classList.add("active");
     updateColors(currentIndex);
     updateProgress(currentIndex);
+    changeBackgroundColor(currentIndex);
 });

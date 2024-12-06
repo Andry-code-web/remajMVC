@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*Varibles de registro y login*/
+/*Variables de registro y login*/
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -19,20 +19,12 @@
   box-sizing: border-box;
 }
 
-:root {
-  --primary-color: #FFE5D0;
-  --bg-dark: #000000;
-  --bg-light: #ffffff;
-  --glow-color: #FFE5D0;
-  --dark-glow: rgba(0, 0, 0, 0.7);
-}
-
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
   overflow: hidden;
-  background-color: var(--bg-dark);
-  color: var(--primary-color);
+  background-color: #000000;
+  color: #FFE5D0;
   transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -76,6 +68,7 @@ body {
   overflow: hidden;
 }
 
+/* Estilos base de la barra de progreso */
 .progress-indicator {
   position: fixed;
   left: 4rem;
@@ -83,13 +76,14 @@ body {
   transform: translateY(-50%);
   width: 2px;
   height: 400px;
-  background: rgba(255, 255, 255, 0.1);
   z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s ease;
+  background: #FFE5D0;
+  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
 .progress-dots {
@@ -107,21 +101,22 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: #FFE5D0;
   position: relative;
   transition: all 0.5s ease;
+  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
 .progress-active-line {
   position: absolute;
   width: 2px;
-  background: var(--glow-color);
+  background: #FFE5D0;
   left: 50%;
   transform: translateX(-50%);
   top: 0;
   height: 0%;
   transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
 .progress-active-dot {
@@ -129,50 +124,27 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--glow-color);
+  background: #FFE5D0;
   left: 50%;
   transform: translate(-50%, -50%);
   top: 0%;
   transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
-.progress-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  position: relative;
-  transition: all 0.5s ease;
+/* Estilos para la sección 2 (ubicación) */
+.seccion2.active .progress-indicator,
+.seccion2.active .progress-active-line,
+.seccion2.active .progress-active-dot,
+.seccion2.active .progress-dot {
+  background-color: #000000 !important;
+  box-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 15px #000000 !important;
 }
 
-.progress-dot.active {
-  background: var(--glow-color);
-  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
-}
-
-/* Estilos específicos para la sección 2 */
-.seccion2 ~ .progress-indicator {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.seccion2 ~ .progress-indicator .progress-active-line {
-  background: var(--bg-dark);
-  box-shadow: 0 0 5px var(--dark-glow), 0 0 10px var(--dark-glow), 0 0 15px var(--dark-glow);
-}
-
-.seccion2 ~ .progress-indicator .progress-active-dot {
-  background: var(--bg-dark);
-  box-shadow: 0 0 5px var(--dark-glow), 0 0 10px var(--dark-glow), 0 0 15px var(--dark-glow);
-}
-
-.seccion2 ~ .progress-indicator .progress-dot {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.seccion2 ~ .progress-indicator .progress-dot.active {
-  background: var(--bg-dark);
-  box-shadow: 0 0 5px var(--dark-glow), 0 0 10px var(--dark-glow), 0 0 15px var(--dark-glow);
+/* Estilos para la sección 3 (usuario) */
+.seccion3.active ~ .progress-indicator, .seccion3.active ~ .progress-indicator .progress-active-line, .seccion3.active ~ .progress-indicator .progress-active-dot, .seccion3.active ~ .progress-indicator .progress-dots .progress-dot {
+  background: #FFE5D0;
+  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
 .seccion {
@@ -197,7 +169,7 @@ body {
 
 .seccion2 {
   background: linear-gradient(135deg, rgb(255, 255, 255) 0%, rgb(240, 240, 240) 100%);
-  color: var(--bg-dark);
+  color: #000000;
 }
 
 .texto_grande {
@@ -390,13 +362,13 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .submit-btn:hover {
-  color: var(--bg-dark);
-  background: var(--primary-color);
+  color: #000000;
+  background: #FFE5D0;
 }
 
 .seccion2 .submit-btn:hover {
-  color: var(--bg-light);
-  background: var(--bg-dark);
+  color: #ffffff;
+  background: #000000;
 }
 
 .error-message {
@@ -473,7 +445,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-width: 0 2px 2px 0;
 }
 
-/*effect link*/
+/*effecto link*/
 .terms-link {
   font-size: 17px;
   margin-left: 0.4rem;

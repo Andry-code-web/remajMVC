@@ -1,4 +1,4 @@
-<!-- subasta activa -->
+<!-- Active Auction -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,223 +6,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subasta Activa</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .auction-card {
-            width: 100%;
-            max-width: 400px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .auction-header {
-            padding: 16px;
-        }
-
-        .property-type {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .property-location {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin: 0 0 8px 0;
-        }
-
-        .timer {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            background: none;
-            border: none;
-            font-size: 14px;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s, border-color 0.3s;
-        }
-
-        .tab.active {
-            color: #2196F3;
-            border-bottom: 2px solid #2196F3;
-        }
-
-        .panel-content {
-            padding: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .user,
-        .offers {
-            display: flex;
-            gap: 8px;
-        }
-
-        .label {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .value {
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .best-offer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: #e3f2fd;
-            border-radius: 6px;
-            margin-bottom: 16px;
-        }
-
-        .crown-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .crown {
-            font-size: 18px;
-        }
-
-        .amount {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .join-button {
-            width: 100%;
-            padding: 12px;
-            background: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .join-button:hover {
-            background: #1976D2;
-        }
-
-        .classification-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .classification-table th,
-        .classification-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .classification-table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #666;
-        }
-
-        .classification-table .position {
-            width: 40px;
-            text-align: center;
-        }
-
-        .classification-table .amount {
-            text-align: right;
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="auction-card">
-        <div class="auction-header">
-            <div class="property-type">casa</div>
-            <h2 class="property-location">Cusco, Perú</h2>
-            <div class="timer">Inicia en: <span id="countdown">01:30:00</span></div>
+    <div class="active-auction-card">
+        <div class="active-auction-header">
+            <div class="active-property-type">casa</div>
+            <h2 class="active-property-location">Cusco, Perú</h2>
+            <div class="active-timer">Inicia en: <span id="active-countdown">01:30:00</span></div>
         </div>
 
-        <div class="tabs">
-            <button class="tab active" data-tab="panel">Panel</button>
-            <button class="tab" data-tab="classification">Clasificación</button>
+        <div class="active-tabs">
+            <button class="active-tab active" data-tab="active-panel">Panel</button>
+            <button class="active-tab" data-tab="active-classification">Clasificación</button>
         </div>
 
-        <div id="panel" class="content-section active">
-            <div class="panel-content">
-                <div class="user-info">
-                    <div class="user">
-                        <span class="label">Usuario:</span>
-                        <span class="value">2NE4WZO</span>
+        <div id="active-panel" class="active-content-section active">
+            <div class="active-panel-content">
+                <div class="active-user-info">
+                    <div class="active-user">
+                        <span class="active-label">Usuario:</span>
+                        <span class="active-value">2NE4WZO</span>
                     </div>
-                    <div class="offers">
-                        <span class="label">Mis Ofertas:</span>
-                        <span class="value">0</span>
+                    <div class="active-offers">
+                        <span class="active-label">Mis Ofertas:</span>
+                        <span class="active-value">0</span>
                     </div>
                 </div>
 
-                <div class="best-offer">
-                    <div class="crown-label">
-                        <span class="crown">👑</span>
+                <div class="active-best-offer">
+                    <div class="active-crown-label">
+                        <span class="active-crown">👑</span>
                         <span>Precio Inicial</span>
                     </div>
-                    <div class="amount">USD$ 125000</div>
+                    <div class="active-amount">USD$ 125000</div>
                 </div>
 
-                <div class="bid-controls">
-                    <button class="join-button">Unirse a la subasta</button>
+                <div class="active-bid-controls">
+                    <button class="active-join-button">Unirse a la subasta</button>
                 </div>
             </div>
         </div>
 
-        <div id="classification" class="content-section">
-            <div class="panel-content">
-                <table class="classification-table">
+        <div id="active-classification" class="active-content-section">
+            <div class="active-panel-content">
+                <table class="active-classification-table">
                     <thead>
                         <tr>
                             <th class="position">#</th>
@@ -264,8 +92,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.tab');
-            const contentSections = document.querySelectorAll('.content-section');
+            const tabs = document.querySelectorAll('.active-tab');
+            const contentSections = document.querySelectorAll('.active-content-section');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -279,7 +107,7 @@
                 });
             });
 
-            const joinButton = document.querySelector('.join-button');
+            const joinButton = document.querySelector('.active-join-button');
             joinButton.addEventListener('click', () => {
                 alert('Serás redirigido a la página de registro de la subasta');
             });
@@ -288,7 +116,8 @@
 </body>
 
 </html>
-<!-- subasta finalizado-->
+
+<!-- Finished Auction -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -296,250 +125,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subasta Finalizada</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .auction-card {
-            width: 100%;
-            max-width: 400px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .auction-header {
-            padding: 16px;
-        }
-
-        .property-type {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .property-location {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin: 0 0 8px 0;
-        }
-
-        .timer {
-            color: #ff0000;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            background: none;
-            border: none;
-            font-size: 14px;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s, border-color 0.3s;
-        }
-
-        .tab.active {
-            color: #2196F3;
-            border-bottom: 2px solid #2196F3;
-        }
-
-        .panel-content {
-            padding: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .user,
-        .offers {
-            display: flex;
-            gap: 8px;
-        }
-
-        .label {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .value {
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .best-offer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: #f8f8f8;
-            border-radius: 6px;
-            margin-bottom: 16px;
-        }
-
-        .crown-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .crown {
-            font-size: 18px;
-        }
-
-        .amount {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .bid-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .input-wrapper {
-            position: relative;
-            flex: 1;
-        }
-
-        .currency {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
-
-        .bid-input {
-            width: 100%;
-            padding: 10px 10px 10px 24px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 14px;
-            background-color: #f3f4f6;
-            color: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .bid-button {
-            padding: 10px 24px;
-            background-color: #cccccc;
-            color: #666666;
-            border: none;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .classification-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .classification-table th,
-        .classification-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .classification-table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #666;
-        }
-
-        .classification-table .position {
-            width: 40px;
-            text-align: center;
-        }
-
-        .classification-table .amount {
-            text-align: right;
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="auction-card">
-        <div class="auction-header">
-            <div class="property-type">casa</div>
-            <h2 class="property-location">Cusco, Perú</h2>
-            <div class="timer">Finalizado</div>
+    <div class="finished-auction-card">
+        <div class="finished-auction-header">
+            <div class="finished-property-type">casa</div>
+            <h2 class="finished-property-location">Cusco, Perú</h2>
+            <div class="finished-timer">Finalizado</div>
         </div>
 
-        <div class="tabs">
-            <button class="tab active" data-tab="panel">Panel</button>
-            <button class="tab" data-tab="classification">Clasificación</button>
+        <div class="finished-tabs">
+            <button class="finished-tab active" data-tab="finished-panel">Panel</button>
+            <button class="finished-tab" data-button class="finished-tab"
+                data-tab="finished-classification">Clasificación</button>
         </div>
 
-        <div id="panel" class="content-section active">
-            <div class="panel-content">
-                <div class="user-info">
-                    <div class="user">
-                        <span class="label">Usuario:</span>
-                        <span class="value">2NE4WZO</span>
+        <div id="finished-panel" class="finished-content-section active">
+            <div class="finished-panel-content">
+                <div class="finished-user-info">
+                    <div class="finished-user">
+                        <span class="finished-label">Usuario:</span>
+                        <span class="finished-value">2NE4WZO</span>
                     </div>
-                    <div class="offers">
-                        <span class="label">Mis Ofertas:</span>
-                        <span class="value">0</span>
+                    <div class="finished-offers">
+                        <span class="finished-label">Mis Ofertas:</span>
+                        <span class="finished-value">0</span>
                     </div>
                 </div>
 
-                <div class="best-offer">
-                    <div class="crown-label">
-                        <span class="crown">👑</span>
+                <div class="finished-best-offer">
+                    <div class="finished-crown-label">
+                        <span class="finished-crown">👑</span>
                         <span>Oferta Ganadora</span>
                     </div>
-                    <div class="amount">USD$ 125000</div>
+                    <div class="finished-amount">USD$ 125000</div>
                 </div>
 
-                <div class="bid-controls">
-                    <div class="input-wrapper">
-                        <span class="currency">$</span>
-                        <input type="number" class="bid-input" value="125000" disabled>
+                <div class="finished-bid-controls">
+                    <div class="finished-input-wrapper">
+                        <span class="finished-currency">$</span>
+                        <input type="number" class="finished-bid-input" value="125000" disabled>
                     </div>
-                    <button class="bid-button" disabled>Ofertar</button>
+                    <button class="finished-bid-button" disabled>Ofertar</button>
                 </div>
             </div>
         </div>
 
-        <div id="classification" class="content-section">
-            <div class="panel-content">
-                <table class="classification-table">
+        <div id="finished-classification" class="finished-content-section">
+            <div class="finished-panel-content">
+                <table class="finished-classification-table">
                     <thead>
                         <tr>
                             <th class="position">#</th>
@@ -581,8 +216,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.tab');
-            const contentSections = document.querySelectorAll('.content-section');
+            const tabs = document.querySelectorAll('.finished-tab');
+            const contentSections = document.querySelectorAll('.finished-content-section');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -601,280 +236,260 @@
 
 </html>
 
-<!-- subasta en curso  -->
-
-<!--  aca va el codigo chatb subasta  -->
-
-
-<style>
-    .auction-container {
-        max-width: 600px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .auction-header {
-        padding: 20px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .lot-id {
-        color: #666;
-        font-size: 14px;
-    }
-
-    .lot-title {
-        font-size: 20px;
-        margin-top: 5px;
-    }
-
-    .timer {
-        margin-top: 10px;
-        color: #666;
-    }
-
-    .navigation {
-        display: flex;
-        border-bottom: 1px solid #eee;
-    }
-
-    .nav-btn {
-        flex: 1;
-        padding: 15px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 16px;
-        color: #666;
-    }
-
-    .nav-btn.active {
-        color: #2196F3;
-        border-bottom: 2px solid #2196F3;
-    }
-
-    .user-info {
-        display: flex;
-        padding: 15px 20px;
-        border-bottom: 1px solid #eee;
-        gap: 20px;
-    }
-
-    .user-info .label {
-        color: #666;
-    }
-
-    .user-info .value {
-        font-weight: bold;
-    }
-
-    .best-offer {
-        background: #FFF9E6;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .crown-label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .crown {
-        font-size: 20px;
-    }
-
-    .amount {
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    .bid-section {
-        padding: 20px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .bid-input {
-        flex: 1;
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-
-    .currency {
-        position: absolute;
-        left: 10px;
-        color: #666;
-    }
-
-    #bidAmount {
-        width: 100%;
-        padding: 12px 12px 12px 30px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-
-    .bid-button {
-        padding: 12px 30px;
-        background: #FF5722;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .bid-button:hover {
-        background: #F4511E;
-    }
-
-    /* New styles for classification table */
-    .content-section {
-        display: none;
-        padding: 20px;
-    }
-
-    .content-section.active {
-        display: block;
-    }
-
-    .classification-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    .classification-table th,
-    .classification-table td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-    }
-
-    .classification-table th {
-        background-color: #f8f9fa;
-        font-weight: bold;
-        color: #666;
-    }
-
-    .classification-table tr:last-child td {
-        border-bottom: none;
-    }
-
-    .classification-table .position {
-        width: 60px;
-        text-align: center;
-    }
-
-    .classification-table .amount {
-        text-align: right;
-        font-weight: bold;
-    }
-
-    .classification-table tr:first-child td {
-        color: #2196F3;
-        font-weight: bold;
-    }
-</style>
-
-
-<div class="auction-container">
-    <header class="auction-header">
-        <div class="lot-info">
-            <span class="lot-id">
+<!-- Auction in Progress -->
+<div class="progress-auction-container">
+    <header class="progress-auction-header">
+        <div class="progress-lot-info">
+            <span class="progress-lot-id">
                 <%= auction.categoria %>
             </span>
-            <h1 class="lot-title">
+            <h1 class="progress-lot-title">
                 <%= auction.ubicacion %>
             </h1>
         </div>
-        <div class="timer">
+        <div class="progress-timer">
             <span>Finaliza en: </span>
-            <span id="countdown">05:38:48</span>
+            <span id="progress-countdown">05:38:48</span>
         </div>
     </header>
 
-    <nav class="navigation">
-        <button class="nav-btn active" data-section="panel">Panel</button>
-        <button class="nav-btn" data-section="classification">Clasificación</button>
+    <nav class="progress-navigation">
+        <button class="progress-nav-btn active" data-section="progress-panel">Panel</button>
+        <button class="progress-nav-btn" data-section="progress-classification">Clasificación</button>
     </nav>
 
-    <div id="panel" class="content-section active">
-        <div class="user-info">
-            <div class="user">
-                <span class="label">Usuario:</span>
-                <span class="value">2NE4WZO</span>
+    <div id="progress-panel" class="progress-content-section active">
+        <div class="progress-user-info">
+            <div class="progress-user">
+                <span class="progress-label">Usuario:</span>
+                <span class="progress-value">2NE4WZO</span>
             </div>
-            <div class="offers">
-                <span class="label">Mis Ofertas: </span>
-                <span class="value">0</span>
+            <div class="progress-offers">
+                <span class="progress-label">Mis Ofertas: </span>
+                <span class="progress-value">0</span>
             </div>
         </div>
 
-        <div class="best-offer">
-            <div class="crown-label">
-                <span class="crown">👑</span>
+        <div class="progress-best-offer">
+            <div class="progress-crown-label">
+                <span class="progress-crown">👑</span>
                 <span>Mejor Oferta</span>
             </div>
-            <div class="amount">USD$ <%= auction.monto_venta %>
+            <div class="progress-amount">USD$ <%= auction.monto_venta %>
             </div>
         </div>
 
-        <div class="bid-section">
-            <div class="bid-input">
-                <span class="currency">$</span>
-                <input type="number" id="bidAmount" value="<%= auction.monto_venta %>">
+        <div class="progress-bid-section">
+            <div class="progress-bid-input">
+                <span class="progress-currency">$</span>
+                <input type="number" id="progress-bidAmount" value="<%= auction.monto_venta %>">
             </div>
-            <button class="bid-button">Ofertar</button>
+            <button class="progress-bid-button">Ofertar</button>
         </div>
     </div>
 
-
-    <div id="classification" class="content-section">
-        <table class="classification-table">
+    <div id="progress-classification" class="progress-content-section">
+        <table class="progress-classification-table">
             <thead>
                 <tr>
-                    <th class="position">#</th>
+                    <th class="progress-position">#</th>
                     <th>Usuario</th>
-                    <th class="amount">Oferta</th>
+                    <th class="progress-amount">Oferta</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="position">1</td>
+                    <td class="progress-position">1</td>
                     <td>USER123</td>
-                    <td class="amount">USD$ 9,040.00</td>
+                    <td class="progress-amount">USD$ 9,040.00</td>
                 </tr>
                 <tr>
-                    <td class="position">2</td>
+                    <td class="progress-position">2</td>
                     <td>BIDDER456</td>
-                    <td class="amount">USD$ 8,950.00</td>
+                    <td class="progress-amount">USD$ 8,950.00</td>
                 </tr>
                 <tr>
-                    <td class="position">3</td>
+                    <td class="progress-position">3</td>
                     <td>AUTO789</td>
-                    <td class="amount">USD$ 8,800.00</td>
+                    <td class="progress-amount">USD$ 8,800.00</td>
                 </tr>
                 <tr>
-                    <td class="position">4</td>
+                    <td class="progress-position">4</td>
                     <td>CAR2024</td>
-                    <td class="amount">USD$ 8,500.00</td>
+                    <td class="progress-amount">USD$ 8,500.00</td>
                 </tr>
                 <tr>
-                    <td class="position">5</td>
+                    <td class="progress-position">5</td>
                     <td>DEALER365</td>
-                    <td class="amount">USD$ 8,200.00</td>
+                    <td class="progress-amount">USD$ 8,200.00</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.progress-nav-btn');
+        const contentSections = document.querySelectorAll('.progress-content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const sectionId = tab.getAttribute('data-section');
+
+                tabs.forEach(t => t.classList.remove('active'));
+                contentSections.forEach(cs => cs.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+    });
+</script>
+<script>
+    // Carrusel de imágenes
+    const carousel = document.querySelector('.carousel-inner');
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    document.querySelector('.carousel-control.prev').addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showSlide(currentIndex);
+    });
+
+    document.querySelector('.carousel-control.next').addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+    });
+
+    // Chat de subastas
+    const chatMessages = document.getElementById('chat-messages');
+    const bidInput = document.getElementById('bid-input');
+
+    function sendBid() {
+        const bid = bidInput.value;
+        if (bid.trim() === '') return;
+
+        const now = new Date();
+        const message = document.createElement('div');
+        message.innerHTML = `
+                <span class="user">Usuario:</span>
+                <span class="bid">$${bid}</span>
+                <span class="time">${now.toLocaleTimeString()}</span>
+            `;
+
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        bidInput.value = '';
+    }
+
+    bidInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBid();
+    });
+</script>
+
+
+<script>
+    // Timer Class
+    class Timer {
+        constructor(element) {
+            this.element = element;
+            this.time = {
+                hours: 5,
+                minutes: 38,
+                seconds: 48
+            };
+            this.start();
+        }
+
+        start() {
+            this.interval = setInterval(() => {
+                this.updateTime();
+                this.render();
+            }, 1000);
+        }
+
+        updateTime() {
+            if (this.time.seconds > 0) {
+                this.time.seconds--;
+            } else {
+                if (this.time.minutes > 0) {
+                    this.time.minutes--;
+                    this.time.seconds = 59;
+                } else {
+                    if (this.time.hours > 0) {
+                        this.time.hours--;
+                        this.time.minutes = 59;
+                        this.time.seconds = 59;
+                    } else {
+                        clearInterval(this.interval);
+                        // Auction ended
+                    }
+                }
+            }
+        }
+
+        render() {
+            this.element.textContent = `${String(this.time.hours).padStart(2, '0')}:${String(this.time.minutes).padStart(2, '0')}:${String(this.time.seconds).padStart(2, '0')}`;
+        }
+    }
+
+    // Main Application Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize timer
+        const timerElement = document.getElementById('countdown');
+        const timer = new Timer(timerElement);
+
+        // Navigation buttons
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update navigation buttons
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Show corresponding content section
+                const sectionId = button.getAttribute('data-section');
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Bid functionality
+        const bidButton = document.querySelector('.bid-button');
+        const bidInput = document.getElementById('bidAmount');
+
+        bidButton.addEventListener('click', () => {
+            const amount = parseFloat(bidInput.value);
+            const currentBest = 9040.00;
+
+            if (amount <= currentBest) {
+                alert('La oferta debe ser mayor que la oferta actual');
+                return;
+            }
+
+            // Here you would typically send the bid to a server
+            alert(`Oferta de $${amount} registrada`);
+        });
+
+        // Input validation
+        bidInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value < 0) {
+                e.target.value = 0;
+            }
+        });
+    });
+</script>

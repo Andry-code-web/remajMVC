@@ -53,7 +53,7 @@
 }
 
 .banner_info h1 {
-  width: 50%;
+  width: 60%;
   font-size: 4.7rem;
   font-family: "fuentePrincipal";
   font-weight: 700;
@@ -71,135 +71,181 @@
   margin-top: 1rem;
 }
 
-.banner_filtro {
-  width: 60%;
-  height: auto;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.contenedor_filtro {
-  min-width: 100%;
-  height: 20vh;
-  background-color: #fffcfc;
-  border-radius: 1rem;
-  box-shadow: 2px 2px 15px rgb(44, 44, 44);
-}
-
-.contenedor_filtro form {
+form {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
 
-.parent {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(6, auto);
-  grid-template-rows: 30% 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 1rem;
-  padding: 1rem;
+/* .parent {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: 30% 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 1rem;
+    padding: 1rem;
 }
 
 .div1 {
-  width: 100%;
-  grid-area: 1/1/2/7;
-  border-bottom: 0.2px solid #e3e3e3;
-  display: flex;
-  align-items: center;
+    width: 100%;
+    grid-area: 1/1/2/7;
+    border-bottom: 0.2px solid #e3e3e3;
+    display: flex;
+    align-items: center;
 }
 
 .div1 p {
-  font-size: 1.1rem;
-  font-family: "fuenteparrafos";
+    font-size: 1.1rem;
+    font-family: "fuenteparrafos";
 }
 
 .div2 {
-  grid-area: 2/1/3/2;
+    grid-area: 2/1/3/2;
 }
 
 .div3 {
-  grid-area: 2/2/3/3;
+    grid-area: 2/2/3/3;
 }
 
 .div4 {
-  grid-area: 2/3/3/4;
+    grid-area: 2/3/3/4;
 }
 
 .div5 {
-  grid-area: 2/4/3/5;
+    grid-area: 2/4/3/5;
 }
 
 .div6 {
-  grid-area: 2/5/3/6;
+    grid-area: 2/5/3/6;
 }
 
 .div7 {
-  grid-area: 2/6/3/7;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 0.8rem;
+    grid-area: 2/6/3/7;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 0.8rem;
 }
 
 .div7 button {
-  width: 40px;
-  height: 40px;
-  background: #ededed;
-  color: #000;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: 0.1s ease-in;
+    width: 40px;
+    height: 40px;
+    background: #ededed;
+    color: #000;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.1s ease-in;
 }
 
 .div7 button i {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .div7 button:hover {
-  background: #000;
-  color: #fff;
-}
+    background: #000;
+    color: #fff;
+} 
 
 .contenedor_inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .contenedor_inputs label {
-  font-size: 1rem;
-  font-family: "fuenteparrafos";
+    font-size: 1rem;
+    font-family: "fuenteparrafos";
 }
 
 .contenedor_inputs label i {
-  font-size: 1.3rem;
-  color: #000;
-  margin-right: 0.5rem;
+    font-size: 1.3rem;
+    color: #000;
+    margin-right: 0.5rem;
 }
 
 .contenedor_inputs input {
-  width: 95%;
-  height: 35px;
-  border: 1px solid #dfdfdf;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  font-family: "fuenteparrafos";
-  font-size: 0.9rem;
-  padding-left: 1rem;
+    width: 95%;
+    height: 35px;
+    border: 1px solid #dfdfdf;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    font-family: "fuenteparrafos";
+    font-size: 0.9rem;
+    padding-left: 1rem;
 }
 
 .contenedor_inputs input:focus-visible {
+    outline: none;
+}*/
+.contenedor_filtro_items {
+  display: flex;
+  gap: 2rem;
+  background: #fffcfc;
+  padding: 25px;
+  border-radius: 0.5rem;
+}
+
+.items_filtro {
+  width: 180px;
+  height: 55px;
+}
+
+.items_filtro select {
+  width: 100%;
+  height: 100%;
+}
+
+.btn_filtrar {
+  width: 150px;
+  height: 55px;
+}
+
+.btn_filtrar button {
+  width: 100%;
+  height: 100%;
+  background-color: #d00000;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: "fuenteparrafos";
+  font-size: 1.1rem;
+  color: #fffcfc;
+  transition: ease-in 0.5s;
+}
+
+.btn_filtrar button i {
+  font-size: 1.5rem;
+  color: #fffcfc;
+}
+
+.btn_filtrar button:hover {
+  background: #e25427;
+}
+
+.items_filtro select {
+  border: 1px solid #BDBCBC;
+  border-radius: 5px;
+  padding: 0.5rem;
+  color: #999999;
+  font-family: "fuenteparrafos";
+}
+
+.items_filtro select:focus-visible {
   outline: none;
+}
+
+.items_filtro select option {
+  background-color: #fffcfc;
+  color: #0a0000;
+  padding: 0.5rem;
+  font-family: "fuenteparrafos";
+  border: none;
 }
 
 /* CATEGORIAS */

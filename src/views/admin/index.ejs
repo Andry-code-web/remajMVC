@@ -2,875 +2,884 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Remates</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/css/admin.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Remates</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/admin/admin.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div>
-                    <h1 class="dashboard-title">Gestión de Remates</h1>
-                    <p class="dashboard-subtitle">Sistema de administración de propiedades</p>
-                </div>
-                <button onclick="abrirModalNuevoRemate()" class="btn-add-remate">
-                    <i class="bi bi-plus-circle"></i>
-                    Nuevo Remate
-                </button>
-            </div>
-        </header>
-
-        <div class="metrics-container">
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="bi bi-house-door"></i>
-                </div>
-                <div class="metric-info">
-                    <div class="metric-value" id="totalRemates">0</div>
-                    <div class="metric-label">Total de remates</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="bi bi-graph-up"></i>
-                </div>
-                <div class="metric-info">
-                    <div class="metric-value" id="rematesActivos">0</div>
-                    <div class="metric-label">Remates activos</div>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="bi bi-currency-dollar"></i>
-                </div>
-                <div class="metric-info">
-                    <div class="metric-value" id="montoTotal">$0</div>
-                    <div class="metric-label">Monto total</div>
-                </div>
-            </div>
+  <div class="container">
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div>
+          <h1 class="dashboard-title">Gestión de Remates</h1>
+          <p class="dashboard-subtitle">Sistema de administración de propiedades</p>
         </div>
+        <button onclick="abrirModalNuevoRemate()" class="btn-add-remate">
+          <i class="bi bi-plus-circle"></i>
+          Nuevo Remate
+        </button>
+      </div>
+    </header>
 
-        <div class="search-container">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" id="buscador" class="search-input"
-                placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
+    <div class="metrics-container">
+      <div class="metric-card">
+        <div class="metric-icon">
+          <i class="bi bi-house-door"></i>
         </div>
-
-        <div class="properties-grid" id="rematesGrid">
-            <% remates.forEach(function(remate) { %>
-                <div class="property-card" data-id="<%= remate.id %>">
-                    <% if (remate.imagen) { %>
-                        <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                        <% } else { %>
-                            <img src="/img/3e4fd791f54c8bee5565036c2094309d.jpg" alt="Propiedad" class="property-image">
-                            <% } %>
-                                <div class="property-content">
-                                    <span
-                                        class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
-                                        <%= remate.estado %>
-                                    </span>
-                                    <h3 class="property-title">
-                                        <%= remate.ubicacion %>
-                                    </h3>
-                                    <div class="property-price">$<%= remate.precios %>
-                                    </div>
-                                    <div class="property-details">
-                                        <div class="detail-item">
-                                            <i class="bi bi-building"></i>
-                                            <%= remate.categoria %>
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="bi bi-door-closed"></i>
-                                            <%= remate.N_habitacion %> hab.
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="bi bi-droplet"></i>
-                                            <%= remate.N_banos %> baños
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="bi bi-calendar"></i>
-                                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                                        </div>
-                                    </div>
-                                    <p class="property-description">
-                                        <%= remate.descripcion %>
-                                    </p>
-                                    <div class="property-actions">
-                                        <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                                            <i class="bi bi-pencil"></i>
-                                            Editar
-                                        </button>
-                                        <button class="action-button"
-                                            onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                                            <i class="bi bi-trash"></i>
-                                            Eliminar
-                                        </button>
-                                    </div>
-                                </div>
-                </div>
-                <% }); %>
+        <div class="metric-info">
+          <div class="metric-value" id="totalRemates">0</div>
+          <div class="metric-label">Total de remates</div>
         </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">
+          <i class="bi bi-graph-up"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value" id="rematesActivos">0</div>
+          <div class="metric-label">Remates activos</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">
+          <i class="bi bi-currency-dollar"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value" id="montoTotal">$0</div>
+          <div class="metric-label">Monto total</div>
+        </div>
+      </div>
     </div>
 
-    <!-- añadir nuevo remate -->
-    <div id="modalNuevoRemate" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="bi bi-house-add"></i>
-                    Nuevo Remate
-                </h2>
-                <button class="close-button" onclick="cerrarModalNuevoRemate()">
-                    <i class="bi bi-x"></i>
-                </button>
-            </div>
-            <form id="formNuevoRemate" enctype="multipart/form-data" onsubmit="guardarNuevoRemate(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="ubicacion">
-                            <i class="bi bi-geo-alt"></i>
-                            Ubicación
-                        </label>
-                        <input type="text" id="ubicacion" name="ubicacion" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="precios">
-                            <i class="bi bi-currency-dollar"></i>
-                            Precio Base
-                        </label>
-                        <input type="number" id="precios" name="precios" min="0" step="0.01" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="categoria">
+    <div class="search-container">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" id="buscador" class="search-input" placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
+    </div>
+
+    <div class="properties-grid" id="rematesGrid">
+        <% remates.forEach(function(remate) { %>
+            <div class="property-card" data-id="<%= remate.id %>">
+                <% if (remate.imagen) { %>
+                    <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
+                <% } else { %>
+                    <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+                <% } %>
+                <div class="property-content">
+                    <span class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                        <%= remate.estado %>
+                    </span>
+                    <h3 class="property-title">
+                        <%= remate.ubicacion %>
+                    </h3>
+                    <div class="property-price">$<%= remate.precios %></div>
+                    <div class="property-details">
+                        <div class="detail-item">
                             <i class="bi bi-building"></i>
-                            Categoría
-                        </label>
-                        <select id="categoria" name="categoria" required>
-                            <option value="">Seleccione una categoría</option>
-                            <option value="departamento">Departamento</option>
-                            <option value="cochera">Cochera</option>
-                            <option value="terreno">Terreno</option>
-                            <option value="residencial">Residencial</option>
-                            <option value="casa">Casa</option>
-                            <option value="local">Local</option>
-                            <option value="casa_playa">Casa de Playa</option>
-                            <option value="terreno_urbano">Terreno Urbano</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="N_habitacion">
+                            <%= remate.categoria %>
+                        </div>
+                        <div class="detail-item">
                             <i class="bi bi-door-closed"></i>
-                            Número de Habitaciones
-                        </label>
-                        <input type="number" id="N_habitacion" name="N_habitacion" min="0" step="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="N_banos">
+                            <%= remate.N_habitacion %> hab.
+                        </div>
+                        <div class="detail-item">
                             <i class="bi bi-droplet"></i>
-                            Número de Baños
-                        </label>
-                        <input type="number" id="N_banos" name="N_banos" min="0" step="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="pisos">
-                            <i class="bi bi-layers"></i>
-                            Número de Pisos
-                        </label>
-                        <input type="number" id="pisos" name="pisos" min="1" step="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha_remate">
+                            <%= remate.N_banos %> baños
+                        </div>
+                        <div class="detail-item">
                             <i class="bi bi-calendar"></i>
-                            Fecha de Remate
-                        </label>
-                        <input type="date" id="fecha_remate" name="fecha_remate" required>
+                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="hora_remate">
-                            <i class="bi bi-clock"></i>
-                            Hora de Remate
-                        </label>
-                        <input type="time" id="hora_remate" name="hora_remate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">
-                            <i class="bi bi-toggle-on"></i>
-                            Estado
-                        </label>
-                        <select id="estado" name="estado" required>
-                            <option value="activo">Activo</option>
-                            <option value="en_curso">En Curso</option>
-                            <option value="finalizado">Finalizado</option>
-                        </select>
+                    <p class="property-description">
+                        <%= remate.descripcion %>
+                    </p>
+                    <div class="property-actions">
+                        <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                            <i class="bi bi-pencil"></i>
+                            Editar
+                        </button>
+                        <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                            <i class="bi bi-trash"></i>
+                            Eliminar
+                        </button>
                     </div>
                 </div>
-
-                <div class="amenities-grid">
-                    <div class="form-group">
-                        <label for="pisina">
-                            <i class="bi bi-water"></i>
-                            Piscina
-                        </label>
-                        <select id="pisina" name="pisina">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="patio">
-                            <i class="bi bi-tree"></i>
-                            Patio
-                        </label>
-                        <select id="patio" name="patio">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cocina">
-                            <i class="bi bi-cup-hot"></i>
-                            Cocina
-                        </label>
-                        <select id="cocina" name="cocina">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cochera">
-                            <i class="bi bi-car-front"></i>
-                            Cochera
-                        </label>
-                        <select id="cochera" name="cochera">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="balcon">
-                            <i class="bi bi-door-open"></i>
-                            Balcón
-                        </label>
-                        <select id="balcon" name="balcon">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="jardin">
-                            <i class="bi bi-flower1"></i>
-                            Jardín
-                        </label>
-                        <select id="jardin" name="jardin">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="comedor">
-                            <i class="bi bi-table"></i>
-                            Comedor
-                        </label>
-                        <select id="comedor" name="comedor">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="sala_start">
-                            <i class="bi bi-house-heart"></i>
-                            Sala
-                        </label>
-                        <select id="sala_start" name="sala_start">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="studio">
-                            <i class="bi bi-briefcase"></i>
-                            Estudio
-                        </label>
-                        <select id="studio" name="studio">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="lavanderia">
-                            <i class="bi bi-water"></i>
-                            Lavandería
-                        </label>
-                        <select id="lavanderia" name="lavanderia">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="descripcion">
-                        <i class="bi bi-text-paragraph"></i>
-                        Descripción
-                    </label>
-                    <textarea id="descripcion" name="descripcion" required></textarea>
-                </div>
-
-                <!-- Sección para subir imágenes -->
-                <div class="subir_img">
-                    <label for="file-upload" class="custom-file-upload">
-                        <i class="fas fa-upload"></i> Agrega una foto
-                    </label>
-                    <input type="file" id="file-upload" name="photo" accept="image/*" multiple>
-                </div>
-                <div id="image-preview">
-                    <div id="image-preview-container"></div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevoRemate()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-check-circle"></i>
-                        Guardar Remate
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal de edición -->
-    <div id="editModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="bi bi-house-gear"></i>
-                    Editar Remate
-                </h2>
-                <button class="close-button" onclick="cerrarModal()">
-                    <i class="bi bi-x"></i>
-                </button>
             </div>
-            <form id="editForm" onsubmit="guardarCambios(event)">
-                <input type="hidden" id="editId" name="id">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="editUbicacion">
-                            <i class="bi bi-geo-alt"></i>
-                            Ubicación
-                        </label>
-                        <input type="text" id="editUbicacion" name="ubicacion" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editPrecio">
-                            <i class="bi bi-currency-dollar"></i>
-                            Precio Base
-                        </label>
-                        <input type="number" id="editPrecio" name="precios" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editCategoria">
-                            <i class="bi bi-building"></i>
-                            Categoría
-                        </label>
-                        <select id="editCategoria" name="categoria" required>
-                            <option value="departamento">Departamento</option>
-                            <option value="cochera">Cochera</option>
-                            <option value="terreno">Terreno</option>
-                            <option value="residencial">Residencial</option>
-                            <option value="casa">Casa</option>
-                            <option value="local">Local</option>
-                            <option value="casa_playa">Casa de Playa</option>
-                            <option value="terreno_urbano">Terreno Urbano</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editHabitaciones">
-                            <i class="bi bi-door-closed"></i>
-                            Habitaciones
-                        </label>
-                        <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBanos">
-                            <i class="bi bi-droplet"></i>
-                            Baños
-                        </label>
-                        <input type="number" id="editBanos" name="N_banos" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="editFechaRemate">
-                            <i class="bi bi-calendar"></i>
-                            Fecha de Remate
-                        </label>
-                        <input type="date" id="editFechaRemate" name="fecha_remate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editHoraRemate">
-                            <i class="bi bi-clock"></i>
-                            Hora de Remate
-                        </label>
-                        <input type="time" id="editHoraRemate" name="hora_remate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editEstado">
-                            <i class="bi bi-toggle-on"></i>
-                            Estado
-                        </label>
-                        <select id="editEstado" name="estado" required>
-                            <option value="activo">Activo</option>
-                            <option value="en_curso">En Curso</option>
-                            <option value="finalizado">Finalizado</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="amenities-grid">
-                    <div class="form-group">
-                        <label for="editPisina">
-                            <i class="bi bi-water"></i>
-                            Piscina
-                        </label>
-                        <select id="editPisina" name="pisina">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editPatio">
-                            <i class="bi bi-tree"></i>
-                            Patio
-                        </label>
-                        <select id="editPatio" name="patio">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editCocina">
-                            <i class="bi bi-cup-hot"></i>
-                            Cocina
-                        </label>
-                        <select id="editCocina" name="cocina">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editCochera">
-                            <i class="bi bi-car-front"></i>
-                            Cochera
-                        </label>
-                        <select id="editCochera" name="cochera">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editBalcon">
-                            <i class="bi bi-door-open"></i>
-                            Balcón
-                        </label>
-                        <select id="editBalcon" name="balcon">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editJardin">
-                            <i class="bi bi-flower1"></i>
-                            Jardín
-                        </label>
-                        <select id="editJardin" name="jardin">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editComedor">
-                            <i class="bi bi-cup-straw"></i>
-                            Comedor
-                        </label>
-                        <select id="editComedor" name="comedor">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editSalaStart">
-                            <i class="bi bi-house-heart"></i>
-                            Sala Star
-                        </label>
-                        <select id="editSalaStart" name="sala_start">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editStudio">
-                            <i class="bi bi-book"></i>
-                            Estudio
-                        </label>
-                        <select id="editStudio" name="studio">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editLavanderia">
-                            <i class="bi bi-water"></i>
-                            Lavandería
-                        </label>
-                        <select id="editLavanderia" name="lavanderia">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="editPisos">
-                        <i class="bi bi-layers"></i>
-                        Número de Pisos
-                    </label>
-                    <input type="number" id="editPisos" name="pisos" min="1">
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="editDescripcion">
-                        <i class="bi bi-text-paragraph"></i>
-                        Descripción
-                    </label>
-                    <textarea id="editDescripcion" name="descripcion" required></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
-                        <i class="bi bi-x-circle"></i>
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-check-circle"></i>
-                        Guardar Cambios
-                    </button>
-                </div>
-            </form>
-        </div>
+        <% }); %>
     </div>
+    
+    
+    
+  </div>
 
-    <script>
-        // Funciones de utilidad
-        const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
+  <!-- añadir nuevo remate -->
+  <div id="modalNuevoRemate" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <i class="bi bi-house-add"></i>
+          Nuevo Remate
+        </h2>
+        <button class="close-button" onclick="cerrarModalNuevoRemate()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data" onsubmit="guardarNuevoRemate(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="ubicacion">
+              <i class="bi bi-geo-alt"></i>
+              Ubicación
+            </label>
+            <input type="text" id="ubicacion" name="ubicacion" required>
+          </div>
+          <div class="form-group">
+            <label for="precios">
+              <i class="bi bi-currency-dollar"></i>
+              Precio Base
+            </label>
+            <input type="number" id="precios" name="precios" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="categoria">
+              <i class="bi bi-building"></i>
+              Categoría
+            </label>
+            <select id="categoria" name="categoria" required>
+              <option value="">Seleccione una categoría</option>
+              <option value="departamento">Departamento</option>
+              <option value="cochera">Cochera</option>
+              <option value="terreno">Terreno</option>
+              <option value="residencial">Residencial</option>
+              <option value="casa">Casa</option>
+              <option value="local">Local</option>
+              <option value="casa_playa">Casa de Playa</option>
+              <option value="terreno_urbano">Terreno Urbano</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="N_habitacion">
+              <i class="bi bi-door-closed"></i>
+              Número de Habitaciones
+            </label>
+            <input type="number" id="N_habitacion" name="N_habitacion" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="N_banos">
+              <i class="bi bi-droplet"></i>
+              Número de Baños
+            </label>
+            <input type="number" id="N_banos" name="N_banos" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="pisos">
+              <i class="bi bi-layers"></i>
+              Número de Pisos
+            </label>
+            <input type="number" id="pisos" name="pisos" min="1" step="1">
+          </div>
+          <div class="form-group">
+            <label for="fecha_remate">
+              <i class="bi bi-calendar"></i>
+              Fecha de Remate
+            </label>
+            <input type="date" id="fecha_remate" name="fecha_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="hora_remate">
+              <i class="bi bi-clock"></i>
+              Hora de Remate
+            </label>
+            <input type="time" id="hora_remate" name="hora_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="estado">
+              <i class="bi bi-toggle-on"></i>
+              Estado
+            </label>
+            <select id="estado" name="estado" required>
+              <option value="activo">Activo</option>
+              <option value="en_curso">En Curso</option>
+              <option value="finalizado">Finalizado</option>
+            </select>
+          </div>
+        </div>
 
-        // Gestión de métricas
-        function actualizarMetricas() {
-            const remates = document.querySelectorAll('.property-card');
-            const totalRemates = remates.length;
-            let rematesActivos = 0;
-            let montoTotal = 0;
+        <div class="amenities-grid">
+          <div class="form-group">
+            <label for="pisina">
+              <i class="bi bi-water"></i>
+              Piscina
+            </label>
+            <select id="pisina" name="pisina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="patio">
+              <i class="bi bi-tree"></i>
+              Patio
+            </label>
+            <select id="patio" name="patio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cocina">
+              <i class="bi bi-cup-hot"></i>
+              Cocina
+            </label>
+            <select id="cocina" name="cocina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cochera">
+              <i class="bi bi-car-front"></i>
+              Cochera
+            </label>
+            <select id="cochera" name="cochera">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="balcon">
+              <i class="bi bi-door-open"></i>
+              Balcón
+            </label>
+            <select id="balcon" name="balcon">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="jardin">
+              <i class="bi bi-flower1"></i>
+              Jardín
+            </label>
+            <select id="jardin" name="jardin">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comedor">
+              <i class="bi bi-table"></i>
+              Comedor
+            </label>
+            <select id="comedor" name="comedor">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sala_start">
+              <i class="bi bi-house-heart"></i>
+              Sala
+            </label>
+            <select id="sala_start" name="sala_start">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="studio">
+              <i class="bi bi-briefcase"></i>
+              Estudio
+            </label>
+            <select id="studio" name="studio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lavanderia">
+              <i class="bi bi-water"></i>
+              Lavandería
+            </label>
+            <select id="lavanderia" name="lavanderia">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+        </div>
 
-            remates.forEach(remate => {
-                if (remate.querySelector('.status-active')) {
-                    rematesActivos++;
-                }
-                const precioTexto = remate.querySelector('.property-price').textContent;
-                montoTotal += formatPrice(precioTexto);
+        <div class="form-group full-width">
+          <label for="descripcion">
+            <i class="bi bi-text-paragraph"></i>
+            Descripción
+          </label>
+          <textarea id="descripcion" name="descripcion" required></textarea>
+        </div>
+
+        <!-- Sección para subir imágenes -->
+        <div class="subir_img">
+          <label for="file-upload" class="custom-file-upload">
+            <i class="fas fa-upload"></i> Agrega una foto
+          </label>
+          <input type="file" id="file-upload" name="photo" accept="image/*" multiple>
+        </div>
+        <div id="image-preview">
+          <div id="image-preview-container"></div>
+        </div>
+
+        <!-- Campo para subir anexos PDF -->
+        <div class="subir_anexo">
+          <label for="anexo-upload" class="custom-file-upload">
+            <i class="fas fa-file-upload"></i> Agrega un anexo (PDF)
+          </label>
+          <input type="file" id="anexo-upload" name="anexos" accept="application/pdf" multiple>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevoRemate()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i>
+            Guardar Remate
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de edición -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <i class="bi bi-house-gear"></i>
+          Editar Remate
+        </h2>
+        <button class="close-button" onclick="cerrarModal()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <form id="editForm" onsubmit="guardarCambios(event)">
+        <input type="hidden" id="editId" name="id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="editUbicacion">
+              <i class="bi bi-geo-alt"></i>
+              Ubicación
+            </label>
+            <input type="text" id="editUbicacion" name="ubicacion" required>
+          </div>
+          <div class="form-group">
+            <label for="editPrecio">
+              <i class="bi bi-currency-dollar"></i>
+              Precio Base
+            </label>
+            <input type="number" id="editPrecio" name="precios" required>
+          </div>
+          <div class="form-group">
+            <label for="editCategoria">
+              <i class="bi bi-building"></i>
+              Categoría
+            </label>
+            <select id="editCategoria" name="categoria" required>
+              <option value="departamento">Departamento</option>
+              <option value="cochera">Cochera</option>
+              <option value="terreno">Terreno</option>
+              <option value="residencial">Residencial</option>
+              <option value="casa">Casa</option>
+              <option value="local">Local</option>
+              <option value="casa_playa">Casa de Playa</option>
+              <option value="terreno_urbano">Terreno Urbano</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editHabitaciones">
+              <i class="bi bi-door-closed"></i>
+              Habitaciones
+            </label>
+            <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
+          </div>
+          <div class="form-group">
+            <label for="editBanos">
+              <i class="bi bi-droplet"></i>
+              Baños
+            </label>
+            <input type="number" id="editBanos" name="N_banos" min="0">
+          </div>
+          <div class="form-group">
+            <label for="editFechaRemate">
+              <i class="bi bi-calendar"></i>
+              Fecha de Remate
+            </label>
+            <input type="date" id="editFechaRemate" name="fecha_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="editHoraRemate">
+              <i class="bi bi-clock"></i>
+              Hora de Remate
+            </label>
+            <input type="time" id="editHoraRemate" name="hora_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="editEstado">
+              <i class="bi bi-toggle-on"></i>
+              Estado
+            </label>
+            <select id="editEstado" name="estado" required>
+              <option value="activo">Activo</option>
+              <option value="en_curso">En Curso</option>
+              <option value="finalizado">Finalizado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="amenities-grid">
+          <div class="form-group">
+            <label for="editPisina">
+              <i class="bi bi-water"></i>
+              Piscina
+            </label>
+            <select id="editPisina" name="pisina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editPatio">
+              <i class="bi bi-tree"></i>
+              Patio
+            </label>
+            <select id="editPatio" name="patio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editCocina">
+              <i class="bi bi-cup-hot"></i>
+              Cocina
+            </label>
+            <select id="editCocina" name="cocina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editCochera">
+              <i class="bi bi-car-front"></i>
+              Cochera
+            </label>
+            <select id="editCochera" name="cochera">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editBalcon">
+              <i class="bi bi-door-open"></i>
+              Balcón
+            </label>
+            <select id="editBalcon" name="balcon">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editJardin">
+              <i class="bi bi-flower1"></i>
+              Jardín
+            </label>
+            <select id="editJardin" name="jardin">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editComedor">
+              <i class="bi bi-cup-straw"></i>
+              Comedor
+            </label>
+            <select id="editComedor" name="comedor">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editSalaStart">
+              <i class="bi bi-house-heart"></i>
+              Sala Star
+            </label>
+            <select id="editSalaStart" name="sala_start">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editStudio">
+              <i class="bi bi-book"></i>
+              Estudio
+            </label>
+            <select id="editStudio" name="studio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editLavanderia">
+              <i class="bi bi-water"></i>
+              Lavandería
+            </label>
+            <select id="editLavanderia" name="lavanderia">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="editPisos">
+            <i class="bi bi-layers"></i>
+            Número de Pisos
+          </label>
+          <input type="number" id="editPisos" name="pisos" min="1">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="editDescripcion">
+            <i class="bi bi-text-paragraph"></i>
+            Descripción
+          </label>
+          <textarea id="editDescripcion" name="descripcion" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+            <i class="bi bi-x-circle"></i>
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i>
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Funciones de utilidad
+    const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
+
+    // Gestión de métricas
+    function actualizarMetricas() {
+      const remates = document.querySelectorAll('.property-card');
+      const totalRemates = remates.length;
+      let rematesActivos = 0;
+      let montoTotal = 0;
+
+      remates.forEach(remate => {
+        if (remate.querySelector('.status-active')) {
+          rematesActivos++;
+        }
+        const precioTexto = remate.querySelector('.property-price').textContent;
+        montoTotal += formatPrice(precioTexto);
+      });
+
+      document.getElementById('totalRemates').textContent = totalRemates;
+      document.getElementById('rematesActivos').textContent = rematesActivos;
+      document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
+    }
+
+    // Gestión de búsqueda
+    function buscarRemate() {
+      const input = document.getElementById('buscador').value.toLowerCase();
+      const remates = document.querySelectorAll('.property-card');
+
+      remates.forEach(remate => {
+        const texto = remate.textContent.toLowerCase();
+        remate.style.display = texto.includes(input) ? 'block' : 'none';
+      });
+
+      actualizarMetricas();
+    }
+
+    // Gestión de eliminación
+    function eliminarRemate(id, ubicacion) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `¿Quieres eliminar el remate en ${ubicacion}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/admin/eliminar-remate?deleteId=${id}`, {
+              method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                document.querySelector(`.property-card[data-id="${id}"]`).remove();
+                actualizarMetricas();
+                Swal.fire('Eliminado', 'El remate ha sido eliminado', 'success');
+              } else {
+                throw new Error(data.error || 'Error al eliminar el remate');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              Swal.fire('Error', error.message, 'error');
             });
-
-            document.getElementById('totalRemates').textContent = totalRemates;
-            document.getElementById('rematesActivos').textContent = rematesActivos;
-            document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
         }
+      });
+    }
 
-        // Gestión de búsqueda
-        function buscarRemate() {
-            const input = document.getElementById('buscador').value.toLowerCase();
-            const remates = document.querySelectorAll('.property-card');
+    // Gestión de nuevo remate
+    function abrirModalNuevoRemate() {
+      document.getElementById('modalNuevoRemate').style.display = 'block';
+    }
 
-            remates.forEach(remate => {
-                const texto = remate.textContent.toLowerCase();
-                remate.style.display = texto.includes(input) ? 'block' : 'none';
-            });
+    function cerrarModalNuevoRemate() {
+      document.getElementById('modalNuevoRemate').style.display = 'none';
+      document.getElementById('formNuevoRemate').reset();
+      document.getElementById('image-preview-container').innerHTML = '';
+    }
 
-            actualizarMetricas();
+    /* async function guardarNuevoRemate(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+
+      // Convertir campos numéricos
+      const numerosFields = ['precios', 'N_habitacion', 'N_banos', 'pisos'];
+      numerosFields.forEach(field => {
+        const valor = formData.get(field);
+        if (valor) {
+          formData.set(field, Number(valor));
         }
+      });
 
-        // Gestión de eliminación
-        function eliminarRemate(id, ubicacion) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: `¿Quieres eliminar el remate en ${ubicacion}?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-                        method: 'DELETE'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.querySelector(`.property-card[data-id="${id}"]`).remove();
-                                actualizarMetricas();
-                                Swal.fire('Eliminado', 'El remate ha sido eliminado', 'success');
-                            } else {
-                                throw new Error(data.error || 'Error al eliminar el remate');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire('Error', error.message, 'error');
-                        });
-                }
-            });
-        }
+      // Manejar selects
+      const selectFields = [
+        'pisina', 'patio', 'cocina', 'cochera', 'balcon',
+        'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
+      ];
 
-        // Gestión de nuevo remate
-        function abrirModalNuevoRemate() {
-            document.getElementById('modalNuevoRemate').style.display = 'block';
-        }
+      selectFields.forEach(field => {
+        const select = document.getElementById(field);
+        formData.set(field, select ? select.value : 'no');
+      });
 
-        function cerrarModalNuevoRemate() {
-            document.getElementById('modalNuevoRemate').style.display = 'none';
-            document.getElementById('formNuevoRemate').reset();
-            document.getElementById('image-preview-container').innerHTML = '';
-        }
+      // Manejar el estado
+      const estado = document.getElementById('estado').value;
+      formData.set('estado', estado);
 
-        async function guardarNuevoRemate(event) {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-
-            // Convertir campos numéricos
-            const numerosFields = ['precios', 'N_habitacion', 'N_banos', 'pisos'];
-            numerosFields.forEach(field => {
-                const valor = formData.get(field);
-                if (valor) {
-                    formData.set(field, Number(valor));
-                }
-            });
-
-            // Manejar selects
-            const selectFields = [
-                'pisina', 'patio', 'cocina', 'cochera', 'balcon',
-                'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
-            ];
-
-            selectFields.forEach(field => {
-                const select = document.getElementById(field);
-                formData.set(field, select ? select.value : 'no');
-            });
-
-            // Manejar el estado
-            const estado = document.getElementById('estado').value;
-            formData.set('estado', estado);
-
-            try {
-                const response = await fetch('/admin/nuevo-remate', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    Swal.fire({
-                        title: '¡Éxito!',
-                        text: 'Remate creado correctamente',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } else {
-                    throw new Error(data.error || 'Error al crear el remate');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error',
-                    text: error.message,
-                    icon: 'error'
-                });
-            }
-        }
-
-        function abrirModalEditar(remateId) {
-            fetch(`/admin/editar-remate/${remateId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.remate) {
-                        const { remate } = data;
-
-                        // Llenar campos básicos
-                        document.getElementById('editId').value = remate.id;
-                        document.getElementById('editUbicacion').value = remate.ubicacion;
-                        document.getElementById('editPrecio').value = Number(remate.precios);
-                        document.getElementById('editCategoria').value = remate.categoria;
-                        document.getElementById('editHabitaciones').value = Number(remate.N_habitacion) || '';
-                        document.getElementById('editBanos').value = Number(remate.N_banos) || '';
-                        document.getElementById('editPisos').value = Number(remate.pisos) || '';
-                        document.getElementById('editFechaRemate').value = remate.fecha_remate?.split('T')[0] || '';
-                        document.getElementById('editHoraRemate').value = remate.hora_remate?.split('T')[1]?.slice(0, 5) || '';
-                        document.getElementById('editDescripcion').value = remate.descripcion;
-                        document.getElementById('editEstado').value = remate.estado;
-
-                        // Manejar selects
-                        const selectFields = [
-                            'pisina', 'patio', 'cocina', 'cochera', 'balcon',
-                            'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
-                        ];
-
-                        selectFields.forEach(field => {
-                            const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
-                            if (select) {
-                                select.value = remate[field] === 'si' ? 'si' : 'no';
-                            }
-                        });
-
-                        document.getElementById('editModal').style.display = 'block';
-                    } else {
-                        Swal.fire('Error', 'Remate no encontrado', 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
-                });
-        }
-
-        async function guardarCambios(event) {
-            event.preventDefault();
-
-            const formData = new FormData(document.getElementById('editForm'));
-            const remateId = document.getElementById('editId').value;
-
-            // Convertir campos numéricos
-            const numerosFields = ['precios', 'N_habitacion', 'N_banos', 'pisos'];
-            numerosFields.forEach(field => {
-                const valor = formData.get(field);
-                if (valor) {
-                    formData.set(field, Number(valor));
-                }
-            });
-
-            // Manejar selects
-            const selectFields = [
-                'pisina', 'patio', 'cocina', 'cochera', 'balcon',
-                'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
-            ];
-
-            selectFields.forEach(field => {
-                const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
-                formData.set(field, select ? select.value : 'no');
-            });
-
-            // Manejar el estado
-            const estado = document.getElementById('editEstado').value;
-            formData.set('estado', estado);
-
-            try {
-                const response = await fetch(`/admin/actualizar-remate/${remateId}`, {
-                    method: 'PUT',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud: ' + response.statusText);
-                }
-
-                const data = await response.json();
-
-                if (data.success) {
-                    Swal.fire({
-                        title: '¡Éxito!',
-                        text: 'Remate actualizado correctamente',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } else {
-                    throw new Error(data.error || 'Error al actualizar el remate');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error',
-                    text: error.message,
-                    icon: 'error'
-                });
-            }
-        }
-
-        function cerrarModal() {
-            document.getElementById('editModal').style.display = 'none';
-            document.getElementById('editForm').reset();
-            document.getElementById('image-preview-container').innerHTML = '';
-        }
-
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            actualizarMetricas();
-
-            // Manejador para cerrar modales al hacer clic fuera
-            window.onclick = function (event) {
-                const modalNuevo = document.getElementById('modalNuevoRemate');
-                const modalEditar = document.getElementById('editModal');
-
-                if (event.target === modalNuevo) {
-                    cerrarModalNuevoRemate();
-                } else if (event.target === modalEditar) {
-                    cerrarModal();
-                }
-            };
-
-            // Manejador para la carga de imágenes
-            document.getElementById('file-upload').addEventListener('change', function (event) {
-                const files = event.target.files;
-                const minFiles = 1;
-                const maxFiles = 10;
-
-                if (files.length < minFiles || files.length > maxFiles) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
-                    });
-                    event.target.value = "";
-                    return;
-                }
-
-                const imagePreviewContainer = document.getElementById('image-preview-container');
-                imagePreviewContainer.innerHTML = "";
-
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'preview-img';
-                        imagePreviewContainer.appendChild(img);
-                    };
-
-                    reader.readAsDataURL(file);
-                }
-            });
+      try {
+        const response = await fetch('/admin/nuevo-remate', {
+          method: 'POST',
+          body: formData
         });
-    </script>
+
+        const data = await response.json();
+
+        if (data.success) {
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Remate creado correctamente',
+            icon: 'success'
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          throw new Error(data.error || 'Error al crear el remate');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error'
+        });
+      }
+    }
+ */
+    function abrirModalEditar(remateId) {
+      fetch(`/admin/editar-remate/${remateId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.remate) {
+            const {
+              remate
+            } = data;
+
+            // Llenar campos básicos
+            document.getElementById('editId').value = remate.id;
+            document.getElementById('editUbicacion').value = remate.ubicacion;
+            document.getElementById('editPrecio').value = Number(remate.precios);
+            document.getElementById('editCategoria').value = remate.categoria;
+            document.getElementById('editHabitaciones').value = Number(remate.N_habitacion) || '';
+            document.getElementById('editBanos').value = Number(remate.N_banos) || '';
+            document.getElementById('editPisos').value = Number(remate.pisos) || '';
+            document.getElementById('editFechaRemate').value = remate.fecha_remate?.split('T')[0] || '';
+            document.getElementById('editHoraRemate').value = remate.hora_remate?.split('T')[1]?.slice(0, 5) || '';
+            document.getElementById('editDescripcion').value = remate.descripcion;
+            document.getElementById('editEstado').value = remate.estado;
+
+            // Manejar selects
+            const selectFields = [
+              'pisina', 'patio', 'cocina', 'cochera', 'balcon',
+              'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
+            ];
+
+            selectFields.forEach(field => {
+              const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
+              if (select) {
+                select.value = remate[field] === 'si' ? 'si' : 'no';
+              }
+            });
+
+            document.getElementById('editModal').style.display = 'block';
+          } else {
+            Swal.fire('Error', 'Remate no encontrado', 'error');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
+        });
+    }
+
+    async function guardarCambios(event) {
+      event.preventDefault();
+
+      const formData = new FormData(document.getElementById('editForm'));
+      const remateId = document.getElementById('editId').value;
+
+      // Convertir campos numéricos
+      const numerosFields = ['precios', 'N_habitacion', 'N_banos', 'pisos'];
+      numerosFields.forEach(field => {
+        const valor = formData.get(field);
+        if (valor) {
+          formData.set(field, Number(valor));
+        }
+      });
+
+      // Manejar selects
+      const selectFields = [
+        'pisina', 'patio', 'cocina', 'cochera', 'balcon',
+        'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
+      ];
+
+      selectFields.forEach(field => {
+        const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
+        formData.set(field, select ? select.value : 'no');
+      });
+
+      // Manejar el estado
+      const estado = document.getElementById('editEstado').value;
+      formData.set('estado', estado);
+
+      try {
+        const response = await fetch(`/admin/actualizar-remate/${remateId}`, {
+          method: 'PUT',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Error en la solicitud: ' + response.statusText);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Remate actualizado correctamente',
+            icon: 'success'
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          throw new Error(data.error || 'Error al actualizar el remate');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error'
+        });
+      }
+    }
+
+    function cerrarModal() {
+      document.getElementById('editModal').style.display = 'none';
+      document.getElementById('editForm').reset();
+      document.getElementById('image-preview-container').innerHTML = '';
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarMetricas();
+
+      // Manejador para cerrar modales al hacer clic fuera
+      window.onclick = function(event) {
+        const modalNuevo = document.getElementById('modalNuevoRemate');
+        const modalEditar = document.getElementById('editModal');
+
+        if (event.target === modalNuevo) {
+          cerrarModalNuevoRemate();
+        } else if (event.target === modalEditar) {
+          cerrarModal();
+        }
+      };
+
+      // Manejador para la carga de imágenes
+      document.getElementById('file-upload').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const minFiles = 1;
+        const maxFiles = 10;
+
+        if (files.length < minFiles || files.length > maxFiles) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
+          });
+          event.target.value = "";
+          return;
+        }
+
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.innerHTML = "";
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'preview-img';
+            imagePreviewContainer.appendChild(img);
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -82,8 +82,6 @@ body {
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s ease;
-  background: #FFE5D0;
-  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
 }
 
 .progress-dots {
@@ -101,22 +99,22 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #FFE5D0;
+  background: var(--glow-color);
   position: relative;
   transition: all 0.5s ease;
-  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
+  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
 }
 
 .progress-active-line {
   position: absolute;
   width: 2px;
-  background: #FFE5D0;
+  background: var(--glow-color);
   left: 50%;
   transform: translateX(-50%);
   top: 0;
   height: 0%;
   transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
+  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
 }
 
 .progress-active-dot {
@@ -124,27 +122,38 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #FFE5D0;
+  background: var(--glow-color);
   left: 50%;
   transform: translate(-50%, -50%);
   top: 0%;
   transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
+  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
 }
 
-/* Estilos para la sección 2 (ubicación) */
-.seccion2.active .progress-indicator,
-.seccion2.active .progress-active-line,
-.seccion2.active .progress-active-dot,
-.seccion2.active .progress-dot {
-  background-color: #000000 !important;
-  box-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 15px #000000 !important;
+/* Variables CSS */
+:root {
+  /*     --glow-color: #00ff00; /* Verde brillante por defecto */
+  --glow-dark: #000000; /* Negro fosforescente */
+  --bg-light: #f4f4f4; /**/
+  --bg-dark: #1a1a1a;
 }
 
-/* Estilos para la sección 3 (usuario) */
-.seccion3.active ~ .progress-indicator, .seccion3.active ~ .progress-indicator .progress-active-line, .seccion3.active ~ .progress-indicator .progress-active-dot, .seccion3.active ~ .progress-indicator .progress-dots .progress-dot {
-  background: #FFE5D0;
-  box-shadow: 0 0 5px #FFE5D0, 0 0 10px #FFE5D0, 0 0 15px #FFE5D0;
+/* Cambios dinámicos de color basados en clases de sección activa */
+.container_formulario.seccion2-activa .progress-indicator,
+.container_formulario.seccion2-activa .progress-active-line,
+.container_formulario.seccion2-activa .progress-active-dot,
+.container_formulario.seccion2-activa .progress-dot {
+  background: var(--glow-dark);
+  box-shadow: 0 0 5px var(--glow-dark), 0 0 10px var(--glow-dark), 0 0 15px var(--glow-dark);
+}
+
+/* Restaurar colores para otras secciones */
+.container_formulario:not(.seccion2-activa) .progress-indicator,
+.container_formulario:not(.seccion2-activa) .progress-active-line,
+.container_formulario:not(.seccion2-activa) .progress-active-dot,
+.container_formulario:not(.seccion2-activa) .progress-dot {
+  background: var(--glow-color);
+  box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
 }
 
 .seccion {

@@ -1,5 +1,5 @@
-
-  <!-- Títulos principales fijos -->
+<!--   <section class="formulario_general" id="formulario_general">
+ -->  <!-- Títulos principales fijos -->
   <div class="fixed-titles">
     <h1>BIENVENIDO</h1>
     <h1>REMAJUD</h1>
@@ -100,7 +100,7 @@
             <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
           </div>
           <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-          <button type="button" class="submit-btn siguiente">SIGUIENTE →</button>
+          <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
         </form>
       </div>
     </div>
@@ -130,30 +130,18 @@
       </div>
     </div>
   </div>
+  <!-- </section> -->
+
+  <!-- diseño registro -->
   <link rel="stylesheet" href="/css/registro/registro.css">
+
+  <!-- script y particulas de registro -->
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
 
-  <script>
-    document.addEventListener('scroll', () => {
-      const seccion1 = document.getElementById('seccion1');
-      const seccion2 = document.getElementById('seccion2');
-      const seccion3 = document.getElementById('seccion3');
-      const body = document.body;
 
-      if (seccion1.getBoundingClientRect().top <= window.innerHeight) {
-        body.style.backgroundColor = '#000000';
-      } else if (seccion2.getBoundingClientRect().top <= window.innerHeight) {
-        body.style.backgroundColor = '#ffffff';
-      } else if (seccion3.getBoundingClientRect().top <= window.innerHeight) {
-        body.style.backgroundColor = '#000000';
-      } else {
-        body.style.backgroundColor = '#ffffff';
-      }
-    });
 
-</script>
-
+  <!-- script de datos formulario -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".finalizar").addEventListener("click", async (e) => {

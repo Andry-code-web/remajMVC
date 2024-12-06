@@ -1,3 +1,4 @@
+<section class="login:_general" id="login_general">
 <div class="contenido_login" id="contenedor_login">
   <canvas id="particleCanvas"></canvas>
   <div class="login-box">
@@ -12,28 +13,25 @@
         <label for="contrasena">Contraseña</label>
       </div>
       <button type="submit" class="submit-btn">
-        <span></span>
-        <span></span>
-        <span></span>
         Iniciar sesión
       </button>
     </form>
     <p class="register-link">¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
   </div>
 </div>
+</section>
 
-<script type="module" src="/js/network_login.js"></script>
-
+  <!-- script particulas login -->
+<script type="module" src="/js/componentes/network_login.js"></script>
 <link rel="stylesheet" href="/css/login/login.css">
 
 <script type="module">
   import {
     NetworkAnimationL
-  } from '../../js/network_login.js';
+  } from '../../js/componentes/network_login.js';
   const canvas = document.getElementById("particleCanvas");
   const networkAnimationL = new NetworkAnimationL(canvas);
 
-  // Handle form submission
   document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 

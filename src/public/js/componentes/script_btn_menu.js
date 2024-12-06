@@ -156,4 +156,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }); 
         return closestPosition; 
     } 
-}); 
+});   

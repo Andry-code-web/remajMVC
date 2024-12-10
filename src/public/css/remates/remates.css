@@ -17,6 +17,14 @@
   box-sizing: border-box;
 }
 
+.prueva1 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+  grid-template-rows: repeat(auto1 1fr);
+  row-gap: 2rem;
+}
+
 .banner_remates2 {
   position: relative;
   width: 100%;
@@ -95,7 +103,8 @@ form {
   .parent {
     grid-template-columns: 1fr;
   }
-  .div1, .div7 {
+  .div1,
+  .div7 {
     grid-column: span 1;
   }
 }
@@ -108,7 +117,6 @@ form {
   margin: 20px;
   text-align: center;
   position: relative;
-  top: 111%;
 }
 
 .image-container {

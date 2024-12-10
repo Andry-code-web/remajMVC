@@ -41,7 +41,7 @@ app.use('/auctions', require('./routes/auction.routes'));
 app.use('/', require('./routes/home.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
-app.use('/error', require('./routes/errores.routes'));
+app.use('/errores', require('./routes/errores.routes'))
 
 
 // Socket.IO

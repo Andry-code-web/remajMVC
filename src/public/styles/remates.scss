@@ -6,6 +6,15 @@
     box-sizing: border-box;
 }
 
+.prueva1 {
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 2rem;
+    grid-template-rows: repeat(auto1 1fr);
+    row-gap: 2rem;
+}
+
 .banner_remates2 {
     position: relative;
     width: 100%;
@@ -85,7 +94,8 @@ form {
         grid-template-columns: 1fr;
     }
 
-    .div1, .div7 {
+    .div1,
+    .div7 {
         grid-column: span 1;
     }
 }
@@ -99,7 +109,6 @@ form {
     margin: 20px;
     text-align: center;
     position: relative;
-    top: 111%;
 }
 
 .image-container {
@@ -114,11 +123,11 @@ form {
 }
 
 .image-container .foto_casa {
-    transition: transform 0.5s ease; 
+    transition: transform 0.5s ease;
 }
 
 .image-container:hover .foto_casa {
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
 
 .etiqueta_imagen {
@@ -137,15 +146,15 @@ form {
 }
 
 .etiqueta_imagen:hover {
-    background-color: #00665e; 
+    background-color: #00665e;
     color: white;
 }
 
-.enlaces_carta{
+.enlaces_carta {
     text-decoration: none;
 }
 
-.card-content h2{
+.card-content h2 {
     color: #0a0000;
 }
 
@@ -207,5 +216,3 @@ form {
 .card-content .view-detail:hover {
     background-color: #004d40;
 }
-
-

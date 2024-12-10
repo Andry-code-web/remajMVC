@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REMAJUD ERROR304</title>
-    <link rel="stylesheet" href="/css/errores/errores.css">
-    <!-- CDN DE ICONOS REMIX -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <!-- ESTILOS GLOBALES -->
-    <link rel="stylesheet" href="/css/globales/globales.css">
-</head>
-
-<body>
-    <%- include('../partials/navbar') %>
     <div class="container_errores">
        
         <h1 class="error">304 -Parece que no hay cambios nuevos en el contenido que solicitaste.</h1>
@@ -21,43 +6,4 @@
             Si necesitas actualizar la página, recarga el navegador.</p>
         <a href="/" class="btn_errores">Volver al Inicio</a>
     </div>
-    <%- include('../partials/footer') %>
-</body>
-<script>
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      const banner = document.getElementById('banner');
-      const categorias = document.getElementById('categorias');
-      const subastas = document.getElementById('subastas');
-      const bannerBottom = banner.getBoundingClientRect().bottom;
-      const categoriasBottom = categorias.getBoundingClientRect().bottom;
-      const subastasTop = subastas.getBoundingClientRect().top;
-      if (bannerBottom > 0) {
-        header.style.color = '#fffcfc';
-      } else if (categoriasBottom > 0) {
-        header.style.color = '#0a0000';
-      } else if (subastasTop < window.innerHeight) {
-        header.style.color = '#0a0000';
-      } else {
-        header.style.color = 'black';
-      }
-    });
-  </script>
-
-  <script>
-    let lastScrollPosition = 0;
-    const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', function() {
-      const currentScrollPosition = window.pageYOffset;
-
-      if (currentScrollPosition > lastScrollPosition) {
-        navbar.classList.add('hidden');
-      } else {
-        navbar.classList.remove('hidden');
-      }
-
-      lastScrollPosition = currentScrollPosition;
-    });
-  </script>
-</html>
+ 

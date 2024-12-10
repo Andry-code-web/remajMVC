@@ -1,91 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remates Peru || REMATES</title>
-    <link rel="stylesheet" href="/css/remates/remates.css">
-    <!-- CDN DE ICONOS REMIX -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <!-- ESTILOS GLOBALES -->
-    <link rel="stylesheet" href="/css/globales/globales.css">
-</head>
-
-<body>
-    <%- include('../partials/navbar') %>
-        <!-- banner remates -->
-        <section>
-            <div class="banner_remates2" id="banner_remates">
-                <div class="overlay">
-                    <h1>remates</h1>
-                </div>
+<div class="banner_remates2" id="banner_remates">
+    <div id="banner" class="overlay">
+        <h1>REMATES</h1>
+    </div>
+</div>
+<div class="prueva1">
+    <!-- tarjeta v1 -->
+    <div class="card">
 
 
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
             </div>
-        </section>
-        <section>
-            <!-- tarjeta v1 -->
-            <div class="card">
+        </a>
+    </div>
+    <div class="card">
 
-                <div class="image-container">
-                    <img class="foto_casa"
-                        src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
-                        alt="House Image">
-                    <a href="#" class="etiqueta_imagen">mas informacion</a>
-                    <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
-                    <h6 class="info_img_tex">en venta</h6>
-                </div>
-                <a class="enlaces_carta" href="#">
-                    <div class="card-content">
-                        <h2>casa de campo</h2>
-                        <p class="address">110 hola mundo, nose donde queda</p>
-                        <p class="price">$90,000</p>
-                        <p class="details">4 habitacion | 2 Baños | 360 metros</p>
-                    </div>
-                </a>
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
             </div>
+        </a>
+    </div>
+    <div class="card">
 
-            <%- include('../partials/footer') %>
-        </section>
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+    <div class="card">
 
-        <script>
-            window.addEventListener('scroll', () => {
-                const header = document.getElementById('header');
-                const banner = document.getElementById('banner');
-                const categorias = document.getElementById('categorias');
-                const subastas = document.getElementById('subastas');
-                const bannerBottom = banner.getBoundingClientRect().bottom;
-                const categoriasBottom = categorias.getBoundingClientRect().bottom;
-                const subastasTop = subastas.getBoundingClientRect().top;
-                if (bannerBottom > 0) {
-                    header.style.color = '#fffcfc';
-                } else if (categoriasBottom > 0) {
-                    header.style.color = '#0a0000';
-                } else if (subastasTop < window.innerHeight) {
-                    header.style.color = '#0a0000';
-                } else {
-                    header.style.color = 'black';
-                }
-            });
-        </script>
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+    <div class="card">
 
-        <script>
-            let lastScrollPosition = 0;
-            const navbar = document.querySelector('.navbar');
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+    <div class="card">
 
-            window.addEventListener('scroll', function () {
-                const currentScrollPosition = window.pageYOffset;
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+    <div class="card">
 
-                if (currentScrollPosition > lastScrollPosition) {
-                    navbar.classList.add('hidden');
-                } else {
-                    navbar.classList.remove('hidden');
-                }
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+    <div class="card">
 
-                lastScrollPosition = currentScrollPosition;
-            });
-        </script>
-</body>
-
-</html>
+        <div class="image-container">
+            <img class="foto_casa"
+                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
+                alt="House Image">
+            <a href="#" class="etiqueta_imagen">mas informacion</a>
+            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
+            <h6 class="info_img_tex">en venta</h6>
+        </div>
+        <a class="enlaces_carta" href="#">
+            <div class="card-content">
+                <h2>casa de campo</h2>
+                <p class="address">110 hola mundo, nose donde queda</p>
+                <p class="price">$90,000</p>
+                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
+            </div>
+        </a>
+    </div>
+</div>

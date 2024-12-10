@@ -1,9 +1,12 @@
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
+require('dotenv').config();
 
 // Controlador para error 400
 const geterror400 = async (req, res) => {
     try {
-        res.render('errores/error400', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error400'
         });
     } catch (error) {
@@ -16,7 +19,7 @@ const geterror400 = async (req, res) => {
 // Controlador para error 401
 const geterror401 = async (req, res) => {
     try {
-        res.render('errores/error401', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error401'
         });
     } catch (error) {
@@ -29,7 +32,7 @@ const geterror401 = async (req, res) => {
 // Controlador para error 403
 const geterror403 = async (req, res) => {
     try {
-        res.render('errores/error403', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error403'
         });
     } catch (error) {
@@ -42,7 +45,7 @@ const geterror403 = async (req, res) => {
 // Controlador para error 404
 const geterror404 = async (req, res) => {
     try {
-        res.render('errores/error404', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error404'
         });
     } catch (error) {
@@ -55,7 +58,7 @@ const geterror404 = async (req, res) => {
 // Controlador para error 500
 const geterror500 = async (req, res) => {
     try {
-        res.render('errores/error500', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error500'
         });
     } catch (error) {
@@ -68,7 +71,7 @@ const geterror500 = async (req, res) => {
 // Controlador para error 502
 const geterror502 = async (req, res) => {
     try {
-        res.render('errores/error502', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error502'
         });
     } catch (error) {
@@ -80,7 +83,7 @@ const geterror502 = async (req, res) => {
 // Controlador para error 503
 const geterror503 = async (req, res) => {
     try {
-        res.render('errores/error503', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error503'
         });
     } catch (error) {
@@ -92,7 +95,7 @@ const geterror503 = async (req, res) => {
 // Controlador para error 504
 const geterror504 = async (req, res) => {
     try {
-        res.render('errores/error504', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error504'
         });
     } catch (error) {
@@ -105,7 +108,7 @@ const geterror504 = async (req, res) => {
 // Controlador para error 304
 const geterror304 = async (req, res) => {
     try {
-        res.render('errores/error304', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error304'
         }
         );
@@ -119,7 +122,7 @@ const geterror304 = async (req, res) => {
 // Controlador para error 204
 const geterror204 = async (req, res) => {
     try {
-        res.render('errores/error204', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/error204'
         });
     } catch (error) {
@@ -132,7 +135,7 @@ const geterror204 = async (req, res) => {
 // Controlador para error CORS
 const geterrorCORS = async (req, res) => {
     try {
-        res.render('errores/errorCORS', {
+        res.render('layouts/errores_layouts', {
             errores: 'errores/errorCORS'
         });
     } catch (error) {
@@ -145,8 +148,8 @@ const geterrorCORS = async (req, res) => {
 //Controlador para error SSL
 const geterrorSSL = async (req, res) => {
     try {
-        res.render('errores/errorSSL', {
-            errores: 'errores/error204'
+        res.render('layouts/errores_layouts', {
+            errores: 'errores/errorSSL'
         });
     } catch (error) {
         res.status(500).render('errores/errorSSL', {

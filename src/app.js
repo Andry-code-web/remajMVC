@@ -5,6 +5,7 @@ const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 const morgan = require("morgan");
+const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
 require('dotenv').config();
 
@@ -28,8 +29,15 @@ app.use(session({
   }
 }));
 
+app.use(flash());
 app.use(morgan("dev"));
 app.use(setUserLocals);
+
+// Middleware para pasar mensajes flash a las vistas
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error');
+  next();
+});
 
 // View engine
 app.set('view engine', 'ejs');
@@ -41,7 +49,6 @@ app.use('/admin', require('./routes/admin.routes'));
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
-app.use('/Login_admin', require('./routes/login_admin.routes'));
 
 // Socket.IO
 io.on('connection', (socket) => {

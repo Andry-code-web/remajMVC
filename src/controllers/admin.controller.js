@@ -5,7 +5,50 @@ const {
   agregarImagenes,
   agregarAnexos,
   deleteRemate,
+  getUsuarioAdmin,
+  getRemateById,
+  updateRemate
 } = require('../models/admin.model');
+
+// Vista administrador
+exports.getloginadmin = async (req, res) => {
+  try {
+    res.render('admin/login');
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
+
+// Lógica para el login
+exports.loginAdmin = async (req, res) => {
+  const { correo, contrasena } = req.body;
+
+  try {
+    const usuario = await getUsuarioAdmin(correo, contrasena);
+
+    if (usuario) {
+      // Guardar la sesión del usuario
+      req.session.usuario = usuario;
+      res.redirect('/admin/index');
+    } else {
+      req.flash('error', 'Datos incorrectos');
+      res.redirect('/admin/login');
+    }
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    res.status(500).send('Error al iniciar sesión');
+  }
+};
+
+// Lógica para logout
+exports.logoutAdmin = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Error al cerrar sesión');
+    }
+    res.redirect('/admin/login');
+  });
+};
 
 // Obtener todos los remates
 exports.getAlladmin = async (req, res) => {
@@ -16,7 +59,6 @@ exports.getAlladmin = async (req, res) => {
     // Verifica que las imágenes se asocien correctamente a los remates
     const rematesConImagenes = remates.map(remate => {
       const imagen = img_inmuebles.find(img => img.remates_id === remate.id);
-      console.log(imagen); // Verifica que la imagen esté siendo encontrada
       return {
         ...remate,
         imagen: imagen ? imagen.imagenes_inmueble : null
@@ -75,5 +117,50 @@ exports.deleteRemate = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el remate:', error);
     res.json({ success: false, error: error.message });
+  }
+};
+
+// Obtener los datos de un remate para editar
+exports.getRemateForEdit = async (req, res) => {
+  try {
+    const remateId = req.params.id;
+    const remate = await getRemateById(remateId);
+    res.json(remate);
+  } catch (error) {
+    console.error('Error al obtener los datos del remate:', error);
+    res.status(500).json({ error: 'Error al obtener los datos del remate' });
+  }
+};
+
+// Guardar los cambios de un remate
+exports.updateRemate = async (req, res) => {
+  try {
+    const remateId = req.params.id;
+    const {
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
+    } = req.body;
+
+    // Actualizar el remate en la base de datos
+    await updateRemate(remateId, [
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
+    ]);
+
+    // Procesar imágenes y anexos
+    if (req.files["photo"]) {
+      const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
+      await agregarImagenes(imagenes);
+    }
+
+    if (req.files["anexos"]) {
+      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
+      await agregarAnexos(anexos);
+    }
+
+    res.status(200).json({ success: true, message: "Remate actualizado exitosamente" });
+  } catch (error) {
+    console.error("Error al actualizar el remate:", error);
+    res.status(500).json({ success: false, message: "Hubo un problema al actualizar el remate", error: error.message });
   }
 };

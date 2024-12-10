@@ -17,7 +17,7 @@
   <div class="container_formulario">
 
     <!-- Primera seccion -->
-    <div class="seccion seccion1 active" id="seccion1" style="none">
+    <div class="seccion seccion1 active" id="seccion1" >
       <div class="texto_grande">
         <h2 class="subtitle">REGISTRO</h2>
       </div>
@@ -139,7 +139,23 @@
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
 
-
+  <!-- script para llamar al navbar -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      const banner = document.getElementById('seccion2');
+      const bannerBottom = banner.getBoundingClientRect().bottom;
+      if (bannerBottom > 0) {
+        header.style.color = '#fffcfc';
+      } else if (categoriasBottom > 0) {
+        header.style.color = '#0a0000';
+      } else if (subastasTop < window.innerHeight) {
+        header.style.color = '#0a0000';
+      } else {
+        header.style.color = 'black';
+      }
+    });
+  </script>
 
   <!-- script de datos formulario -->
   <script>
@@ -165,6 +181,7 @@
           condiciones: document.querySelector("[name='terminos_condiciones']").checked,
         };
         
+
         // Validar campos obligatorios
         const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== 'condiciones');
         if (camposVacios.length > 0) {

@@ -1,4 +1,4 @@
-<section class="login:_general" id="login_general">
+<section class="login_general" id="login_general">
 <div class="contenido_login" id="contenedor_login">
   <canvas id="particleCanvas"></canvas>
   <div class="login-box">
@@ -23,7 +23,7 @@
 
   <!-- script particulas login -->
 <script type="module" src="/js/componentes/network_login.js"></script>
-<link rel="stylesheet" href="/css/login/login.css">
+<link rel="stylesheet" href="/css/login/login.cssz">
 
 <script type="module">
   import {
@@ -59,10 +59,10 @@
   });
 </script>
 
-<script>
+<!-- <script>
   window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    const banner = document.getElementById('contenedor_login');
+    const header = document.getElementById('login_general');
+    const banner = document.getElementById('');
     const bannerBottom = banner.getBoundingClientRect().bottom;
     if (bannerBottom > 0) {
       header.style.color = '#fffcfc';
@@ -74,4 +74,4 @@
       header.style.color = 'black';
     }
   });
-</script>
+</script> -->

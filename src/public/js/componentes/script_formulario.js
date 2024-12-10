@@ -66,10 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeBackgroundColor = (index) => {
         secciones.forEach((seccion, i) => {
             if (i === index) {
-                seccion.style.backgroundColor = i === 1 ? '#ffffff' : '#242424';
+                seccion.style.backgroundColor = ""; // Deja que el fondo sea gestionado por CSS.
             }
         });
     };
+    
 
     // Transiciones entre secciones
     const animateTransition = (index) => {

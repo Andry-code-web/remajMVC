@@ -143,18 +143,25 @@
   <script>
     window.addEventListener('scroll', () => {
       const header = document.getElementById('header');
-      const banner = document.getElementById('seccion2');
-      const bannerBottom = banner.getBoundingClientRect().bottom;
-      if (bannerBottom > 0) {
-        header.style.color = '#fffcfc';
-      } else if (categoriasBottom > 0) {
-        header.style.color = '#0a0000';
-      } else if (subastasTop < window.innerHeight) {
-        header.style.color = '#0a0000';
+      const seccion1 = document.getElementById('seccion1');
+      const seccion2 = document.getElementById('seccion2');
+      const seccion3 = document.getElementById('seccion3');
+    
+      const seccion1Bottom = seccion1.getBoundingClientRect().bottom;
+      const seccion2Bottom = seccion2.getBoundingClientRect().bottom;
+      const seccion3Top = seccion3.getBoundingClientRect().top;
+    
+      if (seccion1Bottom > 0) {
+        header.style.color = '#ffffff';
+      } else if (seccion2Bottom > 0) {
+        header.style.color = '#000000';
+      } else if (seccion3Top < window.innerHeight) {
+        header.style.color = '#ffffff';
       } else {
         header.style.color = 'black';
       }
     });
+    
   </script>
 
   <!-- script de datos formulario -->

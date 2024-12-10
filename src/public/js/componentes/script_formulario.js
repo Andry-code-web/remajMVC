@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonesSiguiente = document.querySelectorAll(".siguiente");
     const botonesAnterior = document.querySelectorAll(".anterior");
     const body = document.body;
-    const navbar = document.querySelector(".navbar");
     const fixedTitles = document.querySelector(".fixed-titles");
     const progressIndicator = document.querySelector(".progress-indicator");
     const progressLine = document.querySelector(".progress-active-line");
@@ -17,6 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressDots = document.querySelectorAll(".progress-dot");
 
     let currentIndex = 0;
+
+    // Colores definidos
+    const colors = {
+        white: '#ffffff',
+        black: '#000000'
+    };
 
     // Actualizar progreso visual
     const updateProgress = (index) => {
@@ -32,39 +37,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Actualizar colores de la barra de progreso según la sección activa
+    // Actualizar colores según la sección
     const updateColors = (index) => {
-        const progressElements = [
-            progressIndicator,
-            progressLine,
-            progressDot,
-            ...progressDots
-        ];
-
-        if (index === 1) {
-            // Sección 2 (Ubicación) - Negro fosforescente
-            progressElements.forEach((element) => {
-                element.style.background = colors.glowBlack;
-                element.style.boxShadow = `0 0 5px ${colors.glowBlack}, 0 0 10px ${colors.glowBlack}, 0 0 15px ${colors.glowBlack}`;
+        const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
+        
+        if (index === 1) { // Sección de Ubicación
+            // Cambiar a negro fosforescente para la barra de progreso
+            progressElements.forEach(element => {
+                element.style.backgroundColor = colors.black;
+                element.style.boxShadow = `0 0 5px ${colors.black}, 0 0 10px ${colors.black}, 0 0 15px ${colors.black}`;
             });
-            fixedTitles.style.color = colors.glowBlack;
-            navbar && (navbar.style.color = colors.glowBlack);
-        } else if (index === 0) {
-            // Primera sección - Blanco
-            progressElements.forEach((element) => {
-                element.style.background = colors.white;
+            // Color normal para el título
+            fixedTitles.style.color = colors.black;
+            fixedTitles.style.textShadow = 'none';
+        } else { // Sección de Registro y Usuario
+            // Cambiar a blanco fosforescente para la barra de progreso
+            progressElements.forEach(element => {
+                element.style.backgroundColor = colors.white;
                 element.style.boxShadow = `0 0 5px ${colors.white}, 0 0 10px ${colors.white}, 0 0 15px ${colors.white}`;
             });
+            // Color normal para el título
             fixedTitles.style.color = colors.white;
-            navbar && (navbar.style.color = colors.white);
-        } else {
-            // Otras secciones - Colores originales
-            progressElements.forEach((element) => {
-                element.style.background = colors.glowColor;
-                element.style.boxShadow = `0 0 5px ${colors.glowColor}, 0 0 10px ${colors.glowColor}, 0 0 15px ${colors.glowColor}`;
-            });
-            fixedTitles.style.color = colors.primaryColor;
-            navbar && (navbar.style.color = colors.primaryColor);
+            fixedTitles.style.textShadow = 'none';
         }
     };
 
@@ -72,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeBackgroundColor = (index) => {
         secciones.forEach((seccion, i) => {
             if (i === index) {
-                seccion.style.backgroundColor = i === 1 ? colors.bgLight : colors.bgDark;
+                seccion.style.backgroundColor = i === 1 ? '#ffffff' : '#242424';
             }
         });
     };
@@ -93,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const subtitle = nextSection.querySelector(".subtitle");
             if (subtitle) {
                 subtitle.style.animation = "none";
-                subtitle.offsetHeight; // Forzar reflujo para reiniciar la animación
+                subtitle.offsetHeight;
                 subtitle.style.animation = "glitchAnimation 0.5s ease-out forwards";
             }
         }
@@ -134,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return isValid;
     };
 
-    // Manejo de navegación entre secciones
+    // Eventos de navegación
     botonesSiguiente.forEach((boton) => {
         boton.addEventListener("click", () => {
             const currentForm = secciones[currentIndex].querySelector("form");

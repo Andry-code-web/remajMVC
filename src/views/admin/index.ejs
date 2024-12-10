@@ -62,63 +62,65 @@
 
     <div class="search-container">
       <i class="bi bi-search search-icon"></i>
-      <input type="text" id="buscador" class="search-input" placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
+      <input type="text" id="buscador" class="search-input" placeholder="Buscar por ubicación, precio o categoría..."
+        onkeyup="buscarRemate()">
     </div>
 
     <div class="properties-grid" id="rematesGrid">
-        <% remates.forEach(function(remate) { %>
-            <div class="property-card" data-id="<%= remate.id %>">
-                <% if (remate.imagen) { %>
-                    <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                <% } else { %>
-                    <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-                <% } %>
+      <% remates.forEach(function(remate) { %>
+        <div class="property-card" data-id="<%= remate.id %>">
+          <% if (remate.imagen) { %>
+            <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
+            <% } else { %>
+              <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+              <% } %>
                 <div class="property-content">
-                    <span class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
-                        <%= remate.estado %>
-                    </span>
-                    <h3 class="property-title">
-                        <%= remate.ubicacion %>
-                    </h3>
-                    <div class="property-price">$<%= remate.precios %></div>
-                    <div class="property-details">
-                        <div class="detail-item">
-                            <i class="bi bi-building"></i>
-                            <%= remate.categoria %>
-                        </div>
-                        <div class="detail-item">
-                            <i class="bi bi-door-closed"></i>
-                            <%= remate.N_habitacion %> hab.
-                        </div>
-                        <div class="detail-item">
-                            <i class="bi bi-droplet"></i>
-                            <%= remate.N_banos %> baños
-                        </div>
-                        <div class="detail-item">
-                            <i class="bi bi-calendar"></i>
-                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                        </div>
+                  <span class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                    <%= remate.estado %>
+                  </span>
+                  <h3 class="property-title">
+                    <%= remate.ubicacion %>
+                  </h3>
+                  <div class="property-price">$<%= remate.precios %>
+                  </div>
+                  <div class="property-details">
+                    <div class="detail-item">
+                      <i class="bi bi-building"></i>
+                      <%= remate.categoria %>
                     </div>
-                    <p class="property-description">
-                        <%= remate.descripcion %>
-                    </p>
-                    <div class="property-actions">
-                        <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                            <i class="bi bi-pencil"></i>
-                            Editar
-                        </button>
-                        <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                            <i class="bi bi-trash"></i>
-                            Eliminar
-                        </button>
+                    <div class="detail-item">
+                      <i class="bi bi-door-closed"></i>
+                      <%= remate.N_habitacion %> hab.
                     </div>
+                    <div class="detail-item">
+                      <i class="bi bi-droplet"></i>
+                      <%= remate.N_banos %> baños
+                    </div>
+                    <div class="detail-item">
+                      <i class="bi bi-calendar"></i>
+                      <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                    </div>
+                  </div>
+                  <p class="property-description">
+                    <%= remate.descripcion %>
+                  </p>
+                  <div class="property-actions">
+                    <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                      <i class="bi bi-pencil"></i>
+                      Editar
+                    </button>
+                    <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                      <i class="bi bi-trash"></i>
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
-            </div>
+        </div>
         <% }); %>
     </div>
-    
-    
-    
+
+
+
   </div>
 
   <!-- añadir nuevo remate -->
@@ -133,7 +135,8 @@
           <i class="bi bi-x"></i>
         </button>
       </div>
-      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data" onsubmit="guardarNuevoRemate(event)">
+      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data"
+        onsubmit="guardarNuevoRemate(event)">
         <div class="form-grid">
           <div class="form-group">
             <label for="ubicacion">
@@ -625,8 +628,8 @@
       }).then((result) => {
         if (result.isConfirmed) {
           fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-              method: 'DELETE'
-            })
+            method: 'DELETE'
+          })
             .then(response => response.json())
             .then(data => {
               if (data.success) {
@@ -714,139 +717,22 @@
       }
     }
  */
-    function abrirModalEditar(remateId) {
-      fetch(`/admin/editar-remate/${remateId}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.remate) {
-            const {
-              remate
-            } = data;
-
-            // Llenar campos básicos
-            document.getElementById('editId').value = remate.id;
-            document.getElementById('editUbicacion').value = remate.ubicacion;
-            document.getElementById('editPrecio').value = Number(remate.precios);
-            document.getElementById('editCategoria').value = remate.categoria;
-            document.getElementById('editHabitaciones').value = Number(remate.N_habitacion) || '';
-            document.getElementById('editBanos').value = Number(remate.N_banos) || '';
-            document.getElementById('editPisos').value = Number(remate.pisos) || '';
-            document.getElementById('editFechaRemate').value = remate.fecha_remate?.split('T')[0] || '';
-            document.getElementById('editHoraRemate').value = remate.hora_remate?.split('T')[1]?.slice(0, 5) || '';
-            document.getElementById('editDescripcion').value = remate.descripcion;
-            document.getElementById('editEstado').value = remate.estado;
-
-            // Manejar selects
-            const selectFields = [
-              'pisina', 'patio', 'cocina', 'cochera', 'balcon',
-              'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
-            ];
-
-            selectFields.forEach(field => {
-              const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
-              if (select) {
-                select.value = remate[field] === 'si' ? 'si' : 'no';
-              }
-            });
-
-            document.getElementById('editModal').style.display = 'block';
-          } else {
-            Swal.fire('Error', 'Remate no encontrado', 'error');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
-        });
-    }
-
-    async function guardarCambios(event) {
-      event.preventDefault();
-
-      const formData = new FormData(document.getElementById('editForm'));
-      const remateId = document.getElementById('editId').value;
-
-      // Convertir campos numéricos
-      const numerosFields = ['precios', 'N_habitacion', 'N_banos', 'pisos'];
-      numerosFields.forEach(field => {
-        const valor = formData.get(field);
-        if (valor) {
-          formData.set(field, Number(valor));
-        }
-      });
-
-      // Manejar selects
-      const selectFields = [
-        'pisina', 'patio', 'cocina', 'cochera', 'balcon',
-        'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'
-      ];
-
-      selectFields.forEach(field => {
-        const select = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
-        formData.set(field, select ? select.value : 'no');
-      });
-
-      // Manejar el estado
-      const estado = document.getElementById('editEstado').value;
-      formData.set('estado', estado);
-
-      try {
-        const response = await fetch(`/admin/actualizar-remate/${remateId}`, {
-          method: 'PUT',
-          body: formData
-        });
-
-        if (!response.ok) {
-          throw new Error('Error en la solicitud: ' + response.statusText);
-        }
-
-        const data = await response.json();
-
-        if (data.success) {
-          Swal.fire({
-            title: '¡Éxito!',
-            text: 'Remate actualizado correctamente',
-            icon: 'success'
-          }).then(() => {
-            window.location.reload();
-          });
-        } else {
-          throw new Error(data.error || 'Error al actualizar el remate');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-          title: 'Error',
-          text: error.message,
-          icon: 'error'
-        });
-      }
-    }
-
-    function cerrarModal() {
-      document.getElementById('editModal').style.display = 'none';
-      document.getElementById('editForm').reset();
-      document.getElementById('image-preview-container').innerHTML = '';
-    }
 
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
       actualizarMetricas();
 
       // Manejador para cerrar modales al hacer clic fuera
-      window.onclick = function(event) {
+      window.onclick = function (event) {
         const modalNuevo = document.getElementById('modalNuevoRemate');
-        const modalEditar = document.getElementById('editModal');
 
         if (event.target === modalNuevo) {
           cerrarModalNuevoRemate();
-        } else if (event.target === modalEditar) {
-          cerrarModal();
         }
       };
 
       // Manejador para la carga de imágenes
-      document.getElementById('file-upload').addEventListener('change', function(event) {
+      document.getElementById('file-upload').addEventListener('change', function (event) {
         const files = event.target.files;
         const minFiles = 1;
         const maxFiles = 10;
@@ -868,7 +754,7 @@
           const file = files[i];
           const reader = new FileReader();
 
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             const img = document.createElement('img');
             img.src = e.target.result;
             img.className = 'preview-img';
@@ -880,6 +766,7 @@
       });
     });
   </script>
+
 </body>
 
 </html>

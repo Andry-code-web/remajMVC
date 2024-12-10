@@ -41,6 +41,7 @@ app.use('/admin', require('./routes/admin.routes'));
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
+app.use('/Login_admin', require('./routes/login_admin.routes'));
 
 // Socket.IO
 io.on('connection', (socket) => {

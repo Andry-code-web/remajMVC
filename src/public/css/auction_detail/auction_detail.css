@@ -1,4 +1,4 @@
-.container {
+.containerauc {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -9,7 +9,7 @@
 
 .property-header {
   grid-column: 1/-1;
-  background-color: #000;
+  background-color: #373030;
   color: #fff;
   padding: 20px;
   border-radius: 10px;

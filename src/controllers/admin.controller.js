@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const {
   getAllRemates,
   getImagenesInmuebles,
@@ -27,8 +28,18 @@ exports.loginAdmin = async (req, res) => {
     const usuario = await getUsuarioAdmin(correo, contrasena);
 
     if (usuario) {
-      // Guardar la sesión del usuario
-      req.session.usuario = usuario;
+      // Generar token JWT
+      const token = jwt.sign({ id: usuario.id, correo: usuario.correo }, process.env.JWT_SECRET, {
+        expiresIn: '1h'
+      });
+
+      // Almacenar el token en una cookie
+      res.cookie('auth_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600000 // 1 hora
+      });
+
       res.redirect('/admin/index');
     } else {
       req.flash('error', 'Datos incorrectos');
@@ -42,12 +53,8 @@ exports.loginAdmin = async (req, res) => {
 
 // Lógica para logout
 exports.logoutAdmin = (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send('Error al cerrar sesión');
-    }
-    res.redirect('/admin/login');
-  });
+  res.clearCookie('auth_token');
+  res.redirect('/admin/login');
 };
 
 // Obtener todos los remates

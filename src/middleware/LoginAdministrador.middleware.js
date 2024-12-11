@@ -1,20 +1,36 @@
-// middleware/login.middleware.js
+const jwt = require('jsonwebtoken');
 
 const isAuthenticated = (req, res, next) => {
-    if (req.session.usuario) {
-        // El usuario está autenticado
-        next();
-    } else {
-        // El usuario no está autenticado, redirigir al login
-        req.flash('error', 'Debes iniciar sesión para acceder a esta página');
-        res.redirect('/admin/login');
+  try {
+    const token = req.cookies.auth_token;
+    if (!token) {
+      return res.redirect('/admin/login');
     }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.clearCookie('auth_token');
+    return res.redirect('/admin/login');
+  }
+};
+
+const setUserLocals = (req, res, next) => {
+  try {
+    const token = req.cookies.auth_token;
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      res.locals.user = decoded;
+    } else {
+      res.locals.user = null;
+    }
+  } catch (error) {
+    res.locals.user = null;
+  }
+  next();
 };
 
 module.exports = {
-    isAuthenticated,
-    setUserLocals: (req, res, next) => {
-        res.locals.usuario = req.session.usuario;
-        next();
-    }
+  isAuthenticated,
+  setUserLocals
 };

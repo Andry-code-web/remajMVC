@@ -1,68 +1,65 @@
 <section class="banner" id="banner">
   <div class="banner_contenedor">
     <div class="banner_video">
-      <video src="/img/video1.mp4" autoplay muted loop></video>
+      <video src="/img/video2.mp4" autoplay muted loop></video>
     </div>
     <div class="banner_info_filtro">
       <div class="banner_info">
-        <h1>Remajud remates inmobiliarios</h1>
-        <p>Remates en todo el Perú</p>
+        <p>_____BIENVENIDO A REMAJUD_____</p>
+        <h1>Nuestro Compromiso es que Encuentres tu remate.</h1>
       </div>
-      <div class="banner_filtro">
-        <div class="contenedor_filtro">
-          <form action="" method="post">
+      <form action="" method="post">
 
-            <div class="parent">
-              <div class="div1">
-                <p>
-                  ENCUENTRA TU REMATE MAS RAPIDO
-                </p>
-              </div>
-              <div class="div2 contenedor_inputs">
-                <label for="">
-                  <i class="ri-map-line"></i>
-                  Ciudad
-                </label>
-                <input type="text">
-              </div>
-              <div class="div3 contenedor_inputs">
-                <label for="">
-                  <i class="ri-map-pin-2-line"></i>
-                  Departamanto
-                </label>
-                <input type="text">
-              </div>
-              <div class="div4 contenedor_inputs">
-                <label for="">
-                  <i class="ri-map-pin-user-line"></i>
-                  Distrito
-                </label>
-                <input type="text">
-              </div>
-              <div class="div5 contenedor_inputs">
-                <label for="">
-                  <i class="ri-money-dollar-circle-line"></i>
-                  Precio
-                </label>
-                <input type="number">
-              </div>
-              <div class="div6 contenedor_inputs">
-                <label for="">
-                  <i class="ri-menu-search-line"></i>
-                  Categoria
-                </label>
-                <input type="text">
-              </div>
-              <div class="div7">
-                <button type="submit">
-                  <i class="ri-search-2-line"></i>
-                </button>
-              </div>
-            </div>
-
-          </form>
+        <div class="contenedor_filtro_items">
+          <div class="items_filtro">
+            <select name="categoria" id="cotegoria">
+              <option value="">Eliga una categoria</option>
+              <option value="casa">Casas</option>
+              <option value="departamento">Departamento</option>
+              <option value="cocheras">Cocheras</option>
+              <option value="terrenos">Terrenos</option>
+              <option value="locales_comerciales">Locales Comerciales</option>
+              <option value="azoteas">Azoteas</option>
+              <option value="terreno_rural">Terreno Rural</option>
+              <option value="oficina">Oficinas</option>
+            </select>
+          </div>
+          <div class="items_filtro">
+            <select name="ciudad" id="ciudad">
+              <option value="">Seleccione una ciudad</option>
+              <option value="lima">Lima</option>
+              <option value="arequipa">Arequipa</option>
+              <option value="trujillo">Trujillo</option>
+              <option value="chiclayo">Chiclayo</option>
+              <option value="piura">Piura</option>
+              <option value="cusco">Cusco</option>
+              <option value="iquitos">Iquitos</option>
+              <option value="huancayo">Huancayo</option>
+              <option value="tacna">Tacna</option>
+              <option value="juliaca">Juliaca</option>
+            </select>
+          </div>
+          <div class="items_filtro">
+            <select name="departamento" id="departamento">
+              <option value="">Seleccione un departamento</option>
+            </select>
+          </div>
+          <div class="items_filtro">
+            <select name="precio" id="">
+              <option value="">Eliga el monto</option>
+              <option value="">$10000 - $15000</option>
+              <option value="">$20000 - $30000</option>
+              <option value="">$30000 - $50000</option>
+            </select>
+          </div>
+          <div class="btn_filtrar">
+            <button type="submit">
+              Buscar
+              <i class="ri-search-2-line"></i>
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </section>
@@ -161,3 +158,37 @@
     <% }); %>
   </div>
 </section>
+
+
+<script>
+  const departamentosPorCiudad = {
+    arequipa: ["Cayma", "Yanahuara", "Cerro Colorado", "José Luis Bustamante y Rivero", "Paucarpata"],
+    lima: ["Miraflores", "San Isidro", "Barranco", "Surco", "San Borja"],
+    trujillo: ["Víctor Larco", "El Porvenir", "Florencia de Mora", "La Esperanza", "Huanchaco"],
+    chiclayo: ["Pimentel", "Lambayeque", "Monsefú", "Reque", "Ferreñafe"],
+    piura: ["Sullana", "Catacaos", "Paita", "Sechura", "Talara"],
+    cusco: ["San Sebastián", "Wanchaq", "San Jerónimo", "Santiago", "Ollantaytambo"],
+    iquitos: ["Punchana", "Belén", "San Juan Bautista", "Iquitos", "Nauta"],
+    huancayo: ["El Tambo", "San Agustín de Cajas", "Sapallanga", "Huancán", "Chilca"],
+    tacna: ["Alto de la Alianza", "Ciudad Nueva", "Pocollay", "Calana", "Gregorio Albarracín"],
+    juliaca: ["Caracoto", "Cabana", "Cabanillas", "Coata", "Huata"]
+  };
+
+  document.getElementById("ciudad").addEventListener("change", function() {
+    const ciudadSeleccionada = this.value;
+    const departamentoSelect = document.getElementById("departamento");
+
+    // Limpia las opciones actuales del select de departamentos
+    departamentoSelect.innerHTML = '<option value="">Seleccione un departamento</option>';
+
+    // Agrega las nuevas opciones si hay departamentos para la ciudad seleccionada
+    if (departamentosPorCiudad[ciudadSeleccionada]) {
+      departamentosPorCiudad[ciudadSeleccionada].forEach((departamento) => {
+        const option = document.createElement("option");
+        option.value = departamento.toLowerCase();
+        option.textContent = departamento;
+        departamentoSelect.appendChild(option);
+      });
+    }
+  });
+</script>

@@ -1,55 +1,62 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesión</title>
-  <link rel="stylesheet" href="/css/auth/login.css">
-</head>
-<body>
-  <div class="login-container">
+<div class="contenido_login" id="contenedor_login">
+  <canvas id="particleCanvas"></canvas>
+  <div class="login-box">
     <h1>Iniciar Sesión</h1>
-    <form action="/auth/loginP" method="POST" id="loginForm">
-      <div class="form-group">
-        <label for="usuario">Nombre de usuario</label>
+    <form id="loginForm">
+      <div class="user-box">
         <input type="text" id="usuario" name="usuario" required>
+        <label for="usuario">Nombre de usuario</label>
       </div>
-      <div class="form-group">
-        <label for="contrasena">Contraseña</label>
+      <div class="user-box">
         <input type="password" id="contrasena" name="contrasena" required>
+        <label for="contrasena">Contraseña</label>
       </div>
-      <button type="submit">Iniciar sesión</button>
+      <button type="submit" class="submit-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+        Iniciar sesión
+      </button>
     </form>
-    <p>¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
+    <p class="register-link">¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
   </div>
+</div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData);
+<script type="module" src="/js/componentes/network_login.js"></script>
 
-      fetch('/auth/loginP', {
+<link rel="stylesheet" href="/css/login/login.css">
+
+<script type="module">
+  import {
+    NetworkAnimationL
+  } from '../../js/componentes/network_login.js';
+  const canvas = document.getElementById("particleCanvas");
+  const networkAnimationL = new NetworkAnimationL(canvas);
+
+  // Handle form submission
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch('/auth/loginP', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.redirected) {
-          window.location.href = response.url;
-        } else {
-          return response.json().then(data => {
-            throw new Error(data.message);
-          });
-        }
-      })
-      .catch(error => {
-        alert(error.message);
       });
-    });
-  </script>
-</body>
-</html>
+
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+</script>

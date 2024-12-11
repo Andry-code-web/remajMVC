@@ -42,7 +42,7 @@
 }
 
 .banner_info h1 {
-    width: 50%;
+    width: 60%;
     font-size: 4.7rem;
     font-family: "fuentePrincipal";
     font-weight: 700;
@@ -60,33 +60,16 @@
     margin-top: 1rem;
 }
 
-.banner_filtro {
-    width: 60%;
-    height: auto;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.contenedor_filtro {
-    min-width: 100%;
-    height: 20vh;
-    background-color: #fffcfc;
-    border-radius: 1rem;
-    box-shadow: 2px 2px 15px rgb(44, 44, 44);
-}
-
-.contenedor_filtro form {
+form {
     width: 100%;
-    height: 100%;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
 }
 
-.parent {
+/* .parent {
     width: 100%;
     height: 100%;
     display: grid;
@@ -156,7 +139,7 @@
 .div7 button:hover {
     background: #000;
     color: #fff;
-}
+} 
 
 .contenedor_inputs {
     display: flex;
@@ -189,6 +172,71 @@
 
 .contenedor_inputs input:focus-visible {
     outline: none;
+}*/
+
+.contenedor_filtro_items {
+    display: flex;
+    gap: 2rem;
+    background: $colorsecundario;
+    padding: 25px;
+    border-radius: .5rem;
+}
+
+.items_filtro {
+    width: 180px;
+    height: 55px;
+}
+
+.items_filtro select {
+    width: 100%;
+    height: 100%;
+}
+
+.btn_filtrar {
+    width: 150px;
+    height: 55px;
+}
+
+.btn_filtrar button {
+    width: 100%;
+    height: 100%;
+    background-color: $colorprimario;
+    border: none;
+    border-radius: .5rem;
+    font-family: $fuenteParrafos;
+    font-size: 1.1rem;
+    color: $colorsecundario;
+    transition: ease-in .5s;
+}
+
+
+.btn_filtrar button i{
+    font-size: 1.5rem;
+    color: $colorsecundario;
+}
+
+.btn_filtrar button:hover{
+    background: $complemento1;
+}
+
+.items_filtro select {
+    border: 1px solid #BDBCBC;
+    border-radius: 5px;
+    padding: .5rem;
+    color: #999999;
+    font-family: $fuenteParrafos;
+}
+
+.items_filtro select:focus-visible {
+    outline: none;
+}
+
+.items_filtro select option {
+    background-color: $colorsecundario;
+    color: $colorterciario;
+    padding: .5rem;
+    font-family: $fuenteParrafos;
+    border: none;
 }
 
 /* CATEGORIAS */
@@ -234,7 +282,7 @@
     color: $colorterciario;
 }
 
-.img_categorias{
+.img_categorias {
     width: 50%;
 }
 

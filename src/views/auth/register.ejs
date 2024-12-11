@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REMAJUD - Registro</title>
-  <link rel="stylesheet" href="/css/registro/registro.css">
-</head>
-
-<body>
   <!-- Títulos principales fijos -->
   <div class="fixed-titles">
     <h1>BIENVENIDO</h1>
@@ -130,10 +120,10 @@
       </div>
     </div>
   </div>
-
+  <link rel="stylesheet" href="/css/registro/registro.css">
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
-
+  
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".finalizar").addEventListener("click", async (e) => {
@@ -156,7 +146,7 @@
           contrasena: document.querySelector("[name='contrasena']").value,
           condiciones: document.querySelector("[name='terminos_condiciones']").checked,
         };
-
+        
         // Validar campos obligatorios
         const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== 'condiciones');
         if (camposVacios.length > 0) {
@@ -187,6 +177,3 @@
       });
     });
   </script>
-</body>
-
-</html>

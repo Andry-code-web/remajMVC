@@ -1,117 +1,343 @@
-.auction-detail {
-    padding: 20px;
-  }
-  
-  .property-info {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .current-bid {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 20px 0;
-  }
-  
-  .bid-controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .bid-form, .quick-bid-form {
-    flex: 1;
-  }
-  
-  .progress-container {
-    margin: 20px 0;
-    position: relative;
-  }
-  
-  .auction-progress {
-    height: 20px;
-    background-color: #4CAF50;
-    width: 100%;
-    border-radius: 10px;
-    transition: width 0.1s linear;
-  }
-  
-  .countdown-display {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    display: none;
-  }
-  
-  .chat-container {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px;
-  }
-  
-  .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-  }
-  
-  .message.sent {
-    background: #e3f2fd;
-    margin-left: 20%;
-  }
-  
-  .message.received {
-    background: #f5f5f5;
-    margin-right: 20%;
-  }
-  
-  .bid-alert {
-    text-align: center;
-    color: #2196F3;
-    margin: 10px 0;
-    font-weight: bold;
-  }
-  
-  .chat-input {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid #eee;
-  }
-  
-  .chat-input input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .chat-input button {
-    padding: 8px 15px;
-    background: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .chat-input button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
+
+.containerauc {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+.property-header {
+  grid-column: 1 / -1;
+  background-color: #373030;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.property-title {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.property-address {
+  font-size: 1.2em;
+  color: #ccc;
+}
+
+.carousel {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  min-width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item:hover img {
+  transform: scale(1.05);
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.carousel-control.prev {
+  left: 10px;
+}
+
+.carousel-control.next {
+  right: 10px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.detail-item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.detail-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.detail-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.detail-value {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.detail-label {
+  color: #666;
+}
+
+.section {
+  margin-top: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 5px;
+  color: #000;
+}
+
+.chat-container {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.chat-input {
+  display: flex;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  background: #000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+  background-color: #333;
+}
+
+
+
+//aca va codigo chat subastas 
+
+.auction-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.auction-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.lot-id {
+  color: #666;
+  font-size: 14px;
+}
+
+.lot-title {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.timer {
+  margin-top: 10px;
+  color: #666;
+}
+
+.navigation {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.nav-btn.active {
+  color: #2196F3;
+  border-bottom: 2px solid #2196F3;
+}
+
+.user-info {
+  display: flex;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  gap: 20px;
+}
+
+.user-info .label {
+  color: #666;
+}
+
+.user-info .value {
+  font-weight: bold;
+}
+
+.best-offer {
+  background: #FFF9E6;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crown-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crown {
+  font-size: 20px;
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.bid-section {
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.bid-input {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  position: absolute;
+  left: 10px;
+  color: #666;
+}
+
+#bidAmount {
+  width: 100%;
+  padding: 12px 12px 12px 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.bid-button {
+  padding: 12px 30px;
+  background: #FF5722;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bid-button:hover {
+  background: #F4511E;
+}
+
+/* New styles for classification table */
+.content-section {
+  display: none;
+  padding: 20px;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.classification-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.classification-table th,
+.classification-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.classification-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #666;
+}
+
+.classification-table tr:last-child td {
+  border-bottom: none;
+}
+
+.classification-table .position {
+  width: 60px;
+  text-align: center;
+}
+
+.classification-table .amount {
+  text-align: right;
+  font-weight: bold;
+}
+
+.classification-table tr:first-child td {
+  color: #2196F3;
+  font-weight: bold;
+}
+ 

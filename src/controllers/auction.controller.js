@@ -1,5 +1,19 @@
 const Auction = require('../models/auction.model');
 
+
+exports.getAllAuctions = async (req, res) => {
+  try {
+    const auctions = await Auction.getAll();
+    res.render('layouts/main', { 
+      content: 'auctions/mapa',
+      auctions
+    });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
+
+
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auctionId = req.params.id;
@@ -13,8 +27,9 @@ exports.getAuctionDetails = async (req, res) => {
 
     auction.statusMessage = getStatusMessage(auction.estado);
     
-    res.render('auctions/details', {
+    res.render('layouts/main', {
       auction,
+      content:'auctions/details',
       user: res.locals.user || { id: null }
     });
   } catch (error) {

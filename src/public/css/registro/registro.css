@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*Variables de registro*/
 /*Variables de login*/
 @font-face {
@@ -25,6 +24,7 @@
   box-sizing: border-box;
 }
 
+/*Contenedor general registro */
 .formulario_general {
   line-height: 1.5;
   font-weight: 400;
@@ -35,6 +35,7 @@
   overflow: hidden;
 }
 
+/*particulas*/
 #particleCanvas {
   position: fixed;
   top: 0;
@@ -389,7 +390,7 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  border: 2px solid #0A0A0A;
+  border: 2px solid #ffffff;
   border-radius: 4px;
   transition: all 0.2s ease;
 }
@@ -402,13 +403,17 @@ input[type=number]::-webkit-outer-spin-button {
 .custom-checkbox:checked + .checkbox-label:after {
   content: "";
   position: absolute;
-  left: 7px;
-  top: 50%;
+  left: 9px;
+  top: 45%;
   transform: translateY(-50%) rotate(45deg);
   width: 5px;
-  height: 10px;
+  height: 11px;
   border: solid white;
   border-width: 0 2px 2px 0;
+  -webkit-transform: translateY(-50%) rotate(45deg);
+  -moz-transform: translateY(-50%) rotate(45deg);
+  -ms-transform: translateY(-50%) rotate(45deg);
+  -o-transform: translateY(-50%) rotate(45deg);
 }
 
 .terms-link {
@@ -428,29 +433,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .terms-link:active {
   text-shadow: 0 0 10px #ffffff, 0 0 15px #ffffff, 0 0 20px #ffffff, 0 0 25px #ffffff, 0 0 30px #ffffff;
-}
-
-/*diseño flechita*/
-.submit-btn,
-a,
-button,
-[role=button],
-input[type=submit],
-.clickable {
-  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), pointer;
-}
-
-.login_general {
-  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
-}
-.login_general * {
-  cursor: inherit;
-}
-.login_general .submit-btn,
-.login_general a,
-.login_general button,
-.login_general [role=button] {
-  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), pointer;
 }
 
 @keyframes glitchAnimation {

@@ -24,6 +24,7 @@
   cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
 }
 
+/*Contenedor general del login*/
 .login_general {
   font-family: "fuentePrincipal", sans-serif;
   min-height: 100vh;
@@ -41,6 +42,7 @@
   padding: 20px;
 }
 
+/* Particulas */
 #particleCanvas {
   position: fixed;
   top: 0;
@@ -115,6 +117,7 @@
   font-size: 12px;
 }
 
+/*boton inicio sesion*/
 .submit-btn {
   width: 100%;
   padding: 12px;
@@ -151,6 +154,7 @@
   opacity: 0.5;
 }
 
+/*link registro*/
 .register-link {
   margin-top: 20px;
   text-align: center;

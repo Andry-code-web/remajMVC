@@ -60,18 +60,15 @@
 </script>
 
 <script>
-  window.addEventListener('scroll', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('header');
-    const banner = document.getElementById('contenedor_login');
-    const bannerBottom = banner.getBoundingClientRect().bottom;
-    if (bannerBottom > 0) {
-      header.style.color = '#fffcfc';
-    } else if (categoriasBottom > 0) {
-      header.style.color = '#0a0000';
-    } else if (subastasTop < window.innerHeight) {
-      header.style.color = '#0a0000';
+    const loginSection = document.getElementById('login_general');
+
+    // Verificar si el login está visible
+    if (loginSection) {
+      header.style.color = '#ffffff'; // Cambiar al color deseado (Blanco)
     } else {
-      header.style.color = 'black';
+      header.style.color = 'black'; // Color por defecto si no es el login
     }
   });
 </script>

@@ -51,8 +51,7 @@ app.use('/auctions', require('./routes/auction.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
-app.use('/admin', require('./routes/admin.routes'))
-
+app.use('/admin', require('./routes/admin.routes'));
 
 // Socket.IO
 io.on('connection', (socket) => {

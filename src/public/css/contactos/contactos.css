@@ -1,4 +1,9 @@
-/*Variables de registro y login*/
+/*Variables de registro*/
+/*Variables de login*/
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+}
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");

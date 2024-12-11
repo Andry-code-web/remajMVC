@@ -1,6 +1,7 @@
 @use 'variables' as *;
 
 * {
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -421,6 +422,36 @@ input[type="number"]::-webkit-outer-spin-button {
         0 0 20px #ffffff,
         0 0 25px #ffffff,
         0 0 30px #ffffff;
+}
+
+
+
+/*diseño flechita*/
+
+.submit-btn,
+a,
+button,
+[role="button"],
+input[type="submit"],
+.clickable {
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), pointer;
+}
+
+.login_general {
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
+    
+    // Esto asegura que todos los elementos dentro de login_general hereden el cursor
+    * {
+        cursor: inherit;
+    }
+    
+    // Para elementos clickeables dentro del login
+    .submit-btn,
+    a,
+    button,
+    [role="button"] {
+        cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), pointer;
+    }
 }
 
 @keyframes glitchAnimation {

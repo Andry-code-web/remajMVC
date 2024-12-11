@@ -1,4 +1,10 @@
-/*Variables de registro y login*/
+@charset "UTF-8";
+/*Variables de registro*/
+/*Variables de login*/
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+}
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -13,6 +19,7 @@
   src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
 }
 * {
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -22,7 +29,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: #ffffff;
-  background-color: #000000;
+  background-color: #0A0A0A;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
   overflow: hidden;
@@ -154,16 +161,16 @@
 }
 
 .seccion1 {
-  background-color: #000000;
+  background-color: #0A0A0A;
 }
 
 .seccion2 {
   background-color: #ffffff;
-  color: #000000;
+  color: #0A0A0A;
 }
 
 .seccion3 {
-  background-color: #000000;
+  background-color: #0A0A0A;
 }
 
 .texto_grande {
@@ -280,7 +287,7 @@ select.form-input:focus {
 }
 
 select.form-input option {
-  background-color: #000000;
+  background-color: #0A0A0A;
   color: #ffffff;
   padding: 10px;
 }
@@ -328,18 +335,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .submit-btn:hover {
-  color: #000000;
+  color: #0A0A0A;
   background: #ffffff;
 }
 
 .seccion2 .submit-btn:hover {
   color: #ffffff;
-  background: #000000;
+  background: #0A0A0A;
 }
 
 .seccion2 {
   background-color: #ffffff;
-  color: #000000;
+  color: #0A0A0A;
 }
 
 .error-message {
@@ -382,7 +389,7 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  border: 2px solid #000000;
+  border: 2px solid #0A0A0A;
   border-radius: 4px;
   transition: all 0.2s ease;
 }
@@ -421,6 +428,29 @@ input[type=number]::-webkit-outer-spin-button {
 
 .terms-link:active {
   text-shadow: 0 0 10px #ffffff, 0 0 15px #ffffff, 0 0 20px #ffffff, 0 0 25px #ffffff, 0 0 30px #ffffff;
+}
+
+/*diseño flechita*/
+.submit-btn,
+a,
+button,
+[role=button],
+input[type=submit],
+.clickable {
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), pointer;
+}
+
+.login_general {
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
+}
+.login_general * {
+  cursor: inherit;
+}
+.login_general .submit-btn,
+.login_general a,
+.login_general button,
+.login_general [role=button] {
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), pointer;
 }
 
 @keyframes glitchAnimation {

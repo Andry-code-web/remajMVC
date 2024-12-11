@@ -7,13 +7,25 @@ $colorterciario:#0a0000;
 $complemento1:#e25427;
 $complemento2:#00665e;
 
-/*Variables de registro y login*/
+/*Variables de registro*/
 $primary-color: #FFE5D0; //color principal de la aplicación
 $bg-dark: #000000; //color de fondo oscuro
 $bg-light: #ffffff; //color de fondo claro
 $glow-color: #FFE5D0; //color de iluminación
 $dark-glow: #000000; //color de iluminación oscuro
 $glow-black: #000000; // color negro fosforescente
+
+/*Variables de login*/
+$text-primary: #E5D0B1;  // Elegant beige color
+$text-secondary: rgba(229, 208, 177, 0.7);  // Semi-transparent beige
+$bg-dark: #0A0A0A;  // Almost black
+$glass-bg: rgba(18, 18, 18, 0.7);  // Dark glass effect
+$input-border: rgba(229, 208, 177, 0.2);  // Subtle border color
+
+@font-face {
+    font-family: 'fuentePrincipal';
+    src: url('/fonts/Expressa-DemiBold.otf') format('opentype');
+}
 
 @font-face {
     font-family: 'fuentePrincipal';

@@ -5,7 +5,7 @@ const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 const morgan = require("morgan");
-const { setUserLocals } = require('./middleware/auth.middleware');
+
 require('dotenv').config();
 
 const app = express();
@@ -29,7 +29,13 @@ app.use(session({
 }));
 
 app.use(morgan("dev"));
-app.use(setUserLocals);
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
+
 
 // View engine
 app.set('view engine', 'ejs');

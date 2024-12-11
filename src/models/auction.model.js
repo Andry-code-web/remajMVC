@@ -23,6 +23,13 @@ class Auction {
     );
   }
 
+  static async updatePrice(id, amount) {
+    await db.execute(
+      'UPDATE remates SET monto_venta = ? WHERE id = ?',
+      [amount, id]
+    );
+  }
+
   static async addLike(remateId, userId) {
     await db.execute(
       'INSERT INTO likes (usuarios_id, remates_id) VALUES (?, ?)',

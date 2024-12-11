@@ -15,40 +15,60 @@ class AuctionSocket {
     this.io.on('connection', (socket) => {
       socket.on('join-auction', async (data) => {
         try {
+          // Validar datos de entrada
           const { auctionId, userId } = data;
+          if (!auctionId || !userId) {
+            return socket.emit('error', { message: 'Datos de entrada inválidos. Asegúrate de proporcionar auctionId y userId.' });
+          }
+      
+          // Obtener datos del usuario y la subasta
           const user = await User.findById(userId);
           const auction = await Auction.getById(auctionId);
-
-          if (!auction || !user) return;
-
-          socket.join(`auction-${auctionId}`);
-          
+      
+          // Validar si existen la subasta y el usuario
+          if (!auction) {
+            return socket.emit('error', { message: 'Subasta no encontrada.' });
+          }
+          if (!user) {
+            return socket.emit('error', { message: 'Usuario no encontrado.' });
+          }
+      
+          // Unir al socket a la sala específica de la subasta
+          const roomName = `auction-${auctionId}`;
+          socket.join(roomName);
+      
+          // Si la subasta no está en el mapa de subastas activas, agregarla
           if (!this.activeAuctions.has(auctionId)) {
             this.activeAuctions.set(auctionId, {
               currentBid: auction.precios,
               participants: new Map()
             });
           }
-
+      
+          // Agregar al usuario como participante en la subasta activa
           const auctionRoom = this.activeAuctions.get(auctionId);
           auctionRoom.participants.set(userId, {
             socket: socket.id,
             username: user.nombres_apellidos
           });
-
-          this.io.to(`auction-${auctionId}`).emit('user-joined', {
+      
+          // Notificar a todos los participantes que un usuario se unió
+          this.io.to(roomName).emit('user-joined', {
             userId,
             username: user.nombres_apellidos
           });
-
-          // Send last 50 messages
+      
+          // Obtener y enviar el historial de los últimos 50 mensajes al usuario que se conecta
           const messages = await Message.getLastMessages(auctionId, 50);
           socket.emit('message-history', messages);
-
+      
         } catch (error) {
-          console.error('Error joining auction:', error);
+          // Manejo de errores
+          console.error('Error al unirse a la subasta:', error);
+          socket.emit('error', { message: 'Hubo un problema al intentar unirse a la subasta. Por favor, intenta nuevamente.' });
         }
       });
+      
 
       socket.on('new-bid', async (data) => {
         try {

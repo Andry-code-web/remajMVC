@@ -23,23 +23,26 @@
       <!-- Usuario -->
       <nav class="nav-links">
         <div class="iconos_header usuario" style="font-size: 2rem;">
-          <% if (locals.user) { %>
+          <% if (user) { %>
             <a href="/me/likes" title="Me gusta" class="links_redireccion">
               <i class="ri-heart-line"></i>
             </a>
-            <a href="/auth/logout" title="Cerrar sesion" class="links_redireccion">
+            <a href="/auth/logout" title="Cerrar sesión" class="links_redireccion">
               <i class="ri-logout-circle-line"></i>
             </a>
+            <p>Hola, <%= user.usuario %>!</p>
           <% } else { %>
-            <a href="/auth/login" title="Iniciar sesion" class="links_redireccion">
+            <a href="/auth/login" title="Iniciar sesión" class="links_redireccion">
               <i class="ri-login-box-line"></i>
             </a>
-            <a href="/auth/register" title="Registrame" class="links_redireccion">
+            <a href="/auth/register" title="Registrarme" class="links_redireccion">
               <i class="ri-user-add-line"></i>
             </a>
           <% } %>
         </div>
-      </nav>      
+        
+      </nav>
+            
     </div>
   </header>
   

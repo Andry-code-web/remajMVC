@@ -11,12 +11,13 @@ exports.getAuctionDetails = async (req, res) => {
       });
     }
 
-    auction.statusMessage = getStatusMessage(auction.estado);
+    // Asignar el estado de la subasta para pasarlo a la vista
+    const auctionState = auction.estado || 'activo';
     
     res.render('layouts/main', {
       auction,
-      content:'auctions/details',
-      user: res.locals.user || { id: null }
+      auctionState,  // Aquí pasamos el estado de la subasta
+      content: 'auctions/details',
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
@@ -26,11 +27,43 @@ exports.getAuctionDetails = async (req, res) => {
   }
 };
 
+
+exports.joinAuction = async (req, res) => {
+  try {
+    const { id: auctionId } = req.params;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Usuario no autorizado' });
+    }
+
+    const auction = await Auction.getById(auctionId);
+    if (!auction) {
+      return res.status(404).json({ message: 'Subasta no encontrada' });
+    }
+
+    if (auction.estado !== 'en_curso') {
+      return res.status(400).json({ message: 'La subasta no está en curso' });
+    }
+
+    // Here you could add logic to track auction participants if needed
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al unirse a la subasta:', error);
+    res.status(500).json({ message: 'Error al unirse a la subasta' });
+  }
+};
+
 exports.submitBid = async (req, res) => {
   try {
     const { id: auctionId } = req.params;
     const { amount } = req.body;
-    const userId = req.user.id;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Usuario no autorizado' });
+    }
 
     const auction = await Auction.getById(auctionId);
     if (!auction) {
@@ -41,12 +74,12 @@ exports.submitBid = async (req, res) => {
       return res.status(400).json({ message: 'La subasta no está activa' });
     }
 
-    if (amount <= auction.precios) {
+    if (amount <= auction.monto_venta) {
       return res.status(400).json({ message: 'La oferta debe ser mayor que el precio actual' });
     }
 
-    await Auction.updatePrice(auctionId, amount, userId);
-    res.json({ message: 'Oferta aceptada' });
+    await Auction.updatePrice(auctionId, amount);
+    res.json({ success: true, newAmount: amount });
   } catch (error) {
     console.error('Error al procesar la oferta:', error);
     res.status(500).json({ message: 'Error al procesar la oferta' });
@@ -75,13 +108,3 @@ exports.submitMessage = async (req, res) => {
     res.status(500).json({ message: 'Error al enviar mensaje' });
   }
 };
-
-function getStatusMessage(estado) {
-  const messages = {
-    'en_curso': 'En curso',
-    'finalizada': 'Finalizada',
-    'pendiente': 'Próximamente',
-    'cancelada': 'Cancelada'
-  };
-  return messages[estado] || estado;
-}

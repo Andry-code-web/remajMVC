@@ -50,13 +50,13 @@
 
 /* Estilos de la tarjeta de inicio de sesión */
 .remaju-tarjeta-inicio {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 40px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0);
     z-index: 1;
 }
 

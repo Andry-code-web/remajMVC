@@ -861,9 +861,26 @@
         }
       });
     });
+
+    // Obtener parámetros de URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    // Mostrar la alerta si la variable de éxito está presente
+    if (success === 'true') {
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'Remate creado exitosamente',
+        icon: 'success'
+      });
+    } else if (success === 'false') {
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al crear el remate',
+        icon: 'error'
+      });
+    }
   </script>
-
-
 </body>
 
 </html>

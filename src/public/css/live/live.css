@@ -1,0 +1,246 @@
+@charset "UTF-8";
+:root {
+  --primary-bg: #FFF6EC;
+  --secondary-bg: #ffffff;
+  --primary-text: #2C2C2C;
+  --secondary-text: #666666;
+  --accent-color: #E8A87C;
+  --border-radius: 12px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #F5F5F5;
+  padding: 20px;
+}
+
+.auction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.auction-card {
+  background: var(--primary-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auction-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.auction-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.auction-content {
+  padding: 20px;
+}
+
+.countdown {
+  background: rgba(232, 168, 124, 0.1);
+  color: #E8A87C;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.countdown::before {
+  content: "⏱";
+  margin-right: 6px;
+}
+
+.title {
+  font-size: 1.2rem;
+  color: var(--primary-text);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.details {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-details {
+  background: #2C2C2C;
+  color: white;
+}
+
+.btn-details:hover {
+  background: #1a1a1a;
+}
+
+.btn-images {
+  background: #E8A87C;
+  color: white;
+}
+
+.btn-images:hover {
+  background: #d89b6f;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: #FFF6EC;
+  width: 90%;
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  color: #2C2C2C;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #2C2C2C;
+  padding: 5px;
+}
+
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.slider-container {
+  display: flex;
+  transition: transform 0.5s ease;
+  height: 100%;
+}
+
+.slider-image {
+  width: 100%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #2C2C2C;
+  transition: all 0.3s ease;
+}
+
+.slider-button:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.slider-button.prev {
+  left: 10px;
+}
+
+.slider-button.next {
+  right: 10px;
+}
+
+/* Ajuste para el espacio del header */
+.auction-grid {
+  margin-top: 100px; /* Espacio para el header */
+}
+
+/* Indicadores de imagen */
+.slider-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.indicator.active {
+  background: white;
+}
+
+/*# sourceMappingURL=live.css.map */

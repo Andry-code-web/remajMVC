@@ -7,7 +7,7 @@
     "start": "node src/app.js",
     "dev": "concurrently \"npm run build:all\" \"npm run dev:server\"",
     "watch:css": "sass --watch public/styles:public/css",
-    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:login",
+    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:login && npm run build:live",
     "build:layout_main": "sass src/public/styles/main_layout.scss src/public/css/main_layout/main_layout.css",
     "build:inicio": "sass src/public/styles/inicio.scss src/public/css/inicio/inicio.css",
     "build:remates": "sass src/public/styles/remates.scss src/public/css/remates/remates.css",
@@ -18,6 +18,7 @@
     "build:mapas": "sass src/public/styles/mapa.scss src/public/css/mapa/mapa.css",
     "build:admin": "sass src/public/styles/admin.scss src/public/css/admin/admin.css",
     "build:btn_menu": "sass src/public/styles/btn_menu.scss src/public/css/btn_menu/btn_menu.css",
+    "build:live": "sass src/public/styles/live.scss src/public/css/live/live.css",
     "build:auction_detail": "sass src/public/styles/auction_detail.scss src/public/css/auction_detail/auction_detail.css",
     "build:globales": "sass src/public/styles/globales.scss src/public/css/globales/globales.css",
     "dev:server": "nodemon app.js"

@@ -11,8 +11,25 @@
     line-height: 1.5;
 } */
 
-.admin_generalp1{
-    margin-top: 5rem;
+
+.parent {
+/*     display: grid; */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1 { grid-area: 1 / 1 / 2 / 3; }
+    .div2 { grid-area: 2 / 3 / 1 / 2; }
+
+.div1{
+    position: fixed;
+    width: 100%;
+}
+
+.admingeneral1{
+   padding: 2rem;
 }
 
 .dashboard-container {
@@ -346,7 +363,7 @@
     background: #e8eaed;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .container {
         padding: 1rem;
     }
@@ -359,7 +376,7 @@
         width: 95%;
         margin: 1rem auto;
     }
-}
+} */
 
 
 /* Add these styles to your existing CSS */

@@ -5,25 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const textButton = button.querySelector('.text_buton'); 
     const tableroTitulo = document.getElementById('tablero_titulo'); // Título del tablero 
     const flechaRegreso = document.getElementById('flecha_regreso'); // Flecha de regreso 
-    const formularioLogin = document.getElementById('formulario_login'); // Formulario de login 
-    const subMenu = document.querySelector('.sub_menu'); // Menú secundario (LOGIN, INICIO, etc.) 
-    const loginLink = document.getElementById('login_link'); // Enlace LOGIN 
     let isTableroVisible = false;  
     let isDragging = false; 
     let wasDragging = false; // Nueva bandera para diferenciar clic y arrastre 
     let offsetX, offsetY;  
-    // Mostrar el formulario de login cuando se hace clic en "LOGIN" 
-    loginLink.addEventListener('click', function(e) { 
-        e.preventDefault(); // Prevenir el comportamiento predeterminado del enlace 
-        // Cambiar el título grande a "INICIO DE SESIÓN" 
-        cambiarTitulo('INICIO DE SESIÓN'); 
-        // Mostrar el formulario de login 
-        formularioLogin.style.display = 'block'; 
-        // Ocultar otras partes del tablero si es necesario 
-        subMenu.style.display = 'none'; 
-        // Mostrar la flecha de regreso 
-        flechaRegreso.style.display = 'block'; 
-    }); 
+    
     // Función para cambiar el título dinámicamente con clases 
     function cambiarTitulo(nuevoTitulo) {  
         tableroTitulo.classList.remove('inicio_sesion'); // Eliminar la clase si la tiene 

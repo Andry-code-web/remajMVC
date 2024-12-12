@@ -41,40 +41,7 @@
           <div class="row">
             <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
           </div>
-
-          <!-- Fila de Estado Civil, Fecha de Nacimiento y Sexo -->
-          <div class="row">
-            <div class="col">
-              <select class="form-input" name="estado_civil" required>
-                <option value="" disabled selected>ESTADO CIVIL</option>
-                <option value="soltero">Soltero(a)</option>
-                <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
-                <option value="viudo">Viudo(a)</option>
-              </select>
-            </div>
-            <div class="col">
-              <input type="date" class="form-input" placeholder="FECHA NACIMIENTO" name="fecha_nacimiento" required>
-            </div>
-            <div class="col">
-              <select class="form-input" name="sexo" required>
-                <option value="" disabled selected>SEXO</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Fila de DNI y Celular -->
-          <div class="row">
-            <div class="col">
-              <input type="number" class="form-input" placeholder="DNI" name="dni" required>
-            </div>
-            <div class="col">
-              <input type="number" class="form-input" placeholder="CELULAR" name="celular" required>
-            </div>
-          </div>
-
+ 
           <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
         </form>
       </div>
@@ -141,44 +108,28 @@
 
   <!-- script para llamar al navbar -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('scroll', () => {
       const header = document.getElementById('header');
-      const sections = document.querySelectorAll('.seccion');
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5, // Cambiar cuando el 50% de la sección sea visible
-      };
-  
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.id;
-  
-            // Cambiar el color del header basado en la sección visible
-            switch (sectionId) {
-              case 'seccion1':
-                header.style.color = '#ffffff'; // Blanco
-                break;
-              case 'seccion2':
-                header.style.color = '#000000'; // Negro
-                break;
-              case 'seccion3':
-                header.style.color = '#ffffff'; // Blanco
-                break;
-              default:
-                header.style.color = 'black';
-            }
-          }
-        });
-      }, options);
-  
-      sections.forEach((section) => {
-        observer.observe(section);
-      });
+      const seccion1 = document.getElementById('seccion1');
+      const seccion2 = document.getElementById('seccion2');
+      const seccion3 = document.getElementById('seccion3');
+    
+      const seccion1Bottom = seccion1.getBoundingClientRect().bottom;
+      const seccion2Bottom = seccion2.getBoundingClientRect().bottom;
+      const seccion3Top = seccion3.getBoundingClientRect().top;
+    
+      if (seccion1Bottom > 0) {
+        header.style.color = '#ffffff';
+      } else if (seccion2Bottom > 0) {
+        header.style.color = '#000000';
+      } else if (seccion3Top < window.innerHeight) {
+        header.style.color = '#ffffff';
+      } else {
+        header.style.color = 'black';
+      }
     });
+    
   </script>
-  
 
   <!-- script de datos formulario -->
   <script>

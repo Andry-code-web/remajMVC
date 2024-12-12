@@ -1,5 +1,6 @@
-/*Variables de registro*/
-/*Variables de login*/
+/*Variables para registro*/
+/*Variables para login*/
+/*Variables de live*/
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -28,8 +29,8 @@
 .formulario_general {
   line-height: 1.5;
   font-weight: 400;
-  color: #ffffff;
-  background-color: #0A0A0A;
+  color: #F9F9F9;
+  background-color: #121212;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
   overflow: hidden;
@@ -162,16 +163,16 @@
 }
 
 .seccion1 {
-  background-color: #0A0A0A;
+  background-color: #121212;
 }
 
 .seccion2 {
-  background-color: #ffffff;
-  color: #0A0A0A;
+  background-color: #F9F9F9;
+  color: #121212;
 }
 
 .seccion3 {
-  background-color: #0A0A0A;
+  background-color: #121212;
 }
 
 .texto_grande {
@@ -288,7 +289,7 @@ select.form-input:focus {
 }
 
 select.form-input option {
-  background-color: #0A0A0A;
+  background-color: #121212;
   color: #ffffff;
   padding: 10px;
 }
@@ -336,18 +337,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .submit-btn:hover {
-  color: #0A0A0A;
+  color: #121212;
   background: #ffffff;
 }
 
 .seccion2 .submit-btn:hover {
   color: #ffffff;
-  background: #0A0A0A;
+  background: #121212;
 }
 
 .seccion2 {
   background-color: #ffffff;
-  color: #0A0A0A;
+  color: #121212;
 }
 
 .error-message {

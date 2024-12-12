@@ -1,5 +1,6 @@
-/*Variables de registro*/
-/*Variables de login*/
+/*Variables para registro*/
+/*Variables para login*/
+/*Variables de live*/
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -28,7 +29,7 @@
 .login_general {
   font-family: "fuentePrincipal", sans-serif;
   min-height: 100vh;
-  background-color: #0A0A0A;
+  background-color: #121212;
   color: #E5D0B1;
   position: relative;
 }

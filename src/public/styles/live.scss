@@ -1,85 +1,99 @@
-:root {
-    --primary-bg: #FFF6EC;
-    --secondary-bg: #ffffff;
-    --primary-text: #2C2C2C;
-    --secondary-text: #666666;
-    --accent-color: #E8A87C;
-    --border-radius: 12px;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
+@use "variables" as *;
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 
-body {
-    background-color: #F5F5F5;
+}
+.contenedor_live {
+    width: 100%;
+    min-height: 100vh;
+    background: $bg-light;
     padding: 20px;
 }
 
 .auction-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    max-width: 1400px;
+    max-width: 1440px;
     margin: 0 auto;
 }
 
 .auction-card {
-    background: var(--primary-bg);
-    border-radius: var(--border-radius);
+    background: $bg-light;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 20rem;
+    margin-top: 8rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid $border-color;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .auction-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.auction-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.auction-image-container:hover .auction-image {
+    transform: scale(1.1);
 }
 
 .auction-image {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
-}
-
-.auction-content {
-    padding: 20px;
+    transition: transform 0.3s ease;
 }
 
 .countdown {
-    background: rgba(232, 168, 124, 0.1);
-    color: #E8A87C;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: inline-flex;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: $accent-color;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: $bg-dark;
+    font-weight: bold;
 }
 
-.countdown::before {
-    content: '⏱';
-    margin-right: 6px;
+.auction-content {
+    padding: 15px;
 }
 
 .title {
+    font-family: Simulated 'fuentePrincipal';
     font-size: 1.2rem;
-    color: var(--primary-text);
+    color:  $text-dark;
+    margin-bottom: 5px;
+}
+
+.vehicle-type {
+    color: $text-light;
+    font-size: 0.9rem;
     margin-bottom: 10px;
-    font-weight: 600;
+}
+
+.company-info {
+    font-size: 0.9rem;
+    color: $text-light;
+    margin-bottom: 10px;
 }
 
 .details {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
-    color: var(--secondary-text);
     font-size: 0.9rem;
 }
 
@@ -87,156 +101,137 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
+    color: $text-light;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: $text-light;
+}
+
+.location-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
 .btn {
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
+    flex: 1;
+    padding: 8px;
+    border: 1px solid  $border-color;
+    border-radius: 4px;
+    background: $accent-color;
+    color: $bg-dark;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-weight: 500;
     transition: all 0.3s ease;
 }
 
-.btn-details {
-    background: #2C2C2C;
-    color: white;
+.btn:hover {
+    background: $hover-color;
 }
 
-.btn-details:hover {
-    background: #1a1a1a;
+.bid-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
 }
 
-.btn-images {
-    background: #E8A87C;
-    color: white;
+.bid-label {
+    font-size: 0.9rem;
+    color: $text-light;
 }
 
-.btn-images:hover {
-    background: #d89b6f;
+.bid-amount {
+    font-size: 1.2rem;
+    color: $primary-color;
+    font-weight: bold;
 }
 
 .modal {
     display: none;
     position: fixed;
-    top: 0;
+    z-index: 1000;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    backdrop-filter: blur(5px);
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
 }
+
 .modal-content {
-    background: #FFF6EC;
-    width: 90%;
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 25px;
-    border-radius: 20px;
+    background-color: $bg-light;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid $border-color;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
     position: relative;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.modal-header h2 {
-    font-size: 1.5rem;
-    color: #2C2C2C;
-}
-
 .close-modal {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
+    color: $text-light;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
-    color: #2C2C2C;
-    padding: 5px;
 }
 
-.image-slider {
+.close-modal:hover,
+.close-modal:focus {
+    color: $text-dark;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.gallery-container {
     position: relative;
     width: 100%;
     height: 400px;
     overflow: hidden;
-    border-radius: 12px;
 }
 
-.slider-container {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-}
-
-.slider-image {
+.gallery-image {
     width: 100%;
-    flex-shrink: 0;
+    height: 100%;
     object-fit: cover;
 }
 
-.slider-button {
+.gallery-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s ease;
+    user-select: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: #2C2C2C;
-    transition: all 0.3s ease;
 }
 
-.slider-button:hover {
-    background: rgba(255, 255, 255, 0.95);
+.gallery-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
-.slider-button.prev {
+.prev {
     left: 10px;
 }
 
-.slider-button.next {
+.next {
     right: 10px;
-}
-
-/* Ajuste para el espacio del header */
-.auction-grid {
-    margin-top: 100px; /* Espacio para el header */
-}
-
-/* Indicadores de imagen */
-.slider-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-}
-
-.indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-}
-
-.indicator.active {
-    background: white;
 }

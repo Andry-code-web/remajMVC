@@ -7,7 +7,7 @@ $colorterciario:#0a0000;
 $complemento1:#e25427;
 $complemento2:#00665e;
 
-/*Variables de registro*/
+/*Variables para registro*/
 $primary-color: #FFE5D0; //color principal de la aplicación
 $bg-dark: #000000; //color de fondo oscuro
 $bg-light: #ffffff; //color de fondo claro
@@ -15,12 +15,22 @@ $glow-color: #FFE5D0; //color de iluminación
 $dark-glow: #000000; //color de iluminación oscuro
 $glow-black: #000000; // color negro fosforescente
 
-/*Variables de login*/
+/*Variables para login*/
 $text-primary: #E5D0B1;  // color beige 
 $text-secondary: rgba(229, 208, 177, 0.7);  // Semi-transparente beige
 $bg-dark: #0A0A0A;  // Casi negro
 $glass-bg: rgba(18, 18, 18, 0.7);  // Efecto cristal oscuro
 $input-border: rgba(229, 208, 177, 0.2);  // Color de borde sutil
+
+/*Variables de live*/
+$primary-color: #FFE5D0;
+$accent-color: #E8A87C; 
+$hover-color: #F8D7C4; 
+$bg-dark: #121212;
+$bg-light: #F9F9F9;
+$text-dark: #333333;
+$text-light: #666666;
+$border-color: rgba(0, 0, 0, 0.1);
 
 @font-face {
     font-family: 'fuentePrincipal';

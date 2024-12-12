@@ -36,6 +36,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
 app.use('/', require('./routes/home.routes'));
+app.use('/en_vivo', require('./routes/live.routes'));
 // Socket.IO
 io.on('connection', (socket) => {
   socket.on('join-auction', (auctionId) => {

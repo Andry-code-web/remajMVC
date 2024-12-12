@@ -1,41 +1,63 @@
-<section>
-    <div id="auction-grid" class="auction-grid">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/live/live.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- CDN DE ICONOS REMIX -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- ESTILOS GLOBALES -->
+  <link rel="stylesheet" href="/css/globales/globales.css">
+</head>
+<body>
+  <!-- COMPONENTE HEADER -->
+  <%- include('../partials/navbar') %>
+
+  <section class="contenedor_live" id="contenedor_live">
+    <div class="auction-grid" id="auction-grid">
         <!-- Las tarjetas de subasta se generarán dinámicamente aquí -->
     </div>
-
-    <!-- Modal de Características -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Características del Vehículo</h2>
-                <button class="close-modal" onclick="closeModal('details')">&times;</button>
-            </div>
-            <div id="detailsContent" class="details-content">
-                <!-- El contenido se generará dinámicamente -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Galería -->
-    <div id="galleryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Galería de Imágenes</h2>
-                <button class="close-modal" onclick="closeModal('gallery')">&times;</button>
-            </div>
-            <div class="image-slider">
-                <div id="sliderContainer" class="slider-container">
-                    <!-- Las imágenes se generarán dinámicamente -->
-                </div>
-                <button class="slider-button prev" onclick="changeSlide(-1)">&#10094;</button>
-                <button class="slider-button next" onclick="changeSlide(1)">&#10095;</button>
-                <div id="sliderIndicators" class="slider-indicators"></div>
-            </div>
-        </div>
-    </div>
-
 </section>
 
-    <script src=/js/script_live.js"></script>
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
 
-    <link rel="stylesheet" href="/css/live/live.css">
+<div class="modal" id="modal">
+  <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  let lastScrollTop = 0; // Posición de scroll anterior
+  const header = document.getElementById('header');
+  const liveContainer = document.getElementById('contenedor_live');
+
+  window.addEventListener('scroll', () => {
+    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    // Si el scroll es hacia abajo y supera la posición del encabezado, oculta el encabezado
+    if (currentScrollTop > lastScrollTop && currentScrollTop > liveContainer.offsetTop) {
+      header.style.top = '-100px'; // Mueve el encabezado hacia arriba (fuera de la vista)
+    } else {
+      // Si el scroll es hacia arriba, muestra el encabezado
+      header.style.top = '0'; // Vuelve el encabezado a su posición original
+    }
+    
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+  });
+</script>
+
+  <!-- script live -->
+<script src="/js/script_live.js"></script>
+
+</body>
+</html>

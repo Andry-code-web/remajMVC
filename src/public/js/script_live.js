@@ -12,8 +12,9 @@ const auctionData = [
         currentBid: 4050.00,
         description: 'Este es un automóvil MG New MG 5 del año 2023. Está en excelentes condiciones y tiene bajo kilometraje.',
         photos: ['/img/casa.png', '/img/oficina.png', '/img/casa.png'],
-        endTime: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 horas desde ahora
+        endTime: new Date(Date.now() + 24 * 60 * 60 * 1000) 
     },
+    // Puedes agregar más subastas aquí
 ];
 
 function generateAuctionCards() {
@@ -66,7 +67,7 @@ function generateAuctionCards() {
                     <button class="btn btn-photos" onclick="openModal('gallery', ${auction.id})">Fotos</button>
                 </div>
                 <div class="bid-info">
-                    <span class="bid-label">Oferta Más Alta xd</span>
+                    <span class="bid-label">Oferta Más Alta</span>
                     <span class="bid-amount">USD$ ${auction.currentBid.toFixed(2)}</span>
                 </div>
             </div>
@@ -99,8 +100,12 @@ function openModal(type, id) {
         modalBody.innerHTML = `
             <div class="gallery-container">
                 <img src="${auction.photos[currentPhotoIndex]}" alt="${auction.title}" class="gallery-image">
-                <button class="gallery-nav prev" onclick="changePhoto(-1, ${id})">&#10094;</button>
-                <button class="gallery-nav next" onclick="changePhoto(1, ${id})">&#10095;</button>
+                <button class="gallery-nav prev" onclick="changePhoto(-1, ${id})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="gallery-nav next" onclick="changePhoto(1, ${id})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         `;
     }

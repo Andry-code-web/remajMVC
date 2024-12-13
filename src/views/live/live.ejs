@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="/css/live/live.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- CDN DE ICONOS REMIX -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
   <!-- ESTILOS GLOBALES -->
@@ -37,22 +37,20 @@
 </div>
 
 <script>
-  let lastScrollTop = 0; // Posición de scroll anterior
+  let lastScrollTop = 0; 
   const header = document.getElementById('header');
   const liveContainer = document.getElementById('contenedor_live');
 
   window.addEventListener('scroll', () => {
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-    // Si el scroll es hacia abajo y supera la posición del encabezado, oculta el encabezado
     if (currentScrollTop > lastScrollTop && currentScrollTop > liveContainer.offsetTop) {
-      header.style.top = '-100px'; // Mueve el encabezado hacia arriba (fuera de la vista)
+      header.style.top = '-100px';
     } else {
-      // Si el scroll es hacia arriba, muestra el encabezado
-      header.style.top = '0'; // Vuelve el encabezado a su posición original
+      header.style.top = '0'; 
     }
     
-    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; 
   });
 </script>
 

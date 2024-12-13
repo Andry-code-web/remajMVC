@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/admin.controller');
 
-router.get('/index',adminController. getAlladmin);
+/* router.get('/index',adminController. getAlladmin); */
 
 const upload = require('../middleware/upload.middleware');
 const { isAuthenticated } = require('../middleware/LoginAdministrador.middleware');

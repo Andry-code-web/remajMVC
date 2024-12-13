@@ -1,27 +1,9 @@
-/* * {
-    box-sizing: border-box;
-  } */
-/*   
-  html,
-  body {
-    color: #99a0b0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #f5f5fa;
-    font-size: 16px;
-    line-height: 120%;
-    font-family: Open Sans, Helvetica, sans-serif;
-  }
-   */
 .opciones_admin1 {
   padding: 2rem;
   list-style: none;
 }
 
 .dashboardnav {
-  /*  position: fixed;
-   top: 0; */
   display: grid;
   width: 100%;
   height: 100%;
@@ -78,7 +60,6 @@
 
 .menu-wrap {
   grid-area: menu;
-  /*  padding-bottom: 3em; */
   overflow: auto;
   background: #fff;
   border-right: 1px solid #ede8f0;

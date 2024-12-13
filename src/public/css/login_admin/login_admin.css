@@ -12,6 +12,12 @@
   font-family: "fuenteParrafos";
   src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Contenedor principal que centra el formulario */
 .remaju-contenedor {
   min-height: 100vh;

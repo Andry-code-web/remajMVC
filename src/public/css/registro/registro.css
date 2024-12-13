@@ -29,8 +29,8 @@
 .formulario_general {
   line-height: 1.5;
   font-weight: 400;
-  color: #F9F9F9;
-  background-color: #121212;
+  color: #F5F5F5;
+  background-color: #333333;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
   overflow: hidden;
@@ -163,16 +163,16 @@
 }
 
 .seccion1 {
-  background-color: #121212;
+  background-color: #333333;
 }
 
 .seccion2 {
-  background-color: #F9F9F9;
-  color: #121212;
+  background-color: #F5F5F5;
+  color: #333333;
 }
 
 .seccion3 {
-  background-color: #121212;
+  background-color: #333333;
 }
 
 .texto_grande {
@@ -289,7 +289,7 @@ select.form-input:focus {
 }
 
 select.form-input option {
-  background-color: #121212;
+  background-color: #333333;
   color: #ffffff;
   padding: 10px;
 }
@@ -337,18 +337,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .submit-btn:hover {
-  color: #121212;
+  color: #333333;
   background: #ffffff;
 }
 
 .seccion2 .submit-btn:hover {
   color: #ffffff;
-  background: #121212;
+  background: #333333;
 }
 
 .seccion2 {
   background-color: #ffffff;
-  color: #121212;
+  color: #333333;
 }
 
 .error-message {

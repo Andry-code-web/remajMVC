@@ -1,8 +1,14 @@
 @use "variables" as *;
-* {
-    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
+
+/*Contenedor general de live*/
+
 .contenedor_live {
     width: 100%;
     min-height: 100vh;
@@ -10,28 +16,40 @@
     padding: 20px;
 }
 
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
 .auction-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     max-width: 1440px;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .auction-card {
-    background: $bg-light;
+    background: $card-bg;
     border-radius: 8px;
     overflow: hidden;
     width: 20rem;
+    height: 25rem;
     margin-top: 8rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid $border-color;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+
 .auction-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
 }
 
 .auction-image-container {
@@ -67,14 +85,15 @@
     font-weight: bold;
 }
 
-.auction-content {
+.auction-content {margin-top: 1rem;
+    font-family: $fuentePrincipal;
     padding: 15px;
 }
 
 .title {
-    font-family: Simulated 'fuentePrincipal';
+    font-family: $fuentePrincipal;
     font-size: 1.2rem;
-    color:  $text-dark;
+    color: $text-dark;
     margin-bottom: 5px;
 }
 
@@ -128,17 +147,22 @@
 .btn {
     flex: 1;
     padding: 8px;
-    border: 1px solid  $border-color;
     border-radius: 4px;
-    background: $accent-color;
-    color: $bg-dark;
+    background: linear-gradient(to bottom, #726354, #5c4f41);
+    color: #ffffff;
     font-size: 0.9rem;
+    font-family: $fuenteParrafos;
     cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-
 .btn:hover {
-    background: $hover-color;
+    background: linear-gradient(to bottom, #7d6d5c, #665648);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .bid-info {
@@ -155,10 +179,9 @@
 
 .bid-amount {
     font-size: 1.2rem;
-    color: $primary-color;
+    color: $accent-color;
     font-weight: bold;
 }
-
 .modal {
     display: none;
     position: fixed;
@@ -168,40 +191,65 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    background-color: $bg-light;
-    margin: 15% auto;
-    padding: 20px;
+    font-family: $fuenteParrafos;
+    background-color: $card-bg;
+    margin: 5% auto; 
+    padding: 30px;
     border: 1px solid $border-color;
-    width: 80%;
-    max-width: 600px;
+    width: 50%;
+    max-width: 800px;
     border-radius: 8px;
     position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
     color: $text-light;
-    float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
 .close-modal:hover,
 .close-modal:focus {
     color: $text-dark;
+    background-color: rgba(0, 0, 0, 0.05);
     text-decoration: none;
-    cursor: pointer;
 }
 
+
+.modal h2 {
+    color: $text-dark;
+    margin-bottom: 20px;
+    padding-right: 40px; // Espacio para el botón de cerrar
+}
+
+.modal p {
+    color: $text-light;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
 .gallery-container {
     position: relative;
     width: 100%;
     height: 400px;
     overflow: hidden;
+    border-radius: 8px;
+    margin: 20px 0;
 }
 
 .gallery-image {
@@ -214,7 +262,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     color: $text-dark;
     width: 40px;
     height: 40px;
@@ -226,19 +274,19 @@
     transition: 0.3s ease;
     border: none;
     cursor: pointer;
-    opacity: 0.7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     &:hover {
-        background: rgba(255, 255, 255, 0.9);
-        opacity: 1;
+        background: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     &.prev {
-        left: 10px;
+        left: 20px;
     }
 
     &.next {
-        right: 10px;
+        right: 20px;
     }
 
     i {
@@ -247,9 +295,15 @@
 }
 
 @media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 20px;
+    }
+
     .gallery-nav {
-        width: 30px;
-        height: 30px;
-        font-size: 18px;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
     }
 }

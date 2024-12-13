@@ -1,74 +1,28 @@
-// Simulación de datos de la base de datos
-const auctionData = [
-    {
-        id: 1,
-        title: 'MG New MG 5 - 2023',
-        image: '/img/casa.png',
-        company: 'SANTANDER CONSUMER',
-        reference: 'L01143_SL01_V01',
-        auctionType: 'Dinámica',
-        views: 28,
-        location: 'LIMA',
-        currentBid: 4050.00,
-        description: 'Este es un automóvil MG New MG 5 del año 2023. Está en excelentes condiciones y tiene bajo kilometraje.',
-        photos: ['/img/casa.png', '/img/oficina.png', '/img/casa.png'],
-        endTime: new Date(Date.now() + 24 * 60 * 60 * 1000) 
-    },
-    // Puedes agregar más subastas aquí
-];
-
 function generateAuctionCards() {
     const auctionGrid = document.getElementById('auction-grid');
-    auctionGrid.innerHTML = ''; 
+    auctionGrid.innerHTML = ''; // Limpiar el contenedor antes de regenerar las tarjetas
 
     auctionData.forEach(auction => {
         const card = document.createElement('div');
         card.className = 'auction-card';
         card.innerHTML = `
             <div class="auction-image-container">
-                <img src="${auction.image}" alt="${auction.title}" class="auction-image">
+                <img src="data:image/png;base64,${auction.imagen}" alt="${auction.description}" class="auction-image">
                 <div class="countdown" data-id="${auction.id}">
                     <span class="countdown-icon">⏱</span>
                     <span class="countdown-text">Cargando...</span>
                 </div>
             </div>
             <div class="auction-content">
-                <h3 class="title">${auction.title}</h3>
-                <p class="vehicle-type">${auction.auctionType}</p>
-                <div class="company-info">
-                    <span>Empresa: ${auction.company}</span>
-                </div>
+                <h3 class="title">${auction.ubicacion}</h3>
+                <p class="description">${auction.description}</p>
+                <p class="price">USD$ ${parseFloat(auction.precios).toFixed(2)}</p>
                 <div class="details">
-                    <div class="detail-item">
-                        <span class="detail-icon">📄</span>
-                        <span>${auction.reference}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🔄</span>
-                        <span>${auction.auctionType}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">👁</span>
-                        <span>${auction.views}</span>
-                    </div>
-                </div>
-                <div class="location-info">
-                    <div class="location-item">
-                        <span class="location-icon">📍</span>
-                        <span>${auction.location}</span>
-                    </div>
-                    <div class="location-item">
-                        <span class="company-icon">🏢</span>
-                        <span>${auction.company}</span>
-                    </div>
+                    <span>Baños: ${auction.N_banos}</span> | 
+                    <span>Habitaciones: ${auction.N_habitacion}</span>
                 </div>
                 <div class="buttons">
-                    <button class="btn btn-description" onclick="openModal('details', ${auction.id})">Descripción</button>
-                    <button class="btn btn-photos" onclick="openModal('gallery', ${auction.id})">Fotos</button>
-                </div>
-                <div class="bid-info">
-                    <span class="bid-label">Oferta Más Alta</span>
-                    <span class="bid-amount">USD$ ${auction.currentBid.toFixed(2)}</span>
+                    <button class="btn btn-description" onclick="openModal('details', ${auction.id})">Ver detalles</button>
                 </div>
             </div>
         `;
@@ -87,41 +41,15 @@ function openModal(type, id) {
 
     if (type === 'details') {
         modalBody.innerHTML = `
-            <h2>${auction.title}</h2>
+            <h2>${auction.ubicacion}</h2>
             <p>${auction.description}</p>
-            <p>Referencia: ${auction.reference}</p>
-            <p>Tipo de subasta: ${auction.auctionType}</p>
-            <p>Ubicación: ${auction.location}</p>
-            <p>Empresa: ${auction.company}</p>
-            <p>Oferta actual: USD$ ${auction.currentBid.toFixed(2)}</p>
-        `;
-    } else if (type === 'gallery') {
-        let currentPhotoIndex = 0;
-        modalBody.innerHTML = `
-            <div class="gallery-container">
-                <img src="${auction.photos[currentPhotoIndex]}" alt="${auction.title}" class="gallery-image">
-                <button class="gallery-nav prev" onclick="changePhoto(-1, ${id})">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="gallery-nav next" onclick="changePhoto(1, ${id})">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+            <p>Precio: USD$ ${parseFloat(auction.precios).toFixed(2)}</p>
+            <p>Baños: ${auction.N_banos}</p>
+            <p>Habitaciones: ${auction.N_habitacion}</p>
         `;
     }
 
     modal.style.display = 'block';
-}
-
-function changePhoto(direction, id) {
-    const auction = auctionData.find(a => a.id === id);
-    if (!auction) return;
-
-    let currentPhotoIndex = auction.photos.findIndex(photo => photo === document.querySelector('.gallery-image').src);
-    currentPhotoIndex += direction;
-    if (currentPhotoIndex < 0) currentPhotoIndex = auction.photos.length - 1;
-    if (currentPhotoIndex >= auction.photos.length) currentPhotoIndex = 0;
-    document.querySelector('.gallery-image').src = auction.photos[currentPhotoIndex];
 }
 
 function closeModal() {
@@ -162,4 +90,4 @@ window.onclick = function(event) {
     if (event.target == modal) {
         closeModal();
     }
-}
+};

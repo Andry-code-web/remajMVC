@@ -15,12 +15,28 @@
 <body>
   <!-- COMPONENTE HEADER -->
   <%- include('../partials/navbar') %>
-
+  
+  <!-- live_Tarjeta  -->
   <section class="contenedor_live" id="contenedor_live">
     <div class="auction-grid" id="auction-grid">
-        <!-- Las tarjetas de subasta se generarán dinámicamente aquí -->
+      <% liveData.forEach(auction => { %>
+        <div class="auction-card">
+          <div class="auction-image-container">
+            <img 
+              src="data:image/png;base64,<%= auction.imagen %>" 
+              alt="Imagen de remate <%= auction.id %>" 
+              class="auction-image">
+          </div>
+          <div class="auction-content">
+            <h3 class="title"><%= auction.descripcion %></h3>
+            <!-- Más contenido aquí -->
+          </div>
+        </div>
+      <% }) %>
     </div>
-</section>
+  </section>
+  
+  
 
 <div class="modal" id="modal">
     <div class="modal-content">
@@ -29,13 +45,11 @@
     </div>
 </div>
 
-<div class="modal" id="modal">
-  <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <div id="modal-body"></div>
-  </div>
-</div>
+<script>
+  const auctionData = <%- JSON.stringify(liveData) %>;
+</script>
 
+<!-- navbar -->
 <script>
   let lastScrollTop = 0; 
   const header = document.getElementById('header');
@@ -45,14 +59,14 @@
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
     if (currentScrollTop > lastScrollTop && currentScrollTop > liveContainer.offsetTop) {
-      header.style.top = '-100px';
+      header.style.transform = 'translateY(-100%)'; 
     } else {
-      header.style.top = '0'; 
+      header.style.transform = 'translateY(0)'; 
     }
-    
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; 
   });
 </script>
+
 
   <!-- script live -->
 <script src="/js/script_live.js"></script>

@@ -32,10 +32,21 @@ $text-dark: #333333;
 $text-light: #666666;
 $border-color: rgba(0, 0, 0, 0.1);
 
+// _variables.scss
+$primary-color: #ffffff;    // Color base claro
+$accent-color: #8B7355;     // Marrón para acentos
+$hover-color: #9F8170;      // Marrón más claro para hover
+$bg-dark: #333333;         // Para textos
+$bg-light: #F5F5F5;        // Fondo claro
+$text-dark: #333333;       // Texto oscuro
+$text-light: #666666;      // Texto gris
+$border-color: rgba(0, 0, 0, 0.1); // Borde sutil
+$card-bg: #ffffff;         // Fondo de tarjeta
+
 @font-face {
     font-family: 'fuentePrincipal';
     src: url('/fonts/Expressa-DemiBold.otf') format('opentype');
-}
+} 
 
 @font-face {
     font-family: 'fuentePrincipal';

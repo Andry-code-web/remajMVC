@@ -4,15 +4,63 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
+    cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9; /* Fondo general */
+}
+
+/*letras movement*/
+
+.letras-movement {
+    position: absolute; /* Las letras estarán absolutamente posicionadas */
+    top: 50%; /* Colocamos las letras en el centro vertical */
+    left: 0;
+    right: 0;
+    z-index: -1; /* Ponemos las letras detrás de las tarjetas */
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Para que estén alineadas a la izquierda y derecha */
+    transform: translateY(-50%); /* Ajustamos la posición para que estén centradas */
+    opacity: 0.1; /* Les damos opacidad para que no interfieran visualmente con el contenido */
+}
+
+.cta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cta h5 {
+    font-size: 10rem; /* Tamaño de las letras */
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    transform: rotate(2deg); /* Efecto de inclinación sutil */
+    margin: 0; /* Eliminamos márgenes extra */
+}
+
+.cta h5.left {
+    margin-right: 20px;
+}
+
+.cta h5.right {
+    margin-left: 20px;
+}
 .contenedor_live {
     width: 100%;
-    min-height: 100vh;
-    background: $bg-light;
-    padding: 20px;
+    background: transparent;
+    padding: 30px 20px;
+    position: relative; /* Asegura que las tarjetas estén por encima de las letras */
 }
+
 
 #header {
     position: fixed;
@@ -20,70 +68,58 @@
     left: 0;
     right: 0;
     z-index: 10;
-    transform: translateY(0); 
-    transition: transform 0.3s ease; 
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
 }
 
 .auction-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    max-width: 1440px;
+    gap: 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    /* padding-top: 100px; */ // Ajuste para el header fijo
+    position: relative; /* Necesario para asegurar que las tarjetas estén sobre las letras */
 }
+
 .auction-card {
-    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-    border-radius: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 20rem;
-    margin-top: 8rem;
-    border: 1px solid #8F9092;
-    transition: all 0.3s ease;
-    position: relative;
-    box-shadow: 
-        0 4px 3px 1px transparent,
-        0 6px 8px transparent,
-        0 -4px 4px transparent,
-        0 -6px 4px transparent,
-        inset 0 0 3px 3px transparent;
-
-    &:hover {
-        box-shadow: 
-            0 4px 3px 1px #FCFCFC,
-            0 6px 8px #D6D7D9,
-            0 -4px 4px #CECFD1,
-            0 -6px 4px #FEFEFE,
-            inset 0 0 5px 3px #999,
-            inset 0 0 30px #aaa;
-        transform: translateY(2px);
-    }
-
-    .auction-content {
-        margin-bottom: -1.5rem;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.7);
-    }
-
-    .title {
-        font-family: $fuentePrincipal;
-        color: #606060;
-        text-shadow: 0 1px #fff;
-    }
-
-    .vehicle-type,
-    .company-info,
-    .detail-item,
-    .location-info,
-    .bid-label {
-        color: #666;
-    }
-
-    .bid-amount {
-        color: #505050;
-        text-shadow: 0 1px #fff;
-    }
+    transition: transform 0.3s ease;
 }
+.auction-card:hover {
+    transform: translateY(-5px);
+}
+.auction-content {
+    padding: 15px;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.vehicle-type,
+.company-info,
+.detail-item,
+.location-info,
+.bid-label {
+    color: #666;
+}
+
+.bid-amount {
+    color: #505050;
+    text-shadow: 0 1px #fff;
+}
+
 .auction-image-container {
     position: relative;
     width: 100%;
@@ -122,7 +158,7 @@
 }
 
 .title {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     font-size: 1.2rem;
     color: $text-dark;
     margin-bottom: 10px;
@@ -185,9 +221,9 @@
     cursor: pointer;
     width: 150px;
     height: 30px;
-    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    background-image: linear-gradient(to top, #d8d9db 0%, #fff 80%, #fdfdfd 100%);
     border-radius: 30px;
-    border: 1px solid #8F9092;
+    border: 1px solid #8f9092;
     transition: all 0.2s ease;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 14px;
@@ -197,15 +233,32 @@
     flex: 1;
 
     &:hover {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+        box-shadow:
+            0 4px 3px 1px #fcfcfc,
+            0 6px 8px #d6d7d9,
+            0 -4px 4px #cecfd1,
+            0 -6px 4px #fefefe,
+            inset 0 0 3px 3px #cecfd1;
     }
 
     &:active {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+        box-shadow:
+            0 4px 3px 1px #fcfcfc,
+            0 6px 8px #d6d7d9,
+            0 -4px 4px #cecfd1,
+            0 -6px 4px #fefefe,
+            inset 0 0 5px 3px #999,
+            inset 0 0 30px #aaa;
     }
 
     &:focus {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+        box-shadow:
+            0 4px 3px 1px #fcfcfc,
+            0 6px 8px #d6d7d9,
+            0 -4px 4px #cecfd1,
+            0 -6px 4px #fefefe,
+            inset 0 0 5px 3px #999,
+            inset 0 0 30px #aaa;
     }
 }
 .bid-info {

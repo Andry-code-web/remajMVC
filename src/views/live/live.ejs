@@ -16,27 +16,36 @@
   <!-- COMPONENTE HEADER -->
   <%- include('../partials/navbar') %>
   
-  <!-- live_Tarjeta  -->
-  <section class="contenedor_live" id="contenedor_live">
-    <div class="auction-grid" id="auction-grid">
-      <% liveData.forEach(auction => { %>
-        <div class="auction-card">
-          <div class="auction-image-container">
-            <img 
-              src="data:image/png;base64,<%= auction.imagen %>" 
-              alt="Imagen de remate <%= auction.id %>" 
-              class="auction-image">
-          </div>
-          <div class="auction-content">
-            <h3 class="title"><%= auction.descripcion %></h3>
-            <!-- Más contenido aquí -->
-          </div>
-        </div>
-      <% }) %>
+  <!-- Contenedor de Letras en Movimiento -->
+  <div class="letras-movement">
+    <div class="cta">
+      <h5 class="left">REMAJUD</h5>
+      <h5 class="right">SUBASTAS</h5>
     </div>
-  </section>
-  
-  
+  </div>
+
+
+<!-- Contenedor de Tarjetas -->
+<section class="contenedor_live" id="contenedor_live">
+  <div class="auction-grid" id="auction-grid">
+    <% liveData.forEach(auction => { %>
+      <div class="auction-card">
+        <div class="auction-image-container">
+          <img 
+            src="data:image/png;base64,<%= auction.imagen %>" 
+            alt="Imagen de remate <%= auction.id %>" 
+            class="auction-image">
+        </div>
+        <div class="auction-content">
+          <h3 class="title"><%= auction.descripcion %></h3>
+          <!-- Más contenido aquí -->
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+
 
 <div class="modal" id="modal">
     <div class="modal-content">

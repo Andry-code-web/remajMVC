@@ -1,14 +1,12 @@
-// Genera las tarjetas de subastas dinámicamente y las inserta en la cuadrícula
 function generateAuctionCards() {
-    const auctionGrid = document.getElementById('auction-grid'); // Contenedor de tarjetas
-    auctionGrid.innerHTML = ''; // Limpiar contenido previo para evitar duplicados
+    const auctionGrid = document.getElementById('auction-grid');
+    auctionGrid.innerHTML = ''; 
 
     // Iterar sobre los datos de las subastas para crear tarjetas
     auctionData.forEach(auction => {
         const card = document.createElement('div'); // Crear elemento div para la tarjeta
         card.className = 'auction-card'; // Asignar clase CSS para estilo
 
-        // Contenido HTML dinámico de la tarjeta
         card.innerHTML = `
             <div class="auction-image-container">
                 <img src="data:image/png;base64,${auction.imagen}" alt="${auction.description}" class="auction-image">
@@ -29,13 +27,20 @@ function generateAuctionCards() {
             <button class="btn btn-description" onclick="openModal('details', ${auction.id})">
                 Descripción
             </button>
+            <button class="btn btn-description" onclick="openModal('details', ${auction.id})">
+                Detalles
+            </button>
+            <button class="btn btn-description" onclick="openModal('details', ${auction.id})">
+                Descarga
+            </button>
         </div>
         `;
-        auctionGrid.appendChild(card); // Agregar la tarjeta al contenedor
+        auctionGrid.appendChild(card); 
     });
 
-    updateCountdown(); // Actualizar la cuenta regresiva al generar las tarjetas
+    updateCountdown(); 
 }
+
 
 // Abrir modal para mostrar detalles de una subasta
 function openModal(type, id) {

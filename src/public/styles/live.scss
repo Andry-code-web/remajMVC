@@ -7,8 +7,6 @@
     cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
 
-/*Contenedor general de live*/
-
 .contenedor_live {
     width: 100%;
     min-height: 100vh;
@@ -22,36 +20,70 @@
     left: 0;
     right: 0;
     z-index: 10;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
+    transform: translateY(0); 
+    transition: transform 0.3s ease; 
 }
 
 .auction-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
     max-width: 1440px;
-    margin: 0;
+    margin: 0 auto;
+    /* padding-top: 100px; */ // Ajuste para el header fijo
 }
-
 .auction-card {
-    background: $card-bg;
-    border-radius: 8px;
+    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    border-radius: 15px;
     overflow: hidden;
     width: 20rem;
-    height: 25rem;
     margin-top: 8rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid $border-color;
-    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #8F9092;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 
+        0 4px 3px 1px transparent,
+        0 6px 8px transparent,
+        0 -4px 4px transparent,
+        0 -6px 4px transparent,
+        inset 0 0 3px 3px transparent;
+
+    &:hover {
+        box-shadow: 
+            0 4px 3px 1px #FCFCFC,
+            0 6px 8px #D6D7D9,
+            0 -4px 4px #CECFD1,
+            0 -6px 4px #FEFEFE,
+            inset 0 0 5px 3px #999,
+            inset 0 0 30px #aaa;
+        transform: translateY(2px);
+    }
+
+    .auction-content {
+        margin-bottom: -1.5rem;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    .title {
+        font-family: $fuentePrincipal;
+        color: #606060;
+        text-shadow: 0 1px #fff;
+    }
+
+    .vehicle-type,
+    .company-info,
+    .detail-item,
+    .location-info,
+    .bid-label {
+        color: #666;
+    }
+
+    .bid-amount {
+        color: #505050;
+        text-shadow: 0 1px #fff;
+    }
 }
-
-
-.auction-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
-}
-
 .auction-image-container {
     position: relative;
     width: 100%;
@@ -81,20 +113,19 @@
     align-items: center;
     gap: 5px;
     font-size: 0.9rem;
-    color: $bg-dark;
+    color: $bg-light;
     font-weight: bold;
 }
 
-.auction-content {margin-top: 1rem;
-    font-family: $fuentePrincipal;
-    padding: 15px;
+.auction-content {
+    padding: 20px;
 }
 
 .title {
-    font-family: $fuentePrincipal;
+    font-family: 'Arial', sans-serif;
     font-size: 1.2rem;
     color: $text-dark;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .vehicle-type {
@@ -106,11 +137,12 @@
 .company-info {
     font-size: 0.9rem;
     color: $text-light;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .details {
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 15px;
     font-size: 0.9rem;
@@ -138,6 +170,7 @@
     gap: 5px;
 }
 
+/*boton tarjeta */
 .buttons {
     display: flex;
     gap: 10px;
@@ -145,26 +178,36 @@
 }
 
 .btn {
-    flex: 1;
-    padding: 8px;
-    border-radius: 4px;
-    background: linear-gradient(to bottom, #726354, #5c4f41);
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-family: $fuenteParrafos;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
     cursor: pointer;
-    border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-.btn:hover {
-    background: linear-gradient(to bottom, #7d6d5c, #665648);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2);
-}
+    width: 150px;
+    height: 30px;
+    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    border-radius: 30px;
+    border: 1px solid #8F9092;
+    transition: all 0.2s ease;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+    text-shadow: 0 1px #fff;
+    flex: 1;
 
+    &:hover {
+        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+    }
+
+    &:active {
+        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+    }
+
+    &:focus {
+        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+    }
+}
 .bid-info {
     display: flex;
     flex-direction: column;
@@ -182,6 +225,7 @@
     color: $accent-color;
     font-weight: bold;
 }
+
 .modal {
     display: none;
     position: fixed;
@@ -195,12 +239,11 @@
 }
 
 .modal-content {
-    font-family: $fuenteParrafos;
     background-color: $card-bg;
-    margin: 5% auto; 
+    margin: 5% auto;
     padding: 30px;
     border: 1px solid $border-color;
-    width: 50%;
+    width: 90%;
     max-width: 800px;
     border-radius: 8px;
     position: relative;
@@ -231,11 +274,10 @@
     text-decoration: none;
 }
 
-
 .modal h2 {
     color: $text-dark;
     margin-bottom: 20px;
-    padding-right: 40px; // Espacio para el botón de cerrar
+    padding-right: 40px;
 }
 
 .modal p {
@@ -243,6 +285,7 @@
     margin-bottom: 15px;
     line-height: 1.5;
 }
+
 .gallery-container {
     position: relative;
     width: 100%;
@@ -295,6 +338,11 @@
 }
 
 @media (max-width: 768px) {
+    .auction-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
     .modal-content {
         margin: 10% auto;
         width: 95%;

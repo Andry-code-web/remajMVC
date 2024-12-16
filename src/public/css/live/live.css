@@ -25,7 +25,6 @@
   cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
 }
 
-/*Contenedor general de live*/
 .contenedor_live {
   width: 100%;
   min-height: 100vh;
@@ -45,27 +44,48 @@
 
 .auction-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
   max-width: 1440px;
-  margin: 0;
+  margin: 0 auto;
+  /* padding-top: 100px; */
 }
 
 .auction-card {
-  background: #ffffff;
-  border-radius: 8px;
+  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+  border-radius: 15px;
   overflow: hidden;
   width: 20rem;
-  height: 25rem;
   margin-top: 8rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #8F9092;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 4px 3px 1px transparent, 0 6px 8px transparent, 0 -4px 4px transparent, 0 -6px 4px transparent, inset 0 0 3px 3px transparent;
 }
-
 .auction-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+  transform: translateY(2px);
+}
+.auction-card .auction-content {
+  margin-bottom: -1.5rem;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+}
+.auction-card .title {
+  font-family: "fuentePrincipal";
+  color: #606060;
+  text-shadow: 0 1px #fff;
+}
+.auction-card .vehicle-type,
+.auction-card .company-info,
+.auction-card .detail-item,
+.auction-card .location-info,
+.auction-card .bid-label {
+  color: #666;
+}
+.auction-card .bid-amount {
+  color: #505050;
+  text-shadow: 0 1px #fff;
 }
 
 .auction-image-container {
@@ -97,21 +117,19 @@
   align-items: center;
   gap: 5px;
   font-size: 0.9rem;
-  color: #333333;
+  color: #F5F5F5;
   font-weight: bold;
 }
 
 .auction-content {
-  margin-top: 1rem;
-  font-family: "fuentePrincipal";
-  padding: 15px;
+  padding: 20px;
 }
 
 .title {
-  font-family: "fuentePrincipal";
+  font-family: "Arial", sans-serif;
   font-size: 1.2rem;
   color: #333333;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .vehicle-type {
@@ -123,11 +141,12 @@
 .company-info {
   font-size: 0.9rem;
   color: #666666;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .details {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 15px;
   font-size: 0.9rem;
@@ -155,6 +174,7 @@
   gap: 5px;
 }
 
+/*boton tarjeta */
 .buttons {
   display: flex;
   gap: 10px;
@@ -162,23 +182,32 @@
 }
 
 .btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: 4px;
-  background: linear-gradient(to bottom, #726354, #5c4f41);
-  color: #ffffff;
-  font-size: 0.9rem;
-  font-family: "fuenteparrafos";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
   cursor: pointer;
-  border: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 30px;
+  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+  border-radius: 30px;
+  border: 1px solid #8F9092;
+  transition: all 0.2s ease;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #606060;
+  text-shadow: 0 1px #fff;
+  flex: 1;
 }
-
 .btn:hover {
-  background: linear-gradient(to bottom, #7d6d5c, #665648);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+}
+.btn:active {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+.btn:focus {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
 }
 
 .bid-info {
@@ -212,12 +241,11 @@
 }
 
 .modal-content {
-  font-family: "fuenteparrafos";
   background-color: #ffffff;
   margin: 5% auto;
   padding: 30px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 50%;
+  width: 90%;
   max-width: 800px;
   border-radius: 8px;
   position: relative;
@@ -308,6 +336,10 @@
 }
 
 @media (max-width: 768px) {
+  .auction-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
   .modal-content {
     margin: 10% auto;
     width: 95%;

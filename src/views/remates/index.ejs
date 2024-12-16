@@ -27,58 +27,38 @@
             </div>
         </a>
     </div>
-    <div id="chat">
-        <div id="chat-box" style="overflow-y: auto; max-height: 300px;"></div>
-        <form id="chat-form">
-          <input id="chat-input" type="text" placeholder="Escribe un mensaje" required />
-          <button type="submit">Enviar</button>
+
+
+    <section id="chat">
+        <ul id="messages"></ul>
+        <form id="form">
+            <input type="number" name="message" id="input" placeholder="type a message" autocomplete="off" />
+            <button type="submit">enviar</button>
+            <input type="number" name="message" id="input" placeholder="type a message" autocomplete="off" />
+            <button type="submit">enviar</button>
         </form>
-      </div>
-      
-</div>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
-
-    // Unirse a la sala de una subasta específica
-    const auctionId = '<%= auction.id %>'; // Asegúrate de pasar el ID de la subasta desde el backend
-    const username = '<%= user.username %>'; // Asegúrate de pasar el nombre del usuario
-
-    socket.emit('join', { auctionId });
-
-    // Enviar un mensaje de chat
-    const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-    const chatBox = document.getElementById('chat-box');
-
-    chatForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const message = chatInput.value.trim();
-        if (message) {
-            socket.emit('chat-message', {
-                auctionId,
-                username,
-                message,
-            });
-            chatInput.value = '';
-        }
-    });
-
-    // Recibir mensajes de chat
-    socket.on('chat-message', (data) => {
-        const chatMessage = document.createElement('div');
-        chatMessage.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
-        chatBox.appendChild(chatMessage);
-        chatBox.scrollTop = chatBox.scrollHeight; // Desplaza hacia abajo
-    });
-
-    // Cargar mensajes previos
-    socket.on('load-messages', (messages) => {
-        messages.forEach((msg) => {
-            const chatMessage = document.createElement('div');
-            chatMessage.innerHTML = `<strong>${msg.username}:</strong> ${msg.message}`;
-            chatBox.appendChild(chatMessage);
-        });
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
-</script>
+    </section>
+    <script type="module">
+        import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+    
+        const socket = io()
+    
+        const form = document.getElementById('form')
+        const input = document.getElementById('input')
+        const messages = document.getElementById('messages')
+    
+        socket.on('chat-message', (msg) => {
+            const item = `<li>${msg}</li>` // Uso de backticks para interpolación
+            messages.insertAdjacentHTML('beforeend', item)
+        })
+    
+        form.addEventListener('submit', (e) => { // Evento correcto: "submit"
+            e.preventDefault()
+    
+            if (input.value) {
+                socket.emit('chat-message', input.value)
+                input.value = ''
+            }
+        })
+    </script>
+    

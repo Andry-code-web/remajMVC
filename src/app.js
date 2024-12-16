@@ -54,7 +54,7 @@ app.use('/errores', require('./routes/errores.routes'));
 app.use('/admin', require('./routes/admin.routes'));
 
 // Socket.IO
-io.on('connection', (socket) => {
+/* io.on('connection', (socket) => {
   console.log('New client connected');
 
   socket.on('join', (data) => {
@@ -85,8 +85,29 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
+ */
+
+io.on('connection', (socket) => {
+  console.log('New client connected')
+
+  // Escuchar mensajes del cliente
+  socket.on('chat-message', (msg) => {
+      console.log('New chat message:', msg)
+      // Enviar mensaje a todos los clientes conectados
+      io.emit('chat-message', msg)
+  })
+
+  // Desconexión
+  socket.on('disconnect', () => {
+      console.log('Client disconnected')
+  })
+})
+
+
 
 const PORT = process.env.PORT || 5050;
+
+
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

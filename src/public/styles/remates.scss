@@ -217,45 +217,49 @@ form {
     background-color: #004d40;
 }
 
+#chat{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow:  hidden;
+    width: 350px;
+    height: 90% ;
+    position: relative;
+}
 
+#messages{
+    color: #0a0000;
+}
 
-#chat {
-    border: 1px solid #ddd;
-    padding: 10px;
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
+#form{
+    bottom: 0;
+    display: flex;
+ /*    height: 48px; */
+    left: 0;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+}
 
-    #chat-box {
-        border: 1px solid #ccc;
-        padding: 5px;
-        background: #f9f9f9;
-        max-height: 300px;
-        overflow-y: auto;
-    }
+#imput{
+    border-radius: 99px;
+    border: 1px solid #eee;
+    flex: 1;
+    margin: 4px;
+    padding: 0 0px;
+}
 
-    #chat-form {
-        display: flex;
-        margin-top: 10px;
+#imput:focus{
+    outline: 0;
+}
 
-        #chat-input {
-            flex: 1;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
+#form > button{
+    background: #004d40;
+    color: #ccc;
+    border: 0;
+    margin: 4px;
+    border-radius: 4px;
+}
 
-        button {
-            padding: 5px 10px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-
-            &:hover {
-                background: #0056b3;
-            }
-        }
-    }
+#form > button:hover{
+    background-color: #555;
 }

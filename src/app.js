@@ -94,33 +94,62 @@ app.use('/admin', require('./routes/admin.routes'));
 
 
 
+
+let highestAmount = 0; // Definir la variable globalmente
+
+// Escuchar mensajes del cliente
 io.on('connection', (socket) => {
-  console.log('New client connected')
+  console.log('Nuevo cliente conectado');
 
   // Escuchar mensajes del cliente
   socket.on('chat-message', async (msg) => {
-    // Guardar el mensaje en la base de datos
+    const { monto, usuarios_id, remates_id } = msg;
+
     try {
-      await dbConnection.execute('INSERT INTO mensajes (content) VALUES (?)', [msg]);
-      console.log('✅ Mensaje guardado en la base de datos');
+      // Realizar la consulta para obtener el nombre del usuario
+      const [rows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
+
+      // Si el usuario no existe
+      if (rows.length === 0) {
+        socket.emit('error-message', 'Usuario no encontrado');
+        return;
+      }
+
+      const usuarioNombre = rows[0].nombre; // Nombre del usuario
+
+      // Validar que el monto sea mayor al monto más alto
+      if (monto > highestAmount) {
+        highestAmount = monto; // Actualizar el monto más alto
+
+        // Guardar el mensaje en la base de datos
+        await db.execute('INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)', [
+          monto,
+          usuarios_id,
+          remates_id,
+        ]);
+        console.log('✅ Mensaje guardado en la base de datos');
+
+        // Emitir el mensaje a todos los clientes conectados
+        io.emit('chat-message', { monto, usuario: usuarioNombre, remates_id });
+      } else {
+        console.log(`Monto rechazado: ${monto}. Debe ser mayor a ${highestAmount}`);
+        socket.emit('error-message', `El monto debe ser mayor a ${highestAmount}`);
+      }
     } catch (error) {
-      console.error('❌ Error al guardar mensaje:', error.message);
+      console.error('❌ Error al obtener nombre de usuario:', error.message);
+      socket.emit('error-message', 'Error al obtener nombre de usuario');
     }
-    // Enviar mensaje a todos los clientes conectados
-    io.emit('chat-message', msg)
-  })
+  });
 
   // Desconexión
   socket.on('disconnect', () => {
-    console.log('Client disconnected')
-  })
-})
+    console.log('Cliente desconectado');
+  });
+});
 
 
 
 const PORT = process.env.PORT || 5050;
-
-
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });

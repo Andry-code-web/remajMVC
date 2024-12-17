@@ -22,7 +22,7 @@
         <div class="active-user">
           <span class="active-label">Usuario:</span>
           <span class="active-value">
-            <%= user?.id || 'Anónimo' %>
+            <%= user?.usuario || 'Anónimo' %>
           </span>
         </div>
       </div>
@@ -67,7 +67,7 @@
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
           <span class="progress-value">
-            <%= user?.id || 'Anónimo' %>
+            <%= user?.usuario || 'Anónimo' %>
           </span>
         </div>
       </div>
@@ -91,10 +91,10 @@
     </div>
 
     <!-- Chat (inicialmente oculto) -->
-     <div id="auction-chat" class="chat" style="display: none;">
+    <div id="auction-chat" class="chat" style="display: none;">
       <section id="chat">
         <ul id="messages"></ul>
-  
+
         <!-- Formulario 1 -->
         <form id="form1">
           <div class="input-container">
@@ -102,7 +102,7 @@
             <button type="submit" class="send-btn">Enviar</button>
           </div>
         </form>
-  
+
         <!-- Formulario 2 -->
         <form id="form2">
           <div class="input-container">
@@ -111,7 +111,7 @@
           </div>
         </form>
       </section>
-    </div> 
+    </div>
 
   </div>
 
@@ -150,60 +150,76 @@
 </script>
 
 <script type="module">
-  import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+  import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
-  const socket = io()
+  const socket = io();
 
   // Referencias del DOM
-  const form1 = document.getElementById('form1')
-  const input1 = document.getElementById('input') // Primer input
-  const form2 = document.getElementById('form2')
-  const input2 = document.getElementById('input2') // Segundo input
-  const messages = document.getElementById('messages')
+  const form1 = document.getElementById('form1');
+  const input1 = document.getElementById('input'); // Primer input
+  const form2 = document.getElementById('form2');
+  const input2 = document.getElementById('input2'); // Segundo input
+  const messages = document.getElementById('messages');
 
-  let highestAmount = 0 // Variable para almacenar el monto más alto
+  let highestAmount = 0; // Variable para almacenar el monto más alto
 
   // Escuchar mensajes del servidor y mostrarlos en el chat
   socket.on('chat-message', (msg) => {
-    const item = `<li>${msg}</li>`
-    messages.insertAdjacentHTML('beforeend', item)
-  })
+    const { monto, usuario, remates_id } = msg;
+    const item = `<li><strong>${usuario}</strong>: $${monto} (Subasta ID: ${remates_id})</li>`;
+    messages.insertAdjacentHTML('beforeend', item);
+  });
+
+  // Mostrar mensaje de error
+  socket.on('error-message', (error) => {
+    alert(error);
+  });
 
   // Evento para el primer formulario
   form1.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const value = parseFloat(input1.value) || 0 // Obtener valor como número
+    const value = parseFloat(input1.value) || 0; // Obtener valor como número
 
     if (value > 0) {
       // Si el valor es mayor al monto más alto, actualizamos
       if (value > highestAmount) {
-        highestAmount = value
-        input2.value = highestAmount + 100 // Actualizar segundo input
+        highestAmount = value;
+        input2.value = highestAmount + 100; // Actualizar segundo input
+      } else {
+        alert(`El monto debe ser mayor a ${highestAmount}`);
+        return;
       }
 
       // Emitir mensaje al servidor
-      socket.emit('chat-message', value)
-      input1.value = '' // Limpiar input
-    }
-  })
+      socket.emit('chat-message', {
+        monto: value,
+        usuarios_id: 1, // Cambiar con el ID real del usuario
+        remates_id: 1 // Cambiar con el ID real de la subasta
+      });
 
-  // Evento para el segundo formulario
+      input1.value = ''; // Limpiar input
+    }
+  });
+
+  // Evento para el segundo formulario (input2) que solo es para mostrar el monto más alto + 100
   form2.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const value = parseFloat(input2.value) || 0 // Obtener valor como número
+    const value = parseFloat(input2.value);
 
-    if (value > 0) {
-      // Emitir mensaje al servidor
-      socket.emit('chat-message', value)
+    if (value > highestAmount) {
+      // Emitir mensaje con el monto más alto + 100
+      socket.emit('chat-message', {
+        monto: value,
+        usuarios_id: 1, // Cambiar con el ID real del usuario
+        remates_id: 1 // Cambiar con el ID real de la subasta
+      });
 
-      // Si el valor enviado es mayor al monto más alto, actualizarlo
-      if (value > highestAmount) {
-        highestAmount = value
-        input2.value = highestAmount + 100 // Actualizar segundo input
-      }
+      highestAmount = value; // Actualizar el monto más alto
+      input2.value = highestAmount + 100; // Actualizar segundo input
+    } else {
+      alert(`El monto debe ser mayor a ${highestAmount}`);
     }
-  })
-
+  });
 </script>

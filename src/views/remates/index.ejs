@@ -28,37 +28,81 @@
         </a>
     </div>
 
-
     <section id="chat">
         <ul id="messages"></ul>
-        <form id="form">
-            <input type="number" name="message" id="input" placeholder="type a message" autocomplete="off" />
-            <button type="submit">enviar</button>
-            <input type="number" name="message" id="input" placeholder="type a message" autocomplete="off" />
-            <button type="submit">enviar</button>
+
+        <!-- Formulario 1 -->
+        <form id="form1">
+            <div class="input-container">
+                <input type="number" id="input" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
+                <button type="submit" class="send-btn">Enviar</button>
+            </div>
+        </form>
+
+        <!-- Formulario 2 -->
+        <form id="form2">
+            <div class="input-container">
+                <input type="number" id="input2" class="input-field" placeholder="Monto más alto + 100" readonly />
+                <button type="submit" class="send-btn">Enviar</button>
+            </div>
         </form>
     </section>
+
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-    
+
         const socket = io()
-    
-        const form = document.getElementById('form')
-        const input = document.getElementById('input')
+
+        // Referencias del DOM
+        const form1 = document.getElementById('form1')
+        const input1 = document.getElementById('input') // Primer input
+        const form2 = document.getElementById('form2')
+        const input2 = document.getElementById('input2') // Segundo input
         const messages = document.getElementById('messages')
-    
+
+        let highestAmount = 0 // Variable para almacenar el monto más alto
+
+        // Escuchar mensajes del servidor y mostrarlos en el chat
         socket.on('chat-message', (msg) => {
-            const item = `<li>${msg}</li>` // Uso de backticks para interpolación
+            const item = `<li>${msg}</li>`
             messages.insertAdjacentHTML('beforeend', item)
         })
-    
-        form.addEventListener('submit', (e) => { // Evento correcto: "submit"
+
+        // Evento para el primer formulario
+        form1.addEventListener('submit', (e) => {
             e.preventDefault()
-    
-            if (input.value) {
-                socket.emit('chat-message', input.value)
-                input.value = ''
+
+            const value = parseFloat(input1.value) || 0 // Obtener valor como número
+
+            if (value > 0) {
+                // Si el valor es mayor al monto más alto, actualizamos
+                if (value > highestAmount) {
+                    highestAmount = value
+                    input2.value = highestAmount + 100 // Actualizar segundo input
+                }
+
+                // Emitir mensaje al servidor
+                socket.emit('chat-message', value)
+                input1.value = '' // Limpiar input
             }
         })
+
+        // Evento para el segundo formulario
+        form2.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const value = parseFloat(input2.value) || 0 // Obtener valor como número
+
+            if (value > 0) {
+                // Emitir mensaje al servidor
+                socket.emit('chat-message', value)
+
+                // Si el valor enviado es mayor al monto más alto, actualizarlo
+                if (value > highestAmount) {
+                    highestAmount = value
+                    input2.value = highestAmount + 100 // Actualizar segundo input
+                }
+            }
+        })
+
     </script>
-    

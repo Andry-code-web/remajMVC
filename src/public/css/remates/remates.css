@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -270,6 +271,57 @@ form {
 
 #form > button:hover {
   background-color: #555;
+}
+
+/* Estilos generales */
+#chat {
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  max-width: 600px;
+  /* Contenedor de input y botón */
+}
+#chat ul#messages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  border: 1px solid #ddd;
+  height: 200px;
+  overflow-y: auto;
+}
+#chat ul#messages li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+#chat .input-container {
+  display: flex;
+  margin-bottom: 10px;
+  /* Estilos para los inputs */
+  /* Estilos para los botones */
+}
+#chat .input-container .input-field {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+#chat .input-container .input-field:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+#chat .input-container .send-btn {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#chat .input-container .send-btn:hover {
+  background-color: #357ab7;
 }
 
 /*# sourceMappingURL=remates.css.map */

@@ -11,7 +11,11 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server,
+  {
+    conectionStateRecovery:{}
+  }
+);
 
 // Middleware
 app.use(cookieParser());
@@ -87,19 +91,21 @@ app.use('/admin', require('./routes/admin.routes'));
 });
  */
 
+
+
 io.on('connection', (socket) => {
   console.log('New client connected')
 
   // Escuchar mensajes del cliente
   socket.on('chat-message', (msg) => {
-      console.log('New chat message:', msg)
-      // Enviar mensaje a todos los clientes conectados
-      io.emit('chat-message', msg)
+    console.log('New chat message:', msg)
+    // Enviar mensaje a todos los clientes conectados
+    io.emit('chat-message', msg)
   })
 
   // Desconexión
   socket.on('disconnect', () => {
-      console.log('Client disconnected')
+    console.log('Client disconnected')
   })
 })
 

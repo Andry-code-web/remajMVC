@@ -26,7 +26,7 @@ exports.getAuctionDetails = async (req, res) => {
       message: 'Error al cargar los detalles de la subasta'
     });
   }
-};
+}; 
 
 exports.joinAuction = async (req, res) => {
   try {

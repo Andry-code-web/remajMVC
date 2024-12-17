@@ -60,7 +60,6 @@ function generateAuctionCards() {
         
         auctionGrid.appendChild(card);
         
-        // Aplicar la animación con un retraso escalonado
         setTimeout(() => {
             if (index % 2 === 0) {
                 card.classList.add('animate-left');
@@ -78,24 +77,16 @@ function openModal(type, id) {
 
     if (!auction) return;
 
-    // Verifica si el tipo es 'remate' o 'seguimiento' y muestra la información correspondiente
     if (type === 'remate') {
         modalBody.innerHTML = `
             <div class="modal-header">
-                <button class="modal-btn" onclick="showInmuebles(${auction.id})">Inmuebles</button>
-                <button class="modal-btn" onclick="showCronograma(${auction.id})">Cronograma</button>
+                <button class="modal-btn btn-light" onclick="showDetalles(${auction.id})">Detalles</button>
+                <button class="modal-btn btn-dark" onclick="showInmuebles(${auction.id})">Inmuebles</button>
+                <button class="modal-btn btn-dark" onclick="showCronograma(${auction.id})">Cronograma</button>
             </div>
-            <h3>Información del Remate</h3>
-            <p><strong>Convocatoria:</strong> ${auction.convocatoria}</p>
-            <p><strong>Tipo Cambio:</strong> ${auction.tipo_cambio}</p>
-            <p><strong>Tasación:</strong> ${auction.tasacion}</p>
-            <p><strong>Precio Base:</strong> ${auction.precio_base}</p>
-            <p><strong>Incremento entre ofertas:</strong> ${auction.incremento_ofertas}</p>
-            <p><strong>Arancel:</strong> ${auction.arancel}</p>
-            <p><strong>Oblaje:</strong> ${auction.oblaje}</p>
-            <p><strong>Descripción:</strong> ${auction.descripcion}</p>
-            <p><strong>N° Inscritos:</strong> ${auction.numero_inscritos}</p>
+            <div id="board-content"></div>
         `;
+        showDetalles(auction.id);
     } else if (type === 'seguimiento') {
         modalBody.innerHTML = `
             <div class="expediente">
@@ -116,78 +107,156 @@ function openModal(type, id) {
             </div>
         `;
     }
-
-    // Muestra el modal
     modal.style.display = 'block';
 }
 
-function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.style.display = 'none';
-}
-
-function showInmuebles(auctionId) {
+function showDetalles(auctionId) {
     const auction = auctionData.find(a => a.id === auctionId);
-
     if (!auction) return;
 
-    const modalBody = document.getElementById('modal-body');
+    const boardContent = document.getElementById('board-content');
+    boardContent.innerHTML = `
+       <div class="details-container">
+            <!-- Primera columna -->
+            <div class="details-column">
+                <div class="detail-row">
+                    <strong>Expediente:</strong> ${auction.expediente}
+                </div>
+                <div class="detail-row">
+                    <strong>Distrito Judicial:</strong> ${auction.distrito_judicial}
+                </div>
+                <div class="detail-row">
+                    <strong>Órgano Jurisdiccional:</strong> ${auction.organo_jurisdiccional}
+                </div>
+                <div class="detail-row">
+                    <strong>Instancia:</strong> ${auction.instancia}
+                </div>
+                <div class="detail-row">
+                    <strong>Juez:</strong> ${auction.juez}
+                </div>
+                <div class="detail-row">
+                    <strong>Especialista:</strong> ${auction.especialista}
+                </div>
+                <div class="detail-row">
+                    <strong>Materia:</strong> ${auction.materia}
+                </div>
+                <div class="detail-row">
+                    <strong>Resolución:</strong> ${auction.resolucion}
+                </div>
+            </div>
 
-    // Mantener los botones de navegación visibles
-    modalBody.innerHTML = `
-        <div class="modal-header">
-            <button class="modal-btn" onclick="showInmuebles(${auction.id})">Inmuebles</button>
-            <button class="modal-btn" onclick="showCronograma(${auction.id})">Cronograma</button>
-        </div>
-        <div class="inmueble-details">
-            <h3>Detalles del Inmueble</h3>
-            <p><strong>Partida Registral:</strong> ${auction.partida_registral}</p>
-            <p><strong>Tipo de Inmueble:</strong> ${auction.tipo_inmueble}</p>
-            <p><strong>Dirección:</strong> ${auction.direccion}</p>
-            <p><strong>Carga/Gravamen:</strong> ${auction.carga_ogravamen}</p>
-            <p><strong>Porcentaje a Rematar:</strong> ${auction.porcentaje_rematar}%</p>
-            <div class="images">
-                ${auction.imagenes && auction.imagenes.length > 0 ? auction.imagenes.map(img => `<img src="data:image/png;base64,${img}" alt="Inmueble">`).join('') : 'No hay imágenes disponibles'}
+            <!-- Segunda columna -->
+            <div class="details-column">
+                <div class="detail-row">
+                    <strong>Archivo:</strong> ${auction.archivo}
+                </div>
+                <div class="detail-row">
+                    <strong>Convocatoria:</strong> ${auction.convocatoria}
+                </div>
+                <div class="detail-row">
+                    <strong>Tasación:</strong> ${auction.tasacion}
+                </div>
+                <div class="detail-row">
+                    <strong>Precio base:</strong> ${auction.precio_base}
+                </div>
+                <div class="detail-row">
+                    <strong>Incremento entre ofertas:</strong> ${auction.incremento_ofertas}
+                </div>
+                <div class="detail-row">
+                    <strong>Arancel:</strong> ${auction.arancel}
+                </div>
+                <div class="detail-row">
+                    <strong>Oblaje:</strong> ${auction.oblaje}
+                </div>
+                <div class="detail-row">
+                    <strong>N° Inscritos:</strong> ${auction.numero_inscritos}
+                </div>
             </div>
         </div>
     `;
 }
 
-function showCronograma(auctionId) {
+function showInmuebles(auctionId) {
     const auction = auctionData.find(a => a.id === auctionId);
-
     if (!auction) return;
 
-    const modalBody = document.getElementById('modal-body');
-
-    // Mantener los botones de navegación visibles
-    modalBody.innerHTML = `
-        <div class="modal-header">
-            <button class="modal-btn" onclick="showInmuebles(${auction.id})">Inmuebles</button>
-            <button class="modal-btn" onclick="showCronograma(${auction.id})">Cronograma</button>
-        </div>
-        <div class="cronograma">
-            <h3>Cronograma</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>FASE</th>
-                        <th>FECHA INICIO</th>
-                        <th>FECHA FIN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${auction.cronograma && auction.cronograma.length > 0 ? auction.cronograma.map((fase, index) => `
+    const boardContent = document.getElementById('board-content');
+    boardContent.innerHTML = `
+        <div class="board">
+            <div class="board-header">
+            </div>
+            <div class="board-table">
+                <table>
+                    <thead>
                         <tr>
-                            <td>${index + 1}</td>
-                            <td>${fase.nombre}</td>
-                            <td>${fase.fecha_inicio}</td>
-                            <td>${fase.fecha_fin}</td>
+                            <th>PARTIDA REGISTRAL</th>
+                            <th>TIPO INMUEBLE</th>
+                            <th>DIRECCIÓN</th>
+                            <th>CARGA Y/O GRAVAMEN</th>
+                            <th>PORCENTAJE A REMATAR</th>
+                            <th>IMÁGENES</th>
                         </tr>
-                    `).join('') : '<tr><td colspan="4">No hay fases disponibles.</td></tr>'}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${auction.partida_registral}</td>
+                            <td>${auction.tipo_inmueble}</td>
+                            <td>${auction.direccion}</td>
+                            <td>${auction.carga_ogravamen}</td>
+                            <td>${auction.porcentaje_rematar}%</td>
+                            <td>${auction.imagenes ? auction.imagenes.length : 0}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            ${auction.imagenes && auction.imagenes.length > 0 ? `
+                <div class="board-images">
+                    ${auction.imagenes.map(img => `
+                        <div class="board-image">
+                            <img src="data:image/png;base64,${img}" alt="Inmueble">
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+
+function showCronograma(auctionId) {
+    const auction = auctionData.find(a => a.id === auctionId);
+    if (!auction) return;
+
+    const boardContent = document.getElementById('board-content');
+    boardContent.innerHTML = `
+        <div class="board">
+            <div class="board-header">
+            </div>
+            <div class="board-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>FASE</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${auction.cronograma && auction.cronograma.length > 0 
+                            ? auction.cronograma.map((fase, index) => `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${fase.nombre}</td>
+                                    <td>${fase.fecha_inicio}</td>
+                                    <td>${fase.fecha_fin}</td>
+                                </tr>
+                            `).join('')
+                            : '<tr><td colspan="4">No hay fases disponibles.</td></tr>'
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     `;
 }
@@ -226,16 +295,23 @@ window.onclick = function(event) {
     }
 };
 
-// Función para descargar el PDF
-function downloadPDF(auctionId) {
-    const pdfUrl = 'ruta_del_pdf/aviso.pdf'; // Aquí se pondrá la ruta del PDF real
-
-    const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.download = 'aviso.pdf'; // Nombre del archivo descargado
-    link.click(); // Inicia la descarga
+function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
 }
 
-// Hacer las funciones disponibles globalmente
+//PDF
+function downloadPDF(auctionId) {
+    const pdfUrl = 'ruta_del_pdf/aviso.pdf';
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'aviso.pdf';
+    link.click();
+}
+
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.showDetalles = showDetalles;
+window.showInmuebles = showInmuebles;
+window.showCronograma = showCronograma;
+window.downloadPDF = downloadPDF;

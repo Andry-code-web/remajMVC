@@ -29,7 +29,6 @@ class Live {
             });
             return img_inmuebles; 
         } catch (error) {
-            // Lanzar un error si ocurre algo durante la consulta
             throw new Error('Error al obtener las imágenes de inmuebles: ' + error.message);
         }
     }

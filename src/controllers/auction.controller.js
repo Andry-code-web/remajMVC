@@ -67,7 +67,6 @@ exports.submitMessage = async (req, res) => {
       return res.status(400).json({ message: 'El chat está cerrado' });
     }
 
-    // Aquí podrías guardar el mensaje en la base de datos si lo deseas
     res.json({ message: 'Mensaje enviado' });
   } catch (error) {
     console.error('Error al enviar mensaje:', error);

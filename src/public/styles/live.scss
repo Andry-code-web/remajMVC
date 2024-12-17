@@ -6,18 +6,19 @@
     box-sizing: border-box;
     cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
+/*contenedor live general*/
 
 .contenedor_live {
-    font-family: 'fuentePrincipal', sans-serif;
+    font-family: $fuenteParrafos;
     min-height: 100vh;
-    background-color: $bg-dark;
-    color: $text-primary;
     position: relative;
     padding: 20px;
-    padding-top: 100px; // Añadido para bajar las tarjetas
+    padding-top: 100px; 
 }
 
+/*particulas canva */
 #particleCanvas {
+    background: $bg-dark;
     position: fixed;
     top: 0;
     left: 0;
@@ -27,6 +28,8 @@
     pointer-events: none;
 }
 
+
+/*nabvar*/
 #header {
     position: fixed;
     top: 0;
@@ -39,9 +42,9 @@
     padding: 10px 0;
     transition: transform 0.3s ease, opacity 0.3s ease; /* Transición de movimiento y opacidad */
     background: transparent; /* Sin fondo */
-  }
+}
 
-
+/*grid  cards*/
 .auction-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -160,6 +163,40 @@
     margin-bottom: 20px;
 }
 
+.details-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.details-column {
+    flex: 1;
+}
+
+.detail-row {
+    font-family: $fuenteSecundaria;
+    margin: 10px 0;
+    font-size: 16px;
+    color: $bg-dark;
+}
+
+.detail-row strong {
+    color: #000;
+    font-weight: bold;
+}
+
+.description-container {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.description-container strong {
+    font-size: 16px;
+    color: #000;
+}
+
 .buttons {
     display: flex;
     gap: 10px;
@@ -218,29 +255,29 @@
 }
 
 .modal-content {
-    background: $glass-bg;
+    background: $primary-color;
     margin: 5% auto;
     padding: 30px;
-    border: 1px solid rgba(229, 208, 177, 0.1);
+    border: 2px solid $bg-dark;
     width: 90%;
     max-width: 800px;
     border-radius: 24px;
     position: relative;
     backdrop-filter: blur(20px);
-    color: $text-primary;
+    color: $bg-dark
 }
 
 .close-modal {
-    color: $text-secondary;
+    color: $bg-dark;
     font-size: 28px;
     font-weight: bold;
     position: absolute;
-    right: 20px;
-    top: 15px;
+    right: 10px;
+    top: 2px;
     transition: all 0.3s ease;
 
     &:hover {
-        color: $text-primary;
+        color: $text-dark;
     }
 }
 
@@ -250,16 +287,16 @@
 .expediente, .seguimiento {
     margin-bottom: 20px;
     padding: 15px;
-    border: 1px solid rgba(229, 208, 177, 0.5);
+    border: 1px solid $bg-dark;
     border-radius: 12px;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
-    color: $text-primary;
+    color: $bg-dark;
 
     h3 {
         margin-bottom: 10px;
         font-size: 1.2rem;
-        color: $text-secondary;
+        color: $bg-dark;
     }
 
     p {
@@ -269,13 +306,13 @@
 }
 
 /*boton detalles*/
-
 .modal-btn {
+    font-family: $fuenteParrafos;
     flex: 1;
     padding: 12px;
     background: rgba(229, 208, 177, 0.1);
     border: 1px solid $input-border;
-    color: $text-primary;
+    color: $bg-dark;
     font-size: 14px;
     letter-spacing: 1px;
     border-radius: 12px;
@@ -309,52 +346,137 @@
     }
 }
 
+
 .remate-details p {
     margin: 5px 0;
     color: #ddd;
     font-size: 0.9rem;
 }
 
-/* Estilo del contenedor de los botones dentro del modal */
 .modal-header {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacio entre los botones */
+    gap: 20px; 
     margin-bottom: 20px; /* Espacio debajo de los botones */
 }
 
-
-/*boton inmueble*/
-/* 
-.inmueble-details {
+/*tableros*/
+.board {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
     margin-top: 20px;
 }
 
-.inmueble-details h3 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    color: $text-secondary;
+.board-header {
+    margin-bottom: 20px;
+    text-align: center;
+    
+    h3 {
+        color: $bg-dark;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
 }
 
-.inmueble-details .detail {
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-    color: $text-primary;
+.board-table {
+    overflow-x: auto;
+    margin: 20px 0;
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            color: #666;
+            font-size: 0.9rem;
+            
+            &:first-child {
+                font-weight: 500;
+            }
+        }
+        
+        tr:hover td {
+            background: #f5f5f5;
+        }
+    }
 }
 
-.inmueble-details .images {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
 
-.inmueble-details .images img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+.board-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
     border-radius: 8px;
 }
- */
+
+.board-image {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    padding: 10px;
+    
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+        
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+
+.no-images {
+    text-align: center;
+    color: $text-dark;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+// Responsive tablero
+@media (max-width: 768px) {
+    .board-table {
+        margin: 10px -15px;
+        
+        table {
+            font-size: 0.8rem;
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+    }
+    
+    .board-images {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}
+
 /*responsive*/
 @media (max-width: 1200px) {
     .auction-grid {

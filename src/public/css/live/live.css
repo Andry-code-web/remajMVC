@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*Variables para registro*/
 /*Variables para login*/
 /*Variables de live*/
@@ -26,10 +27,23 @@
 }
 
 .contenedor_live {
-  width: 100%;
+  font-family: "fuentePrincipal", sans-serif;
   min-height: 100vh;
-  background: #F5F5F5;
+  background-color: #333333;
+  color: #E5D0B1;
+  position: relative;
   padding: 20px;
+  padding-top: 100px;
+}
+
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #header {
@@ -37,55 +51,64 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
-  transform: translateY(0);
-  transition: transform 0.3s ease;
+  z-index: 1000; /* Encima del contenido */
+  color: white; /* Letras blancas */
+  font-size: 24px;
+  text-align: center;
+  padding: 10px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transición de movimiento y opacidad */
+  background: transparent; /* Sin fondo */
 }
 
 .auction-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  max-width: 1440px;
+  position: relative;
+  z-index: 2;
+  max-width: 1420px;
   margin: 0 auto;
-  /* padding-top: 100px; */
 }
 
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .auction-card {
-  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-  border-radius: 15px;
+  background: rgba(18, 18, 18, 0.7);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(229, 208, 177, 0.1);
   overflow: hidden;
-  width: 20rem;
-  margin-top: 8rem;
-  border: 1px solid #8F9092;
-  transition: all 0.3s ease;
-  position: relative;
-  box-shadow: 0 4px 3px 1px transparent, 0 6px 8px transparent, 0 -4px 4px transparent, 0 -6px 4px transparent, inset 0 0 3px 3px transparent;
+  transition: all 0.3s ease, transform 0.3s ease-in-out;
+  opacity: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .auction-card:hover {
-  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-  transform: translateY(2px);
+  transform: translateY(5px) scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.auction-card .auction-content {
-  margin-bottom: -1.5rem;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.7);
+.auction-card.animate-left {
+  animation: slideInFromLeft 0.8s ease forwards;
 }
-.auction-card .title {
-  font-family: "fuentePrincipal";
-  color: #606060;
-  text-shadow: 0 1px #fff;
-}
-.auction-card .vehicle-type,
-.auction-card .company-info,
-.auction-card .detail-item,
-.auction-card .location-info,
-.auction-card .bid-label {
-  color: #666;
-}
-.auction-card .bid-amount {
-  color: #505050;
-  text-shadow: 0 1px #fff;
+.auction-card.animate-right {
+  animation: slideInFromRight 0.8s ease forwards;
 }
 
 .auction-image-container {
@@ -95,30 +118,26 @@
   overflow: hidden;
 }
 
-.auction-image-container:hover .auction-image {
-  transform: scale(1.1);
-}
-
 .auction-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
+.auction-image:hover {
+  transform: scale(1.05);
+}
 
 .countdown {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #8B7355;
+  background: rgba(229, 208, 177, 0.2);
   padding: 6px 12px;
   border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
   font-size: 0.9rem;
-  color: #F5F5F5;
-  font-weight: bold;
+  color: #E5D0B1;
+  backdrop-filter: blur(5px);
 }
 
 .auction-content {
@@ -126,106 +145,73 @@
 }
 
 .title {
-  font-family: "Arial", sans-serif;
+  color: #E5D0B1;
   font-size: 1.2rem;
-  color: #333333;
   margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
-.vehicle-type {
-  color: #666666;
+.description {
+  color: rgba(229, 208, 177, 0.7);
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.company-info {
-  font-size: 0.9rem;
-  color: #666666;
+.price {
+  color: #E5D0B1;
+  font-size: 1.1rem;
+  font-weight: bold;
   margin-bottom: 15px;
 }
 
 .details {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  color: rgba(229, 208, 177, 0.7);
   font-size: 0.9rem;
+  margin-bottom: 20px;
 }
 
-.detail-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #666666;
-}
-
-.location-info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-  color: #666666;
-}
-
-.location-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-/*boton tarjeta */
 .buttons {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  cursor: pointer;
-  width: 150px;
-  height: 30px;
-  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-  border-radius: 30px;
-  border: 1px solid #8F9092;
-  transition: all 0.2s ease;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #606060;
-  text-shadow: 0 1px #fff;
   flex: 1;
+  padding: 12px;
+  background: rgba(229, 208, 177, 0.1);
+  border: 1px solid rgba(229, 208, 177, 0.2);
+  color: #E5D0B1;
+  font-size: 14px;
+  letter-spacing: 1px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #E5D0B1, transparent, #E5D0B1);
+  z-index: -1;
+  filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 .btn:hover {
-  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+  background: rgba(229, 208, 177, 0.2);
+  border-color: #E5D0B1;
 }
-.btn:active {
-  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-}
-.btn:focus {
-  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-}
-
-.bid-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-}
-
-.bid-label {
-  font-size: 0.9rem;
-  color: #666666;
-}
-
-.bid-amount {
-  font-size: 1.2rem;
-  color: #8B7355;
-  font-weight: bold;
+.btn:hover::before {
+  opacity: 0.5;
 }
 
 .modal {
@@ -241,114 +227,147 @@
 }
 
 .modal-content {
-  background-color: #ffffff;
+  background: rgba(18, 18, 18, 0.7);
   margin: 5% auto;
   padding: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(229, 208, 177, 0.1);
   width: 90%;
   max-width: 800px;
-  border-radius: 8px;
+  border-radius: 24px;
   position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  color: #E5D0B1;
 }
 
 .close-modal {
+  color: rgba(229, 208, 177, 0.7);
+  font-size: 28px;
+  font-weight: bold;
   position: absolute;
   right: 20px;
   top: 15px;
-  color: #666666;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
   transition: all 0.3s ease;
 }
-
-.close-modal:hover,
-.close-modal:focus {
-  color: #333333;
-  background-color: rgba(0, 0, 0, 0.05);
-  text-decoration: none;
+.close-modal:hover {
+  color: #E5D0B1;
 }
 
-.modal h2 {
-  color: #333333;
+/*boton seguimiento*/
+.expediente, .seguimiento {
   margin-bottom: 20px;
-  padding-right: 40px;
+  padding: 15px;
+  border: 1px solid rgba(229, 208, 177, 0.5);
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  color: #E5D0B1;
+}
+.expediente h3, .seguimiento h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: rgba(229, 208, 177, 0.7);
+}
+.expediente p, .seguimiento p {
+  margin: 5px 0;
+  font-size: 0.9rem;
 }
 
-.modal p {
-  color: #666666;
-  margin-bottom: 15px;
-  line-height: 1.5;
-}
-
-.gallery-container {
+/*boton detalles*/
+.modal-btn {
+  flex: 1;
+  padding: 12px;
+  background: rgba(229, 208, 177, 0.1);
+  border: 1px solid rgba(229, 208, 177, 0.2);
+  color: #E5D0B1;
+  font-size: 14px;
+  letter-spacing: 1px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
   position: relative;
-  width: 100%;
-  height: 400px;
   overflow: hidden;
-  border-radius: 8px;
-  margin: 20px 0;
 }
-
-.gallery-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.gallery-nav {
+.modal-btn::before {
+  content: "";
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  color: #333333;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #E5D0B1, transparent, #E5D0B1);
+  z-index: -1;
+  filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-btn:hover {
+  background: rgba(229, 208, 177, 0.2);
+  border-color: #E5D0B1;
+}
+.modal-btn:hover::before {
+  opacity: 0.5;
+}
+
+.remate-details p {
+  margin: 5px 0;
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+/* Estilo del contenedor de los botones dentro del modal */
+.modal-header {
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  transition: 0.3s ease;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.gallery-nav:hover {
-  background: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-.gallery-nav.prev {
-  left: 20px;
-}
-.gallery-nav.next {
-  right: 20px;
-}
-.gallery-nav i {
-  line-height: 1;
+  gap: 20px; /* Espacio entre los botones */
+  margin-bottom: 20px; /* Espacio debajo de los botones */
 }
 
-@media (max-width: 768px) {
+/*boton inmueble*/
+/* 
+.inmueble-details {
+    margin-top: 20px;
+}
+
+.inmueble-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: $text-secondary;
+}
+
+.inmueble-details .detail {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: $text-primary;
+}
+
+.inmueble-details .images {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.inmueble-details .images img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+ */
+/*responsive*/
+@media (max-width: 1200px) {
   .auction-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
   }
-  .modal-content {
-    margin: 10% auto;
-    width: 95%;
-    padding: 20px;
+}
+@media (max-width: 900px) {
+  .auction-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .gallery-nav {
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
+}
+@media (max-width: 600px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
   }
 }
 

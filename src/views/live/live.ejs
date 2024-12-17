@@ -13,27 +13,46 @@
   <link rel="stylesheet" href="/css/globales/globales.css">
 </head>
 <body>
+  
   <!-- COMPONENTE HEADER -->
   <%- include('../partials/navbar') %>
   
   <!-- live_Tarjeta  -->
+  <!-- Canvas para las partículas -->
+  <canvas id="particleCanvas"></canvas>
   <section class="contenedor_live" id="contenedor_live">
     <div class="auction-grid" id="auction-grid">
       <% liveData.forEach(auction => { %>
-        <div class="auction-card">
-          <div class="auction-image-container">
-            <img 
-              src="data:image/png;base64,<%= auction.imagen %>" 
-              alt="Imagen de remate <%= auction.id %>" 
-              class="auction-image">
+          <div class="auction-card">
+              <div class="auction-image-container">
+                  <img 
+                      src="data:image/png;base64,<%= auction.imagen %>" 
+                      alt="Imagen de remate <%= auction.id %>" 
+                      class="auction-image">
+                  <div class="countdown" data-id="<%= auction.id %>">
+                      <span class="countdown-text">Cargando...</span>
+                  </div>
+              </div>
+              <div class="auction-content">
+                  <h3 class="title"><%= auction.ubicacion %></h3>
+                  <p class="description"><%= auction.descripcion %></p>
+                  <p class="price">USD$ <%= parseFloat(auction.precios).toFixed(2) %></p>
+                  <div class="details">
+                      <span>Baños: <%= auction.N_banos %></span>
+                      <span>Habitaciones: <%= auction.N_habitacion %></span>
+                  </div>
+                  <div class="buttons">
+                      <button class="btn" onclick="openModal('details', <%= auction.id %>)">
+                          Descripción
+                      </button>
+                      <button class="btn" onclick="openModal('features', <%= auction.id %>)">
+                          Características
+                      </button>
+                  </div>
+              </div>
           </div>
-          <div class="auction-content">
-            <h3 class="title"><%= auction.descripcion %></h3>
-            <!-- Más contenido aquí -->
-          </div>
-        </div>
       <% }) %>
-    </div>
+  </div>
   </section>
   
   
@@ -49,24 +68,90 @@
   const auctionData = <%- JSON.stringify(liveData) %>;
 </script>
 
+
+
+<!-- Scripts -->
+    <script src="/js/script_live.js" type="module"></script>
+    <script type="module">
+      import { NetworkAnimationL } from '/js/componentes/network.live.js';
+      document.addEventListener('DOMContentLoaded', () => {
+          const canvas = document.getElementById('particleCanvas');
+          if (canvas) {
+              const networkAnimationL = new NetworkAnimationL(canvas);
+              canvas.width = window.innerWidth;
+              canvas.height = window.innerHeight;
+              
+              window.addEventListener('resize', () => {
+                  canvas.width = window.innerWidth;
+                  canvas.height = window.innerHeight;
+              });
+          }
+      });
+  </script>
 <!-- navbar -->
 <script>
-  let lastScrollTop = 0; 
-  const header = document.getElementById('header');
-  const liveContainer = document.getElementById('contenedor_live');
+  let lastScrollTop = 0; // Posición previa del scroll
+  const header = document.getElementById('header'); // Encabezado
+  const liveSection = document.getElementById('contenedor_live'); // Sección Live
 
   window.addEventListener('scroll', () => {
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-    if (currentScrollTop > lastScrollTop && currentScrollTop > liveContainer.offsetTop) {
-      header.style.transform = 'translateY(-100%)'; 
+    // Desaparece al bajar el scroll
+    if (currentScrollTop > lastScrollTop && currentScrollTop > liveSection.offsetTop) {
+      header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
+      header.style.opacity = '0'; // Desvanece
     } else {
-      header.style.transform = 'translateY(0)'; 
+      // Aparece al subir el scroll
+      header.style.transform = 'translateY(0)'; // Vuelve a su posición
+      header.style.opacity = '1'; // Reaparece
     }
-    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; 
+
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
   });
 </script>
 
+
+
+
+<!-- particulas  -->
+<!-- script particulas login -->
+<script type="module" src="/js/componentes/network.live.js"></script>
+<link rel="stylesheet" href="/css/live/live.css">
+
+<script type="module">
+  import {
+    NetworkAnimationL
+  } from '../../js/componentes/network.live.js';
+  const canvas = document.getElementById("particleCanvas");
+  const networkAnimationL = new NetworkAnimationL(canvas);
+
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch('/auth/loginP', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        const responseData = await response.json();
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+</script>
 
   <!-- script live -->
 <script src="/js/script_live.js"></script>

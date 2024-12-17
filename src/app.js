@@ -36,13 +36,7 @@ app.use(session({
 
 app.use(flash());
 app.use(morgan("dev"));
-
-app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
-  next();
-});
-
-
+app.use(setUserLocals);
 
 // Middleware para pasar mensajes flash a las vistas
 app.use((req, res, next) => {
@@ -107,7 +101,7 @@ io.on('connection', (socket) => {
   socket.on('chat-message', async (msg) => {
     // Guardar el mensaje en la base de datos
     try {
-      await db.execute('INSERT INTO mensajes (monto) VALUES (?)', [msg]);
+      await dbConnection.execute('INSERT INTO mensajes (content) VALUES (?)', [msg]);
       console.log('✅ Mensaje guardado en la base de datos');
     } catch (error) {
       console.error('❌ Error al guardar mensaje:', error.message);

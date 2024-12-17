@@ -1,7 +1,11 @@
 <div class="active-auction-card">
   <div class="active-auction-header">
-    <div class="active-property-type"><%= auction.categoria %></div>
-    <h2 class="active-property-location"><%= auction.ubicacion %></h2>
+    <div class="active-property-type">
+      <%= auction.categoria %>
+    </div>
+    <h2 class="active-property-location">
+      <%= auction.ubicacion %>
+    </h2>
   </div>
 
   <div class="active-tabs">
@@ -9,14 +13,17 @@
     <button class="active-tab" data-tab="active-classification">Clasificación</button>
   </div>
 
-  
+
   <div id="active-panel" class="active-content-section active">
     <!-- Estado: En Curso -->
-    <div class="active-panel-content" id="en_curso" style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
+    <div class="active-panel-content" id="en_curso"
+      style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
       <div class="active-user-info">
         <div class="active-user">
           <span class="active-label">Usuario:</span>
-          <span class="active-value"><%= user?.id || 'Anónimo' %></span>
+          <span class="active-value">
+            <%= user?.id || 'Anónimo' %>
+          </span>
         </div>
       </div>
 
@@ -25,7 +32,8 @@
           <span class="active-crown">👑</span>
           <span>Precio Inicial</span>
         </div>
-        <div class="active-amount">USD$ <%= auction.precios %></div>
+        <div class="active-amount">USD$ <%= auction.precios %>
+        </div>
       </div>
 
       <div class="active-bid-controls">
@@ -40,14 +48,17 @@
           <span class="finished-crown">👑</span>
           <span>Oferta Ganadora</span>
         </div>
-        <div class="finished-amount">USD$ <%= auction.monto_venta %></div>
+        <div class="finished-amount">USD$ <%= auction.monto_venta %>
+        </div>
       </div>
       <% if (auction.ganador) { %>
-      <div class="finished-winner">
-        <span>Ganador:</span>
-        <span class="winner-id"><%= auction.ganador %></span>
-      </div>
-      <% } %>
+        <div class="finished-winner">
+          <span>Ganador:</span>
+          <span class="winner-id">
+            <%= auction.ganador %>
+          </span>
+        </div>
+        <% } %>
     </div>
 
     <!-- Estado: Activo -->
@@ -55,7 +66,9 @@
       <div class="progress-user-info">
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
-          <span class="progress-value"><%= user?.id || 'Anónimo' %></span>
+          <span class="progress-value">
+            <%= user?.id || 'Anónimo' %>
+          </span>
         </div>
       </div>
 
@@ -64,7 +77,8 @@
           <span class="progress-crown">👑</span>
           <span>Mejor Oferta</span>
         </div>
-        <div class="progress-amount">USD$ <%= auction.monto_venta %></div>
+        <div class="progress-amount">USD$ <%= auction.monto_venta %>
+        </div>
       </div>
 
       <div class="progress-bid-section">
@@ -77,25 +91,28 @@
     </div>
 
     <!-- Chat (inicialmente oculto) -->
-    <div id="auction-chat" class="chat" style="display: none;">
-      <div>
-        <label for="bidAmount">Ingrese su puja:</label>
-        <input type="number" id="bidAmount" min="1" step="1">
-        <button id="submitBid">Enviar Puja</button>
-      </div>
+     <div id="auction-chat" class="chat" style="display: none;">
+      <section id="chat">
+        <ul id="messages"></ul>
+  
+        <!-- Formulario 1 -->
+        <form id="form1">
+          <div class="input-container">
+            <input type="number" id="input" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
+            <button type="submit" class="send-btn">Enviar</button>
+          </div>
+        </form>
+  
+        <!-- Formulario 2 -->
+        <form id="form2">
+          <div class="input-container">
+            <input type="number" id="input2" class="input-field" placeholder="Monto más alto + 100" readonly />
+            <button type="submit" class="send-btn">Enviar</button>
+          </div>
+        </form>
+      </section>
+    </div> 
 
-      <div>
-        <label for="chatMessage">Mensaje de Chat:</label>
-        <input type="text" id="chatMessage">
-        <button id="sendMessage">Enviar Mensaje</button>
-      </div>
-
-      <div id="chatWindow">
-        <h3>Chat:</h3>
-        <ul id="chatMessages"></ul>
-      </div>
-
-    </div>
   </div>
 
   <!-- Clasificación -->
@@ -130,4 +147,63 @@
     // Mostrar el chat
     chat.style.display = 'block';
   });
+</script>
+
+<script type="module">
+  import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+
+  const socket = io()
+
+  // Referencias del DOM
+  const form1 = document.getElementById('form1')
+  const input1 = document.getElementById('input') // Primer input
+  const form2 = document.getElementById('form2')
+  const input2 = document.getElementById('input2') // Segundo input
+  const messages = document.getElementById('messages')
+
+  let highestAmount = 0 // Variable para almacenar el monto más alto
+
+  // Escuchar mensajes del servidor y mostrarlos en el chat
+  socket.on('chat-message', (msg) => {
+    const item = `<li>${msg}</li>`
+    messages.insertAdjacentHTML('beforeend', item)
+  })
+
+  // Evento para el primer formulario
+  form1.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const value = parseFloat(input1.value) || 0 // Obtener valor como número
+
+    if (value > 0) {
+      // Si el valor es mayor al monto más alto, actualizamos
+      if (value > highestAmount) {
+        highestAmount = value
+        input2.value = highestAmount + 100 // Actualizar segundo input
+      }
+
+      // Emitir mensaje al servidor
+      socket.emit('chat-message', value)
+      input1.value = '' // Limpiar input
+    }
+  })
+
+  // Evento para el segundo formulario
+  form2.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const value = parseFloat(input2.value) || 0 // Obtener valor como número
+
+    if (value > 0) {
+      // Emitir mensaje al servidor
+      socket.emit('chat-message', value)
+
+      // Si el valor enviado es mayor al monto más alto, actualizarlo
+      if (value > highestAmount) {
+        highestAmount = value
+        input2.value = highestAmount + 100 // Actualizar segundo input
+      }
+    }
+  })
+
 </script>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-.containerauc {
-=======
 .container_detalles {
->>>>>>> origin/main
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -13,11 +9,7 @@
 
 .property-header {
   grid-column: 1/-1;
-<<<<<<< HEAD
-  background-color: #373030;
-=======
   background-color: #000;
->>>>>>> origin/main
   color: #fff;
   padding: 20px;
   border-radius: 10px;

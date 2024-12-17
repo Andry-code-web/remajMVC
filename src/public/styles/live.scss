@@ -4,61 +4,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
+    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    background: #f9f9f9; /* Fondo general */
-}
-
-/*letras movement*/
-
-.letras-movement {
-    position: absolute; /* Las letras estarán absolutamente posicionadas */
-    top: 50%; /* Colocamos las letras en el centro vertical */
-    left: 0;
-    right: 0;
-    z-index: -1; /* Ponemos las letras detrás de las tarjetas */
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Para que estén alineadas a la izquierda y derecha */
-    transform: translateY(-50%); /* Ajustamos la posición para que estén centradas */
-    opacity: 0.1; /* Les damos opacidad para que no interfieran visualmente con el contenido */
-}
-
-.cta {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.cta h5 {
-    font-size: 10rem; /* Tamaño de las letras */
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    transform: rotate(2deg); /* Efecto de inclinación sutil */
-    margin: 0; /* Eliminamos márgenes extra */
-}
-
-.cta h5.left {
-    margin-right: 20px;
-}
-
-.cta h5.right {
-    margin-left: 20px;
-}
 .contenedor_live {
-    width: 100%;
+    font-family: 'fuentePrincipal', sans-serif;
     min-height: 100vh;
-    background: $bg-light;
+    background-color: $bg-dark;
+    color: $text-primary;
+    position: relative;
     padding: 20px;
+    padding-top: 100px; // Añadido para bajar las tarjetas
+}
+
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
 }
 
 #header {
@@ -66,71 +32,72 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
-    transform: translateY(0); 
-    transition: transform 0.3s ease; 
-}
+    z-index: 1000; /* Encima del contenido */
+    color: white; /* Letras blancas */
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición de movimiento y opacidad */
+    background: transparent; /* Sin fondo */
+  }
+
 
 .auction-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    max-width: 1440px;
-    margin: 0 auto;
-    /* padding-top: 100px; */ // Ajuste para el header fijo
-}
-.auction-card {
-    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-    border-radius: 15px;
-    overflow: hidden;
-    width: 20rem;
-    margin-top: 8rem;
-    border: 1px solid #8F9092;
-    transition: all 0.3s ease;
     position: relative;
-    box-shadow: 
-        0 4px 3px 1px transparent,
-        0 6px 8px transparent,
-        0 -4px 4px transparent,
-        0 -6px 4px transparent,
-        inset 0 0 3px 3px transparent;
+    z-index: 2;
+    max-width: 1420px;
+    margin: 0 auto;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.auction-card {
+    background: $glass-bg;
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(229, 208, 177, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease, transform 0.3s ease-in-out;
+    opacity: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     &:hover {
-        box-shadow: 
-            0 4px 3px 1px #FCFCFC,
-            0 6px 8px #D6D7D9,
-            0 -4px 4px #CECFD1,
-            0 -6px 4px #FEFEFE,
-            inset 0 0 5px 3px #999,
-            inset 0 0 30px #aaa;
-        transform: translateY(2px);
+        transform: translateY(5px) scale(0.98);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    .auction-content {
-        margin-bottom: -1.5rem;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.7);
+    &.animate-left {
+        animation: slideInFromLeft 0.8s ease forwards;
     }
 
-    .title {
-        font-family: $fuentePrincipal;
-        color: #606060;
-        text-shadow: 0 1px #fff;
-    }
-
-    .vehicle-type,
-    .company-info,
-    .detail-item,
-    .location-info,
-    .bid-label {
-        color: #666;
-    }
-
-    .bid-amount {
-        color: #505050;
-        text-shadow: 0 1px #fff;
+    &.animate-right {
+        animation: slideInFromRight 0.8s ease forwards;
     }
 }
+
 .auction-image-container {
     position: relative;
     width: 100%;
@@ -166,7 +133,7 @@ body {
 }
 
 .title {
-    font-family: 'Arial', sans-serif;
+    color: $text-primary;
     font-size: 1.2rem;
     margin-bottom: 10px;
     letter-spacing: 1px;
@@ -209,47 +176,33 @@ body {
     letter-spacing: 1px;
     border-radius: 12px;
     cursor: pointer;
-    width: 150px;
-    height: 30px;
-    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-    border-radius: 30px;
-    border: 1px solid #8F9092;
-    transition: all 0.2s ease;
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #606060;
-    text-shadow: 0 1px #fff;
-    flex: 1;
-
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, $text-primary, transparent, $text-primary);
+        z-index: -1;
+        filter: blur(5px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
     &:hover {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+        background: rgba(229, 208, 177, 0.2);
+        border-color: $text-primary;
+        
+        &::before {
+            opacity: 0.5;
+        }
     }
-
-    &:active {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-    }
-
-    &:focus {
-        box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-    }
-}
-.bid-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-}
-
-.bid-label {
-    font-size: 0.9rem;
-    color: $text-light;
-}
-
-.bid-amount {
-    font-size: 1.2rem;
-    color: $accent-color;
-    font-weight: bold;
 }
 
 .modal {
@@ -420,3 +373,4 @@ body {
         grid-template-columns: 1fr;
     }
 }
+

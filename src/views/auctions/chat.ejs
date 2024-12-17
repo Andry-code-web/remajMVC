@@ -152,74 +152,78 @@
 <script type="module">
   import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
+  // Conexión al servidor
   const socket = io();
 
-  // Referencias del DOM
+  // Elementos del DOM
   const form1 = document.getElementById('form1');
-  const input1 = document.getElementById('input'); // Primer input
+  const input1 = document.getElementById('input');
   const form2 = document.getElementById('form2');
-  const input2 = document.getElementById('input2'); // Segundo input
+  const input2 = document.getElementById('input2');
   const messages = document.getElementById('messages');
 
-  let highestAmount = 0; // Variable para almacenar el monto más alto
+  // Variables globales
+  let highestAmount = 0; // Monto más alto actual
+  const rematesId = 20; // ID del remate actual (ajustar dinámicamente si es necesario)
+  const usuarioId = "<%= user?.usuario || 'Anónimo' %>"; // ID del usuario actual (ajustar dinámicamente si hay autenticación)
 
-  // Escuchar mensajes del servidor y mostrarlos en el chat
+  // Escuchar mensajes del servidor
   socket.on('chat-message', (msg) => {
     const { monto, usuario, remates_id } = msg;
-    const item = `<li><strong>${usuario}</strong>: $${monto} (Subasta ID: ${remates_id})</li>`;
+
+    // Mostrar mensaje en el chat
+    const item = `<li><strong>${usuario}:</strong> USD$${monto} (Remate ID: ${remates_id})</li>`;
     messages.insertAdjacentHTML('beforeend', item);
+
+    // Actualizar el monto más alto y sugerir un nuevo valor
+    if (monto > highestAmount) {
+      highestAmount = monto;
+      input2.value = highestAmount + 100; // Incremento automático sugerido
+    }
   });
 
-  // Mostrar mensaje de error
+  // Mostrar mensajes de error del servidor
   socket.on('error-message', (error) => {
     alert(error);
   });
 
-  // Evento para el primer formulario
+  // Enviar oferta con el Formulario 1 (monto manual)
   form1.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    const value = parseFloat(input1.value) || 0; // Obtener valor como número
-
-    if (value > 0) {
-      // Si el valor es mayor al monto más alto, actualizamos
-      if (value > highestAmount) {
-        highestAmount = value;
-        input2.value = highestAmount + 100; // Actualizar segundo input
-      } else {
-        alert(`El monto debe ser mayor a ${highestAmount}`);
-        return;
-      }
-
-      // Emitir mensaje al servidor
-      socket.emit('chat-message', {
-        monto: value,
-        usuarios_id: 1, // Cambiar con el ID real del usuario
-        remates_id: 1 // Cambiar con el ID real de la subasta
-      });
-
-      input1.value = ''; // Limpiar input
-    }
-  });
-
-  // Evento para el segundo formulario (input2) que solo es para mostrar el monto más alto + 100
-  form2.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const value = parseFloat(input2.value);
+    const value = parseFloat(input1.value) || 0;
 
     if (value > highestAmount) {
-      // Emitir mensaje con el monto más alto + 100
       socket.emit('chat-message', {
         monto: value,
-        usuarios_id: 1, // Cambiar con el ID real del usuario
-        remates_id: 1 // Cambiar con el ID real de la subasta
+        usuarios_id: usuarioId, // ID del usuario actual
+        remates_id: rematesId, // ID del remate actual
       });
-
-      highestAmount = value; // Actualizar el monto más alto
-      input2.value = highestAmount + 100; // Actualizar segundo input
+      highestAmount = value; // Actualizar monto más alto
+      input2.value = highestAmount + 100; // Actualizar oferta sugerida
+      input1.value = ''; // Limpiar input manual
     } else {
-      alert(`El monto debe ser mayor a ${highestAmount}`);
+      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
+
+  // Enviar oferta con el Formulario 2 (oferta sugerida)
+  form2.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = parseFloat(input2.value) || 0;
+
+    if (value > highestAmount) {
+      socket.emit('chat-message', {
+        monto: value,
+        usuarios_id: usuarioId, // ID del usuario actual
+        remates_id: rematesId, // ID del remate actual
+      });
+      highestAmount = value; // Actualizar monto más alto
+      input2.value = highestAmount + 100; // Incrementar sugerencia automáticamente
+    } else {
+      alert(`La oferta sugerida debe ser mayor a USD$${highestAmount}`);
+    }
+  });
+
+  // Inicializar la oferta sugerida al cargar la página
+  input2.value = highestAmount + 100;
 </script>

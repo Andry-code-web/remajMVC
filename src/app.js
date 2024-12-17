@@ -7,13 +7,14 @@ const socketIO = require('socket.io');
 const morgan = require("morgan");
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
+const db = require('./config/database')
 require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server,
   {
-    conectionStateRecovery:{}
+    conectionStateRecovery: {}
   }
 );
 
@@ -97,8 +98,14 @@ io.on('connection', (socket) => {
   console.log('New client connected')
 
   // Escuchar mensajes del cliente
-  socket.on('chat-message', (msg) => {
-    console.log('New chat message:', msg)
+  socket.on('chat-message', async (msg) => {
+    // Guardar el mensaje en la base de datos
+    try {
+      await db.execute('INSERT INTO mensajes (monto) VALUES (?)', [msg]);
+      console.log('✅ Mensaje guardado en la base de datos');
+    } catch (error) {
+      console.error('❌ Error al guardar mensaje:', error.message);
+    }
     // Enviar mensaje a todos los clientes conectados
     io.emit('chat-message', msg)
   })

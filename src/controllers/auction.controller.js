@@ -1,19 +1,20 @@
 const Auction = require('../models/auction.model');
+const db = require('../config/database'); // Asegúrate de tener acceso a la base de datos
 
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auctionId = req.params.id;
     const auction = await Auction.getById(auctionId);
-    
+
     if (!auction) {
-      return res.status(404).render('error', { 
+      return res.status(404).render('error', {
         message: 'Subasta no encontrada'
       });
     }
 
     // Asignar el estado de la subasta para pasarlo a la vista
     const auctionState = auction.estado || 'activo';
-    
+
     res.render('layouts/main', {
       auction,
       auctionState,  // Aquí pasamos el estado de la subasta
@@ -21,12 +22,11 @@ exports.getAuctionDetails = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('error', {
       message: 'Error al cargar los detalles de la subasta'
     });
   }
 };
-
 
 exports.joinAuction = async (req, res) => {
   try {
@@ -47,7 +47,7 @@ exports.joinAuction = async (req, res) => {
     }
 
     // Here you could add logic to track auction participants if needed
-    
+
     res.json({ success: true });
   } catch (error) {
     console.error('Error al unirse a la subasta:', error);
@@ -106,5 +106,34 @@ exports.submitMessage = async (req, res) => {
   } catch (error) {
     console.error('Error al enviar mensaje:', error);
     res.status(500).json({ message: 'Error al enviar mensaje' });
+  }
+};
+
+exports.checkOpportunities = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Usuario no autorizado' });
+    }
+
+    const [rows] = await db.execute(
+      'SELECT oportunidades FROM usuarios WHERE id = ?',
+      [userId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const user = rows[0];
+    if (user.oportunidades <= 0) {
+      return res.status(400).json({ message: 'No tienes oportunidades' });
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al verificar oportunidades:', error);
+    res.status(500).json({ message: 'Error al verificar oportunidades' });
   }
 };

@@ -1,525 +1,704 @@
   /* Active auction specific styles */
   .active-auction-card {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.active-auction-header {
-    padding: 16px;
-}
-
-.active-property-type {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-
-.active-property-location {
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 8px 0;
-}
-
-.active-timer {
-    color: #666;
-    font-size: 14px;
-}
-
-.active-tabs {
-    display: flex;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.active-tab {
-    flex: 1;
-    padding: 12px;
-    background: none;
-    border: none;
-    font-size: 14px;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.3s, border-color 0.3s;
-}
-
-.active-tab.active {
-    color: #2196F3;
-    border-bottom: 2px solid #2196F3;
-}
-
-.active-panel-content {
-    padding: 16px;
-}
-
-.active-user-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.active-user,
-.active-offers {
-    display: flex;
-    gap: 8px;
-}
-
-.active-label {
-    color: #666;
-    font-size: 14px;
-}
-
-.active-value {
-    color: #333;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.active-best-offer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: #e3f2fd;
-    border-radius: 6px;
-    margin-bottom: 16px;
-}
-
-.active-crown-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #333;
-}
-
-.active-crown {
-    font-size: 18px;
-}
-
-.active-amount {
-    font-weight: 600;
-    color: #333;
-}
-
-.active-join-button {
-    width: 100%;
-    padding: 12px;
-    background: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.active-join-button:hover {
-    background: #1976D2;
-}
-
-.active-classification-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.active-classification-table th,
-.active-classification-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.active-classification-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #666;
-}
-
-.active-classification-table .position {
-    width: 40px;
-    text-align: center;
-}
-
-.active-classification-table .amount {
-    text-align: right;
-}
-
-.active-content-section {
-    display: none;
-}
-
-.active-content-section.active {
-    display: block;
-}
-
-
-/* Finished auction specific styles */
-.finished-auction-card {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.finished-auction-header {
-    padding: 16px;
-}
-
-.finished-property-type {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-
-.finished-property-location {
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 8px 0;
-}
-
-.finished-timer {
-    color: #ff0000;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.finished-tabs {
-    display: flex;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.finished-tab {
-    flex: 1;
-    padding: 12px;
-    background: none;
-    border: none;
-    font-size: 14px;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.3s, border-color 0.3s;
-}
-
-.finished-tab.active {
-    color: #2196F3;
-    border-bottom: 2px solid #2196F3;
-}
-
-.finished-panel-content {
-    padding: 16px;
-}
-
-.finished-user-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.finished-user,
-.finished-offers {
-    display: flex;
-    gap: 8px;
-}
-
-.finished-label {
-    color: #666;
-    font-size: 14px;
-}
-
-.finished-value {
-    color: #333;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.finished-best-offer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: #f8f8f8;
-    border-radius: 6px;
-    margin-bottom: 16px;
-}
-
-.finished-crown-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #333;
-}
-
-.finished-crown {
-    font-size: 18px;
-}
-
-.finished-amount {
-    font-weight: 600;
-    color: #333;
-}
-
-.finished-bid-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.finished-input-wrapper {
-    position: relative;
-    flex: 1;
-}
-
-.finished-currency {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #666;
-}
-
-.finished-bid-input {
-    width: 100%;
-    padding: 10px 10px 10px 24px;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 14px;
-    background-color: #f3f4f6;
-    color: #9ca3af;
-    cursor: not-allowed;
-}
-
-.finished-bid-button {
-    padding: 10px 24px;
-    background-color: #cccccc;
-    color: #666666;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.finished-classification-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.finished-classification-table th,
-.finished-classification-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.finished-classification-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #666;
-}
-
-.finished-classification-table .position {
-    width: 40px;
-    text-align: center;
-}
-
-.finished-classification-table .amount {
-    text-align: right;
-}
-
-.finished-content-section {
-    display: none;
-}
-
-.finished-content-section.active {
-    display: block;
-}
-
-
-/* en progreso */
-
-/* Progress auction specific styles */
-.progress-auction-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.progress-auction-header {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.progress-lot-id {
-    color: #666;
-    font-size: 14px;
-}
-
-.progress-lot-title {
-    font-size: 20px;
-    margin-top: 5px;
-}
-
-.progress-timer {
-    margin-top: 10px;
-    color: #666;
-}
-
-.progress-navigation {
-    display: flex;
-    border-bottom: 1px solid #eee;
-}
-
-.progress-nav-btn {
-    flex: 1;
-    padding: 15px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #666;
-}
-
-.progress-nav-btn.active {
-    color: #2196F3;
-    border-bottom: 2px solid #2196F3;
-}
-
-.progress-user-info {
-    display: flex;
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    gap: 20px;
-}
-
-.progress-user-info .progress-label {
-    color: #666;
-}
-
-.progress-user-info .progress-value {
-    font-weight: bold;
-}
-
-.progress-best-offer {
-    background: #FFF9E6;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.progress-crown-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.progress-crown {
-    font-size: 20px;
-}
-
-.progress-amount {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.progress-bid-section {
-    padding: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.progress-bid-input {
-    flex: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.progress-currency {
-    position: absolute;
-    left: 10px;
-    color: #666;
-}
-
-#progress-bidAmount {
-    width: 100%;
-    padding: 12px 12px 12px 30px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.progress-bid-button {
-    padding: 12px 30px;
-    background: #FF5722;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.progress-bid-button:hover {
-    background: #F4511E;
-}
-
-.progress-content-section {
-    display: none;
-    padding: 20px;
-}
-
-.progress-content-section.active {
-    display: block;
-}
-
-.progress-classification-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-.progress-classification-table th,
-.progress-classification-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
-
-.progress-classification-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #666;
-}
-
-.progress-classification-table tr:last-child td {
-    border-bottom: none;
-}
-
-.progress-classification-table .progress-position {
-    width: 60px;
-    text-align: center;
-}
-
-.progress-classification-table .progress-amount {
-    text-align: right;
-    font-weight: bold;
-}
-
-.progress-classification-table tr:first-child td {
-    color: #2196F3;
-    font-weight: bold;
-}
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .active-auction-header {
+      padding: 16px;
+  }
+
+  .active-property-type {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 4px;
+  }
+
+  .active-property-location {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 8px 0;
+  }
+
+  .active-timer {
+      color: #666;
+      font-size: 14px;
+  }
+
+  .active-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .active-tab {
+      flex: 1;
+      padding: 12px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.3s, border-color 0.3s;
+  }
+
+  .active-tab.active {
+      color: #2196F3;
+      border-bottom: 2px solid #2196F3;
+  }
+
+  .active-panel-content {
+      padding: 16px;
+  }
+
+  .active-user-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .active-user,
+  .active-offers {
+      display: flex;
+      gap: 8px;
+  }
+
+  .active-label {
+      color: #666;
+      font-size: 14px;
+  }
+
+  .active-value {
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+  }
+
+  .active-best-offer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #e3f2fd;
+      border-radius: 6px;
+      margin-bottom: 16px;
+  }
+
+  .active-crown-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #333;
+  }
+
+  .active-crown {
+      font-size: 18px;
+  }
+
+  .active-amount {
+      font-weight: 600;
+      color: #333;
+  }
+
+  .active-join-button {
+      width: 100%;
+      padding: 12px;
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+
+  .active-join-button:hover {
+      background: #1976D2;
+  }
+
+  .active-classification-table {
+      width: 100%;
+      border-collapse: collapse;
+  }
+
+  .active-classification-table th,
+  .active-classification-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .active-classification-table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      color: #666;
+  }
+
+  .active-classification-table .position {
+      width: 40px;
+      text-align: center;
+  }
+
+  .active-classification-table .amount {
+      text-align: right;
+  }
+
+  .active-content-section {
+      display: none;
+  }
+
+  .active-content-section.active {
+      display: block;
+  }
+
+
+  /* Finished auction specific styles */
+  .finished-auction-card {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .finished-auction-header {
+      padding: 16px;
+  }
+
+  .finished-property-type {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 4px;
+  }
+
+  .finished-property-location {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 8px 0;
+  }
+
+  .finished-timer {
+      color: #ff0000;
+      font-size: 14px;
+      font-weight: bold;
+  }
+
+  .finished-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .finished-tab {
+      flex: 1;
+      padding: 12px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.3s, border-color 0.3s;
+  }
+
+  .finished-tab.active {
+      color: #2196F3;
+      border-bottom: 2px solid #2196F3;
+  }
+
+  .finished-panel-content {
+      padding: 16px;
+  }
+
+  .finished-user-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .finished-user,
+  .finished-offers {
+      display: flex;
+      gap: 8px;
+  }
+
+  .finished-label {
+      color: #666;
+      font-size: 14px;
+  }
+
+  .finished-value {
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+  }
+
+  .finished-best-offer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f8f8f8;
+      border-radius: 6px;
+      margin-bottom: 16px;
+  }
+
+  .finished-crown-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #333;
+  }
+
+  .finished-crown {
+      font-size: 18px;
+  }
+
+  .finished-amount {
+      font-weight: 600;
+      color: #333;
+  }
+
+  .finished-bid-controls {
+      display: flex;
+      gap: 8px;
+  }
+
+  .finished-input-wrapper {
+      position: relative;
+      flex: 1;
+  }
+
+  .finished-currency {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+  }
+
+  .finished-bid-input {
+      width: 100%;
+      padding: 10px 10px 10px 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: #f3f4f6;
+      color: #9ca3af;
+      cursor: not-allowed;
+  }
+
+  .finished-bid-button {
+      padding: 10px 24px;
+      background-color: #cccccc;
+      color: #666666;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: not-allowed;
+      opacity: 0.7;
+  }
+
+  .finished-classification-table {
+      width: 100%;
+      border-collapse: collapse;
+  }
+
+  .finished-classification-table th,
+  .finished-classification-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+  }
+
+  .finished-classification-table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      color: #666;
+  }
+
+  .finished-classification-table .position {
+      width: 40px;
+      text-align: center;
+  }
+
+  .finished-classification-table .amount {
+      text-align: right;
+  }
+
+  .finished-content-section {
+      display: none;
+  }
+
+  .finished-content-section.active {
+      display: block;
+  }
+
+
+  /* en progreso */
+
+  /* Progress auction specific styles */
+  .progress-auction-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+  }
+
+  .progress-auction-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+  }
+
+  .progress-lot-id {
+      color: #666;
+      font-size: 14px;
+  }
+
+  .progress-lot-title {
+      font-size: 20px;
+      margin-top: 5px;
+  }
+
+  .progress-timer {
+      margin-top: 10px;
+      color: #666;
+  }
+
+  .progress-navigation {
+      display: flex;
+      border-bottom: 1px solid #eee;
+  }
+
+  .progress-nav-btn {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+  }
+
+  .progress-nav-btn.active {
+      color: #2196F3;
+      border-bottom: 2px solid #2196F3;
+  }
+
+  .progress-user-info {
+      display: flex;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+      gap: 20px;
+  }
+
+  .progress-user-info .progress-label {
+      color: #666;
+  }
+
+  .progress-user-info .progress-value {
+      font-weight: bold;
+  }
+
+  .progress-best-offer {
+      background: #FFF9E6;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .progress-crown-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+  }
+
+  .progress-crown {
+      font-size: 20px;
+  }
+
+  .progress-amount {
+      font-weight: bold;
+      font-size: 18px;
+  }
+
+  .progress-bid-section {
+      padding: 20px;
+      display: flex;
+      gap: 10px;
+  }
+
+  .progress-bid-input {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+  }
+
+  .progress-currency {
+      position: absolute;
+      left: 10px;
+      color: #666;
+  }
+
+  #progress-bidAmount {
+      width: 100%;
+      padding: 12px 12px 12px 30px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+  }
+
+  .progress-bid-button {
+      padding: 12px 30px;
+      background: #FF5722;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+  }
+
+  .progress-bid-button:hover {
+      background: #F4511E;
+  }
+
+  .progress-content-section {
+      display: none;
+      padding: 20px;
+  }
+
+  .progress-content-section.active {
+      display: block;
+  }
+
+  .progress-classification-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+  }
+
+  .progress-classification-table th,
+  .progress-classification-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+  }
+
+  .progress-classification-table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      color: #666;
+  }
+
+  .progress-classification-table tr:last-child td {
+      border-bottom: none;
+  }
+
+  .progress-classification-table .progress-position {
+      width: 60px;
+      text-align: center;
+  }
+
+  .progress-classification-table .progress-amount {
+      text-align: right;
+      font-weight: bold;
+  }
+
+  .progress-classification-table tr:first-child td {
+      color: #2196F3;
+      font-weight: bold;
+  }
+
+  /* CSS para el modal de método de pago */
+  .payment-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+  }
+
+  .payment-modal-container {
+      background: white;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      animation: modalFadeIn 0.3s ease-out;
+  }
+
+  .payment-modal-container.card-size {
+      max-width: 800px;
+  }
+
+  .payment-modal-container.yape-size {
+      max-width: 600px;
+  }
+
+  @keyframes modalFadeIn {
+      from {
+          opacity: 0;
+          transform: translateY(-20px);
+      }
+
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  .close-button-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+  }
+
+  .sidebar-container {
+      width: 280px;
+      background: white;
+      border-right: 1px solid #eee;
+      padding: 20px 0;
+  }
+
+  .modal-header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+  }
+
+  .logo-container-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .logo-element {
+      width: 40px;
+      height: 40px;
+      background: #010106;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+  }
+
+  .amount-display {
+      color: #000000;
+      font-weight: 500;
+  }
+
+  .payment-options-container {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .payment-option-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.3s ease;
+  }
+
+  .payment-option-item.active {
+      background: #F8F9FF;
+      color: #00A19B;
+      border-left: 3px solid #00A19B;
+  }
+
+  .payment-option-item:hover:not(.active) {
+      background: #f5f5f5;
+  }
+
+  .main-content-container {
+      flex: 1;
+      padding: 20px;
+  }
+
+  .form-notice-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+  }
+
+  .card-info-container,
+  .yape-info-container {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 20px;
+  }
+
+  .qr-code-container {
+      width: 200px;
+      height: 200px;
+      background: #eee;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
+  }
+
+  .image-element {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+  }
+
+  .powered-by-container {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #666;
+      font-size: 12px;
+  }
+
+  .payment-section-container {
+      display: none;
+  }
+
+  .payment-section-container.active {
+      display: block;
+  }

@@ -1,7 +1,14 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
+
 <div class="active-auction-card">
   <div class="active-auction-header">
-    <div class="active-property-type"><%= auction.categoria %></div>
-    <h2 class="active-property-location"><%= auction.ubicacion %></h2>
+    <div class="active-property-type">
+      <%= auction.categoria %>
+    </div>
+    <h2 class="active-property-location">
+      <%= auction.ubicacion %>
+    </h2>
   </div>
 
   <div class="active-tabs">
@@ -9,14 +16,16 @@
     <button class="active-tab" data-tab="active-classification">Clasificación</button>
   </div>
 
-  
   <div id="active-panel" class="active-content-section active">
     <!-- Estado: En Curso -->
-    <div class="active-panel-content" id="en_curso" style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
+    <div class="active-panel-content" id="en_curso"
+      style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
       <div class="active-user-info">
         <div class="active-user">
           <span class="active-label">Usuario:</span>
-          <span class="active-value"><%= user?.id || 'Anónimo' %></span>
+          <span class="active-value">
+            <%= user?.id || 'Anónimo' %>
+          </span>
         </div>
       </div>
 
@@ -25,7 +34,8 @@
           <span class="active-crown">👑</span>
           <span>Precio Inicial</span>
         </div>
-        <div class="active-amount">USD$ <%= auction.precios %></div>
+        <div class="active-amount">USD$ <%= auction.precios %>
+        </div>
       </div>
 
       <div class="active-bid-controls">
@@ -40,14 +50,17 @@
           <span class="finished-crown">👑</span>
           <span>Oferta Ganadora</span>
         </div>
-        <div class="finished-amount">USD$ <%= auction.monto_venta %></div>
+        <div class="finished-amount">USD$ <%= auction.monto_venta %>
+        </div>
       </div>
       <% if (auction.ganador) { %>
-      <div class="finished-winner">
-        <span>Ganador:</span>
-        <span class="winner-id"><%= auction.ganador %></span>
-      </div>
-      <% } %>
+        <div class="finished-winner">
+          <span>Ganador:</span>
+          <span class="winner-id">
+            <%= auction.ganador %>
+          </span>
+        </div>
+        <% } %>
     </div>
 
     <!-- Estado: Activo -->
@@ -55,7 +68,9 @@
       <div class="progress-user-info">
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
-          <span class="progress-value"><%= user?.id || 'Anónimo' %></span>
+          <span class="progress-value">
+            <%= user?.id || 'Anónimo' %>
+          </span>
         </div>
       </div>
 
@@ -64,7 +79,8 @@
           <span class="progress-crown">👑</span>
           <span>Mejor Oferta</span>
         </div>
-        <div class="progress-amount">USD$ <%= auction.monto_venta %></div>
+        <div class="progress-amount">USD$ <%= auction.monto_venta %>
+        </div>
       </div>
 
       <div class="progress-bid-section">
@@ -94,7 +110,6 @@
         <h3>Chat:</h3>
         <ul id="chatMessages"></ul>
       </div>
-
     </div>
   </div>
 
@@ -117,17 +132,103 @@
   </div>
 </div>
 
+<!-- Contenedor para el modal de método de pago -->
+<div class="payment-modal-overlay" id="paymentModalOverlay">
+  <div class="payment-modal-content">
+    <%- include('../layouts/Metodopago') %>
+  </div>
+</div>
 
 <script>
   const btn_unirse = document.getElementById('unirse');
   const chat = document.getElementById('auction-chat');
   const en_curso = document.getElementById('en_curso');
+  const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+  const paymentModalContent = document.querySelector('.payment-modal-content');
 
   btn_unirse.addEventListener('click', () => {
-    // Ocultar el panel de subasta en curso
-    en_curso.style.display = 'none';
+    Swal.fire({
+      title: 'Términos y condiciones',
+      html: `
+        <input type="checkbox" id="termsCheckbox">
+        <label for="termsCheckbox">He leído y acepto los términos y condiciones</label>
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        if (!termsCheckbox.checked) {
+          Swal.showValidationMessage('Debes marcar la casilla de los términos y condiciones');
+          return false;
+        }
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Depósito requerido',
+          text: 'Debes depositar 500 dólares para participar en 10 subasta.',
+          showCancelButton: true,
+          confirmButtonText: 'Ya deposité',
+          cancelButtonText: 'No deposité',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Enviar solicitud al servidor para verificar oportunidades
+            fetch('/auctions/check-opportunities', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // Ocultar el panel de subasta en curso
+                  en_curso.style.display = 'none';
+                  // Mostrar el chat
+                  chat.style.display = 'block';
+                } else {
+                  Swal.fire({
+                    title: 'Error',
+                    text: data.message,
+                    icon: 'error',
+                  }).then(() => {
+                    if (data.message === 'No tienes oportunidades') {
+                      // Mostrar el modal de método de pago
+                      paymentModalOverlay.style.display = 'flex';
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.error('Error al verificar oportunidades:', error);
+                Swal.fire({
+                  title: 'Error',
+                  text: 'Error al verificar oportunidades',
+                  icon: 'error',
+                });
+              });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Mostrar el modal de método de pago
+            paymentModalOverlay.style.display = 'flex';
+          }
+        });
+      }
+    });
+  });
 
-    // Mostrar el chat
-    chat.style.display = 'block';
+  function closePaymentModal() {
+    paymentModalOverlay.style.display = 'none';
+  }
+
+  // Cerrar el modal si se hace clic fuera del contenido del modal
+  document.addEventListener('click', (event) => {
+    if (event.target === paymentModalOverlay) {
+      closePaymentModal();
+    }
   });
 </script>
+
+<link rel="stylesheet" href="/css/metodopago/metodopago.css">

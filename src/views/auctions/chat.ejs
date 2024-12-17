@@ -1,0 +1,133 @@
+<div class="active-auction-card">
+  <div class="active-auction-header">
+    <div class="active-property-type"><%= auction.categoria %></div>
+    <h2 class="active-property-location"><%= auction.ubicacion %></h2>
+  </div>
+
+  <div class="active-tabs">
+    <button class="active-tab active" data-tab="active-panel">Panel</button>
+    <button class="active-tab" data-tab="active-classification">Clasificación</button>
+  </div>
+
+  
+  <div id="active-panel" class="active-content-section active">
+    <!-- Estado: En Curso -->
+    <div class="active-panel-content" id="en_curso" style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
+      <div class="active-user-info">
+        <div class="active-user">
+          <span class="active-label">Usuario:</span>
+          <span class="active-value"><%= user?.id || 'Anónimo' %></span>
+        </div>
+      </div>
+
+      <div class="active-best-offer">
+        <div class="active-crown-label">
+          <span class="active-crown">👑</span>
+          <span>Precio Inicial</span>
+        </div>
+        <div class="active-amount">USD$ <%= auction.precios %></div>
+      </div>
+
+      <div class="active-bid-controls">
+        <button class="active-join-button" id="unirse" data-auction-id="<%= auction.id %>">Unirse a la subasta</button>
+      </div>
+    </div>
+
+    <!-- Estado: Finalizado -->
+    <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
+      <div class="finished-best-offer">
+        <div class="finished-crown-label">
+          <span class="finished-crown">👑</span>
+          <span>Oferta Ganadora</span>
+        </div>
+        <div class="finished-amount">USD$ <%= auction.monto_venta %></div>
+      </div>
+      <% if (auction.ganador) { %>
+      <div class="finished-winner">
+        <span>Ganador:</span>
+        <span class="winner-id"><%= auction.ganador %></span>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- Estado: Activo -->
+    <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
+      <div class="progress-user-info">
+        <div class="progress-user">
+          <span class="progress-label">Usuario:</span>
+          <span class="progress-value"><%= user?.id || 'Anónimo' %></span>
+        </div>
+      </div>
+
+      <div class="progress-best-offer">
+        <div class="progress-crown-label">
+          <span class="progress-crown">👑</span>
+          <span>Mejor Oferta</span>
+        </div>
+        <div class="progress-amount">USD$ <%= auction.monto_venta %></div>
+      </div>
+
+      <div class="progress-bid-section">
+        <div class="progress-bid-input">
+          <span class="progress-currency">$</span>
+          <input type="number" id="progress-bidAmount" value="<%= auction.monto_venta %>">
+        </div>
+        <button class="progress-bid-button">Ofertar</button>
+      </div>
+    </div>
+
+    <!-- Chat (inicialmente oculto) -->
+    <div id="auction-chat" class="chat" style="display: none;">
+      <div>
+        <label for="bidAmount">Ingrese su puja:</label>
+        <input type="number" id="bidAmount" min="1" step="1">
+        <button id="submitBid">Enviar Puja</button>
+      </div>
+
+      <div>
+        <label for="chatMessage">Mensaje de Chat:</label>
+        <input type="text" id="chatMessage">
+        <button id="sendMessage">Enviar Mensaje</button>
+      </div>
+
+      <div id="chatWindow">
+        <h3>Chat:</h3>
+        <ul id="chatMessages"></ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Clasificación -->
+  <div id="active-classification" class="active-content-section">
+    <div class="active-panel-content">
+      <table class="active-classification-table">
+        <thead>
+          <tr>
+            <th class="position">#</th>
+            <th>Usuario</th>
+            <th class="amount">Oferta</th>
+          </tr>
+        </thead>
+        <tbody id="bids-table-body">
+          <!-- Filled dynamically via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const btn_unirse = document.getElementById('unirse');
+  const chat = document.getElementById('auction-chat');
+  const en_curso = document.getElementById('en_curso');
+
+  btn_unirse.addEventListener('click', () => {
+    // Ocultar el panel de subasta en curso
+    en_curso.style.display = 'none';
+
+    // Mostrar el chat
+    chat.style.display = 'block';
+  });
+</script>

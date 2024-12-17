@@ -123,40 +123,43 @@
 <section class="subastas" id="subastas">
 
   <div class="contenedor_card_subastas">
-    <% remates.forEach(remate => {%>
+    <% remates.forEach(remate => { %>
     <div class="carta">
-      <div class="imagen-contenedor">
-        <img src="/img/casa_1.jfif" alt="" class="imagen-propiedad">
-        <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
-      </div>
-      <div class="contenido">
-        <div class="label"><%= remate.categoria %></div>
-        <h2 class="nombre_proyecto">Edificio los canarios</h2>
-
-        <div class="label">Dirección</div>
-        <p class="direccion"><%= remate.ubicacion %></p>
-
-        <div class="detalles">
-          <div class="detalles-item">
-            <div class="label">M2</div>
-            <div class="detalles-valor"><%= remate.tamaño_propiedad %></div>
-          </div>
-          <div class="detalles-item">
-            <div class="label">N° Pisos</div>
-            <div class="detalles-valor"><%= remate.pisos %></div>
-          </div>
-          <div class="detalles-item">
-            <div class="label">N° de cuartos</div>
-            <div class="detalles-valor"><%= remate.N_habitacion %></div>
-          </div>
+        <div class="imagen-contenedor">
+            <% if (remate.imagen) { %>
+            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>" alt="Imagen del inmueble" class="imagen-propiedad">
+            <% } else { %>
+            <img src="/img/default.jpg" alt="Imagen no disponible" class="imagen-propiedad">
+            <% } %>
+            <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
         </div>
-
-        <div class="label">Precio</div>
-        <div class="precio"><%= remate.precios %></div>
-      </div>
+        <div class="contenido">
+            <div class="label"><%= remate.categoria %></div>
+            <h2 class="nombre_proyecto">Edificio los canarios</h2>
+            <div class="label">Dirección</div>
+            <p class="direccion"><%= remate.ubicacion %></p>
+            <div class="detalles">
+                <div class="detalles-item">
+                    <div class="label">M2</div>
+                    <div class="detalles-valor"><%= remate.tamaño_propiedad %></div>
+                </div>
+                <div class="detalles-item">
+                    <div class="label">N° Pisos</div>
+                    <div class="detalles-valor"><%= remate.pisos %></div>
+                </div>
+                <div class="detalles-item">
+                    <div class="label">N° de cuartos</div>
+                    <div class="detalles-valor"><%= remate.N_habitacion %></div>
+                </div>
+            </div>
+            <div class="label">Precio</div>
+            <div class="precio"><%= remate.precios %></div>
+        </div>
     </div>
-    <% }); %>
-  </div>
+    <% }) %>
+</div>
+
+
 </section>
 
 

@@ -28,20 +28,21 @@ exports.register = async (req, res) => {
     }
 
     const userId = await User.create(req.body);
-    const token = jwt.sign({ id: userId, usuario }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    
-    res.cookie('auth_token', token, { 
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 3600000 // 1 hora
-    });
-    
-    res.status(201).json({ message: "Registro exitoso", redirect: '/' });
+
+    // Almacena los datos del usuario en la sesión
+    req.session.user = {
+      id: userId,
+      nombre: nombre_apellidos,
+      usuario
+    };
+
+    res.status(201).redirect('/');
   } catch (error) {
     console.error("Error en el registro:", error);
     res.status(500).json({ message: "Error en el registro", error: error.message });
   }
 };
+
 
 exports.login_vista = async (req, res) => {
   try {
@@ -73,21 +74,13 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Contraseña incorrecta." });
     }
 
-    const token = jwt.sign(
-      { 
-        id: user.id, 
-        usuario: user.usuario,
-        nombre: user.nombres_apellidos 
-      }, 
-      process.env.JWT_SECRET, 
-      { expiresIn: '1h' }
-    );
+    // Guardar usuario en la sesión
+    req.session.user = {
+      id: user.id,
+      usuario: user.usuario,
+    };
 
-    res.cookie('auth_token', token, { 
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 3600000 // 1 hora
-    });
+    console.log("Usuario guardado en la sesión:", req.session.user);
 
     res.redirect('/');
   } catch (error) {
@@ -96,7 +89,15 @@ exports.login = async (req, res) => {
   }
 };
 
+
+
 exports.logout = (req, res) => {
-  res.clearCookie('auth_token');
-  res.redirect('/');
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect('/');
+    }
+    res.clearCookie('connect.sid'); // Si usas el nombre predeterminado de cookie de sesión
+    res.redirect('/');
+  });
 };
+

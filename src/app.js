@@ -36,7 +36,13 @@ app.use(session({
 
 app.use(flash());
 app.use(morgan("dev"));
-app.use(setUserLocals);
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
+
 
 // Middleware para pasar mensajes flash a las vistas
 app.use((req, res, next) => {

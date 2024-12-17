@@ -6,5 +6,8 @@ const { isAuthenticated } = require('../middleware/auth.middleware');
 router.get('/:id', auctionController.getAuctionDetails);
 router.post('/:id/bid', isAuthenticated, auctionController.submitBid);
 router.post('/:id/message', isAuthenticated, auctionController.submitMessage);
+router.post('/:id/join', auctionController.joinAuction);
+
+
 
 module.exports = router;

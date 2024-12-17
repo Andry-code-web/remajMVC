@@ -649,6 +649,232 @@
           </div>
         </div>
       </div>
+      <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="ubicacion">
+              <i class="bi bi-geo-alt"></i>
+              Ubicación
+            </label>
+            <input type="text" id="ubicacion" name="ubicacion" required>
+          </div>
+          <div class="form-group">
+            <label for="precios">
+              <i class="bi bi-currency-dollar"></i>
+              Precio Base
+            </label>
+            <input type="number" id="precios" name="precios" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="categoria">
+              <i class="bi bi-building"></i>
+              Categoría
+            </label>
+            <select id="categoria" name="categoria" required>
+              <option value="">Seleccione una categoría</option>
+              <option value="departamento">Departamento</option>
+              <option value="cochera">Cochera</option>
+              <option value="terreno">Terreno</option>
+              <option value="residencial">Residencial</option>
+              <option value="casa">Casa</option>
+              <option value="local">Local</option>
+              <option value="casa_playa">Casa de Playa</option>
+              <option value="terreno_urbano">Terreno Urbano</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="N_habitacion">
+              <i class="bi bi-door-closed"></i>
+              Número de Habitaciones
+            </label>
+            <input type="number" id="N_habitacion" name="N_habitacion" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="N_banos">
+              <i class="bi bi-droplet"></i>
+              Número de Baños
+            </label>
+            <input type="number" id="N_banos" name="N_banos" min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="pisos">
+              <i class="bi bi-layers"></i>
+              Número de Pisos
+            </label>
+            <input type="number" id="pisos" name="pisos" min="1" step="1">
+          </div>
+          <div class="form-group">
+            <label for="fecha_remate">
+              <i class="bi bi-calendar"></i>
+              Fecha de Remate
+            </label>
+            <input type="date" id="fecha_remate" name="fecha_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="hora_remate">
+              <i class="bi bi-clock"></i>
+              Hora de Remate
+            </label>
+            <input type="time" id="hora_remate" name="hora_remate" required>
+          </div>
+          <div class="form-group">
+            <label for="estado">
+              <i class="bi bi-toggle-on"></i>
+              Estado
+            </label>
+            <select id="estado" name="estado" required>
+              <option value="activo">Activo</option>
+              <option value="en_curso">En Curso</option>
+              <option value="finalizado">Finalizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tamaño_propiedad">
+              <i class="bi bi-bounding-box"></i>
+              Tamaño de la propiedad
+            </label>
+            <input type="number" id="tamaño_propiedad" name="tamaño_propiedad" required>
+          </div>
+        </div>
+
+        <div class="amenities-grid">
+          <div class="form-group">
+            <label for="pisina">
+              <i class="bi bi-water"></i>
+              Piscina
+            </label>
+            <select id="pisina" name="pisina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="patio">
+              <i class="bi bi-tree"></i>
+              Patio
+            </label>
+            <select id="patio" name="patio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cocina">
+              <i class="bi bi-cup-hot"></i>
+              Cocina
+            </label>
+            <select id="cocina" name="cocina">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cochera">
+              <i class="bi bi-car-front"></i>
+              Cochera
+            </label>
+            <select id="cochera" name="cochera">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="balcon">
+              <i class="bi bi-door-open"></i>
+              Balcón
+            </label>
+            <select id="balcon" name="balcon">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="jardin">
+              <i class="bi bi-flower1"></i>
+              Jardín
+            </label>
+            <select id="jardin" name="jardin">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comedor">
+              <i class="bi bi-table"></i>
+              Comedor
+            </label>
+            <select id="comedor" name="comedor">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sala_start">
+              <i class="bi bi-house-heart"></i>
+              Sala
+            </label>
+            <select id="sala_start" name="sala_start">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="studio">
+              <i class="bi bi-briefcase"></i>
+              Estudio
+            </label>
+            <select id="studio" name="studio">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lavanderia">
+              <i class="bi bi-water"></i>
+              Lavandería
+            </label>
+            <select id="lavanderia" name="lavanderia">
+              <option value="no">No</option>
+              <option value="si">Sí</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="descripcion">
+            <i class="bi bi-text-paragraph"></i>
+            Descripción
+          </label>
+          <textarea id="descripcion" name="descripcion" required></textarea>
+        </div>
+
+        <!-- Sección para subir imágenes -->
+        <div class="subir_img">
+          <label for="file-upload" class="custom-file-upload">
+            <i class="fas fa-upload"></i> Agrega una foto
+          </label>
+          <input type="file" id="file-upload" name="photo" accept="image/*" multiple>
+        </div>
+        <div id="image-preview">
+          <div id="image-preview-container"></div>
+        </div>
+
+        <!-- Campo para subir anexos PDF -->
+        <div class="subir_anexo">
+          <label for="anexo-upload" class="custom-file-upload">
+            <i class="fas fa-file-upload"></i> Agrega un anexo (PDF)
+          </label>
+          <input type="file" id="anexo-upload" name="anexos" accept="application/pdf" multiple>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevoRemate()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i>
+            Guardar Remate
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   </div>

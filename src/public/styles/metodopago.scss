@@ -149,7 +149,38 @@ body {
     font-size: 0.9rem;
     color: #666;
 }
-.imagen-yape-qr{
+
+.imagen-yape-qr {
     width: 200px;
     height: 200px;
+}
+
+/* From Uiverse.io by biswacpcode */
+.botonsalir {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.botonsalir::before {
+    margin-left: auto;
+}
+
+.botonsalir::after,
+.botonsalir::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f44336;
+    display: block;
+    transition: 0.5s;
+}
+
+.botonsalir:hover::after,
+.botonsalir:hover::before {
+    width: 100%;
 }

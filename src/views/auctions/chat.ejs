@@ -135,7 +135,7 @@
 <!-- Contenedor para el modal de método de pago -->
 <div class="payment-modal-overlay" id="paymentModalOverlay">
   <div class="payment-modal-content">
-    <%- include('../layouts/Metodopago') %>
+    <%- include('../layouts/Metodopago') %>}
   </div>
 </div>
 
@@ -156,6 +156,8 @@
       showCancelButton: true,
       confirmButtonText: 'Continuar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick:false,
+      allowEscapeKey:false,
       preConfirm: () => {
         const termsCheckbox = document.getElementById('termsCheckbox');
         if (!termsCheckbox.checked) {
@@ -172,6 +174,8 @@
           showCancelButton: true,
           confirmButtonText: 'Ya deposité',
           cancelButtonText: 'No deposité',
+          allowOutsideClick:false,
+          allowEscapeKey:false,
         }).then((result) => {
           if (result.isConfirmed) {
             // Enviar solicitud al servidor para verificar oportunidades
@@ -194,6 +198,8 @@
                     title: 'Error',
                     text: data.message,
                     icon: 'error',
+                    allowOutsideClick:false,
+                    allowEscapeKey:false,
                   }).then(() => {
                     if (data.message === 'No tienes oportunidades') {
                       // Mostrar el modal de método de pago
@@ -208,6 +214,8 @@
                   title: 'Error',
                   text: 'Error al verificar oportunidades',
                   icon: 'error',
+                  allowOutsideClick:false,
+                  allowEscapeKey:false,
                 });
               });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -218,17 +226,10 @@
       }
     });
   });
-
   function closePaymentModal() {
     paymentModalOverlay.style.display = 'none';
   }
 
-  // Cerrar el modal si se hace clic fuera del contenido del modal
-  document.addEventListener('click', (event) => {
-    if (event.target === paymentModalOverlay) {
-      closePaymentModal();
-    }
-  });
 </script>
 
 <link rel="stylesheet" href="/css/metodopago/metodopago.css">

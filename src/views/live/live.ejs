@@ -18,41 +18,23 @@
   <%- include('../partials/navbar') %>
   
   <!-- live_Tarjeta  -->
-  <!-- Canvas para las partículas -->
-  <canvas id="particleCanvas"></canvas>
   <section class="contenedor_live" id="contenedor_live">
     <div class="auction-grid" id="auction-grid">
       <% liveData.forEach(auction => { %>
-          <div class="auction-card">
-              <div class="auction-image-container">
-                  <img 
-                      src="data:image/png;base64,<%= auction.imagen %>" 
-                      alt="Imagen de remate <%= auction.id %>" 
-                      class="auction-image">
-                  <div class="countdown" data-id="<%= auction.id %>">
-                      <span class="countdown-text">Cargando...</span>
-                  </div>
-              </div>
-              <div class="auction-content">
-                  <h3 class="title"><%= auction.ubicacion %></h3>
-                  <p class="description"><%= auction.descripcion %></p>
-                  <p class="price">USD$ <%= parseFloat(auction.precios).toFixed(2) %></p>
-                  <div class="details">
-                      <span>Baños: <%= auction.N_banos %></span>
-                      <span>Habitaciones: <%= auction.N_habitacion %></span>
-                  </div>
-                  <div class="buttons">
-                      <button class="btn" onclick="openModal('details', <%= auction.id %>)">
-                          Descripción
-                      </button>
-                      <button class="btn" onclick="openModal('features', <%= auction.id %>)">
-                          Características
-                      </button>
-                  </div>
-              </div>
+        <div class="auction-card">
+          <div class="auction-image-container">
+            <img 
+              src="data:image/png;base64,<%= auction.imagen %>" 
+              alt="Imagen de remate <%= auction.id %>" 
+              class="auction-image">
           </div>
+          <div class="auction-content">
+            <h3 class="title"><%= auction.descripcion %></h3>
+            <!-- Más contenido aquí -->
+          </div>
+        </div>
       <% }) %>
-  </div>
+    </div>
   </section>
   
   

@@ -158,3 +158,44 @@
 
 </body>
 </html>
+
+
+<!-- 
+-- -----------------------------------------------------
+-- Table inmuebles
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS inmuebles (
+  id INT NOT NULL AUTO_INCREMENT,
+  partida_registral VARCHAR(45) NULL,
+  tipo_inmueble VARCHAR(45) NULL,
+  direccion VARCHAR(255) NULL,
+  carga_ogravamen VARCHAR(255) NULL,
+  porcentaje_rematar DECIMAL(5, 2) NULL,
+  remates_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_inmuebles_remates_idx (remates_id ASC),
+  CONSTRAINT fk_inmuebles_remates1
+    FOREIGN KEY (remates_id)
+    REFERENCES remates (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table cronograma
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS cronograma (
+  id INT NOT NULL AUTO_INCREMENT,
+  actividad VARCHAR(255) NULL,
+  fecha_actividad DATE NULL,
+  remates_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_cronograma_remates_idx (remates_id ASC),
+  CONSTRAINT fk_cronograma_remates1
+    FOREIGN KEY (remates_id)
+    REFERENCES remates (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE = InnoDB;
+ -->

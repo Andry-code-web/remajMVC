@@ -184,6 +184,7 @@ function showInmuebles(auctionId) {
     boardContent.innerHTML = `
         <div class="board">
             <div class="board-header">
+                <h2>Inmuebles del Remate</h2>
             </div>
             <div class="board-table">
                 <table>
@@ -223,6 +224,66 @@ function showInmuebles(auctionId) {
 }
 
 
+async function fetchInmuebles(auctionId) {
+    try {
+        const response = await fetch(`/auctions/${auctionId}/inmuebles`);
+        const result = await response.json();
+
+        if (result.success) {
+            const inmuebles = result.data;
+            const boardContent = document.getElementById('board-content');
+
+            if (inmuebles.length === 0) {
+                boardContent.innerHTML = `<p>No se encontraron inmuebles para este remate.</p>`;
+                return;
+            }
+
+            boardContent.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARTIDA REGISTRAL</th>
+                            <th>TIPO INMUEBLE</th>
+                            <th>DIRECCIÓN</th>
+                            <th>CARGA Y/O GRAVAMEN</th>
+                            <th>PORCENTAJE A REMATAR</th>
+                            <th>IMÁGENES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${inmuebles.map(inmueble => `
+                            <tr>
+                                <td>${inmueble.partida_registral}</td>
+                                <td>${inmueble.tipo_inmueble}</td>
+                                <td>${inmueble.direccion}</td>
+                                <td>${inmueble.carga_ogravamen}</td>
+                                <td>${inmueble.porcentaje_rematar}%</td>
+                                <td>
+                                    ${inmueble.imagenes_inmueble && inmueble.imagenes_inmueble.length > 0
+                                        ? inmueble.imagenes_inmueble.map(img => `
+                                            <img src="data:image/png;base64,${img}" alt="Inmueble" class="inmueble-img">
+                                          `).join('')
+                                        : 'Sin imágenes'}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        } else {
+            console.error(result.message);
+            boardContent.innerHTML = `<p>Error: ${result.message}</p>`;
+        }
+    } catch (error) {
+        console.error('Error al cargar inmuebles:', error);
+        const boardContent = document.getElementById('board-content');
+        boardContent.innerHTML = `<p>No se pudieron cargar los inmuebles. Por favor, intenta de nuevo más tarde.</p>`;
+    }
+}
+
+window.showInmuebles = fetchInmuebles;
+
+
 function showCronograma(auctionId) {
     const auction = auctionData.find(a => a.id === auctionId);
     if (!auction) return;
@@ -231,6 +292,7 @@ function showCronograma(auctionId) {
     boardContent.innerHTML = `
         <div class="board">
             <div class="board-header">
+                <h2>Cronograma del Remate</h2>
             </div>
             <div class="board-table">
                 <table>
@@ -260,6 +322,47 @@ function showCronograma(auctionId) {
         </div>
     `;
 }
+
+async function fetchCronograma(auctionId) {
+    try {
+        const response = await fetch(`/auctions/${auctionId}/cronograma`);
+        const result = await response.json();
+
+        if (result.success) {
+            const cronograma = result.data;
+            const boardContent = document.getElementById('board-content');
+
+            boardContent.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>FASE</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cronograma.map((fase, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${fase.nombre}</td>
+                                <td>${fase.fecha_inicio}</td>
+                                <td>${fase.fecha_fin}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        } else {
+            console.error(result.message);
+        }
+    } catch (error) {
+        console.error('Error al cargar cronograma:', error);
+    }
+}
+
+window.showCronograma = fetchCronograma;
 
 function updateCountdown() {
     const countdownElements = document.querySelectorAll('.countdown');

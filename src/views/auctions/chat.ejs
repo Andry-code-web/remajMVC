@@ -95,43 +95,46 @@
       <section id="chat">
         <ul id="messages"></ul>
 
-        <!-- Formulario 1 -->
-        <form id="form1">
+        <!-- Formulario de oferta -->
+        <form id="form-bid">
           <div class="input-container">
-            <input type="number" id="input" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
+            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
             <button type="submit" class="send-btn">Enviar</button>
           </div>
         </form>
 
-        <!-- Formulario 2 -->
-        <form id="form2">
+        <!-- Formulario de oferta sugerida -->
+        <form id="form-suggested-bid">
           <div class="input-container">
-            <input type="number" id="input2" class="input-field" placeholder="Monto más alto + 100" readonly />
+            <input type="number" id="input-suggested-bid" class="input-field" placeholder="Monto más alto + 100"
+              readonly />
             <button type="submit" class="send-btn">Enviar</button>
           </div>
         </form>
       </section>
     </div>
 
-  </div>
 
-  <!-- Clasificación -->
-  <div id="active-classification" class="active-content-section">
-    <div class="active-panel-content">
-      <table class="active-classification-table">
-        <thead>
-          <tr>
-            <th class="position">#</th>
-            <th>Usuario</th>
-            <th class="amount">Oferta</th>
-          </tr>
-        </thead>
-        <tbody id="bids-table-body">
-          <!-- Filled dynamically via JavaScript -->
-        </tbody>
-      </table>
-    </div>
+
+</div>
+
+<!-- Clasificación -->
+<div id="active-classification" class="active-content-section">
+  <div class="active-panel-content">
+    <table class="active-classification-table">
+      <thead>
+        <tr>
+          <th class="position">#</th>
+          <th>Usuario</th>
+          <th class="amount">Oferta</th>
+        </tr>
+      </thead>
+      <tbody id="bids-table-body">
+        <!-- Filled dynamically via JavaScript -->
+      </tbody>
+    </table>
   </div>
+</div>
 </div>
 
 
@@ -149,81 +152,76 @@
   });
 </script>
 
+<script>
+  const btnUnirse = document.getElementById('unirse');
+  const chat = document.getElementById('auction-chat');
+  const panelEnCurso = document.getElementById('en_curso');
+
+  btnUnirse.addEventListener('click', () => {
+    panelEnCurso.style.display = 'none';
+    chat.style.display = 'block';
+  });
+</script>
+
 <script type="module">
   import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
 
-  // Conexión al servidor
   const socket = io();
 
   // Elementos del DOM
-  const form1 = document.getElementById('form1');
-  const input1 = document.getElementById('input');
-  const form2 = document.getElementById('form2');
-  const input2 = document.getElementById('input2');
+  const formBid = document.getElementById('form-bid');
+  const inputBid = document.getElementById('input-bid');
+  const formSuggestedBid = document.getElementById('form-suggested-bid');
+  const inputSuggestedBid = document.getElementById('input-suggested-bid');
   const messages = document.getElementById('messages');
 
-  // Variables globales
-  let highestAmount = 0; // Monto más alto actual
-  const rematesId = 20; // ID del remate actual (ajustar dinámicamente si es necesario)
-  const usuarioId = "<%= user?.usuario || 'Anónimo' %>"; // ID del usuario actual (ajustar dinámicamente si hay autenticación)
+  // Variables
+  let highestAmount = 0;
+  const auctionId = <%= auction.id %>;
+  const userId = "<%= user?.id || '0' %>";
+  const userName = "<%= user?.usuario || 'Anónimo' %>";
 
-  // Escuchar mensajes del servidor
-  socket.on('chat-message', (msg) => {
-    const { monto, usuario, remates_id } = msg;
+  // Actualizar chat
+  socket.on('chat-message', ({ monto, usuario, remates_id }) => {
+    if (remates_id === auctionId) {
+      const item = `<li><strong>${usuario}:</strong> USD$${monto}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
 
-    // Mostrar mensaje en el chat
-    const item = `<li><strong>${usuario}:</strong> USD$${monto} (Remate ID: ${remates_id})</li>`;
-    messages.insertAdjacentHTML('beforeend', item);
-
-    // Actualizar el monto más alto y sugerir un nuevo valor
-    if (monto > highestAmount) {
-      highestAmount = monto;
-      input2.value = highestAmount + 100; // Incremento automático sugerido
+      if (monto > highestAmount) {
+        highestAmount = monto;
+        inputSuggestedBid.value = highestAmount + 100;
+      }
     }
   });
 
-  // Mostrar mensajes de error del servidor
-  socket.on('error-message', (error) => {
-    alert(error);
-  });
+  // Manejar errores
+  socket.on('error-message', (error) => alert(error));
 
-  // Enviar oferta con el Formulario 1 (monto manual)
-  form1.addEventListener('submit', (e) => {
+  // Enviar oferta manual
+  formBid.addEventListener('submit', (e) => {
     e.preventDefault();
-    const value = parseFloat(input1.value) || 0;
+    const amount = parseFloat(inputBid.value);
 
-    if (value > highestAmount) {
-      socket.emit('chat-message', {
-        monto: value,
-        usuarios_id: usuarioId, // ID del usuario actual
-        remates_id: rematesId, // ID del remate actual
-      });
-      highestAmount = value; // Actualizar monto más alto
-      input2.value = highestAmount + 100; // Actualizar oferta sugerida
-      input1.value = ''; // Limpiar input manual
+    if (amount > highestAmount) {
+      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+      inputBid.value = '';
     } else {
       alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
 
-  // Enviar oferta con el Formulario 2 (oferta sugerida)
-  form2.addEventListener('submit', (e) => {
+  // Enviar oferta sugerida
+  formSuggestedBid.addEventListener('submit', (e) => {
     e.preventDefault();
-    const value = parseFloat(input2.value) || 0;
+    const amount = parseFloat(inputSuggestedBid.value);
 
-    if (value > highestAmount) {
-      socket.emit('chat-message', {
-        monto: value,
-        usuarios_id: usuarioId, // ID del usuario actual
-        remates_id: rematesId, // ID del remate actual
-      });
-      highestAmount = value; // Actualizar monto más alto
-      input2.value = highestAmount + 100; // Incrementar sugerencia automáticamente
+    if (amount > highestAmount) {
+      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
     } else {
-      alert(`La oferta sugerida debe ser mayor a USD$${highestAmount}`);
+      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
 
-  // Inicializar la oferta sugerida al cargar la página
-  input2.value = highestAmount + 100;
+  // Inicializar oferta sugerida
+  inputSuggestedBid.value = highestAmount + 100;
 </script>

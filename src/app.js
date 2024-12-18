@@ -48,6 +48,10 @@ app.use('/auth', require('./routes/auth.routes'));
 app.use('/auctions', require('./routes/auction.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
 
+app.get('/unauthorized', (req, res) => {
+  res.render('unauthorized/unauthorized');
+});
+
 // Socket.IO
 io.on('connection', (socket) => {
   console.log('New client connected');

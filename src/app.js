@@ -63,7 +63,26 @@ let highestAmount = 0; // Variable global para el monto más alto
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
-  // Escuchar mensajes del cliente
+  // Escuchar evento para unirse a una sala específica
+  socket.on('join-auction', async (remates_id) => {
+    socket.join(remates_id); // Cliente se une a una sala específica
+    console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
+
+    try {
+      // Recuperar los mensajes persistidos de la base de datos
+      const [messages] = await db.execute(
+        'SELECT m.monto, u.usuario, m.remates_id FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
+        [remates_id]
+      );
+
+      // Enviar los mensajes al cliente
+      socket.emit('load-messages', messages);
+    } catch (error) {
+      console.error('❌ Error al cargar mensajes persistentes:', error.message);
+    }
+  });
+
+  // Escuchar mensajes del cliente (ya está implementado)
   socket.on('chat-message', async (msg) => {
     const { monto, usuarios_id, remates_id } = msg;
 
@@ -86,10 +105,14 @@ io.on('connection', (socket) => {
 
       const usuarioNombre = userRows[0].usuario;
 
-      // Verificar si el monto es mayor al monto más alto
-      if (monto > highestAmount) {
-        highestAmount = monto;
+      // Verificar si el monto es mayor al monto más alto para ese remate
+      const [highestRow] = await db.execute(
+        'SELECT IFNULL(MAX(monto), 0) as highestAmount FROM mensajes WHERE remates_id = ?',
+        [remates_id]
+      );
+      const highestAmount = highestRow[0].highestAmount;
 
+      if (monto > highestAmount) {
         // Insertar el mensaje en la base de datos
         await db.execute(
           'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
@@ -98,8 +121,8 @@ io.on('connection', (socket) => {
 
         console.log('✅ Mensaje guardado en la base de datos');
 
-        // Emitir mensaje a todos los clientes
-        io.emit('chat-message', {
+        // Emitir mensaje a la sala correspondiente
+        io.to(remates_id).emit('chat-message', {
           monto,
           usuario: usuarioNombre,
           remates_id,
@@ -119,6 +142,7 @@ io.on('connection', (socket) => {
     console.log('🔴 Cliente desconectado:', socket.id);
   });
 });
+
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

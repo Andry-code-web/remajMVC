@@ -116,25 +116,25 @@
 
 
 
-</div>
-
-<!-- Clasificación -->
-<div id="active-classification" class="active-content-section">
-  <div class="active-panel-content">
-    <table class="active-classification-table">
-      <thead>
-        <tr>
-          <th class="position">#</th>
-          <th>Usuario</th>
-          <th class="amount">Oferta</th>
-        </tr>
-      </thead>
-      <tbody id="bids-table-body">
-        <!-- Filled dynamically via JavaScript -->
-      </tbody>
-    </table>
   </div>
-</div>
+
+  <!-- Clasificación -->
+  <div id="active-classification" class="active-content-section">
+    <div class="active-panel-content">
+      <table class="active-classification-table">
+        <thead>
+          <tr>
+            <th class="position">#</th>
+            <th>Usuario</th>
+            <th class="amount">Oferta</th>
+          </tr>
+        </thead>
+        <tbody id="bids-table-body">
+          <!-- Filled dynamically via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 
@@ -181,7 +181,24 @@
   const userId = "<%= user?.id || '0' %>";
   const userName = "<%= user?.usuario || 'Anónimo' %>";
 
-  // Actualizar chat
+  // Unirse a la sala del remate
+  socket.emit('join-auction', auctionId);
+
+  // Cargar mensajes persistentes al unirse
+  socket.on('load-messages', (loadedMessages) => {
+    messages.innerHTML = ''; // Limpia el historial previo
+    loadedMessages.forEach(({ monto, usuario }) => {
+      const item = `<li><strong>${usuario}:</strong> USD$${monto}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
+
+      if (monto > highestAmount) {
+        highestAmount = monto;
+        inputSuggestedBid.value = highestAmount + 100;
+      }
+    });
+  });
+
+  // Escuchar mensajes en tiempo real
   socket.on('chat-message', ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
       const item = `<li><strong>${usuario}:</strong> USD$${monto}</li>`;
@@ -224,4 +241,5 @@
 
   // Inicializar oferta sugerida
   inputSuggestedBid.value = highestAmount + 100;
+
 </script>

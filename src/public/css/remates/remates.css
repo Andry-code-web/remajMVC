@@ -227,11 +227,11 @@ form {
 }
 
 #chat {
-  border: 1px solid #ccc;
+  border: 1px solid #ab2323;
   border-radius: 4px;
   overflow: hidden;
   width: 350px;
-  height: 77%;
+  height: 296%;
   position: relative;
 }
 

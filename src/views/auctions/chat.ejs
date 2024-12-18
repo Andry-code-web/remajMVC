@@ -1,3 +1,4 @@
+<!-- views/auctions/details.ejs -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="/css/metodopago/metodopago.css">
@@ -25,7 +26,7 @@
         <div class="active-user">
           <span class="active-label">Usuario:</span>
           <span class="active-value">
-            <%= user?.id || 'Anónimo' %>
+            <%= user?.usuario || 'Anónimo' %>
           </span>
         </div>
       </div>
@@ -89,7 +90,7 @@
           <span class="progress-currency">$</span>
           <input type="number" id="progress-bidAmount" value="<%= auction.monto_venta %>">
         </div>
-        <button class="progress-bid-button">Ofertar</button>
+        <button class="progress-bid-button">Monto</button>
       </div>
     </div>
 
@@ -238,4 +239,51 @@
   function closePaymentModal() {
     paymentModalOverlay.style.display = 'none';
   }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.active-tab');
+    const contentSections = document.querySelectorAll('.active-content-section');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabId = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        contentSections.forEach(cs => cs.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Fetch top bids and update the classification table
+    const auctionId = '<%= auction.id %>';
+    fetch(`/auctions/${auctionId}/top-bids`)
+      .then(response => response.json())
+      .then(data => {
+        const bidsTableBody = document.getElementById('bids-table-body');
+        bidsTableBody.innerHTML = '';
+        data.forEach((bid, index) => {
+          const row = document.createElement('tr');
+          let positionEmoji = '';
+          if (index === 0) {
+            positionEmoji = '👑';
+          } else if (index === 1) {
+            positionEmoji = '🥈';
+          } else if (index === 2) {
+            positionEmoji = '🥉';
+          } else {
+            positionEmoji = `${index + 1}`;
+          }
+          row.innerHTML = `
+            <td class="position">${positionEmoji}</td>
+            <td>${bid.usuario}</td>
+            <td class="amount">USD$ ${bid.monto}</td>
+          `;
+          bidsTableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener las mejores ofertas:', error);
+      });
+  });
 </script>

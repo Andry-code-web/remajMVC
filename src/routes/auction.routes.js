@@ -1,12 +1,14 @@
+// routes/auction.routes.js
 const express = require('express');
 const router = express.Router();
 const auctionController = require('../controllers/auction.controller');
-const { isAuthenticated } = require('../middleware/auth.middleware');
+const authMiddleware = require('../middleware/auth.middleware');
 
-router.get('/:id', auctionController.getAuctionDetails);
-router.post('/:id/bid', isAuthenticated, auctionController.submitBid);
-router.post('/:id/message', isAuthenticated, auctionController.submitMessage);
-router.post('/:id/join', auctionController.joinAuction);
-router.post('/check-opportunities', isAuthenticated, auctionController.checkOpportunities);
+router.get('/:id', authMiddleware.isAuthenticated, auctionController.getAuctionDetails);
+router.post('/:id/join', authMiddleware.isAuthenticated, auctionController.joinAuction);
+router.post('/:id/bid', authMiddleware.isAuthenticated, auctionController.submitBid);
+router.post('/:id/message', authMiddleware.isAuthenticated, auctionController.submitMessage);
+router.post('/check-opportunities', authMiddleware.isAuthenticated, auctionController.checkOpportunities);
+router.get('/:id/top-bids', authMiddleware.isAuthenticated, auctionController.getTopBids);
 
 module.exports = router;

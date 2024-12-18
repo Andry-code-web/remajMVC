@@ -1,3 +1,4 @@
+// models/auction.model.js
 const db = require('../config/database');
 
 class Auction {
@@ -39,6 +40,20 @@ class Auction {
       'UPDATE remates SET like_count = like_count + 1 WHERE id = ?',
       [remateId]
     );
+  }
+
+  static async getTopBids(auctionId) {
+    const [rows] = await db.execute(
+      `SELECT MAX(m.monto) AS monto, u.id AS usuarios_id, u.usuario
+       FROM mensajes m
+       JOIN usuarios u ON m.usuarios_id = u.id
+       WHERE m.remates_id = ?
+       GROUP BY u.id
+       ORDER BY monto DESC
+       LIMIT 10`,
+      [auctionId]
+    );
+    return rows;
   }
 }
 

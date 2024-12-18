@@ -1,3 +1,4 @@
+// controllers/auction.controller.js
 const Auction = require('../models/auction.model');
 const db = require('../config/database'); // Asegúrate de tener acceso a la base de datos
 
@@ -19,6 +20,7 @@ exports.getAuctionDetails = async (req, res) => {
       auction,
       auctionState,  // Aquí pasamos el estado de la subasta
       content: 'auctions/details',
+      user: req.user // Asegúrate de pasar el usuario a la vista
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
@@ -26,7 +28,7 @@ exports.getAuctionDetails = async (req, res) => {
       message: 'Error al cargar los detalles de la subasta'
     });
   }
-}; 
+};
 
 exports.joinAuction = async (req, res) => {
   try {
@@ -135,5 +137,16 @@ exports.checkOpportunities = async (req, res) => {
   } catch (error) {
     console.error('Error al verificar oportunidades:', error);
     res.status(500).json({ message: 'Error al verificar oportunidades' });
+  }
+};
+
+exports.getTopBids = async (req, res) => {
+  try {
+    const auctionId = req.params.id;
+    const topBids = await Auction.getTopBids(auctionId);
+    res.json(topBids);
+  } catch (error) {
+    console.error('Error al obtener las mejores ofertas:', error);
+    res.status(500).json({ message: 'Error al obtener las mejores ofertas' });
   }
 };

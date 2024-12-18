@@ -96,23 +96,28 @@
         <ul id="messages"></ul>
 
         <!-- Formulario de oferta -->
-        <form id="form-bid">
+        <form id="form-bid" class="message-form">
           <div class="input-container">
             <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
-            <button type="submit" class="send-btn">Enviar</button>
+            <button type="submit" class="send-btn">
+              Enviar
+            </button>
           </div>
         </form>
 
         <!-- Formulario de oferta sugerida -->
-        <form id="form-suggested-bid">
+        <form id="form-suggested-bid" class="message-form">
           <div class="input-container">
             <input type="number" id="input-suggested-bid" class="input-field" placeholder="Monto más alto + 100"
               readonly />
-            <button type="submit" class="send-btn">Enviar</button>
+            <button type="submit" class="send-btn">
+              Enviar
+            </button>
           </div>
         </form>
       </section>
     </div>
+
 
 
 
@@ -188,7 +193,10 @@
   socket.on('load-messages', (loadedMessages) => {
     messages.innerHTML = ''; // Limpia el historial previo
     loadedMessages.forEach(({ monto, usuario }) => {
-      const item = `<li><strong>${usuario}:</strong> USD$${monto}</li>`;
+      const isCurrentUser = usuario === userName;
+      const messageClass = isCurrentUser ? 'sent' : 'received';
+
+      const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
       messages.insertAdjacentHTML('beforeend', item);
 
       if (monto > highestAmount) {
@@ -201,7 +209,10 @@
   // Escuchar mensajes en tiempo real
   socket.on('chat-message', ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
-      const item = `<li><strong>${usuario}:</strong> USD$${monto}</li>`;
+      const isCurrentUser = usuario === userName; // Compara con el usuario actual
+      const messageClass = isCurrentUser ? 'sent' : 'received';
+
+      const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
       messages.insertAdjacentHTML('beforeend', item);
 
       if (monto > highestAmount) {
@@ -221,6 +232,11 @@
 
     if (amount > highestAmount) {
       socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+
+      // Renderizar el mensaje en el cliente
+      const item = `<li class="sent"><strong>${userName}:</strong> USD$${amount}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
+
       inputBid.value = '';
     } else {
       alert(`La oferta debe ser mayor a USD$${highestAmount}`);
@@ -241,5 +257,4 @@
 
   // Inicializar oferta sugerida
   inputSuggestedBid.value = highestAmount + 100;
-
 </script>

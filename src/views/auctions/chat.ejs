@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="/css/metodopago/metodopago.css">
 
 <div class="active-auction-card">
   <div class="active-auction-header">
@@ -135,7 +136,7 @@
 <!-- Contenedor para el modal de método de pago -->
 <div class="payment-modal-overlay" id="paymentModalOverlay">
   <div class="payment-modal-content">
-    <%- include('../layouts/Metodopago') %>}
+    <%- include('../layouts/Metodopago') %>
   </div>
 </div>
 
@@ -144,7 +145,62 @@
   const chat = document.getElementById('auction-chat');
   const en_curso = document.getElementById('en_curso');
   const paymentModalOverlay = document.getElementById('paymentModalOverlay');
-  const paymentModalContent = document.querySelector('.payment-modal-content');
+
+  function showDepositAlert() {
+    return Swal.fire({
+      title: 'Depósito requerido',
+      text: 'Debes depositar 500 dólares para participar en 10 subastas.',
+      showCancelButton: true,
+      confirmButtonText: 'Ya deposité',
+      cancelButtonText: 'No deposité',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+  }
+
+  function checkOpportunities() {
+    return fetch('/auctions/check-opportunities', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
+    }).then(response => response.json());
+  }
+
+  function handleDepositConfirmation(result) {
+    if (result.isConfirmed) {
+      checkOpportunities().then(data => {
+        if (data.success) {
+          en_curso.style.display = 'none';
+          chat.style.display = 'block';
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: data.message,
+            icon: 'error',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then(() => {
+            if (data.message === 'No tienes oportunidades') {
+              paymentModalOverlay.style.display = 'flex';
+            }
+          });
+        }
+      }).catch(error => {
+        console.error('Error al verificar oportunidades:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al verificar oportunidades',
+          icon: 'error',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      paymentModalOverlay.style.display = 'flex';
+    }
+  }
 
   btn_unirse.addEventListener('click', () => {
     Swal.fire({
@@ -156,8 +212,8 @@
       showCancelButton: true,
       confirmButtonText: 'Continuar',
       cancelButtonText: 'Cancelar',
-      allowOutsideClick:false,
-      allowEscapeKey:false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
       preConfirm: () => {
         const termsCheckbox = document.getElementById('termsCheckbox');
         if (!termsCheckbox.checked) {
@@ -168,68 +224,18 @@
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Depósito requerido',
-          text: 'Debes depositar 500 dólares para participar en 10 subasta.',
-          showCancelButton: true,
-          confirmButtonText: 'Ya deposité',
-          cancelButtonText: 'No deposité',
-          allowOutsideClick:false,
-          allowEscapeKey:false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Enviar solicitud al servidor para verificar oportunidades
-            fetch('/auctions/check-opportunities', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
-            })
-              .then(response => response.json())
-              .then(data => {
-                if (data.success) {
-                  // Ocultar el panel de subasta en curso
-                  en_curso.style.display = 'none';
-                  // Mostrar el chat
-                  chat.style.display = 'block';
-                } else {
-                  Swal.fire({
-                    title: 'Error',
-                    text: data.message,
-                    icon: 'error',
-                    allowOutsideClick:false,
-                    allowEscapeKey:false,
-                  }).then(() => {
-                    if (data.message === 'No tienes oportunidades') {
-                      // Mostrar el modal de método de pago
-                      paymentModalOverlay.style.display = 'flex';
-                    }
-                  });
-                }
-              })
-              .catch(error => {
-                console.error('Error al verificar oportunidades:', error);
-                Swal.fire({
-                  title: 'Error',
-                  text: 'Error al verificar oportunidades',
-                  icon: 'error',
-                  allowOutsideClick:false,
-                  allowEscapeKey:false,
-                });
-              });
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            // Mostrar el modal de método de pago
-            paymentModalOverlay.style.display = 'flex';
-          }
-        });
+        showDepositAlert().then(handleDepositConfirmation);
       }
     });
   });
+
+  const btnRetroceder = document.getElementById('retroceder');
+  btnRetroceder.addEventListener('click', () => {
+    paymentModalOverlay.style.display = 'none';
+    showDepositAlert().then(handleDepositConfirmation);
+  });
+
   function closePaymentModal() {
     paymentModalOverlay.style.display = 'none';
   }
-
 </script>
-
-<link rel="stylesheet" href="/css/metodopago/metodopago.css">

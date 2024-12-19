@@ -13,28 +13,23 @@
 
 
 .parent {
-    /*     display: grid; */
+/*     display: grid; */
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-}
+    }
+    
+    .div1 { grid-area: 1 / 1 / 2 / 3; }
+    .div2 { grid-area: 2 / 3 / 1 / 2; }
 
-.div1 {
-    grid-area: 1 / 1 / 2 / 3;
-}
-
-.div2 {
-    grid-area: 2 / 3 / 1 / 2;
-}
-
-.div1 {
+.div1{
     position: fixed;
     width: 100%;
 }
 
-.admingeneral1 {
-    padding: 2rem;
+.admingeneral1{
+   padding: 2rem;
 }
 
 .dashboard-container {

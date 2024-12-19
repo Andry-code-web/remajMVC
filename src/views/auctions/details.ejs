@@ -22,19 +22,19 @@
 
     <div class="section">
       <h2 class="section-title">Sobre la Propiedad</h2>
-       <!-- Mostrar nombre del usuario si está autenticado -->
-  <% if (user && user.username) { %>
-    <p>Usuario: <%= user.username %></p>
-  <% } else { %>
-    <p>Usuario: Anónimo</p>
-  <% } %>
-      <p>
-        <%= auction.descripcion %>
-      </p>
+      <!-- Mostrar nombre del usuario si está autenticado -->
+      <% if (user && user.username) { %>
+        <p>Usuario: <%= user.username %>
+        </p>
+        <% } else { %>
+          <p>Usuario: Anónimo</p>
+          <% } %>
+            <p>
+              <%= auction.descripcion %>
+            </p>
     </div>
   </div>
   <div class="sidebar" id="chatdesubastas">
-
 
     <!--  aca va el codigo chatb subasta  -->
 

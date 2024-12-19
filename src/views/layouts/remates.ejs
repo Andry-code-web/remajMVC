@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemajuD - Remates de Inmuebles</title>
+    <link rel="stylesheet" href="/css/remates_layouts/remates_layouts.css">
+    <!-- remates -->
+    <link rel="stylesheet" href="/css/remates/remates.css">
+    <!-- CDN DE ICONOS REMIX -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!-- ESTILOS COMPONENTES -->
+
+    <!-- ESTILOS GLOBALES -->
+    <link rel="stylesheet" href="/css/globales/globales.css">
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+
+        <main class="">
+            <%- include('../' + remates) %>
+        </main>
+
+
+        <%- include('../partials/footer') %>
+
+            <script>
+                window.addEventListener('scroll', () => {
+                    const header = document.getElementById('header');
+                    const banner = document.getElementById('banner');
+                    const categorias = document.getElementById('categorias');
+                    const subastas = document.getElementById('subastas');
+                    const bannerBottom = banner.getBoundingClientRect().bottom;
+                    const categoriasBottom = categorias.getBoundingClientRect().bottom;
+                    const subastasTop = subastas.getBoundingClientRect().top;
+                    if (bannerBottom > 0) {
+                        header.style.color = '#fffcfc';
+                    } else if (categoriasBottom > 0) {
+                        header.style.color = '#0a0000';
+                    } else if (subastasTop < window.innerHeight) {
+                        header.style.color = '#0a0000';
+                    } else {
+                        header.style.color = 'black';
+                    }
+                });
+            </script>
+
+            <script>
+                let lastScrollPosition = 0;
+                const navbar = document.querySelector('.navbar');
+
+                window.addEventListener('scroll', function () {
+                    const currentScrollPosition = window.pageYOffset;
+
+                    if (currentScrollPosition > lastScrollPosition) {
+                        navbar.classList.add('hidden');
+                    } else {
+                        navbar.classList.remove('hidden');
+                    }
+
+                    lastScrollPosition = currentScrollPosition;
+                });
+            </script>
+</body>
+
+</html>

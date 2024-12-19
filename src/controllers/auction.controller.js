@@ -2,6 +2,20 @@
 const Auction = require('../models/auction.model');
 const db = require('../config/database'); // Asegúrate de tener acceso a la base de datos
 
+
+exports.getAllAuctions = async (req, res) => {
+  try {
+    const auctions = await Auction.getAll();
+    res.render('layouts/main', { 
+      content: 'auctions/mapa',
+      auctions
+    });
+  } catch (error) {
+    res.status(500).render('error', { error: error.message });
+  }
+};
+
+
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auctionId = req.params.id;

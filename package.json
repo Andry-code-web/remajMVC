@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run build:all\" \"npm run dev:server\"",
     "watch:css": "sass --watch public/styles:public/css",
     "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:login && npm run build:chat && npm run build:metodopago && npm run build:login_admin && npm run build:errores && npm run build:errores_layouts && npm run build:remates_layouts && npm run build:adminhf",
+
     "build:layout_main": "sass src/public/styles/main_layout.scss src/public/css/main_layout/main_layout.css",
     "build:inicio": "sass src/public/styles/inicio.scss src/public/css/inicio/inicio.css",
     "build:remates": "sass src/public/styles/remates.scss src/public/css/remates/remates.css",
@@ -27,6 +28,7 @@
     "build:login_admin": "sass src/public/styles/login_admin.scss src/public/css/login_admin/login_admin.css",
     "build:metodopago": "sass src/public/styles/metodopago.scss src/public/css/metodopago/metodopago.css",
     "build:adminhf": "sass src/public/styles/adminhf.scss src/public/css/adminhf/adminhf.css",
+
     "dev:server": "nodemon app.js"
   },
   "dependencies": {
@@ -37,13 +39,14 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
-    "express-session": "^1.17.3",
+    "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.1",
     "nodemailer": "^6.9.16",
+    "remixicon": "^4.5.0",
     "sass": "^1.81.0",
     "socket.io": "^4.7.2"
   },

@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="/css/metodopago/metodopago.css">
+<link rel="stylesheet" href="/css/remates/remates.css">
 
 <div class="active-auction-card">
   <div class="active-auction-header">
@@ -71,7 +72,7 @@
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
           <span class="progress-value">
-            <%= user?.id || 'Anónimo' %>
+            <%= user?.usuario || 'Anónimo' %>
           </span>
         </div>
       </div>
@@ -96,22 +97,30 @@
 
     <!-- Chat (inicialmente oculto) -->
     <div id="auction-chat" class="chat" style="display: none;">
-      <div>
-        <label for="bidAmount">Ingrese su puja:</label>
-        <input type="number" id="bidAmount" min="1" step="1">
-        <button id="submitBid">Enviar Puja</button>
-      </div>
+      <section id="chat">
+        <ul id="messages"></ul>
 
-      <div>
-        <label for="chatMessage">Mensaje de Chat:</label>
-        <input type="text" id="chatMessage">
-        <button id="sendMessage">Enviar Mensaje</button>
-      </div>
+        <!-- Formulario de oferta -->
+        <form id="form-bid" class="message-form">
+          <div class="input-container">
+            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
+            <button type="submit" class="send-btn">
+              Enviar
+            </button>
+          </div>
+        </form>
 
-      <div id="chatWindow">
-        <h3>Chat:</h3>
-        <ul id="chatMessages"></ul>
-      </div>
+        <!-- Formulario de oferta sugerida -->
+        <form id="form-suggested-bid" class="message-form">
+          <div class="input-container">
+            <input type="number" id="input-suggested-bid" class="input-field" placeholder="Monto más alto + 100"
+              readonly />
+            <button type="submit" class="send-btn">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
 
@@ -142,109 +151,108 @@
 </div>
 
 <script>
-  const btn_unirse = document.getElementById('unirse');
-  const chat = document.getElementById('auction-chat');
-  const en_curso = document.getElementById('en_curso');
-  const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnUnirse = document.getElementById('unirse');
+    const chat = document.getElementById('auction-chat');
+    const enCurso = document.getElementById('en_curso');
+    const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+    const tabs = document.querySelectorAll('.active-tab');
+    const contentSections = document.querySelectorAll('.active-content-section');
 
-  function showDepositAlert() {
-    return Swal.fire({
-      title: 'Depósito requerido',
-      text: 'Debes depositar 500 dólares para participar en 10 subastas.',
-      showCancelButton: true,
-      confirmButtonText: 'Ya deposité',
-      cancelButtonText: 'No deposité',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-    });
-  }
+    function showDepositAlert() {
+      return Swal.fire({
+        title: 'Depósito requerido',
+        text: 'Debes depositar 500 dólares para participar en 10 subastas.',
+        showCancelButton: true,
+        confirmButtonText: 'Ya deposité',
+        cancelButtonText: 'No deposité',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+    }
 
-  function checkOpportunities() {
-    return fetch('/auctions/check-opportunities', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
-    }).then(response => response.json());
-  }
-
-  function handleDepositConfirmation(result) {
-    if (result.isConfirmed) {
-      checkOpportunities().then(data => {
-        if (data.success) {
-          en_curso.style.display = 'none';
-          chat.style.display = 'block';
-        } else {
+    function checkOpportunities() {
+      return fetch('/auctions/check-opportunities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
+      }).then(response => response.json())
+        .catch(error => {
+          console.error('Error al verificar oportunidades:', error);
           Swal.fire({
             title: 'Error',
-            text: data.message,
+            text: 'Error al verificar oportunidades',
             icon: 'error',
             allowOutsideClick: false,
             allowEscapeKey: false,
-          }).then(() => {
-            if (data.message === 'No tienes oportunidades') {
-              paymentModalOverlay.style.display = 'flex';
-            }
           });
-        }
-      }).catch(error => {
-        console.error('Error al verificar oportunidades:', error);
-        Swal.fire({
-          title: 'Error',
-          text: 'Error al verificar oportunidades',
-          icon: 'error',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
         });
-      });
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      paymentModalOverlay.style.display = 'flex';
     }
-  }
 
-  btn_unirse.addEventListener('click', () => {
-    Swal.fire({
-      title: 'Términos y condiciones',
-      html: `
-        <input type="checkbox" id="termsCheckbox">
-        <label for="termsCheckbox">He leído y acepto los términos y condiciones</label>
-      `,
-      showCancelButton: true,
-      confirmButtonText: 'Continuar',
-      cancelButtonText: 'Cancelar',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      preConfirm: () => {
-        const termsCheckbox = document.getElementById('termsCheckbox');
-        if (!termsCheckbox.checked) {
-          Swal.showValidationMessage('Debes marcar la casilla de los términos y condiciones');
-          return false;
-        }
-        return true;
-      }
-    }).then((result) => {
+    function handleDepositConfirmation(result) {
       if (result.isConfirmed) {
-        showDepositAlert().then(handleDepositConfirmation);
+        checkOpportunities().then(data => {
+          if (data.success) {
+            enCurso.style.display = 'none';
+            chat.style.display = 'block';
+          } else {
+            Swal.fire({
+              title: 'Error',
+              text: data.message,
+              icon: 'error',
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            }).then(() => {
+              if (data.message === 'No tienes oportunidades') {
+                paymentModalOverlay.style.display = 'flex';
+              }
+            });
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        paymentModalOverlay.style.display = 'flex';
       }
+    }
+
+    btnUnirse.addEventListener('click', () => {
+      Swal.fire({
+        title: 'Términos y condiciones',
+        html: `
+          <input type="checkbox" id="termsCheckbox">
+          <label for="termsCheckbox">He leído y acepto los términos y condiciones</label>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+        cancelButtonText: 'Cancelar',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        preConfirm: () => {
+          const termsCheckbox = document.getElementById('termsCheckbox');
+          if (!termsCheckbox.checked) {
+            Swal.showValidationMessage('Debes marcar la casilla de los términos y condiciones');
+            return false;
+          }
+          return true;
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          showDepositAlert().then(handleDepositConfirmation);
+        }
+      });
     });
-  });
 
-  const btnRetroceder = document.getElementById('retroceder');
-  btnRetroceder.addEventListener('click', () => {
-    paymentModalOverlay.style.display = 'none';
-    showDepositAlert().then(handleDepositConfirmation);
-  });
+    const btnRetroceder = document.getElementById('retroceder');
+    btnRetroceder.addEventListener('click', () => {
+      paymentModalOverlay.style.display = 'none';
+      showDepositAlert().then(handleDepositConfirmation);
+    });
 
-  function closePaymentModal() {
-    paymentModalOverlay.style.display = 'none';
-  }
-</script>
+    function closePaymentModal() {
+      paymentModalOverlay.style.display = 'none';
+    }
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('.active-tab');
-    const contentSections = document.querySelectorAll('.active-content-section');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const tabId = tab.getAttribute('data-tab');
@@ -286,4 +294,95 @@
         console.error('Error al obtener las mejores ofertas:', error);
       });
   });
+</script>
+
+<script type="module">
+  import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
+
+  const socket = io();
+
+  // Elementos del DOM
+  const formBid = document.getElementById('form-bid');
+  const inputBid = document.getElementById('input-bid');
+  const formSuggestedBid = document.getElementById('form-suggested-bid');
+  const inputSuggestedBid = document.getElementById('input-suggested-bid');
+  const messages = document.getElementById('messages');
+
+  // Variables
+  let highestAmount = 0;
+  const auctionId = <%- auction.id %>;
+  const userId = "<%- user?.id || '0' %>";
+  const userName = "<%- user?.usuario || 'Anónimo' %>";
+
+  // Unirse a la sala del remate
+  socket.emit('join-auction', auctionId);
+
+  // Cargar mensajes persistentes al unirse
+  socket.on('load-messages', (loadedMessages) => {
+    messages.innerHTML = ''; // Limpia el historial previo
+    loadedMessages.forEach(({ monto, usuario }) => {
+      const isCurrentUser = usuario === userName;
+      const messageClass = isCurrentUser ? 'sent' : 'received';
+
+      const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
+
+      if (monto > highestAmount) {
+        highestAmount = monto;
+        inputSuggestedBid.value = highestAmount + 100;
+      }
+    });
+  });
+
+  // Escuchar mensajes en tiempo real
+  socket.on('chat-message', ({ monto, usuario, remates_id }) => {
+    if (remates_id === auctionId) {
+      const isCurrentUser = usuario === userName; // Compara con el usuario actual
+      const messageClass = isCurrentUser ? 'sent' : 'received';
+
+      const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
+
+      if (monto > highestAmount) {
+        highestAmount = monto;
+        inputSuggestedBid.value = highestAmount + 100;
+      }
+    }
+  });
+
+  // Manejar errores
+  socket.on('error-message', (error) => alert(error));
+
+  // Enviar oferta manual
+  formBid.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const amount = parseFloat(inputBid.value);
+
+    if (amount > highestAmount) {
+      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+
+      // Renderizar el mensaje en el cliente
+      const item = `<li class="sent"><strong>${userName}:</strong> USD$${amount}</li>`;
+      messages.insertAdjacentHTML('beforeend', item);
+
+      inputBid.value = '';
+    } else {
+      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
+    }
+  });
+
+  // Enviar oferta sugerida
+  formSuggestedBid.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const amount = parseFloat(inputSuggestedBid.value);
+
+    if (amount > highestAmount) {
+      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+    } else {
+      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
+    }
+  });
+
+  // Inicializar oferta sugerida
+  inputSuggestedBid.value = highestAmount + 100;
 </script>

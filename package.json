@@ -25,6 +25,7 @@
     "build:remates_layouts": "sass src/public/styles/remates_layouts.scss src/public/css/remates_layouts/remates_layouts.css",
     "build:chatsubastas": "sass src/public/styles/chatsubastas.scss src/public/css/chatsubastas/chatsubastas.css",
     "build:login_admin": "sass src/public/styles/login_admin.scss src/public/css/login_admin/login_admin.css",
+    "build:metodopago": "sass src/public/styles/metodopago.scss src/public/css/metodopago/metodopago.css",
     "build:adminhf": "sass src/public/styles/adminhf.scss src/public/css/adminhf/adminhf.css",
     "dev:server": "nodemon app.js"
   },

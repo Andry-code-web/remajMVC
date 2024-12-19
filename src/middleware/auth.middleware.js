@@ -20,10 +20,7 @@ exports.isAuthenticated = (req, res, next) => {
     }
   }
 
-  return res.status(401).json({ 
-    success: false, 
-    message: 'Usuario no autorizado' 
-  });
+  return res.redirect('/unauthorized');
 };
 
 exports.setUserLocals = (req, res, next) => {
@@ -47,6 +44,6 @@ exports.setUserLocals = (req, res, next) => {
   } else {
     res.locals.user = null;
   }
-  
+
   next();
 };

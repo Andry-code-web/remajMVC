@@ -57,6 +57,10 @@ app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
 
+app.get('/unauthorized', (req, res) => {
+  res.render('unauthorized/unauthorized');
+});
+
 // Socket.IO
 let highestAmount = 0; 
 const timers = {}; 

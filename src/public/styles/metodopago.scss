@@ -1,0 +1,188 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.payment-container {
+    width: 400px;
+    min-height: 500px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    position: relative;
+}
+
+.payment-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab.active {
+    background: #e6f7f5;
+    color: #00bfa5;
+}
+
+.payment-content {
+    position: relative;
+    min-height: 400px;
+}
+
+.form-section {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.form-section.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 1rem;
+    background: #00bfa5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pay-button:hover {
+    background: #00a693;
+}
+
+.yape-section {
+    text-align: center;
+}
+
+.qr-placeholder {
+    width: 200px;
+    height: 200px;
+    margin: 2rem auto;
+    background: #f5f5f5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.security-badges {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bank-account {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.bank-account:hover {
+    background: #e0e0e0;
+}
+
+.bank-account h4 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.bank-account p {
+    margin: 0;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.imagen-yape-qr {
+    width: 200px;
+    height: 200px;
+}
+
+/* From Uiverse.io by biswacpcode */
+.botonsalir {
+    margin-bottom: 0.5;
+    margin-top: 1rem;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.botonsalir::before {
+    margin-left: auto;
+}
+
+.botonsalir::after,
+.botonsalir::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f44336;
+    display: block;
+    transition: 0.5s;
+}
+
+.botonsalir:hover::after,
+.botonsalir:hover::before {
+    width: 100%;
+}

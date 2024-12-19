@@ -1,3 +1,8 @@
+<!-- views/auctions/details.ejs -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="/css/metodopago/metodopago.css">
+
 <div class="active-auction-card">
   <div class="active-auction-header">
     <div class="active-property-type">
@@ -12,7 +17,6 @@
     <button class="active-tab active" data-tab="active-panel">Panel</button>
     <button class="active-tab" data-tab="active-classification">Clasificación</button>
   </div>
-
 
   <div id="active-panel" class="active-content-section active">
     <!-- Estado: En Curso -->
@@ -86,7 +90,7 @@
           <span class="progress-currency">$</span>
           <input type="number" id="progress-bidAmount" value="<%= auction.monto_venta %>">
         </div>
-        <button class="progress-bid-button">Ofertar</button>
+        <button class="progress-bid-button">Monto</button>
       </div>
     </div>
 
@@ -98,7 +102,7 @@
           <div id="timer-bar"></div>
         </div>
         <ul id="messages"></ul>
-        
+
         <!-- Formulario de oferta -->
         <form id="form-bid" class="message-form">
           <div class="input-container">
@@ -142,18 +146,111 @@
   </div>
 </div>
 
+<!-- Contenedor para el modal de método de pago -->
+<div class="payment-modal-overlay" id="paymentModalOverlay">
+  <div class="payment-modal-content">
+    <%- include('../layouts/Metodopago') %>
+  </div>
+</div>
+
 <script>
   const btn_unirse = document.getElementById('unirse');
   const chat = document.getElementById('auction-chat');
   const en_curso = document.getElementById('en_curso');
+  const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+
+  function showDepositAlert() {
+    return Swal.fire({
+      title: 'Depósito requerido',
+      text: 'Debes depositar 500 dólares para participar en 10 subastas.',
+      showCancelButton: true,
+      confirmButtonText: 'Ya deposité',
+      cancelButtonText: 'No deposité',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+  }
+
+  function checkOpportunities() {
+    return fetch('/auctions/check-opportunities', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
+    }).then(response => response.json());
+  }
+
+  function handleDepositConfirmation(result) {
+    if (result.isConfirmed) {
+      checkOpportunities().then(data => {
+        if (data.success) {
+          en_curso.style.display = 'none';
+          chat.style.display = 'block';
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: data.message,
+            icon: 'error',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then(() => {
+            if (data.message === 'No tienes oportunidades') {
+              paymentModalOverlay.style.display = 'flex';
+            }
+          });
+        }
+      }).catch(error => {
+        console.error('Error al verificar oportunidades:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al verificar oportunidades',
+          icon: 'error',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      paymentModalOverlay.style.display = 'flex';
+    }
+  }
 
   btn_unirse.addEventListener('click', () => {
-    // Ocultar el panel de subasta en curso
-    en_curso.style.display = 'none';
-
-    // Mostrar el chat
-    chat.style.display = 'block';
+    Swal.fire({
+      title: 'Términos y condiciones',
+      html: `
+        <input type="checkbox" id="termsCheckbox">
+        <label for="termsCheckbox">He leído y acepto los términos y condiciones</label>
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      preConfirm: () => {
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        if (!termsCheckbox.checked) {
+          Swal.showValidationMessage('Debes marcar la casilla de los términos y condiciones');
+          return false;
+        }
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showDepositAlert().then(handleDepositConfirmation);
+      }
+    });
   });
+
+  const btnRetroceder = document.getElementById('retroceder');
+  btnRetroceder.addEventListener('click', () => {
+    paymentModalOverlay.style.display = 'none';
+    showDepositAlert().then(handleDepositConfirmation);
+  });
+
+  function closePaymentModal() {
+    paymentModalOverlay.style.display = 'none';
+  }
 </script>
 
 <script>
@@ -181,7 +278,7 @@
   const progressBar = document.getElementById("timer-bar");
 
   // Configuración del temporizador
-  const TIMER_DURATION = 30; 
+  const TIMER_DURATION = 30;
   let timerInterval;
   let timerCountdown = TIMER_DURATION;
   let shownAlerts = new Set();
@@ -204,10 +301,10 @@
 
   // Función para reiniciar el temporizador
   function resetTimer() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);
     timerCountdown = TIMER_DURATION;
-    shownAlerts.clear(); 
-    isChatActive = true; 
+    shownAlerts.clear();
+    isChatActive = true;
 
     timerInterval = setInterval(() => {
       timerCountdown--;
@@ -228,9 +325,9 @@
         shownAlerts.add("tres");
       } else if (timerCountdown <= 0) {
         clearInterval(timerInterval);
-        progressBar.style.width = "0%"; 
+        progressBar.style.width = "0%";
         addAlertMessage(`¡Vendido! El ganador es: "${getWinner()}"`);
-        disableChat(); 
+        disableChat();
       }
     }, 1000);
   }
@@ -256,7 +353,7 @@
 
   // Cargar mensajes persistentes al unirse
   socket.on("load-messages", (loadedMessages) => {
-    messages.innerHTML = ""; 
+    messages.innerHTML = "";
     loadedMessages.forEach(({ monto, usuario }) => {
       const isCurrentUser = usuario === userName;
       const messageClass = isCurrentUser ? "sent" : "received";
@@ -333,4 +430,50 @@
 
   // Inicializar oferta sugerida
   inputSuggestedBid.value = highestAmount + 100;
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.active-tab');
+    const contentSections = document.querySelectorAll('.active-content-section');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabId = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        contentSections.forEach(cs => cs.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Fetch top bids and update the classification table
+    const auctionId = '<%= auction.id %>';
+    fetch(`/auctions/${auctionId}/top-bids`)
+      .then(response => response.json())
+      .then(data => {
+        const bidsTableBody = document.getElementById('bids-table-body');
+        bidsTableBody.innerHTML = '';
+        data.forEach((bid, index) => {
+          const row = document.createElement('tr');
+          let positionEmoji = '';
+          if (index === 0) {
+            positionEmoji = '👑';
+          } else if (index === 1) {
+            positionEmoji = '🥈';
+          } else if (index === 2) {
+            positionEmoji = '🥉';
+          } else {
+            positionEmoji = `${index + 1}`;
+          }
+          row.innerHTML = `
+            <td class="position">${positionEmoji}</td>
+            <td>${bid.usuario}</td>
+            <td class="amount">USD$ ${bid.monto}</td>
+          `;
+          bidsTableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener las mejores ofertas:', error);
+      });
+  });
 </script>

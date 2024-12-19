@@ -1,0 +1,84 @@
+<div class="payment-container">
+    <div class="payment-tabs">
+        <div class="tab active" data-tab="card">
+            <span>💳</span>
+            Tarjeta débito/crédito
+        </div>
+        <div class="tab" data-tab="yape">
+            <span>📱</span>
+            Yape
+        </div>
+    </div>
+
+    <div class="payment-content">
+        <div class="form-section card-section active">
+            <h3>Información de Cuentas</h3>
+            <div class="account-info">
+                <div class="bank-account">
+                    <h4>BCP</h4>
+                    <p>CCI: 00219400212345678901</p>
+                </div>
+                <div class="bank-account">
+                    <h4>Interbank</h4>
+                    <p>CCI: 00319400212345678902</p>
+                </div>
+                <div class="bank-account">
+                    <h4>BBVA</h4>
+                    <p>CCI: 00119400212345678903</p>
+                </div>
+                <div class="bank-account">
+                    <h4>Scotiabank</h4>
+                    <p>CCI: 00919400212345678904</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section yape-section">
+            <h3>Escanea el código QR</h3>
+            <div class="qr-placeholder">
+                <img class="imagen-yape-qr" src="/img/yape.jpg" alt="">
+            </div>
+            <p>Yape a: Montano Quispe Cleofer</p>
+            <p>Monto: S/ 5000.00</p>
+        </div>
+    </div>
+
+    <div class="security-badges">
+        <small>Enviar tu comprobante de pago a:</small>
+        <div>📧 remajud@remajud.com</div>
+        <button class="botonsalir" id="retroceder">Retroceder</button>
+    </div>
+</div>
+
+<script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
+            tab.classList.add('active');
+
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show selected section
+            const targetSection = tab.dataset.tab === 'card' ? '.card-section' : '.yape-section';
+            document.querySelector(targetSection).classList.add('active');
+        });
+    });
+
+    // Card number formatting
+    document.getElementById('cardNumber').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formattedValue = '';
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) {
+                formattedValue += ' ';
+            }
+            formattedValue += value[i];
+        }
+        e.target.value = formattedValue;
+    });
+</script>

@@ -71,14 +71,12 @@
                     Remates
                   </a>
                 </li>
-
                 <li>
                   <a href="#">
                     <i class="ri-team-line"></i>
                     clientes
                   </a>
                 </li>
-
               </ul>
             </section>
           </nav>
@@ -513,6 +511,13 @@
                     <option value="en_curso">En Curso</option>
                     <option value="finalizado">Finalizado</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <label for="editTamañoPropiedad">
+                    <i class="bi bi-bounding-box"></i>
+                    Tamaño de la propiedad
+                  </label>
+                  <input type="number" id="editTamañoPropiedad" name="tamaño_propiedad" required>
                 </div>
               </div>
 
@@ -976,6 +981,7 @@
           document.getElementById('editFechaRemate').value = data.fecha_remate.split('T')[0];
           document.getElementById('editHoraRemate').value = data.hora_remate;
           document.getElementById('editEstado').value = data.estado;
+          document.getElementById('editTamañoPropiedad').value = data.tamaño_propiedad;
           document.getElementById('editPisina').value = data.pisina;
           document.getElementById('editPatio').value = data.patio;
           document.getElementById('editCocina').value = data.cocina;
@@ -1107,7 +1113,7 @@
       });
     }
 
-    //boton de cerrar secion admin
+    // Botón de cerrar sesión admin
     document.getElementById('logout-button').addEventListener('click', function () {
       window.location.href = '/admin/logout';
     });

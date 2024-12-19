@@ -59,17 +59,6 @@
         // Ejecutar la función cuando se carga el documento
         document.addEventListener('DOMContentLoaded', () => {
             crearParticulasRemaju();
-
-            // Mostrar SweetAlert si hay un mensaje de error
-            <% if (error) { %>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '<%= error %>',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Entendido'
-                });
-            <% } %>
         });
     </script>
 </body>

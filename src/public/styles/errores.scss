@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container_errores {
+    padding: 85px 22rem;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1.error {
+    font-family: "fuentePrincipal";
+    font-size: 96px;
+    color: #0a0000;
+    margin-bottom: 20px;
+}
+
+p.causas_error {
+    font-family: "fuenteSecundaria";
+    font-size: 1.5rem;
+    color: #0a0000a2;  
+    margin-bottom: 20px;
+}
+
+a.btn_errores {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #0a0000;
+    text-decoration: none;
+    border-radius: .5rem;
+    font-size: 1.2rem;
+    font-family: "fuenteparrafos";
+}
+
+a.btn_errores:hover {
+    background-color:#0a020099;
+}

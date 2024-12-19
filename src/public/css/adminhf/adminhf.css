@@ -1,0 +1,135 @@
+.opciones_admin1 {
+  padding: 2rem;
+  list-style: none;
+}
+
+.dashboardnav {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-gap: 0;
+  grid-template-columns: 300px auto;
+  grid-template-rows: 80px auto;
+  grid-template-areas: "menu search" "menu content";
+}
+
+.search-wrap {
+  grid-area: search;
+  background: #fff;
+  border-bottom: 1px solid #ede8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3em;
+}
+
+.search-wrap .search label input:focus {
+  background: #f5f5fa;
+}
+
+.search-wrap .search label:hover svg path,
+.search-wrap .search label:hover svg circle {
+  fill: #2b3a60;
+}
+
+.search-wrap .user-actions button {
+  border: 0;
+  background: none;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.5em;
+}
+
+.search-wrap .user-actions button svg {
+  position: relative;
+  top: 2px;
+}
+
+.search-wrap .user-actions button svg path,
+.search-wrap .user-actions button svg circle {
+  fill: #b6bbc6;
+  transition: fill 0.15s ease;
+}
+
+.search-wrap .user-actions button:hover svg path,
+.search-wrap .user-actions button:hover svg circle {
+  fill: #2b3a60;
+}
+
+.menu-wrap {
+  grid-area: menu;
+  overflow: auto;
+  background: #fff;
+  border-right: 1px solid #ede8f0;
+}
+
+.menu-wrap .user {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0 3em;
+}
+
+.menu-wrap .user .user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.menu-wrap .user .user-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.menu-wrap .user figcaption {
+  margin: 0;
+  padding: 0 0 0 1em;
+  color: #1b253d;
+  font-weight: 700;
+  font-size: 0.875em;
+  line-height: 100%;
+}
+
+.menu-wrap nav {
+  display: block;
+  padding: 0 3em;
+}
+
+.menu-wrap nav li {
+  display: block;
+  padding: 0;
+  margin: 1em 0 0;
+}
+
+.menu-wrap nav li a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #99a0b0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875em;
+  transition: color 0.15s ease;
+}
+
+.menu-wrap nav li a:hover {
+  color: #1b253d;
+}
+
+i {
+  font-size: 23px;
+}
+
+.user-actions svg {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=adminhf.css.map */

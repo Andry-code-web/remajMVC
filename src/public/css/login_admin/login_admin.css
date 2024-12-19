@@ -1,0 +1,143 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal que centra el formulario */
+.remaju-contenedor {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1a237e 0%, #000000 100%);
+  overflow: hidden;
+}
+
+/* Contenedor de las partículas (estrellas) */
+.remaju-particulas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Estilo de cada partícula (estrella) */
+.remaju-particula {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: remaju-parpadeo 3s infinite;
+}
+
+/* Animación de parpadeo para las partículas */
+@keyframes remaju-parpadeo {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+/* Estilos de la tarjeta de inicio de sesión */
+.remaju-tarjeta-inicio {
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0);
+  z-index: 1;
+}
+
+/* Estilo del título */
+.remaju-titulo {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Estilo de cada campo del formulario */
+.remaju-campo {
+  margin-bottom: 20px;
+}
+
+/* Estilo de las etiquetas de los campos */
+.remaju-etiqueta {
+  display: block;
+  color: white;
+  margin-bottom: 5px;
+}
+
+/* Estilo de los campos de entrada */
+.remaju-entrada {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Estilo del placeholder de los campos de entrada */
+.remaju-entrada::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estilo de los campos de entrada al estar enfocados */
+.remaju-entrada:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo del botón de inicio de sesión */
+.remaju-boton-inicio {
+  background: white;
+  color: #1a237e;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  width: 100%;
+}
+
+/* Efecto hover del botón de inicio de sesión */
+.remaju-boton-inicio:hover {
+  transform: translateY(-2px);
+  background-color: #f0f0f0;
+}
+
+/*# sourceMappingURL=login_admin.css.map */

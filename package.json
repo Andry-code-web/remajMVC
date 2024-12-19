@@ -5,13 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-
     "dev": "concurrently \"npm run build:all\" \"npm run dev:server\"",
-
     "watch:css": "sass --watch public/styles:public/css",
-
-    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:login && npm run build:chat && npm run build:metodopago",
-
+    "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:login && npm run build:chat && npm run build:metodopago && npm run build:login_admin && npm run build:errores && npm run build:errores_layouts && npm run build:remates_layouts && npm run build:adminhf",
     "build:layout_main": "sass src/public/styles/main_layout.scss src/public/css/main_layout/main_layout.css",
     "build:inicio": "sass src/public/styles/inicio.scss src/public/css/inicio/inicio.css",
     "build:remates": "sass src/public/styles/remates.scss src/public/css/remates/remates.css",
@@ -23,13 +19,19 @@
     "build:admin": "sass src/public/styles/admin.scss src/public/css/admin/admin.css",
     "build:auction_detail": "sass src/public/styles/auction_detail.scss src/public/css/auction_detail/auction_detail.css",
     "build:chat": "sass src/public/styles/chat_subasta.scss src/public/css/chat/chat_subasta.css",
-    "build:metodopago": "sass src/public/styles/metodopago.scss src/public/css/metodopago/metodopago.css",
     "build:globales": "sass src/public/styles/globales.scss src/public/css/globales/globales.css",
-
+    "build:errores": "sass src/public/styles/errores.scss src/public/css/errores/errores.css",
+    "build:errores_layouts": "sass src/public/styles/errores_layouts.scss src/public/css/errores_layouts/errores_layouts.css",
+    "build:remates_layouts": "sass src/public/styles/remates_layouts.scss src/public/css/remates_layouts/remates_layouts.css",
+    "build:chatsubastas": "sass src/public/styles/chatsubastas.scss src/public/css/chatsubastas/chatsubastas.css",
+    "build:login_admin": "sass src/public/styles/login_admin.scss src/public/css/login_admin/login_admin.css",
+    "build:metodopago": "sass src/public/styles/metodopago.scss src/public/css/metodopago/metodopago.css",
+    "build:adminhf": "sass src/public/styles/adminhf.scss src/public/css/adminhf/adminhf.css",
     "dev:server": "nodemon app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",

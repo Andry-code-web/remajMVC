@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const db = require('../config/database');
 
 // Validación de conexión
@@ -105,62 +103,16 @@ const agregarAnexos = async (anexos) => {
     await db.query(query, [anexos]);
 };
 
-// Función para actualizar un remate
-const updateRemate = async (remateId, remateData) => {
-    const {
-        ubicacion, precios, descripcion, categoria,
-        N_banos, N_habitacion, pisina, patio,
-        cocina, cochera, balcon, jardin, pisos,
-        comedor, sala_start, studio, lavanderia,
-        fecha_remate, hora_remate, estado
-    } = remateData;
-
-    const booleanFields = ['pisina', 'patio', 'cocina', 'cochera', 'balcon', 'jardin', 'comedor', 'sala_start', 'studio', 'lavanderia'];
-    const processedFields = booleanFields.reduce((acc, field) => {
-        acc[field] = remateData[field] === 'si' ? 'si' : 'no';
-        return acc;
-    }, {});
-
-    const query = `
-    UPDATE remates SET
-      ubicacion = ?, precios = ?, descripcion = ?, categoria = ?,
-      N_banos = ?, N_habitacion = ?, pisina = ?, patio = ?,
-      cocina = ?, cochera = ?, balcon = ?, jardin = ?, pisos = ?,
-      comedor = ?, sala_start = ?, studio = ?, lavanderia = ?,
-      fecha_remate = ?, hora_remate = ?, estado = ?
-    WHERE id = ?
-  `;
-
-    const values = [
-        ubicacion, precios, descripcion, categoria,
-        N_banos, N_habitacion,
-        processedFields.pisina, processedFields.patio,
-        processedFields.cocina, processedFields.cochera,
-        processedFields.balcon, processedFields.jardin,
-        pisos,
-        processedFields.comedor, processedFields.sala_start,
-        processedFields.studio, processedFields.lavanderia,
-        fecha_remate, hora_remate, estado,
-        remateId
-    ];
-
-    try {
-        const [result] = await db.query(query, values);
-        if (result.affectedRows > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (error) {
-        throw new Error('Error al actualizar el remate: ' + error.message);
-    }
-};
-
 // Función para eliminar un remate
 const deleteRemate = async (remateId) => {
-    const query = 'DELETE FROM remates WHERE id = ?';
+    const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
+    const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
+    const queryRemate = 'DELETE FROM remates WHERE id = ?';
+
     try {
-        const [result] = await db.query(query, [remateId]);
+        await db.query(queryAnexos, [remateId]);
+        await db.query(queryImagenes, [remateId]);
+        const [result] = await db.query(queryRemate, [remateId]);
         if (result.affectedRows > 0) {
             return true;
         } else {
@@ -171,19 +123,63 @@ const deleteRemate = async (remateId) => {
     }
 };
 
-// Función para obtener un remate por ID
-const getRemateById = async (remateId) => {
-    const query = 'SELECT * FROM remates WHERE id = ?';
+// Función para obtener un usuario administrador por correo y contraseña
+const getUsuarioAdmin = async (correo, contrasena) => {
+    const query = 'SELECT * FROM usuario_admin WHERE correo = ? AND contrasena = ?';
     try {
-        const [remates] = await db.query(query, [remateId]);
-        if (remates.length > 0) {
-            return remates[0];
-        } else {
-            return null;
-        }
+        const [result] = await db.query(query, [correo, contrasena]);
+        return result[0];
     } catch (error) {
-        throw new Error('Error al obtener el remate: ' + error.message);
+        throw new Error('Error al obtener el usuario administrador: ' + error.message);
     }
+};
+
+// Función para obtener los datos de un remate por ID
+const getRemateById = async (remateId) => {
+    const query = `
+        SELECT
+          r.id AS id,
+          r.ubicacion,
+          r.precios,
+          r.descripcion,
+          r.categoria,
+          r.N_banos,
+          r.N_habitacion,
+          r.pisina,
+          r.patio,
+          r.cocina,
+          r.cochera,
+          r.balcon,
+          r.jardin,
+          r.pisos,
+          r.comedor,
+          r.sala_start,
+          r.studio,
+          r.lavanderia,
+          r.fecha_remate,
+          r.hora_remate,
+          r.estado
+        FROM remates r
+        WHERE r.id = ?
+    `;
+    try {
+        const [result] = await db.query(query, [remateId]);
+        return result[0];
+    } catch (error) {
+        throw new Error('Error al obtener los datos del remate: ' + error.message);
+    }
+};
+
+// Función para actualizar un remate
+const updateRemate = async (remateId, datosRemate) => {
+    const query = `
+        UPDATE remates
+        SET ubicacion = ?, precios = ?, descripcion = ?, categoria = ?, N_banos = ?, N_habitacion = ?,
+            pisina = ?, patio = ?, cocina = ?, cochera = ?, balcon = ?, jardin = ?, pisos = ?, comedor = ?,
+            sala_start = ?, studio = ?, lavanderia = ?, fecha_remate = ?, hora_remate = ?, estado = ?
+        WHERE id = ?
+    `;
+    await db.query(query, [...datosRemate, remateId]);
 };
 
 module.exports = {
@@ -192,10 +188,8 @@ module.exports = {
     createRemate,
     agregarImagenes,
     agregarAnexos,
-    updateRemate,
     deleteRemate,
+    getUsuarioAdmin,
     getRemateById,
+    updateRemate
 };
-
-
-

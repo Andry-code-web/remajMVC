@@ -5,12 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-
     "dev": "concurrently \"npm run build:all\" \"npm run dev:server\"",
-
     "watch:css": "sass --watch public/styles:public/css",
     "build:all": "npm run build:inicio && npm run build:remates && npm run build:contactos && npm run build:globales && npm run build:mapas && npm run build:subastas && npm run build:admin && npm run build:layout_main && npm run build:registro && npm run build:auction_detail && npm run build:errores && npm run build:errores_layouts && npm run build:remates_layouts && npm run build:login && npm run build:chatsubastas && npm run build:login_admin && npm run build:adminhf && npm run build:chat",
-
     "build:layout_main": "sass src/public/styles/main_layout.scss src/public/css/main_layout/main_layout.css",
     "build:inicio": "sass src/public/styles/inicio.scss src/public/css/inicio/inicio.css",
     "build:remates": "sass src/public/styles/remates.scss src/public/css/remates/remates.css",
@@ -29,7 +26,6 @@
     "build:chatsubastas": "sass src/public/styles/chatsubastas.scss src/public/css/chatsubastas/chatsubastas.css",
     "build:login_admin": "sass src/public/styles/login_admin.scss src/public/css/login_admin/login_admin.css",
     "build:adminhf": "sass src/public/styles/adminhf.scss src/public/css/adminhf/adminhf.css",
-
     "dev:server": "nodemon app.js"
   },
   "dependencies": {
@@ -49,7 +45,8 @@
     "nodemailer": "^6.9.16",
     "remixicon": "^4.5.0",
     "sass": "^1.81.0",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "sweetalert2": "^11.15.2"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",

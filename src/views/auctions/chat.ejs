@@ -93,8 +93,12 @@
     <!-- Chat (inicialmente oculto) -->
     <div id="auction-chat" class="chat" style="display: none;">
       <section id="chat">
+        <!-- Contenedor de la barra de progreso -->
+        <div id="timer-container">
+          <div id="timer-bar"></div>
+        </div>
         <ul id="messages"></ul>
-
+        
         <!-- Formulario de oferta -->
         <form id="form-bid" class="message-form">
           <div class="input-container">
@@ -117,10 +121,6 @@
         </form>
       </section>
     </div>
-
-
-
-
   </div>
 
   <!-- Clasificación -->
@@ -141,7 +141,6 @@
     </div>
   </div>
 </div>
-
 
 <script>
   const btn_unirse = document.getElementById('unirse');
@@ -169,16 +168,24 @@
 </script>
 
 <script type="module">
-  import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
+  import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
   const socket = io();
 
   // Elementos del DOM
-  const formBid = document.getElementById('form-bid');
-  const inputBid = document.getElementById('input-bid');
-  const formSuggestedBid = document.getElementById('form-suggested-bid');
-  const inputSuggestedBid = document.getElementById('input-suggested-bid');
-  const messages = document.getElementById('messages');
+  const formBid = document.getElementById("form-bid");
+  const inputBid = document.getElementById("input-bid");
+  const formSuggestedBid = document.getElementById("form-suggested-bid");
+  const inputSuggestedBid = document.getElementById("input-suggested-bid");
+  const messages = document.getElementById("messages");
+  const progressBar = document.getElementById("timer-bar");
+
+  // Configuración del temporizador
+  const TIMER_DURATION = 30; 
+  let timerInterval;
+  let timerCountdown = TIMER_DURATION;
+  let shownAlerts = new Set();
+  let isChatActive = true;
 
   // Variables
   let highestAmount = 0;
@@ -186,18 +193,76 @@
   const userId = "<%= user?.id || '0' %>";
   const userName = "<%= user?.usuario || 'Anónimo' %>";
 
+  // Función para deshabilitar el chat
+  function disableChat() {
+    isChatActive = false;
+    inputBid.disabled = true;
+    inputSuggestedBid.disabled = true;
+    formBid.querySelector("button").disabled = true;
+    formSuggestedBid.querySelector("button").disabled = true;
+  }
+
+  // Función para reiniciar el temporizador
+  function resetTimer() {
+    clearInterval(timerInterval); 
+    timerCountdown = TIMER_DURATION;
+    shownAlerts.clear(); 
+    isChatActive = true; 
+
+    timerInterval = setInterval(() => {
+      timerCountdown--;
+      const percentage = (timerCountdown / TIMER_DURATION) * 100;
+
+      // Actualizar la barra de progreso
+      progressBar.style.width = `${percentage}%`;
+
+      // Mostrar mensajes en momentos clave
+      if (percentage <= 75 && !shownAlerts.has("una")) {
+        addAlertMessage("¡A la una!");
+        shownAlerts.add("una");
+      } else if (percentage <= 50 && !shownAlerts.has("dos")) {
+        addAlertMessage("¡A las dos!");
+        shownAlerts.add("dos");
+      } else if (percentage <= 10 && !shownAlerts.has("tres")) {
+        addAlertMessage("¡A las tres!");
+        shownAlerts.add("tres");
+      } else if (timerCountdown <= 0) {
+        clearInterval(timerInterval);
+        progressBar.style.width = "0%"; 
+        addAlertMessage(`¡Vendido! El ganador es: "${getWinner()}"`);
+        disableChat(); 
+      }
+    }, 1000);
+  }
+
+  // Mostrar mensajes de alerta en el chat
+  function addAlertMessage(message) {
+    const alertMessage = `<li class="alert"><strong></strong> ${message}</li>`;
+    messages.insertAdjacentHTML("beforeend", alertMessage);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Obtener al ganador actual
+  function getWinner() {
+    const messagesList = Array.from(messages.querySelectorAll("li.received, li.sent"));
+    const winnerMessage = messagesList[messagesList.length - 1];
+    if (!winnerMessage) return "Ningún usuario";
+    const match = winnerMessage.textContent.match(/^(.*?):/);
+    return match ? match[1] : "Ningún usuario";
+  }
+
   // Unirse a la sala del remate
-  socket.emit('join-auction', auctionId);
+  socket.emit("join-auction", auctionId);
 
   // Cargar mensajes persistentes al unirse
-  socket.on('load-messages', (loadedMessages) => {
-    messages.innerHTML = ''; // Limpia el historial previo
+  socket.on("load-messages", (loadedMessages) => {
+    messages.innerHTML = ""; 
     loadedMessages.forEach(({ monto, usuario }) => {
       const isCurrentUser = usuario === userName;
-      const messageClass = isCurrentUser ? 'sent' : 'received';
+      const messageClass = isCurrentUser ? "sent" : "received";
 
       const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
-      messages.insertAdjacentHTML('beforeend', item);
+      messages.insertAdjacentHTML("beforeend", item);
 
       if (monto > highestAmount) {
         highestAmount = monto;
@@ -207,51 +272,62 @@
   });
 
   // Escuchar mensajes en tiempo real
-  socket.on('chat-message', ({ monto, usuario, remates_id }) => {
+  socket.on("chat-message", ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
-      const isCurrentUser = usuario === userName; // Compara con el usuario actual
-      const messageClass = isCurrentUser ? 'sent' : 'received';
+      const isCurrentUser = usuario === userName;
+      const messageClass = isCurrentUser ? "sent" : "received";
 
       const item = `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`;
-      messages.insertAdjacentHTML('beforeend', item);
+      messages.insertAdjacentHTML("beforeend", item);
 
       if (monto > highestAmount) {
         highestAmount = monto;
         inputSuggestedBid.value = highestAmount + 100;
       }
+
+      // Reiniciar temporizador al recibir un mensaje
+      resetTimer();
     }
   });
 
   // Manejar errores
-  socket.on('error-message', (error) => alert(error));
+  socket.on("error-message", (error) => addAlertMessage(`Error: ${error}`));
 
   // Enviar oferta manual
-  formBid.addEventListener('submit', (e) => {
+  formBid.addEventListener("submit", (e) => {
     e.preventDefault();
-    const amount = parseFloat(inputBid.value);
+    if (!isChatActive) return addAlertMessage("El chat está deshabilitado.");
 
+    const amount = parseFloat(inputBid.value);
     if (amount > highestAmount) {
-      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+      socket.emit("chat-message", { monto: amount, usuarios_id: userId, remates_id: auctionId });
 
       // Renderizar el mensaje en el cliente
       const item = `<li class="sent"><strong>${userName}:</strong> USD$${amount}</li>`;
-      messages.insertAdjacentHTML('beforeend', item);
+      messages.insertAdjacentHTML("beforeend", item);
 
-      inputBid.value = '';
+      inputBid.value = "";
+
+      // Reiniciar temporizador al enviar un mensaje
+      resetTimer();
     } else {
-      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
+      addAlertMessage(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
 
   // Enviar oferta sugerida
-  formSuggestedBid.addEventListener('submit', (e) => {
+  formSuggestedBid.addEventListener("submit", (e) => {
     e.preventDefault();
-    const amount = parseFloat(inputSuggestedBid.value);
+    if (!isChatActive) return addAlertMessage("El chat está deshabilitado.");
 
+    const amount = parseFloat(inputSuggestedBid.value);
     if (amount > highestAmount) {
-      socket.emit('chat-message', { monto: amount, usuarios_id: userId, remates_id: auctionId });
+      socket.emit("chat-message", { monto: amount, usuarios_id: userId, remates_id: auctionId });
+
+      // Reiniciar temporizador al enviar un mensaje
+      resetTimer();
     } else {
-      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
+      addAlertMessage(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
 

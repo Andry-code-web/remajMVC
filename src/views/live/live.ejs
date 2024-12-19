@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,295 +12,231 @@
   <!-- ESTILOS GLOBALES -->
   <link rel="stylesheet" href="/css/globales/globales.css">
 </head>
+
 <body>
-  
   <!-- COMPONENTE HEADER -->
   <%- include('../partials/navbar') %>
 
-  <!-- Canvas para las partículas -->
-  <canvas id="particleCanvas"></canvas>
+  <!-- live_Tarjeta  -->
+  <section class="property-container">
+    <div class="property-grid">
+      <canvas id="particleCanvas"></canvas>
 
-    <!-- live_Tarjeta  -->
-    <section class="property-container">
-
-      <div class="property-grid">
-        <canvas id="particleCanvas"></canvas>
-
-          <% liveData.forEach((auction, index) => { %>
-              <div class="property-card <%= index % 4 < 2 ? 'slide-left' : 'slide-right' %>">
-                  <img src="data:image/png;base64,<%= auction.imagen %>" alt="Imagen de propiedad" class="property-image">
-                  <div class="property-info">
-                      <h2><%= auction.ubicacion %></h2>
-                      <p>USD$ <%= auction.precios %></p>
-                      <div class="property-stats">
-                          <span>Baños: <%= auction.N_baños %></span>
-                          <span>Habitaciones: <%= auction.N_habitacion %></span>
-                      </div>
-                      <div class="property-actions">
-                          <button class="card-button" data-action="tracking"><p>Seguimiento</p></button>
-                          <button class="card-button" data-action="open-details"><p>Detalles</p></button>
-                          <button class="card-button" data-action="notice"><p>Aviso</p></button>
-                      </div>
-                  </div>
-              </div>
-          <% }); %>
+      <% liveData.forEach((auction, index) => { %>
+      <div class="property-card <%= index % 4 < 2 ? 'slide-left' : 'slide-right' %>">
+        <img src="data:image/png;base64,<%= auction.imagen %>" alt="Imagen de propiedad" class="property-image">
+        <div class="property-info">
+          <h2><%= auction.ubicacion %></h2>
+          <p>USD$ <%= auction.precios %></p>
+          <div class="property-stats">
+            <span>Baños: <%= auction.N_baños %></span>
+            <span>Habitaciones: <%= auction.N_habitacion %></span>
+          </div>
+          <div class="property-actions">
+            <button class="card-button" data-action="tracking">
+              <p>Seguimiento</p>
+            </button>
+            <button class="card-button" data-action="open-details">
+              <p>Detalles</p>
+            </button>
+            <button class="card-button" data-action="notice">
+              <p>Aviso</p>
+            </button>
+          </div>
+        </div>
       </div>
+      <% }); %>
+    </div>
   </section>
 
 
 
-<!-- Modal de Seguimiento -->
-<div id="trackingModal" class="modal">
-  <div class="modal-content">
+  <!-- Modal de Seguimiento -->
+  <div id="trackingModal" class="modal">
+    <div class="modal-content">
       <button class="close-button">&times;</button>
       <div class="tracking-section">
-          <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
-          <div class="tracking-row">
-              <strong>N° Expediente:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Distrito judicial:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Instancia:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Especialidad:</strong> <span>undefined</span>
-          </div>
+        <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
+        <div class="tracking-row">
+          <strong>N° Expediente:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Distrito judicial:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Instancia:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Especialidad:</strong> <span>undefined</span>
+        </div>
       </div>
 
       <div class="tracking-section">
-          <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
-          <div class="tracking-row">
-              <strong>N° Convocatoria:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Fecha de registro:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Procesado por:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Fase convocatoria:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>Estado convocatoria:</strong> <span>undefined</span>
-          </div>
-          <div class="tracking-row">
-              <strong>¿Reanudado?:</strong> <span>No</span>
-          </div>
+        <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
+        <div class="tracking-row">
+          <strong>N° Convocatoria:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Fecha de registro:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Procesado por:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Fase convocatoria:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>Estado convocatoria:</strong> <span>undefined</span>
+        </div>
+        <div class="tracking-row">
+          <strong>¿Reanudado?:</strong> <span>No</span>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-<!-- Modal de detalles -->
-<div id="detailsModal" class="modal">
+  <!-- Modal de detalles -->
+  <div id="detailsModal" class="modal">
     <div class="modal-content">
-        <button class="close-button">&times;</button>
-        
-        <div class="tabs">
-            <button class="tab-button active" data-tab="detalles"><p>Detalles</p></button>
-            <button class="tab-button" data-tab="inmuebles"><p>Inmuebles</p></button>
-            <button class="tab-button" data-tab="cronograma"><p>Cronograma</p></button>
-        </div>
+      <button class="close-button">&times;</button>
 
-        <!-- Pestaña de Detalles -->
-        <div id="detalles" class="tab-content active">
-            <div class="details-container">
-                <!-- Primera columna -->
-                <div class="details-column">
-                    <div class="detail-row">
-                        <strong>Expediente:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Distrito Judicial:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Órgano Jurisdiccional:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Instancia:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Juez:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Especialista:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Materia:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Resolución:</strong> undefined
-                    </div>
-                </div>
-
-                <!-- Segunda columna -->
-                <div class="details-column">
-                    <div class="detail-row">
-                        <strong>Archivo:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Convocatoria:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Tasación:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Precio base:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Incremento entre ofertas:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Arancel:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>Oblaje:</strong> undefined
-                    </div>
-                    <div class="detail-row">
-                        <strong>N° Inscritos:</strong> undefined
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pestaña de Inmuebles -->
-<div id="inmuebles" class="tab-content">
-  <div class="board">
-      <div class="board-header">
-          <h2>Inmuebles del Remate</h2>
+      <div class="tabs">
+        <button class="tab-button active" data-tab="detalles">
+          <p>Detalles</p>
+        </button>
+        <button class="tab-button" data-tab="inmuebles">
+          <p>Inmuebles</p>
+        </button>
+        <button class="tab-button" data-tab="cronograma">
+          <p>Cronograma</p>
+        </button>
       </div>
-      <div class="board-table">
-          <table>
+
+      <!-- Pestaña de detalles -->
+      <div id="detalles" class="tab-content active">
+        <div class="details-container">
+          <% liveData.forEach(auction => { %>
+          <% if (auction.detalles) { %>
+          <div class="details-column">
+            <div class="detail-row"><strong>Expediente:</strong> <%= auction.detalles.expediente %></div>
+            <div class="detail-row"><strong>Distrito Judicial:</strong> <%= auction.detalles.distrito_judicial %></div>
+            <div class="detail-row"><strong>Órgano Jurisdiccional:</strong> <%= auction.detalles.organo_juridiccional %></div>
+            <div class="detail-row"><strong>Instancia:</strong> <%= auction.detalles.instancia %></div>
+            <div class="detail-row"><strong>Juez:</strong> <%= auction.detalles.juez %></div>
+            <div class="detail-row"><strong>Especialista:</strong> <%= auction.detalles.especialista %></div>
+          </div>
+          <div class="details-column">
+            <div class="detail-row"><strong>Materia:</strong> <%= auction.detalles.materia %></div>
+            <div class="detail-row"><strong>Resolución:</strong> <%= auction.detalles.resolucion %></div>
+            <div class="detail-row"><strong>Archivo:</strong> <%= auction.detalles.archivo %></div>
+            <div class="detail-row"><strong>Convocatoria:</strong> <%= auction.detalles.convocatoria %></div>
+            <div class="detail-row"><strong>Tasación:</strong> <%= auction.detalles.tasacion %></div>
+            <div class="detail-row"><strong>Precio Base:</strong> <%= auction.detalles.precio_base %></div>
+          </div>
+          <% } %>
+          <% }); %>
+        </div>
+      </div>
+      
+
+      <!-- Pestaña de Inmuebles -->
+      <div id="inmuebles" class="tab-content">
+        <div class="board">
+          <div class="board-header">
+            <h2>Inmuebles del Remate</h2>
+          </div>
+          <div class="board-table">
+            <table>
               <thead>
-                  <tr>
-                      <th>PARTIDA REGISTRAL</th>
-                      <th>TIPO INMUEBLE</th>
-                      <th>DIRECCIÓN</th>
-                      <th>CARGA Y/O GRAVAMEN</th>
-                      <th>PORCENTAJE A REMATAR</th>
-                  </tr>
+                <tr>
+                  <th>PARTIDA REGISTRAL</th>
+                  <th>TIPO INMUEBLE</th>
+                  <th>DIRECCIÓN</th>
+                  <th>CARGA Y/O GRAVAMEN</th>
+                  <th>PORCENTAJE A REMATAR</th>
+                </tr>
               </thead>
               <tbody>
-                  <% liveData.forEach(auction => { %>
-                      <% auction.inmuebles.forEach(inmueble => { %>
-                          <tr>
-                              <td><%= inmueble.partida_registral %></td>
-                              <td><%= inmueble.tipo_inmueble %></td>
-                              <td><%= inmueble.direccion %></td>
-                              <td><%= inmueble.carga_ogravamen %></td>
-                              <td><%= inmueble.porcentaje_rematar %>%</td>
-                          </tr>
-                      <% }); %>
-                  <% }); %>
+                <% liveData.forEach(auction => { %>
+                <% auction.inmuebles.forEach(inmueble => { %>
+                <tr>
+                  <td><%= inmueble.partida_registral %></td>
+                  <td><%= inmueble.tipo_inmueble %></td>
+                  <td><%= inmueble.direccion %></td>
+                  <td><%= inmueble.carga_ogravamen %></td>
+                  <td><%= inmueble.porcentaje_rematar %>%</td>
+                </tr>
+                <% }); %>
+                <% }); %>
               </tbody>
-          </table>
+            </table>
+          </div>
+        </div>
       </div>
-  </div>
-</div>
 
 
-        <!-- Pestaña de Cronograma -->
-<div id="cronograma" class="tab-content">
-  <div class="board">
-      <div class="board-header">
-          <h2>Cronograma del Remate</h2>
-      </div>
-      <div class="board-table">
-          <table>
+      <!-- Pestaña de Cronograma -->
+      <div id="cronograma" class="tab-content">
+        <div class="board">
+          <div class="board-header">
+            <h2>Cronograma del Remate</h2>
+          </div>
+          <div class="board-table">
+            <table>
               <thead>
-                  <tr>
-                      <th>N°</th>
-                      <th>FASE</th>
-                      <th>FECHA INICIO</th>
-                      <th>FECHA FIN</th>
-                  </tr>
+                <tr>
+                  <th>N°</th>
+                  <th>FASE</th>
+                  <th>FECHA INICIO</th>
+                  <th>FECHA FIN</th>
+                </tr>
               </thead>
               <tbody>
-                  <% liveData.forEach(auction => { %>
-                      <% auction.cronograma.forEach((fase, index) => { %>
-                          <tr>
-                              <td><%= index + 1 %></td>
-                              <td><%= fase.actividad %></td>
-                              <td><%= fase.fecha_actividad %></td>
-                              <td><%= fase.fecha_actividad %></td>
-                          </tr>
-                      <% }); %>
-                  <% }); %>
+                <% liveData.forEach(auction => { %>
+                <% auction.cronograma.forEach((fase, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= fase.actividad %></td>
+                  <td><%= fase.fecha_actividad %></td>
+                  <td><%= fase.fecha_actividad %></td>
+                </tr>
+                <% }); %>
+                <% }); %>
               </tbody>
-          </table>
+            </table>
+          </div>
+        </div>
       </div>
-  </div>
-</div>
 
-<!-- particulas  -->
-<!-- script particulas live -->
-<script type="module" src="/js/componentes/network.live.js"></script>
-<link rel="stylesheet" href="/css/live/live.css">
+      <!-- Diseño live -->
+      <link rel="stylesheet" href="/css/live/live.css">
 
-<script type="module">
-  import {
-    NetworkAnimationL
-  } from '../../js/componentes/network.live.js';
-  const canvas = document.getElementById("particleCanvas");
-  const networkAnimationL = new NetworkAnimationL(canvas);
+      <!-- nabvar -->
+      <script>
+        let lastScrollTop = 0; // Posición previa del scroll
+        const header = document.getElementById('header'); // Encabezado
+        const propertyContainer = document.querySelector('.property-container'); // Contenedor de propiedades
 
-  document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        window.addEventListener('scroll', () => {
+          const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
+          // Desaparece al bajar el scroll
+          if (currentScrollTop > lastScrollTop && currentScrollTop > propertyContainer.offsetTop) {
+            header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
+            header.style.opacity = '0'; // Desvanece
+          } else {
+            // Aparece al subir el scroll
+            header.style.transform = 'translateY(0)'; // Vuelve a su posición
+            header.style.opacity = '1'; // Reaparece
+          }
 
-    try {
-      const response = await fetch('/auth/loginP', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  });
-</script>
+          lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+        });
+      </script>
 
 
-  <!-- nabvar -->
-
-  <script>
-    let lastScrollTop = 0; // Posición previa del scroll
-    const header = document.getElementById('header'); // Encabezado
-    const propertyContainer = document.querySelector('.property-container'); // Contenedor de propiedades
-  
-    window.addEventListener('scroll', () => {
-      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-  
-      // Desaparece al bajar el scroll
-      if (currentScrollTop > lastScrollTop && currentScrollTop > propertyContainer.offsetTop) {
-        header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
-        header.style.opacity = '0'; // Desvanece
-      } else {
-        // Aparece al subir el scroll
-        header.style.transform = 'translateY(0)'; // Vuelve a su posición
-        header.style.opacity = '1'; // Reaparece
-      }
-  
-      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
-    });
-  </script>
-  
-  
-  <!-- script live -->
-<script src="/js/script_live.js"></script>
+      <!-- script live -->
+      <script src="/js/script_live.js"></script>
 
 </body>
-</html>
 
+</html>

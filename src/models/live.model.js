@@ -50,6 +50,31 @@ class Live {
         return rows;
     }
 
+    static async getDetalles(remates_id) {
+        const query = `
+        SELECT
+            expediente,
+            distrito_judicial,
+            organo_juridiccional,
+            instancia,
+            juez,
+            especialista,
+            materia,
+            resolucion,
+            archivo,
+            convocatoria,
+            tasacion,
+            precio_base,
+            incremento_ofertas,
+            arancel,
+            oblase,
+            n_inscritos
+        FROM detalles
+        WHERE remates_id = ?`;
+        const [rows] = await db.execute(query, [remates_id]);
+        return rows[0]; // Asumimos que hay un solo registro de detalles por remate
+    }
+
     // Obtener detalles de una subasta por ID
     static async getById(id) {
         const query = "SELECT * FROM remajud.remates WHERE id = ?";

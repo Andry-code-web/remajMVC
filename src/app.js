@@ -59,6 +59,7 @@ app.use('/errores', require('./routes/errores.routes'));
 
 // Socket.IO
 let highestAmount = 0; // Variable global para el monto más alto
+const timers = {}; // Almacenar temporizadores por cada remate
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
@@ -77,12 +78,17 @@ io.on('connection', (socket) => {
 
       // Enviar los mensajes al cliente
       socket.emit('load-messages', messages);
+
+      // Emitir alerta inicial
+      const mensaje = `Bienvenido al remate ${remates_id}`;
+      socket.emit('site-alert', mensaje);
+
     } catch (error) {
       console.error('❌ Error al cargar mensajes persistentes:', error.message);
     }
   });
 
-  // Escuchar mensajes del cliente (ya está implementado)
+  // Escuchar mensajes del cliente
   socket.on('chat-message', async (msg) => {
     const { monto, usuarios_id, remates_id } = msg;
 
@@ -137,12 +143,29 @@ io.on('connection', (socket) => {
     }
   });
 
+  // Emitir alerta cuando finaliza la subasta
+  socket.on('start-auction-timer', (remates_id) => {
+    console.log(`⏳ Temporizador iniciado para remate ${remates_id}`);
+    if (timers[remates_id]) {
+      clearTimeout(timers[remates_id]);
+    }
+
+    timers[remates_id] = setTimeout(() => {
+      const mensaje = `La subasta ${remates_id} ha finalizado`;
+      io.to(remates_id).emit('auction-ended', mensaje);
+
+      // Emitir alerta al cliente
+      io.to(remates_id).emit('site-alert', mensaje);
+
+      console.log(`⏳ Subasta ${remates_id} finalizada`);
+    }, 30000); // 30 segundos
+  });
+
   // Evento de desconexión
   socket.on('disconnect', () => {
     console.log('🔴 Cliente desconectado:', socket.id);
   });
 });
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

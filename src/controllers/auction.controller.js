@@ -128,31 +128,36 @@ exports.submitMessage = async (req, res) => {
 exports.checkOpportunities = async (req, res) => {
   try {
     const userId = req.user?.id;
+    const auctionId = req.body.auctionId; // El auctionId es pasado en el body
 
     if (!userId) {
       return res.status(401).json({ message: 'Usuario no autorizado' });
     }
 
-    const [rows] = await db.execute(
-      'SELECT oportunidades FROM usuarios WHERE id = ?',
+    const [userRows] = await db.execute(
+      'SELECT usuario_validado FROM usuarios WHERE id = ?',
       [userId]
     );
 
-    if (rows.length === 0) {
+    if (userRows.length === 0) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const user = rows[0];
-    if (user.oportunidades <= 0) {
-      return res.status(400).json({ message: 'No tienes oportunidades' });
+    const user = userRows[0];
+
+    // Verificar si el usuario está validado para el remate
+    if (user.usuario_validado !== auctionId) {
+      return res.status(403).json({ message: 'No estás validado para este remate' });
     }
 
+    // Si el usuario está validado, continuar sin problemas
     res.json({ success: true });
   } catch (error) {
-    console.error('Error al verificar oportunidades:', error);
-    res.status(500).json({ message: 'Error al verificar oportunidades' });
+    console.error('Error al verificar validación:', error);
+    res.status(500).json({ message: 'Error al verificar validación' });
   }
 };
+
 
 exports.getTopBids = async (req, res) => {
   try {

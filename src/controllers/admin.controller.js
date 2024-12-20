@@ -40,6 +40,9 @@ exports.loginAdmin = async (req, res) => {
         maxAge: 3600000 // 1 hora
       });
 
+      // Establecer el ID del usuario en la sesión
+      req.session.userId = usuario.id;
+
       res.redirect('/admin/index');
     } else {
       req.flash('error', 'Datos incorrectos');
@@ -85,6 +88,11 @@ exports.crearRemate = async (req, res) => {
       balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
     } = req.body;
 
+    // Verifica que req.session.userId esté definido
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Usuario no autenticado" });
+    }
+
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
@@ -109,7 +117,6 @@ exports.crearRemate = async (req, res) => {
     res.status(500).json({ message: "Hubo un problema al crear el remate" });
   }
 };
-
 
 // Actualizar un remate existente
 exports.updateRemate = async (req, res) => {

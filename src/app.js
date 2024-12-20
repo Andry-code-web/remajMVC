@@ -57,20 +57,16 @@ app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
 
-app.get('/unauthorized', (req, res) => {
-  res.render('unauthorized/unauthorized');
-});
-
 // Socket.IO
-let highestAmount = 0; 
-const timers = {}; 
+let highestAmount = 0;
+const timers = {};
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
   // Escuchar evento para unirse a una sala específica
   socket.on('join-auction', async (remates_id) => {
-    socket.join(remates_id); 
+    socket.join(remates_id);
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {

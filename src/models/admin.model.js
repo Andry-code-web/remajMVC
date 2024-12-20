@@ -77,8 +77,8 @@ const getImagenesInmuebles = async () => {
 
 // Crear un nuevo remate
 const createRemate = async (datosRemate) => {
-    const query = `INSERT INTO remates 
-(ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera, 
+    const query = `INSERT INTO remates
+(ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
  balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, usuario_admin_id)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 

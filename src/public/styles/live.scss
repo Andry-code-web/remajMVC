@@ -1,340 +1,338 @@
 @use 'variables' as *;
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
 
 /* Particulas */
 #particleCanvas {
-    background-color: $bg-dark;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
+  background-color: $bg-dark;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 #header {
-    color: white;
+  color: white;
 }
 
 // Contenedor principal
 .property-container {
-    padding: 2rem 1rem;
-    max-width: 1600px;
-    margin: 0 auto;
+  padding: 2rem 1rem;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 // Grid de propiedades
 .property-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 100%;
+  margin-top: 6rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 100%;
 }
 
 // Tarjeta de propiedad
 .property-card {
-    background: white;
-    border-radius: 12px;
+    background: $glass-bg;
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 4px 20px $shadow-color;
-    transition: $card-transition;
-    opacity: 0;
+    transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
+                0 0 0 2px rgb(190, 190, 190),
+                0.3em 0.3em 1em rgba(0,0,0,0.3);
     text-align: center;
-    border: 1px solid $border-color;
-    animation: slideIn 0.8s forwards; // Aumentado a 0.8s para reducir la velocidad
     
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      border-radius: 15px;
     }
+  }
 
-    &:nth-child(4n+1),
-    &:nth-child(4n+2) {
-        transform: translateX(-50px);
-    }
-
-    &:nth-child(4n+3),
-    &:nth-child(4n) {
-        transform: translateX(50px);
-    }
-}
-
-@keyframes slideIn {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.property-image-container {
+  position: relative;
+  overflow: hidden;
 }
 
 .property-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.property-card:hover .property-image {
+  transform: scale(1.1);
 }
 
 .property-info {
-    padding: 1.5rem;
-    
-    h2 {
-        color: $text-dark;
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-    
-    p {
-        color: $accent-color;
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
+  padding: 1.5rem;
+  
+  h2 {
+    color: $text-primary;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    color: $primary-color;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .property-stats {
-    display: flex;
-    justify-content: space-around;
-    margin: 1rem 0;
-    color: $text-dark;
-    font-size: 0.875rem;
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem 0;
+  color: $text-secondary;
+  font-size: 0.8rem;
 }
 
 // Botones de la tarjeta
 .property-actions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    padding: 0 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
 }
 
 // Estilo común para botones de tarjeta y modal
 .card-button, .tab-button {
-    position: relative;
-    padding: 0.75rem 1rem;
-    background: white;
-    color: $text-dark;
-    border: 1px solid $border-color;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: rgba($bg-light, 0.2);
+  color: $glow-black;
+  border: 1px solid $input-border;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  backdrop-filter: blur(5px);
+  
+  svg {
+    margin-right: 3px;
+    font-size: 16px;
+    transition: all 0.4s ease-in;
+  }
+  
+  &:hover {
+    background: rgba($glass-bg, 0.3);
+    color: $text-primary;
+    border-color: $bg-dark;
+    transform: translateY(-2px);
     
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: -100%;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, $accent-color, transparent);
-        animation: line-slide 2s linear infinite;
+    svg {
+      transform: translateX(-3px);
     }
-    
-    &:hover {
-        background: $accent-color;
-        color: white;
-        border-color: $accent-color;
-    }
-}
-
-@keyframes line-slide {
-    0% {
-        left: -100%;
-    }
-    50%, 100% {
-        left: 100%;
-    }
+  }
 }
 
 // Modal
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba($bg-dark, 0.8);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($bg-dark, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content {
-    background: $bg-light;
-    border-radius: 12px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 800px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalSlideIn 0.3s ease;
-    border: 1px solid $border-color;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: $bg-light;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s ease;
+  border: 1px solid $input-border;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 // Botones del modal
 .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid $border-color;
-    padding-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $input-border;
+  padding-bottom: 1rem;
 }
 
 .tab-button {
-    border: none;
-    background: transparent;
-    
-    &.active {
-        color: $accent-color;
-        font-weight: 600;
-    }
+  border: none;
+  background: transparent;
+  
+  &.active {
+    color: $primary-color;
+    font-weight: 600;
+  }
 }
 
 .tab-content {
-    display: none;
-    
-    &.active {
-        display: block;
-    }
+  display: none;
+  
+  &.active {
+    display: block;
+  }
 }
 
 // Tabla
 .board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  
+  table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    
-    table {
-        width: 100%;
-    }
-    
-    th {
-        background: $bg-dark;
-        color: $accent-color;
-        padding: 1rem;
-        text-align: left;
-        font-weight: 600;
-        border-bottom: 2px solid $accent-color;
-    }
-    
-    td {
-        padding: 1rem;
-        border-bottom: 1px solid $border-color;
-    }
-    
-    tr:hover {
-        background: rgba($accent-color, 0.05);
-    }
+  }
+  
+  th {
+    background: $bg-light;
+    color: $bg-dark;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid $glass-effect;
+  }
+  
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid $glass-bg;
+    color: $bg-dark;
+  }
+  
+  tr:hover {
+    background: rgba($primary-color, 0.05);
+  }
 }
 
 // Botón de cerrar
 .close-button {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: $accent-color;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    
-    &:hover {
-        background: rgba($accent-color, 0.1);
-        transform: rotate(90deg);
-    }
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: $text-primary;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  z-index: 10;
+  
+  &:hover {
+    background: rgba($primary-color, 0.1);
+    transform: rotate(90deg);
+  }
 }
 
 // Detalles del tracking
 .tracking-section {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+  
+  h3 {
+    color: $text-primary;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
     
-    h3 {
-        color: $accent-color;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        
-        .red-dot {
-            width: 8px;
-            height: 8px;
-            background: $accent-color;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            display: inline-block;
-        }
+    .red-dot {
+      width: 8px;
+      height: 8px;
+      background: $primary-color;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      display: inline-block;
     }
+  }
 }
 
 .tracking-row, .detail-row {
-    display: flex;
-    margin-bottom: 0.5rem;
-    
-    strong {
-        min-width: 150px;
-        color: $text-dark;
-    }
-    
-    span {
-        color: $text-light;
-    }
+  display: flex;
+  margin-bottom: 0.5rem;
+  
+  strong {
+    min-width: 150px;
+    color: $text-primary;
+  }
+  
+  span {
+    color: $text-secondary;
+  }
 }
 
 // Detalles
 .details-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
 // Animaciones
 @keyframes modalSlideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 // Responsive
-@media (max-width: 1024px) {
-    .property-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .details-container {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 1200px) {
+  .property-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .property-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-    .property-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tabs {
-        flex-wrap: wrap;
-    }
-    
-    .tab-button {
-        flex: 1 1 auto;
-    }
-    
-    .modal-content {
-        padding: 1rem;
-        width: 95%;
-    }
+  .property-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    flex: 1 1 auto;
+  }
+  
+  .modal-content {
+    padding: 1rem;
+    width: 95%;
+  }
+  
+  .details-container {
+    grid-template-columns: 1fr;
+  }
 }
+

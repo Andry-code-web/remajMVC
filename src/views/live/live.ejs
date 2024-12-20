@@ -14,17 +14,18 @@
 </head>
 
 <body>
+
   <!-- COMPONENTE HEADER -->
   <%- include('../partials/navbar') %>
 
   <!-- live_Tarjeta  -->
   <section class="property-container">
     <div class="property-grid">
-      <canvas id="particleCanvas"></canvas>
-
       <% liveData.forEach((auction, index) => { %>
-      <div class="property-card <%= index % 4 < 2 ? 'slide-left' : 'slide-right' %>">
-        <img src="data:image/png;base64,<%= auction.imagen %>" alt="Imagen de propiedad" class="property-image">
+      <div class="property-card">
+        <div class="property-image-container">
+          <img src="data:image/png;base64,<%= auction.imagen %>" alt="Imagen de propiedad" class="property-image">
+        </div>
         <div class="property-info">
           <h2><%= auction.ubicacion %></h2>
           <p>USD$ <%= auction.precios %></p>
@@ -34,12 +35,15 @@
           </div>
           <div class="property-actions">
             <button class="card-button" data-action="tracking">
+              <a href="en_vivo/detalles/<%= auction.detalles %>"></a>
               <p>Seguimiento</p>
             </button>
             <button class="card-button" data-action="open-details">
+              <a href=""></a>
               <p>Detalles</p>
             </button>
             <button class="card-button" data-action="notice">
+              <a href=""></a>
               <p>Aviso</p>
             </button>
           </div>
@@ -51,49 +55,6 @@
 
 
 
-  <!-- Modal de Seguimiento -->
-  <div id="trackingModal" class="modal">
-    <div class="modal-content">
-      <button class="close-button">&times;</button>
-      <div class="tracking-section">
-        <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
-        <div class="tracking-row">
-          <strong>N° Expediente:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Distrito judicial:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Instancia:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Especialidad:</strong> <span>undefined</span>
-        </div>
-      </div>
-
-      <div class="tracking-section">
-        <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
-        <div class="tracking-row">
-          <strong>N° Convocatoria:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Fecha de registro:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Procesado por:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Fase convocatoria:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>Estado convocatoria:</strong> <span>undefined</span>
-        </div>
-        <div class="tracking-row">
-          <strong>¿Reanudado?:</strong> <span>No</span>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- Modal de detalles -->
   <div id="detailsModal" class="modal">
     <div class="modal-content">
@@ -114,29 +75,27 @@
       <!-- Pestaña de detalles -->
       <div id="detalles" class="tab-content active">
         <div class="details-container">
-          <% liveData.forEach(auction => { %>
-          <% if (auction.detalles) { %>
+          <% liveData.forEach((auction) => { %>
+          <% if (auction.detalles && auction.detalles.length > 0) { %>
+          <% auction.detalles.forEach(detalle => { %>
           <div class="details-column">
-            <div class="detail-row"><strong>Expediente:</strong> <%= auction.detalles.expediente %></div>
-            <div class="detail-row"><strong>Distrito Judicial:</strong> <%= auction.detalles.distrito_judicial %></div>
-            <div class="detail-row"><strong>Órgano Jurisdiccional:</strong> <%= auction.detalles.organo_juridiccional %></div>
-            <div class="detail-row"><strong>Instancia:</strong> <%= auction.detalles.instancia %></div>
-            <div class="detail-row"><strong>Juez:</strong> <%= auction.detalles.juez %></div>
-            <div class="detail-row"><strong>Especialista:</strong> <%= auction.detalles.especialista %></div>
-          </div>
-          <div class="details-column">
-            <div class="detail-row"><strong>Materia:</strong> <%= auction.detalles.materia %></div>
-            <div class="detail-row"><strong>Resolución:</strong> <%= auction.detalles.resolucion %></div>
-            <div class="detail-row"><strong>Archivo:</strong> <%= auction.detalles.archivo %></div>
-            <div class="detail-row"><strong>Convocatoria:</strong> <%= auction.detalles.convocatoria %></div>
-            <div class="detail-row"><strong>Tasación:</strong> <%= auction.detalles.tasacion %></div>
-            <div class="detail-row"><strong>Precio Base:</strong> <%= auction.detalles.precio_base %></div>
-          </div>
+            <div class="detail-row"><strong>Expediente:</strong> <%= detalle.expediente %></div>
+            <div class="detail-row"><strong>Distrito Judicial:</strong> <%= detalle.distrito_judicial %></div>
+            <div class="detail-row"><strong>Órgano Jurisdiccional:</strong> <%= detalle.organo_juridiccional %></div>
+            <div class="detail-row"><strong>Instancia:</strong> <%= detalle.instancia %></div>
+            <div class="detail-row"><strong>Juez:</strong> <%= detalle.juez %></div>
+            <div class="detail-row"><strong>Especialista:</strong> <%= detalle.especialista %></div>
+         </div>
+          <% }); %>
+          <% } else { %>
+          <p>No hay detalles disponibles para esta subasta.</p>
           <% } %>
+
           <% }); %>
         </div>
       </div>
-      
+
+
 
       <!-- Pestaña de Inmuebles -->
       <div id="inmuebles" class="tab-content">
@@ -157,6 +116,7 @@
               </thead>
               <tbody>
                 <% liveData.forEach(auction => { %>
+                <% if (auction.inmuebles && auction.inmuebles.length > 0) { %>
                 <% auction.inmuebles.forEach(inmueble => { %>
                 <tr>
                   <td><%= inmueble.partida_registral %></td>
@@ -166,12 +126,18 @@
                   <td><%= inmueble.porcentaje_rematar %>%</td>
                 </tr>
                 <% }); %>
+                <% } else { %>
+                <tr>
+                  <td colspan="5">No hay inmuebles para este remate.</td>
+                </tr>
+                <% } %>
                 <% }); %>
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
 
 
       <!-- Pestaña de Cronograma -->
@@ -206,36 +172,82 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Diseño live -->
-      <link rel="stylesheet" href="/css/live/live.css">
+<!-- Modal de Seguimiento -->
+<div id="trackingModal" class="modal">
+  <div class="modal-content">
+    <button class="close-button">&times;</button>
+    <div class="tracking-section">
+      <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
+      <div class="tracking-row">
+        <strong>N° Expediente:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Distrito judicial:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Instancia:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Especialidad:</strong> <span>undefined</span>
+      </div>
+    </div>
 
-      <!-- nabvar -->
-      <script>
-        let lastScrollTop = 0; // Posición previa del scroll
-        const header = document.getElementById('header'); // Encabezado
-        const propertyContainer = document.querySelector('.property-container'); // Contenedor de propiedades
+    <div class="tracking-section">
+      <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
+      <div class="tracking-row">
+        <strong>N° Convocatoria:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Fecha de registro:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Procesado por:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Fase convocatoria:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>Estado convocatoria:</strong> <span>undefined</span>
+      </div>
+      <div class="tracking-row">
+        <strong>¿Reanudado?:</strong> <span>No</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-        window.addEventListener('scroll', () => {
-          const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+  <!-- Diseño live -->
+  <link rel="stylesheet" href="/css/live/live.css">
 
-          // Desaparece al bajar el scroll
-          if (currentScrollTop > lastScrollTop && currentScrollTop > propertyContainer.offsetTop) {
-            header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
-            header.style.opacity = '0'; // Desvanece
-          } else {
-            // Aparece al subir el scroll
-            header.style.transform = 'translateY(0)'; // Vuelve a su posición
-            header.style.opacity = '1'; // Reaparece
-          }
+  <!-- nabvar -->
+  <script>
+    let lastScrollTop = 0; // Posición previa del scroll
+    const header = document.getElementById('header'); // Encabezado
+    const propertyContainer = document.querySelector('.property-container'); // Contenedor de propiedades
 
-          lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
-        });
-      </script>
+    window.addEventListener('scroll', () => {
+      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      // Desaparece al bajar el scroll
+      if (currentScrollTop > lastScrollTop && currentScrollTop > propertyContainer.offsetTop) {
+        header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
+        header.style.opacity = '0'; // Desvanece
+      } else {
+        // Aparece al subir el scroll
+        header.style.transform = 'translateY(0)'; // Vuelve a su posición
+        header.style.opacity = '1'; // Reaparece
+      }
+
+      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+    });
+  </script>
 
 
-      <!-- script live -->
-      <script src="/js/script_live.js"></script>
+  <!-- script live -->
+  <script src="/js/script_live.js"></script>
 
 </body>
 

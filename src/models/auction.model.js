@@ -35,4 +35,6 @@ class Auction {
   }
 }
 
+
+
 module.exports = Auction;

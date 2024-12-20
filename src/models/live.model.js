@@ -2,7 +2,6 @@
 const db = require('../config/database');
 
 class Live {
-    // Obtener todas las subastas
     static async getAll() {
         const query = "SELECT * FROM remajud.remates WHERE estado = 'en_curso'";
         return await db.execute(query).then(([rows]) => rows);
@@ -26,64 +25,29 @@ class Live {
     // Obtener inmuebles de un remate específico
     static async getInmuebles(remates_id) {
         const query = `
-        SELECT
-            partida_registral,
-            tipo_inmueble,
-            direccion,
-            carga_ogravamen,
-            porcentaje_rematar
-        FROM inmuebles
-        WHERE remates_id = ?`;
+        SELECT * FROM inmuebles WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
-
+    
     // Obtener cronograma de un remate específico
     static async getCronograma(remates_id) {
         const query = `
-        SELECT
-            actividad,
-            fecha_actividad
-        FROM cronograma
-        WHERE remates_id = ?`;
+        SELECT * FROM cronograma WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
 
+    // Obtener detalles de un remate específico
     static async getDetalles(remates_id) {
         const query = `
-        SELECT
-            expediente,
-            distrito_judicial,
-            organo_juridiccional,
-            instancia,
-            juez,
-            especialista,
-            materia,
-            resolucion,
-            archivo,
-            convocatoria,
-            tasacion,
-            precio_base,
-            incremento_ofertas,
-            arancel,
-            oblase,
-            n_inscritos
-        FROM detalles
-        WHERE remates_id = ?`;
+        SELECT * FROM detalles WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
-        return rows[0]; // Asumimos que hay un solo registro de detalles por remate
+        return rows;  // Devuelve todos los detalles, no solo el primero
     }
+    
 
-    // Obtener detalles de una subasta por ID
-    static async getById(id) {
-        const query = "SELECT * FROM remajud.remates WHERE id = ?";
-        const [rows] = await db.execute(query, [id]);
-        if (!rows.length) {
-            throw new Error(`No se encontró la subasta con ID ${id}`);
-        }
-        return rows[0];
-    }
+
 }
 
 module.exports = Live;

@@ -21,24 +21,25 @@ function initializeApp() {
     setupTabs();
 }
 
-// Configuración de botones
+// Configuración de botones con delegación de eventos
 function setupButtons(modals) {
-    // Botón de seguimiento
-    const trackingBtn = document.querySelector('[data-action="tracking"]');
-    trackingBtn?.addEventListener('click', () => {
-        modals.tracking.style.display = 'flex';
-    });
+    const propertyContainer = document.querySelector('.property-container');
+    
+    propertyContainer?.addEventListener('click', (e) => {
+        const button = e.target.closest('.card-button');
+        if (!button) return;
 
-    // Botón de detalles
-    const detailsBtn = document.querySelector('[data-action="open-details"]');
-    detailsBtn?.addEventListener('click', () => {
-        modals.details.style.display = 'flex';
-        showTab('detalles');
+        const action = button.getAttribute('data-action');
+        
+        if (action === 'tracking') {
+            modals.tracking.style.display = 'flex';
+        } else if (action === 'open-details') {
+            modals.details.style.display = 'flex';
+            showTab('detalles');
+        } else if (action === 'notice') {
+            downloadPDF();
+        }
     });
-
-    // Botón de aviso (PDF)
-    const noticeBtn = document.querySelector('[data-action="notice"]');
-    noticeBtn?.addEventListener('click', downloadPDF);
 }
 
 // Configuración de modales
@@ -105,53 +106,6 @@ function downloadPDF() {
 function animateCards() {
     const cards = document.querySelectorAll('.property-card');
     cards.forEach((card, index) => {
-        // Determinar si la tarjeta está en la mitad izquierda o derecha
-        const isLeftSide = index % 4 < 2;
-        
-        // Configurar animación inicial
-        card.style.opacity = '0';
-        card.style.transform = `translateX(${isLeftSide ? '-50px' : '50px'})`;
-        
-        // Aplicar animación con retraso
-        setTimeout(() => {
-            card.style.transition = 'all 0.8s ease-out';
-            card.style.opacity = '1';
-            card.style.transform = 'translateX(0)';
-        }, 100 * index);
+        card.style.animationDelay = `${index * 0.1}s`;
     });
 }
-// Función principal de inicialización
-function initializeApp() {
-    const modals = {
-        tracking: document.getElementById('trackingModal'),
-        details: document.getElementById('detailsModal')
-    };
-
-    // Configurar botones
-    setupButtons(modals);
-    
-    // Configurar modales
-    setupModals(modals);
-    
-    // Configurar pestañas
-    setupTabs();
-}
-
-// Configuración de botones con delegación de eventos
-function setupButtons(modals) {
-    const propertyContainer = document.querySelector('.property-container');
-    
-    propertyContainer?.addEventListener('click', (e) => {
-        const action = e.target.getAttribute('data-action');
-        
-        if (action === 'tracking') {
-            modals.tracking.style.display = 'flex';
-        } else if (action === 'open-details') {
-            modals.details.style.display = 'flex';
-            showTab('detalles');
-        } else if (action === 'notice') {
-            downloadPDF();
-        }
-    });
-}
-

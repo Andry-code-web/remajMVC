@@ -24,14 +24,14 @@
       <h2 class="section-title">Sobre la Propiedad</h2>
       <!-- Mostrar nombre del usuario si está autenticado -->
       <% if (user && user?.usuario) { %>
-        <p>Usuario: <%= user?.usuario %>
-        </p>
-        <% } else { %>
-          <p>Usuario: Anónimo</p>
-          <% } %>
-            <p>
-              <%= auction.descripcion %>
-            </p>
+      <p>Usuario: <%= user?.usuario %>
+      </p>
+      <% } else { %>
+      <p>Usuario: Anónimo</p>
+      <% } %>
+      <p>
+        <%= auction.descripcion %>
+      </p>
     </div>
   </div>
   <div class="sidebar" id="chatdesubastas">
@@ -87,8 +87,8 @@
     </div>
   </div>
 </div>
-</div>
-</section>
+
+
 <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
 <link rel="stylesheet" href="/css/chatsubastas/chatsubastas.css">
 <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
@@ -97,7 +97,6 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-
   // Carrusel de imágenes
   const carousel = document.querySelector('.carousel-inner');
   const items = carousel.querySelectorAll('.carousel-item');

@@ -1,30 +1,36 @@
+<!-- vistas/remates/filtrados.ejs -->
+
 <div class="banner_remates2" id="banner_remates">
     <div id="banner" class="overlay">
-        <h1>REMATES</h1>
+      <h1>REMATES</h1>
     </div>
-</div>
-
-
-<div class="prueva1">
-    <!-- tarjeta v1 -->
-
-    <div class="card">
-
+  </div>
+  
+  <div class="prueva1">
+    <!-- Iteramos sobre los remates para renderizar cada tarjeta -->
+    <% remates.forEach(remate => { %>
+      <div class="card">
         <div class="image-container">
-            <img class="foto_casa"
-                src="https://uiparadox.co.uk/public/templates/realtor/v2/assets/media/properties/property-1.png"
-                alt="House Image">
-            <a href="#" class="etiqueta_imagen">mas informacion</a>
-            <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="">
-            <h6 class="info_img_tex">en venta</h6>
+          <!-- Imagen del remate -->
+          <img class="foto_casa" src="<%= remate.imagen %>" alt="<%= remate.titulo %>">
+          
+          <!-- Enlace para más información -->
+          <a href="/remates/<%= remate.id %>" class="etiqueta_imagen">más información</a>
+          
+          <!-- Imagen de estado de la propiedad -->
+          <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info">
+          <h6 class="info_img_tex"><%= remate.estado %></h6>
         </div>
-        <a class="enlaces_carta" href="#">
-            <div class="card-content">
-                <h2>casa de campo</h2>
-                <p class="address">110 hola mundo, nose donde queda</p>
-                <p class="price">$90,000</p>
-                <p class="details">4 habitacion | 2 Baños | 360 metros</p>
-            </div>
+        <a class="enlaces_carta" href="/remates/<%= remate.id %>">
+          <div class="card-content">
+            <!-- Título y descripción del remate -->
+            <h2><%= remate.titulo %></h2>
+            <p class="address"><%= remate.direccion %></p>
+            <p class="price">$<%= remate.precio %></p>
+            <p class="details"><%= remate.habitaciones %> habitaciones | <%= remate.banos %> baños | <%= remate.area %> metros</p>
+          </div>
         </a>
-    </div>
-
+      </div>
+    <% }) %>
+  </div>
+  

@@ -8,7 +8,7 @@
         <p>_____BIENVENIDO A REMAJUD_____</p>
         <h1>Nuestro Compromiso es que Encuentres tu remate.</h1>
       </div>
-      <form action="" method="post">
+      <form action="/filtrar" method="post">
 
         <div class="contenedor_filtro_items">
           <div class="items_filtro">
@@ -41,17 +41,27 @@
           </div>
           <div class="items_filtro">
             <select name="departamento" id="departamento">
-              <option value="">Seleccione un departamento</option>
+              <option value="">Seleccione un distrito</option>
             </select>
           </div>
           <div class="items_filtro">
-            <select name="precio" id="">
-              <option value="">Eliga el monto</option>
-              <option value="">$10000 - $15000</option>
-              <option value="">$20000 - $30000</option>
-              <option value="">$30000 - $50000</option>
+            <select name="precio_min" id="precio_min">
+              <option value="">Elija el monto mínimo</option>
+              <option value="10000">10,000</option>
+              <option value="20000">20,000</option>
+              <option value="30000">30,000</option>
             </select>
           </div>
+      
+          <div class="items_filtro">
+            <select name="precio_max" id="precio_max">
+              <option value="">Elija el monto máximo</option>
+              <option value="15000">15,000</option>
+              <option value="30000">30,000</option>
+              <option value="50000">50,000</option>
+            </select>
+          </div>
+
           <div class="btn_filtrar">
             <button type="submit">
               Buscar
@@ -129,7 +139,7 @@
             <% if (remate.imagen) { %>
             <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>" alt="Imagen del inmueble" class="imagen-propiedad">
             <% } else { %>
-            <img src="/img/default.jpg" alt="Imagen no disponible" class="imagen-propiedad">
+            <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
             <% } %>
             <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
         </div>

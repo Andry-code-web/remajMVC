@@ -6,7 +6,7 @@ const db = require('../config/database'); // Asegúrate de tener acceso a la bas
 exports.getAllAuctions = async (req, res) => {
   try {
     const auctions = await Auction.getAll();
-    res.render('layouts/main', { 
+    res.render('layouts/main', {
       content: 'auctions/mapa',
       auctions
     });
@@ -27,14 +27,13 @@ exports.getAuctionDetails = async (req, res) => {
       });
     }
 
-    // Asignar el estado de la subasta para pasarlo a la vista
     const auctionState = auction.estado || 'activo';
 
+    // Renderizamos la vista con la subasta y el estado, el usuario estará en res.locals
     res.render('layouts/main', {
       auction,
-      auctionState,  // Aquí pasamos el estado de la subasta
-      content: 'auctions/details',
-      user: req.user // Asegúrate de pasar el usuario a la vista
+      auctionState,
+      content: 'auctions/details'  // Vista de detalle específica para esta subasta
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
@@ -157,7 +156,6 @@ exports.checkOpportunities = async (req, res) => {
     res.status(500).json({ message: 'Error al verificar validación' });
   }
 };
-
 
 exports.getTopBids = async (req, res) => {
   try {

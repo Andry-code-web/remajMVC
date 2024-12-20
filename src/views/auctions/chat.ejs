@@ -156,6 +156,7 @@
     <%- include('../layouts/Metodopago') %>
   </div>
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const btnUnirse = document.getElementById('unirse');
@@ -348,7 +349,7 @@
 
   // Variables
   let highestAmount = 0;
-  const auctionId = <% - auction.id %>;
+  const auctionId = <%- auction.id %>;
   const userId = "<%- user?.id || '0' %>";
   const userName = "<%- user?.usuario || 'Anónimo' %>";
 

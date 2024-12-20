@@ -24,19 +24,17 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 exports.setUserLocals = (req, res, next) => {
-  // Check session first
   if (req.session && req.session.user) {
     res.locals.user = req.session.user;
     return next();
   }
 
-  // Then check JWT
   const token = req.cookies.jwt;
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
       res.locals.user = decoded;
-      req.session.user = decoded;
+      req.session.user = decoded; // Almacena en la sesión para solicitudes futuras
     } catch (err) {
       console.error('JWT verification failed:', err);
       res.locals.user = null;
@@ -47,3 +45,4 @@ exports.setUserLocals = (req, res, next) => {
 
   next();
 };
+

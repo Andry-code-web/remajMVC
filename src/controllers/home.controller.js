@@ -23,3 +23,31 @@ exports.getAllRemates = async (req, res) => {
         res.status(500).render('error', { error: error.message });
     }
 };
+
+
+exports.getFiltarRemates = async (req, res) => {
+    try {
+        const { categoria, ciudad, departamento, precio_min, precio_max } = req.query;  // Asegúrate de que la variable esté bien escrita
+
+        const rematesFiltrados = await Home.getFiltrarBanner({
+            categoria,
+            ciudad,
+            departamento,
+            montoMin: precio_min,
+            montoMax: precio_max  // Aquí se debe usar precio_max y no precionmax
+        });
+
+        if (rematesFiltrados.length === 0) {
+            return res.status(404).render('error', {
+                message: 'No se encontraron remates con esos filtros'
+            });
+        }
+
+        res.render('remates/index', {
+            remates: rematesFiltrados
+        });
+    } catch (error) {
+        console.error('Error al obtener los remates filtrados:', error);
+        res.status(500).render('error', { message: 'Error al filtrar los remates' });
+    }
+};

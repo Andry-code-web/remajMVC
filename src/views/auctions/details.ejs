@@ -23,8 +23,8 @@
     <div class="section">
       <h2 class="section-title">Sobre la Propiedad</h2>
       <!-- Mostrar nombre del usuario si está autenticado -->
-      <% if (user && user.username) { %>
-        <p>Usuario: <%= user.username %>
+      <% if (user && user?.usuario) { %>
+        <p>Usuario: <%= user?.usuario %>
         </p>
         <% } else { %>
           <p>Usuario: Anónimo</p>

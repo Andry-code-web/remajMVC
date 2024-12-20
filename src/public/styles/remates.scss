@@ -331,19 +331,20 @@ form {
     border-radius: 5px;
     text-align: center;
     font-weight: bold;
-}
-
-#timer-container {
+  }
+  
+  #timer-container {
     width: 100%;
     background-color: #e0e0e0;
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 10px;
-}
-
-#timer-bar {
+  }
+  
+  #timer-bar {
     height: 10px;
     width: 100%;
     background-color: #f43a3a;
     transition: width 1s linear;
-}
+  }
+  

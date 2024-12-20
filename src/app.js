@@ -29,7 +29,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 3600000, // 1 hora
+      maxAge: 3600000,
     },
   })
 );
@@ -62,15 +62,15 @@ app.get('/unauthorized', (req, res) => {
 });
 
 // Socket.IO
-let highestAmount = 0; // Variable global para el monto más alto
-const timers = {}; // Almacenar temporizadores por cada remate
+let highestAmount = 0; 
+const timers = {}; 
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
   // Escuchar evento para unirse a una sala específica
   socket.on('join-auction', async (remates_id) => {
-    socket.join(remates_id); // Cliente se une a una sala específica
+    socket.join(remates_id); 
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {

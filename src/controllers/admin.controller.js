@@ -92,7 +92,7 @@ exports.crearRemate = async (req, res) => {
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, 1
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad,
     ]);
 
     // Procesar imágenes y anexos

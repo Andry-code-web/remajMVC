@@ -5,14 +5,16 @@
 <link rel="stylesheet" href="/css/remates/remates.css">
 
 <div class="active-auction-card">
-  <div class="active-auction-header">
-    <div class="active-property-type">
-      <%= auction.categoria %>
+  <div class="auction-header">
+    <div class="auction-info">
+      <div class="auction-category">Incremento de:
+        <span class="auction-category-value">s/653</span>
+      </div>
+      <div class="auction-divider"></div>
+      <div class="auction-location">Precio base S/<%= auction.precios %></div>
     </div>
-    <h2 class="active-property-location">
-      <%= auction.ubicacion %>
-    </h2>
   </div>
+  
 
   <div class="active-tabs">
     <button class="active-tab active" data-tab="active-panel">Panel</button>
@@ -42,7 +44,7 @@
       </div>
 
       <div class="active-bid-controls">
-        <button class="active-join-button" id="unirse" data-auction-id="<%= auction.id %>">Unirse al remate</button>
+        <button class="active-join-button" id="unirse" data-auction-id="<%= auction.id %>">Unirse al remate N° <%= auction.id %></button>
       </div>
     </div>
 

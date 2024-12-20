@@ -199,8 +199,7 @@
                 <i class="bi bi-x"></i>
               </button>
             </div>
-            <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data"
-              onsubmit="guardarNuevoRemate(event)">
+            <form id="formNuevoRemate" action="/admin/nuevo-remate" method="POST" enctype="multipart/form-data">
               <div class="form-grid">
                 <div class="form-group">
                   <label for="ubicacion">
@@ -287,7 +286,7 @@
                   <input type="number" id="tamaño_propiedad" name="tamaño_propiedad" required>
                 </div>
               </div>
-
+      
               <div class="amenities-grid">
                 <div class="form-group">
                   <label for="pisina">
@@ -390,7 +389,7 @@
                   </select>
                 </div>
               </div>
-
+      
               <div class="form-group full-width">
                 <label for="descripcion">
                   <i class="bi bi-text-paragraph"></i>
@@ -398,26 +397,26 @@
                 </label>
                 <textarea id="descripcion" name="descripcion" required></textarea>
               </div>
-
+      
               <!-- Sección para subir imágenes -->
               <div class="subir_img">
                 <label for="file-upload" class="custom-file-upload">
-                  <i class="fas fa-upload"></i> Agregar una foto
+                  <i class="fas fa-upload"></i> Agrega una foto
                 </label>
                 <input type="file" id="file-upload" name="photo" accept="image/*" multiple>
               </div>
               <div id="image-preview">
                 <div id="image-preview-container"></div>
               </div>
-
+      
               <!-- Campo para subir anexos PDF -->
               <div class="subir_anexo">
                 <label for="anexo-upload" class="custom-file-upload">
-                  <i class="fas fa-file-upload"></i> Agregar un anexo (PDF)
+                  <i class="fas fa-file-upload"></i> Agrega un anexo (PDF)
                 </label>
                 <input type="file" id="anexo-upload" name="anexos" accept="application/pdf" multiple>
               </div>
-
+      
               <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevoRemate()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">

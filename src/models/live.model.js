@@ -29,7 +29,7 @@ class Live {
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
-    
+
     // Obtener cronograma de un remate específico
     static async getCronograma(remates_id) {
         const query = `
@@ -43,11 +43,17 @@ class Live {
         const query = `
         SELECT * FROM detalles WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
-        return rows;  // Devuelve todos los detalles, no solo el primero
+        return rows;
     }
-    
 
+
+    // Obtener seguimiento de un remate específico
+    static async getSeguimiento(remates_id) {
+        const query = `
+        SELECT * FROM seguimiento WHERE remates_id = ?`;
+        const [rows] = await db.execute(query, [remates_id]);
+        return rows;
+    }
 
 }
-
 module.exports = Live;

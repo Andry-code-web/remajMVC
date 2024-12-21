@@ -62,28 +62,25 @@ app.get('/unauthorized', (req, res) => {
 });
 
 // Socket.IO
-let highestAmount = 0; 
-const timers = {}; 
+let highestAmount = 0;
+const timers = {};
+const lastSentMessages = {}; // Guardará el último monto procesado por remate para evitar duplicados
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
-  // Escuchar evento para unirse a una sala específica
   socket.on('join-auction', async (remates_id) => {
-    socket.join(remates_id); 
+    socket.join(remates_id);
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {
-      // Recuperar los mensajes persistidos de la base de datos
       const [messages] = await db.execute(
         'SELECT m.monto, u.usuario, m.remates_id FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
         [remates_id]
       );
 
-      // Enviar los mensajes al cliente
       socket.emit('load-messages', messages);
 
-      // Emitir alerta inicial
       const mensaje = `Bienvenido al remate ${remates_id}`;
       socket.emit('site-alert', mensaje);
 
@@ -92,12 +89,10 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Escuchar mensajes del cliente
   socket.on('chat-message', async (msg) => {
     const { monto, usuarios_id, remates_id } = msg;
 
     try {
-      // Verificar si el remates_id existe en la tabla remates
       const [remateRows] = await db.execute('SELECT id FROM remates WHERE id = ?', [remates_id]);
       if (remateRows.length === 0) {
         socket.emit('error-message', 'El ID del remate no existe.');
@@ -105,7 +100,6 @@ io.on('connection', (socket) => {
         return;
       }
 
-      // Verificar si el usuario existe
       const [userRows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
       if (userRows.length === 0) {
         socket.emit('error-message', 'Usuario no encontrado');
@@ -115,61 +109,44 @@ io.on('connection', (socket) => {
 
       const usuarioNombre = userRows[0].usuario;
 
-      // Verificar si el monto es mayor al monto más alto para ese remate
       const [highestRow] = await db.execute(
         'SELECT IFNULL(MAX(monto), 0) as highestAmount FROM mensajes WHERE remates_id = ?',
         [remates_id]
       );
-      const highestAmount = highestRow[0].highestAmount;
+      const currentHighestAmount = highestRow[0].highestAmount;
 
-      if (monto > highestAmount) {
-        // Insertar el mensaje en la base de datos
+      // Verificamos si el monto ya fue procesado
+      if (lastSentMessages[remates_id] && lastSentMessages[remates_id] === monto) {
+        socket.emit('error-message', `Este monto ya ha sido enviado: USD$${monto}`);
+        return; // No enviar el mensaje si el monto ya fue enviado
+      }
+
+      // Solo se permite si la oferta es mayor que el monto más alto actual
+      if (monto > currentHighestAmount) {
         await db.execute(
           'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
           [monto, usuarios_id, remates_id]
         );
 
-        console.log('✅ Mensaje guardado en la base de datos');
+        // Guardar el monto como el último procesado para este remate
+        lastSentMessages[remates_id] = monto;
 
-        // Emitir mensaje a la sala correspondiente
         io.to(remates_id).emit('chat-message', {
           monto,
           usuario: usuarioNombre,
           remates_id,
         });
+
       } else {
-        socket.emit('error-message', `El monto debe ser mayor a USD$${highestAmount}`);
-        console.log(`❌ Monto rechazado: ${monto}. Debe ser mayor a ${highestAmount}`);
+        socket.emit('error-message', `El monto debe ser mayor a USD$${currentHighestAmount}`);
       }
     } catch (error) {
-      console.error('❌ Error al procesar el mensaje:', error.message);
       socket.emit('error-message', 'Ocurrió un error al procesar tu oferta');
+      console.error('❌ Error al procesar mensaje:', error);
     }
-  });
-
-  // Emitir alerta cuando finaliza la subasta
-  socket.on('start-auction-timer', (remates_id) => {
-    console.log(`⏳ Temporizador iniciado para remate ${remates_id}`);
-    if (timers[remates_id]) {
-      clearTimeout(timers[remates_id]);
-    }
-
-    timers[remates_id] = setTimeout(() => {
-      const mensaje = `La subasta ${remates_id} ha finalizado`;
-      io.to(remates_id).emit('auction-ended', mensaje);
-
-      // Emitir alerta al cliente
-      io.to(remates_id).emit('site-alert', mensaje);
-
-      console.log(`⏳ Subasta ${remates_id} finalizada`);
-    }, 30000); // 30 segundos
-  });
-
-  // Evento de desconexión
-  socket.on('disconnect', () => {
-    console.log('🔴 Cliente desconectado:', socket.id);
   });
 });
+
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

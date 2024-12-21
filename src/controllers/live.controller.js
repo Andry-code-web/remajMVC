@@ -16,12 +16,12 @@ exports.getAllLive = async (req, res) => {
           );
           return null;
         }
-
+    
         const inmuebles = await Live.getInmuebles(auction.id);
         const cronograma = await Live.getCronograma(auction.id);
-        const detalles = await Live.getDetalles(auction.id); // Aquí obtienes los detalles
+        const detalles = await Live.getDetalles(auction.id); 
         console.log(detalles);
-        
+    
         return {
           ...auction,
           imagen:
@@ -44,3 +44,6 @@ exports.getAllLive = async (req, res) => {
     res.status(500).render("error", { error: error.message });
   }
 };
+
+
+

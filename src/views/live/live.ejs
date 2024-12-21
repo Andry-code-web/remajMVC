@@ -36,18 +36,22 @@
             <span>Habitaciones: <%= auction.N_habitacion %></span>
           </div>
           <div class="property-actions">
-            <button class="card-button" data-action="tracking">
-              <a href="en_vivo/seguimiento/<%= auction.seguimiento %>"></a>
-              <p>Seguimiento</p>
-            </button>
-            <button class="card-button" data-action="open-details">
-              <a href="en_vivo/detalles/<%= auction.detalles %>"></a>
-              <p>Detalles</p>
-            </button>
-            <button class="card-button" data-action="notice">
-              <a href=""></a>
-              <p>Aviso</p>
-            </button>
+            <span>
+              <a href="en_vivo/seguimiento/<%= auction.id %>" class="card-button" data-action="tracking" id="seguimiento-<%= auction.id %>">
+                <span>Seguimiento</span>
+              </a>
+            </span>
+            <span>
+              <a href="en_vivo/detalles/<%= auction.id %>" class="card-button" data-action="open-details" id="detalles-<%= auction.id %>">
+                <span>Detalles</span>
+              </a>
+            </span>
+            <span>
+              <a href="en_vivo/aviso/<%= auction.id %>" class="card-button" data-action="notice" id="aviso-<%= auction.id %>">
+                <span>Aviso</span>
+              </a>
+            </span>
+
           </div>
         </div>
       </div>
@@ -57,22 +61,38 @@
 
 
 
+
   <!-- Modal de detalles -->
   <div id="detailsModal" class="modal">
     <div class="modal-content">
       <button class="close-button">&times;</button>
 
       <div class="tabs">
-        <button class="tab-button active" data-tab="detalles">
-          <p>Detalles</p>
-        </button>
-        <button class="tab-button" data-tab="inmuebles">
-          <p>Inmuebles</p>
-        </button>
-        <button class="tab-button" data-tab="cronograma">
-          <p>Cronograma</p>
-        </button>
+        <span>
+          <a class="tab-button active" data-tab="detalles">
+            <span>
+              Detalles
+            </span>
+          </a>
+        </span>
+        <span>
+          <a class="tab-button" data-tab="inmuebles">
+            <span>
+              Inmuebles
+            </span>
+          </a>
+        </span>
+        <span>
+          <a class="tab-button" data-tab="cronograma">
+            <span>
+              Cronograma
+            </span>
+          </a>
+        </span>
       </div>
+
+
+
 
       <!-- Pestaña de detalles -->
       <div id="detalles" class="tab-content active">
@@ -91,16 +111,16 @@
             <div class="detail-row"><strong>Resolución:</strong> <%= detalle.resolucion %></div>
             <div class="detail-row"><strong>Fecha Resolución:</strong> <%= detalle.fecha_resolucion %></div>
             <div class="detail-row"><strong>Archivo:</strong> <%= detalle.archivo %></div>
-         </div>
-            <div class="detail-row"><strong>Convocatoria:</strong> <%= detalle.convocatoria %></div>
-            <div class="detail-row"><strong>Tipo Cambio:</strong> <%= detalle.tipo_cambio%></div>
-            <div class="detail-row"><strong>Tasación:</strong> <%= detalle.tasacion %></div>
-            <div class="detail-row"><strong>Precio Base:</strong> <%= detalle.precio_base %></div>
-            <div class="detail-row"><strong>Incremento entre ofertas:</strong> <%= detalle.incremento_ofertas %></div>
-            <div class="detail-row"><strong>Arancel:</strong> <%= detalle.arancel %></div>
-            <div class="detail-row"><strong>Oblaje:</strong> <%= detalle.oblaje %></div>
-            <div class="detail-row"><strong>Descripción:</strong> <%= detalle.descripcion %></div>
-            <div class="detail-row"><strong>N inscritos:</strong> <%= detalle.n_inscritos %></div>
+          </div>
+          <div class="detail-row"><strong>Convocatoria:</strong> <%= detalle.convocatoria %></div>
+          <div class="detail-row"><strong>Tipo Cambio:</strong> <%= detalle.tipo_cambio%></div>
+          <div class="detail-row"><strong>Tasación:</strong> <%= detalle.tasacion %></div>
+          <div class="detail-row"><strong>Precio Base:</strong> <%= detalle.precio_base %></div>
+          <div class="detail-row"><strong>Incremento entre ofertas:</strong> <%= detalle.incremento_ofertas %></div>
+          <div class="detail-row"><strong>Arancel:</strong> <%= detalle.arancel %></div>
+          <div class="detail-row"><strong>Oblaje:</strong> <%= detalle.oblaje %></div>
+          <div class="detail-row"><strong>Descripción:</strong> <%= detalle.descripcion %></div>
+          <div class="detail-row"><strong>N inscritos:</strong> <%= detalle.n_inscritos %></div>
           <% }); %>
           <% } else { %>
           <p>No hay detalles disponibles para esta subasta.</p>
@@ -189,37 +209,37 @@
     </div>
   </div>
 
-<!-- Modal de Seguimiento -->
-<div id="trackingModal" class="modal">
-  <div class="modal-content">
-    <button class="close-button">&times;</button>
-    <% liveData.forEach((auction) => { %>
+  <!-- Modal de Seguimiento -->
+  <div id="trackingModal" class="modal">
+    <div class="modal-content">
+      <button class="close-button">&times;</button>
+      <% liveData.forEach((auction) => { %>
       <% if (auction.seguimiento && auction.seguimiento.length > 0) { %>
-        <% auction.seguimiento.forEach(detalle => { %>
-          <div class="tracking-section">
-            <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
-            <div class="tracking-row"><strong>N° Expediente:</strong> <%= detalle.n_expediente %></div>
-            <div class="tracking-row"><strong>Distrito judicial:</strong> <%= detalle.didstrito_judicial %></div>
-            <div class="tracking-row"><strong>Instancia:</strong> <%= detalle.instancia %></div>
-            <div class="tracking-row"><strong>Especialidad:</strong> <%= detalle.especialidad %></div>
-          </div>
+      <% auction.seguimiento.forEach(seguimiento => { %>
+      <div class="tracking-section">
+        <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
+        <div class="tracking-row"><strong>N° Expediente:</strong> <%= detalle.n_expediente %></div>
+        <div class="tracking-row"><strong>Distrito judicial:</strong> <%= detalle.didstrito_judicial %></div>
+        <div class="tracking-row"><strong>Instancia:</strong> <%= detalle.instancia %></div>
+        <div class="tracking-row"><strong>Especialidad:</strong> <%= detalle.especialidad %></div>
+      </div>
 
-          <div class="tracking-section">
-            <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
-            <div class="tracking-row"><strong>N° Convocatoria:</strong> <%= detalle.n_covocatoria %></div>
-            <div class="tracking-row"><strong>Fecha de registro:</strong> <%= detalle.fecha_registro %></div>
-            <div class="tracking-row"><strong>Procesado por:</strong> <%= detalle.procesado %></div>
-            <div class="tracking-row"><strong>Fase convocatoria:</strong> <%= detalle.fase_convocatoria %></div>
-            <div class="tracking-row"><strong>Estado convocatoria:</strong> <%= detalle.estado_convocatoria %></div>
-            <div class="tracking-row"><strong>¿Reanudado?:</strong> <%= detalle.reanudado %></div>
-          </div>
-        <% }); %>
+      <div class="tracking-section">
+        <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
+        <div class="tracking-row"><strong>N° Convocatoria:</strong> <%= detalle.n_covocatoria %></div>
+        <div class="tracking-row"><strong>Fecha de registro:</strong> <%= detalle.fecha_registro %></div>
+        <div class="tracking-row"><strong>Procesado por:</strong> <%= detalle.procesado %></div>
+        <div class="tracking-row"><strong>Fase convocatoria:</strong> <%= detalle.fase_convocatoria %></div>
+        <div class="tracking-row"><strong>Estado convocatoria:</strong> <%= detalle.estado_convocatoria %></div>
+        <div class="tracking-row"><strong>¿Reanudado?:</strong> <%= detalle.reanudado %></div>
+      </div>
+      <% }); %>
       <% } else { %>
-        <p>No hay detalles disponibles para esta subasta.</p>
+      <p>No hay detalles disponibles para esta subasta.</p>
       <% } %>
-    <% }); %>
+      <% }); %>
+    </div>
   </div>
-</div>
 
 
   <!-- Diseño live -->
@@ -227,37 +247,31 @@
 
 
   <script type="module">
-    import { NetworkAnimationL } from '../../js/componentes/network.live.js';
-  
-    // Asegúrate de que el canvas exista antes de interactuar con él
+    import {
+      NetworkAnimationL
+    } from '../../js/componentes/network.live.js';
+
     const canvas = document.getElementById('particleCanvas');
     if (canvas) {
-      // Configuración inicial del canvas
       const resizeCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       };
-  
-      // Redimensionar el canvas al tamaño de la ventana
       window.addEventListener('resize', resizeCanvas);
-      resizeCanvas(); // Llamada inicial para establecer el tamaño
-  
-      // Crear la animación de la red
+      resizeCanvas();
       const networkAnimationL = new NetworkAnimationL(canvas);
-  
-      // Inicializar y empezar la animación
+
       function animate() {
-        networkAnimationL.update(); // Actualiza la animación
-        networkAnimationL.render(); // Renderiza la animación
-        requestAnimationFrame(animate); // Solicita el siguiente frame de animación
+        networkAnimationL.update();
+        networkAnimationL.render();
+        requestAnimationFrame(animate);
       }
-  
-      animate(); // Inicia la animación
+      animate();
     } else {
       console.error('No se encontró el canvas con el id "particleCanvas".');
     }
   </script>
-  
+
   <!-- nabvar -->
   <script>
     let lastScrollTop = 0; // Posición previa del scroll

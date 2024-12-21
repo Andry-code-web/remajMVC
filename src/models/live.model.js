@@ -10,11 +10,7 @@ class Live {
     // Obtener imágenes de inmuebles
     static async getImagenesInmuebles() {
         const query = `
-        SELECT
-            id, 
-            imagenes_inmueble, 
-            remates_id
-        FROM img_inmuebles`;
+        SELECT id, imagenes_inmueble, remates_id FROM img_inmuebles`;
         const [rows] = await db.query(query);
         return rows.map(img => ({
             ...img,

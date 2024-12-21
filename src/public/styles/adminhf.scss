@@ -15,8 +15,6 @@
   
   .search-wrap {
     grid-area: search;
-    background: #fff;
-    border-bottom: 1px solid #ede8f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,7 +60,6 @@
     grid-area: menu;
     overflow: auto;
     background: #fff;
-    border-right: 1px solid #ede8f0;
   }
   
   .menu-wrap .user {

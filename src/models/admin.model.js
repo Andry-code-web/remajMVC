@@ -42,6 +42,7 @@ const getAllRemates = async () => {
       r.monto_venta,
       r.estado
     FROM remates r
+    ORDER BY r.id DESC
   `;
     try {
         const [remates] = await db.query(query);
@@ -59,7 +60,7 @@ const getImagenesInmuebles = async () => {
       i.imagenes_inmueble,
       i.remates_id
     FROM img_inmuebles i
-    `;
+  `;
     try {
         const [img_inmuebles] = await db.query(query);
 
@@ -104,11 +105,13 @@ const agregarAnexos = async (anexos) => {
 
 // Función para eliminar un remate
 const deleteRemate = async (remateId) => {
+    const queryMensajes = 'DELETE FROM mensajes WHERE remates_id = ?';
     const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
     const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
     const queryRemate = 'DELETE FROM remates WHERE id = ?';
 
     try {
+        await db.query(queryMensajes, [remateId]);
         await db.query(queryAnexos, [remateId]);
         await db.query(queryImagenes, [remateId]);
         const [result] = await db.query(queryRemate, [remateId]);
@@ -168,7 +171,6 @@ const getRemateById = async (remateId) => {
         throw new Error('Error al obtener los datos del remate: ' + error.message);
     }
 };
-
 // Función para actualizar un remate
 const updateRemate = async (remateId, datosRemate) => {
     const query = `

@@ -6,5 +6,4 @@ class Property {
     return rows;
   }
 }
-
 module.exports = Property;

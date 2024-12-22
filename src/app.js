@@ -6,6 +6,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const morgan = require('morgan');
 const flash = require('connect-flash');
+const moment = require('moment');
 const { setUserLocals } = require('./middleware/auth.middleware');
 const db = require('./config/database');
 require('dotenv').config();
@@ -18,10 +19,11 @@ const io = socketIO(server, {
 
 // Middleware
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Configuración de sesión
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
@@ -48,7 +50,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Routes
+// Rutas
 app.use('/', require('./routes/home.routes'));
 app.use('/admin', require('./routes/admin.routes'));
 app.use('/auth', require('./routes/auth.routes'));
@@ -73,37 +75,30 @@ io.on('connection', (socket) => {
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {
-      // Retrieve persisted messages from the database
+      // Recuperar mensajes persistentes de la base de datos
       const [messages] = await db.execute(
         'SELECT m.monto, u.usuario, m.remates_id FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
         [remates_id]
       );
 
-      // Emit messages to the client
+      // Emitir mensajes al cliente
       socket.emit('load-messages', messages);
 
-      // Emit initial alert
-      const mensaje = `Bienvenido al remate ${remates_id}`;
-      socket.emit('site-alert', mensaje);
+      // Recuperar el tiempo de inicio de la subasta
+      const [auctionRows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates WHERE id = ?', [remates_id]);
+
+      if (auctionRows.length > 0) {
+        const fechaInicio = moment(`${auctionRows[0].fecha_remate} ${auctionRows[0].hora_remate}`).utc(); // Convertir a UTC con moment
+        const countdownDuration = fechaInicio.diff(moment(), 'seconds'); // Tiempo restante en segundos
+
+        // Emitir el tiempo de inicio y duración del cronómetro al cliente
+        socket.emit('auction-start-time', { startTime: fechaInicio.format(), endTime: fechaInicio.format() });
+        socket.emit('start-auction-timer', countdownDuration);
+      }
 
     } catch (error) {
-      console.error('❌ Error al cargar mensajes persistentes:', error.message);
+      console.error('❌ Error al cargar mensajes persistentes o la subasta:', error.message);
     }
-  });
-
-  socket.on('start-auction-timer', (remates_id) => {
-    console.log(`⏳ Temporizador iniciado para remate ${remates_id}`);
-    
-    let countdown = 30;  // Timer duration in seconds
-    timers[remates_id] = setInterval(() => {
-      if (countdown > 0) {
-        io.to(remates_id).emit('timer-update', countdown);
-        countdown--;
-      } else {
-        clearInterval(timers[remates_id]);
-        io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-      }
-    }, 1000);
   });
 
   socket.on('chat-message', async (msg) => {
@@ -125,42 +120,38 @@ io.on('connection', (socket) => {
       }
 
       const usuarioNombre = userRows[0].usuario;
+      // Emitir el mensaje del chat
+      io.to(remates_id).emit('chat-message', { monto, usuario: usuarioNombre, remates_id });
 
-      const [highestRow] = await db.execute(
-        'SELECT IFNULL(MAX(monto), 0) as highestAmount FROM mensajes WHERE remates_id = ?',
-        [remates_id]
-      );
-      const highestAmount = highestRow[0].highestAmount;
-
+      // Actualizar la mayor oferta
       if (monto > highestAmount) {
-        await db.execute(
-          'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
-          [monto, usuarios_id, remates_id]
-        );
-
-        console.log('✅ Mensaje guardado en la base de datos');
-        io.to(remates_id).emit('chat-message', {
-          monto,
-          usuario: usuarioNombre,
-          remates_id,
-        });
-      } else {
-        socket.emit('error-message', `El monto debe ser mayor a USD$${highestAmount}`);
-        console.log(`❌ Monto rechazado: ${monto}. Debe ser mayor a ${highestAmount}`);
+        highestAmount = monto;
+        io.to(remates_id).emit('highest-offer-update', monto);
       }
+
     } catch (error) {
-      console.error('❌ Error al procesar el mensaje:', error.message);
-      socket.emit('error-message', 'Ocurrió un error al procesar tu oferta');
+      console.error('❌ Error al procesar mensaje:', error.message);
     }
   });
-});
 
+  socket.on('start-auction-timer', (countdownDuration) => {
+    let countdown = countdownDuration;
+    const remates_id = socket.id; // Asignar un remate_id
+
+    timers[remates_id] = setInterval(() => {
+      if (countdown > 0) {
+        io.to(remates_id).emit('timer-update', countdown);
+        countdown--;
+      } else {
+        clearInterval(timers[remates_id]);
+        io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      }
+    }, 1000);
+  });
+});
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;
 server.listen(PORT, () => {
   console.log(`✅ Servidor ejecutándose en el puerto ${PORT}`);
 });
-
-
-/*  hola*/

@@ -3,6 +3,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="/css/metodopago/metodopago.css">
 
+<!-- Incluir Moment.js desde un CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
 <div class="active-auction-card">
   <div class="active-auction-header">
     <div class="active-property-type">
@@ -98,10 +102,12 @@
     <div id="auction-chat" class="chat" style="display: none;">
       <section id="chat">
         <!-- Contenedor de la barra de progreso -->
-        <div onLoad="mostrar_hora()">   
-          <div id="fecha">
-            <span id="hora"></span>:<span id="minuto"></span>:<span id="segundo"></span>
-          </div>  
+        <div>
+          <div id="timer">
+            <span id="hora" data-time="00">00</span>:<span id="minuto" data-time="00">00</span>:<span id="segundo"
+              data-time="00">00</span>
+          </div>
+
         </div>
         <ul id="messages"></ul>
 
@@ -264,7 +270,7 @@
   const formBid = document.getElementById("form-bid");
   const inputBid = document.getElementById("input-bid");
   const messages = document.getElementById("messages");
-  const timerDisplay = document.getElementById("timer-display");  // To display the countdown
+  const timerDisplay = document.getElementById("fecha");  // El contenedor del temporizador
 
   // Variables
   let highestAmount = 0;
@@ -301,18 +307,26 @@
 
       if (monto > highestAmount) {
         highestAmount = monto;
-        inputBid.value = highestAmount ;
+        inputBid.value = highestAmount;
       }
     }
   });
 
-  // Mostrar alerta de error
-  socket.on("error-message", (error) => alert(error));
-
   // Mostrar actualización del temporizador
   socket.on("timer-update", (countdown) => {
-    timerDisplay.textContent = `Tiempo restante: ${countdown}s`;
+    const hours = Math.floor(countdown / 3600);
+    const minutes = Math.floor((countdown % 3600) / 60);
+    const seconds = countdown % 60;
+    document.getElementById('hora').innerHTML = String(hours).padStart(2, '0');
+    document.getElementById('minuto').innerHTML = String(minutes).padStart(2, '0');
+    document.getElementById('segundo').innerHTML = String(seconds).padStart(2, '0');
+
+    // Cuando el cronómetro llega a 0
+    if (countdown <= 0) {
+      socket.emit('auction-finished', { auctionId: <%= auction.id %> });
+    }
   });
+
 
   // Enviar oferta manual
   formBid.addEventListener("submit", (e) => {
@@ -326,7 +340,15 @@
     }
   });
 
+  // Mostrar alerta de error
+  socket.on('auction-start-time', ({ startTime, endTime }) => {
+    const startMoment = moment(startTime).utc();  // Asegurarse de que el tiempo sea en UTC
+    const endMoment = moment(endTime).utc();  // Asegurarse de que el tiempo sea en UTC
+    const countdownDuration = endMoment.diff(moment(), 'seconds'); // En segundos
+    socket.emit('start-auction-timer', countdownDuration);
+  });
 </script>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -376,26 +398,23 @@
 </script>
 
 <script>
-  // Variables Globales
-var tiempo = {}; 
-var clock = new Date("2016-06-01 5:00:00 PM"); // Obtener la fecha y almacenar en clock
-var intervalo = window.setInterval(mostrar_hora, 1); // Frecuencia de actualización
-var i = 0; // Esta variable me ayudará a definir los estados de intervalo
+  const socket = io();
+  const remates_id = <%= auction.id %>; // Asegúrate de pasar el ID de la subasta desde el backend.
 
-function mostrar_hora(){
-  var now = new Date();  
-  // Inserta la hora almacenada en clock en el span con id hora
-  tiempo.horas = document.getElementById('hora');
-  tiempo.horas.innerHTML = clock.getHours() - now.getHours(); 
-  
-  // Inserta los minutos almacenados en clock en el span con id minuto
-  tiempo.minuto = document.getElementById('minuto');
-  tiempo.minuto.innerHTML = clock.getMinutes()+60 - now.getMinutes();
-  
-  // Inserta los segundos almacenados en clock en el span con id segundo
-  tiempo.segundos = document.getElementById('segundo')
-  tiempo.segundos.innerHTML = "0" + clock.getSeconds()+60 - now.getSeconds();
-}
+  socket.emit('join-auction', remates_id);
+
+  socket.on('auction-start-time', ({ startTime, endTime }) => {
+    const endMoment = moment(endTime, 'YYYY-MM-DD HH:mm:ss');
+    const countdownDuration = Math.floor((endMoment - moment()) / 1000); // Duración restante en segundos
+    socket.emit('start-auction-timer', countdownDuration);
+  });
+
+  socket.on("timer-update", (countdown) => {
+    const hours = Math.floor(countdown / 3600);
+    const minutes = Math.floor((countdown % 3600) / 60);
+    const seconds = countdown % 60;
+    document.getElementById('hora').innerHTML = String(hours).padStart(2, '0');
+    document.getElementById('minuto').innerHTML = String(minutes).padStart(2, '0');
+    document.getElementById('segundo').innerHTML = String(seconds).padStart(2, '0');
+  });
 </script>
-
-hola

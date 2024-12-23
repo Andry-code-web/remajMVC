@@ -314,58 +314,59 @@
     </div>
 
     <!-- Modal de Seguimiento -->
-    <div id="trackingModal" class="modal">
-      <div class="modal-content">
-        <button class="close-button">&times;</button>
-        <h2 class="modal-title">Seguimiento del Remate</h2>
+<div id="trackingModal" class="modal">
+  <div class="modal-content">
+    <button class="close-button">&times;</button>
+    <h2 class="modal-title">Seguimiento del Remate</h2>
 
-        <% liveData.forEach((auction) => { %> <% if (auction.seguimiento &&
-        auction.seguimiento.length > 0) { %> <%
-        auction.seguimiento.forEach(seguimiento => { %>
-        <div class="tracking-section">
-          <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
-          <div class="tracking-row">
-            <strong>N° Expediente:</strong> <%= detalle.n_expediente %>
+    <% liveData.forEach((auction) => { %>
+      <% if (auction.seguimiento && auction.seguimiento.length > 0) { %>
+        <% auction.seguimiento.forEach(seguimiento => { %>
+          <div class="tracking-section">
+            <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
+            <div class="tracking-row">
+              <strong>N° Expediente:</strong> <%= seguimiento.n_expediente || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Distrito judicial:</strong> <%= seguimiento.distrito_judicial || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Instancia:</strong> <%= seguimiento.instancia || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Especialidad:</strong> <%= seguimiento.especialidad || 'No disponible' %>
+            </div>
           </div>
-          <div class="tracking-row">
-            <strong>Distrito judicial:</strong> <%= detalle.didstrito_judicial
-            %>
-          </div>
-          <div class="tracking-row">
-            <strong>Instancia:</strong> <%= detalle.instancia %>
-          </div>
-          <div class="tracking-row">
-            <strong>Especialidad:</strong> <%= detalle.especialidad %>
-          </div>
-        </div>
 
-        <div class="tracking-section">
-          <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
-          <div class="tracking-row">
-            <strong>N° Convocatoria:</strong> <%= detalle.n_covocatoria %>
+          <div class="tracking-section">
+            <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
+            <div class="tracking-row">
+              <strong>N° Convocatoria:</strong> <%= seguimiento.n_convocatoria || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Fecha de registro:</strong> <%= seguimiento.fecha_registro || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Procesado por:</strong> <%= seguimiento.procesado || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Fase convocatoria:</strong> <%= seguimiento.fase_convocatoria || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>Estado convocatoria:</strong> <%= seguimiento.estado_convocatoria || 'No disponible' %>
+            </div>
+            <div class="tracking-row">
+              <strong>¿Reanudado?:</strong> <%= seguimiento.reanudado ? 'Sí' : 'No' %>
+            </div>
           </div>
-          <div class="tracking-row">
-            <strong>Fecha de registro:</strong> <%= detalle.fecha_registro %>
-          </div>
-          <div class="tracking-row">
-            <strong>Procesado por:</strong> <%= detalle.procesado %>
-          </div>
-          <div class="tracking-row">
-            <strong>Fase convocatoria:</strong> <%= detalle.fase_convocatoria %>
-          </div>
-          <div class="tracking-row">
-            <strong>Estado convocatoria:</strong> <%=
-            detalle.estado_convocatoria %>
-          </div>
-          <div class="tracking-row">
-            <strong>¿Reanudado?:</strong> <%= detalle.reanudado %>
-          </div>
-        </div>
-        <% }); %> <% } else { %>
-        <p>No hay detalles disponibles para esta subasta.</p>
-        <% } %> <% }); %>
-      </div>
-    </div>
+        <% }); %>
+      <% } else { %>
+        <p>No hay detalles de seguimiento disponibles para esta subasta.</p>
+      <% } %>
+    <% }); %>
+  </div>
+</div>
+
 
     <script type="module">
       import { NetworkAnimationL } from "../../js/componentes/network.live.js";

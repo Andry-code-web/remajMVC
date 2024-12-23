@@ -4,4 +4,4 @@ const rematesController = require('../controllers/remate.controller');
 
 router.get('/index',rematesController. getAllremates);
 
-module.exports = router;
+module.exports = router; 

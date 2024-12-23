@@ -1,5 +1,5 @@
 <!-- vistas/remates/filtrados.ejs -->
-
+<link rel="stylesheet" href="/css/remates/remates.css">
 <div class="banner_remates2" id="banner_remates">
     <div id="banner" class="overlay">
       <h1>REMATES</h1>
@@ -11,7 +11,7 @@
     <% remates.forEach(remate => { %>
       <div class="card">
         <div class="image-container">
-          <!-- Imagen del remate -->
+          <!-- Imagen del remate --> 
           <img class="foto_casa" src="<%= remate.imagen %>" alt="<%= remate.titulo %>">
           
           <!-- Enlace para más información -->
@@ -21,13 +21,13 @@
           <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info">
           <h6 class="info_img_tex"><%= remate.estado %></h6>
         </div>
-        <a class="enlaces_carta" href="/remates/<%= remate.id %>">
+        <a class="enlaces_carta" href="/remates/<%=remate.id %>">
           <div class="card-content">
             <!-- Título y descripción del remate -->
-            <h2><%= remate.titulo %></h2>
-            <p class="address"><%= remate.direccion %></p>
-            <p class="price">$<%= remate.precio %></p>
-            <p class="details"><%= remate.habitaciones %> habitaciones | <%= remate.banos %> baños | <%= remate.area %> metros</p>
+            <h2><%= remate.descripcion %></h2>
+            <p class="address"><%= remate.ubicacion %></p>
+            <p class="price">$<%= remate.precios %></p>
+            <p class="details"><%= remate.N_habitacion %> habitaciones | <%= remate.N_banos%> baños | <%= remate.tamaño %> metros</p>
           </div>
         </a>
       </div>

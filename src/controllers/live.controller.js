@@ -5,34 +5,31 @@ exports.getAllLive = async (req, res) => {
     const liveData = await Live.getAll();
     const imgInmuebles = await Live.getImagenesInmuebles();
     console.log(liveData);
-    
+
     // Construir los datos de las subastas con sus detalles asociados
     const liveDataConImagenes = await Promise.all(
       liveData.map(async (auction) => {
-        if (!auction || !auction.id) {
-          console.error(
-            "Datos incompletos para la subasta:",
-            auction ? auction.id : "Desconocido"
-          );
+        try {
+          const inmuebles = await Live.getInmuebles(auction.id);
+          const cronograma = await Live.getCronograma(auction.id);
+          const detalles = await Live.getDetalles(auction.id);
+    
+          return {
+            ...auction,
+            imagen:
+              imgInmuebles.find((img) => img.remates_id === auction.id)
+                ?.imagenes_inmueble || "/img/default.png",
+            inmuebles,
+            cronograma,
+            detalles,
+          };
+        } catch (err) {
+          console.error(`Error al procesar subasta ID ${auction.id}:`, err);
           return null;
         }
-    
-        const inmuebles = await Live.getInmuebles(auction.id);
-        const cronograma = await Live.getCronograma(auction.id);
-        const detalles = await Live.getDetalles(auction.id); 
-        console.log(detalles);
-    
-        return {
-          ...auction,
-          imagen:
-            imgInmuebles.find((img) => img.remates_id === auction.id)
-              ?.imagenes_inmueble || "/img/default.png",
-          inmuebles,
-          cronograma,
-          detalles, // Asegúrate de pasar detalles
-        };
       })
     );
+    
 
     // Filtrar las subastas válidas
     const validLiveData = liveDataConImagenes.filter((data) => data !== null);

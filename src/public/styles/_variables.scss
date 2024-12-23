@@ -7,7 +7,7 @@ $colorterciario:#0a0000;
 $complemento1:#e25427;
 $complemento2:#00665e;
 
-/*Variables para registro*/
+// Variables para registro
 $primary-color: #FFE5D0; //color principal de la aplicación
 $bg-dark: #000000; //color de fondo oscuro
 $bg-light: #ffffff; //color de fondo claro
@@ -15,7 +15,7 @@ $glow-color: #FFE5D0; //color de iluminación
 $dark-glow: #000000; //color de iluminación oscuro
 $glow-black: #000000; // color negro fosforescente
 
-/*Variables para login*/
+// Variables para login
 $text-primary: #E5D0B1;  // color beige 
 $text-secondary: rgba(229, 208, 177, 0.7);  // Semi-transparente beige
 $bg-dark: #0A0A0A;  // Casi negro
@@ -27,11 +27,6 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 $glass-effect: rgba(255, 255, 255, 0.1);
 $card-transition: all 0.3s ease;
 
-
-@font-face {
-    font-family: 'fuentePrincipal';
-    src: url('/fonts/Expressa-DemiBold.otf') format('opentype');
-} 
 
 @font-face {
     font-family: 'fuentePrincipal';

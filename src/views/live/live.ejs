@@ -1,304 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/live/live.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- CDN DE ICONOS REMIX -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- ESTILOS GLOBALES -->
+    <link rel="stylesheet" href="/css/globales/globales.css" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/css/live/live.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- CDN DE ICONOS REMIX -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-  <!-- ESTILOS GLOBALES -->
-  <link rel="stylesheet" href="/css/globales/globales.css">
-</head>
 
-<body>
+  </head>
 
-  <!-- COMPONENTE HEADER -->
-  <%- include('../partials/navbar') %>
+  <body>
+    <!-- COMPONENTE HEADER -->
+    <%- include('../partials/navbar') %>
 
-  <canvas id="particleCanvas"></canvas>
+    <canvas id="particleCanvas"></canvas>
 
-  <!-- live_Tarjeta  -->
-  <section class="property-container">
-    <div class="property-grid">
-      <% liveData.forEach((auction, index) => { %>
-      <div class="property-card">
-        <div class="property-image-container">
-          <img src="data:image/png;base64,<%= auction.imagen %>" alt="Imagen de propiedad" class="property-image">
-        </div>
-        <div class="property-info">
-          <h2><%= auction.ubicacion %></h2>
-          <p>USD$ <%= auction.precios %></p>
-          <div class="property-stats">
-            <span>Baños: <%= auction.N_baños %></span>
-            <span>Habitaciones: <%= auction.N_habitacion %></span>
+    <!-- live_Tarjeta  -->
+    <section class="property-container">
+      <div class="property-grid">
+        <% liveData.forEach((auction) => { %>
+        <div class="property-card">
+          <!-- ID Badge -->
+          <div class="auction-id">
+            <span class="id-label">Remate N°</span>
+            <span class="id-number"><%= auction.id %></span>
           </div>
-          <div class="property-actions">
-            <span>
-              <a href="en_vivo/seguimiento/<%= auction.id %>" class="card-button" data-action="tracking" id="seguimiento-<%= auction.id %>">
+
+          <!-- Imagen -->
+          <div class="property-image-container">
+            <img
+              src="data:image/png;base64,<%= auction.imagen %>"
+              alt="Imagen de propiedad"
+              class="property-image"
+            />
+          </div>
+
+          <!-- Información General -->
+          <div class="property-info">
+            <div class="auction-type">
+              <span class="badge primary">Primera Convocatoria</span>
+              <span class="badge secondary">Remate Simple</span>
+            </div>
+            <h2 class="location">
+              <i class="fas fa-map-marker-alt"></i> <%= auction.ubicacion %>
+            </h2>
+            <div class="presentation-details">
+              <p>
+                <i class="fas fa-calendar"></i> Presentación de ofertas: <%=
+                auction.fecha_presentacion %>
+              </p>
+              <p>
+                <i class="fas fa-clock"></i> <%= auction.hora_presentacion %>
+              </p>
+            </div>
+
+            <!-- Descripción -->
+            <div class="property-description">
+              <h3>Descripción</h3>
+              <p><%= auction.descripcion %></p>
+            </div>
+
+            <!-- Precio -->
+            <div class="price-section">
+              <span class="price-label">Precio Base:</span>
+              <p class="price">USD$ <%= auction.precios %></p>
+            </div>
+
+            <!-- Botones -->
+            <div class="property-actions">
+              <a
+                href="en_vivo/seguimiento/<%= auction.id %>"
+                class="card-button"
+                data-action="tracking"
+                id="seguimiento-<%= auction.id %>"
+              >
+                <i class="fas fa-chart-line"></i>
                 <span>Seguimiento</span>
               </a>
-            </span>
-            <span>
-              <a href="en_vivo/detalles/<%= auction.id %>" class="card-button" data-action="open-details" id="detalles-<%= auction.id %>">
+              <a
+                href="en_vivo/detalles/<%= auction.id %>"
+                class="card-button"
+                data-action="open-details"
+                id="detalles-<%= auction.id %>"
+              >
+                <i class="fas fa-info-circle"></i>
                 <span>Detalles</span>
               </a>
-            </span>
-            <span>
-              <a href="en_vivo/aviso/<%= auction.id %>" class="card-button" data-action="notice" id="aviso-<%= auction.id %>">
+              <a
+                href="en_vivo/aviso/<%= auction.id %>"
+                class="card-button"
+                data-action="notice"
+                id="aviso-<%= auction.id %>"
+              >
+                <i class="fas fa-bell"></i>
                 <span>Aviso</span>
               </a>
-            </span>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </section>
 
+    <!-- Modal de detalles -->
+    <div id="detailsModal" class="modal">
+      <div class="modal-content">
+        <button class="close-button">&times;</button>
+
+        <div class="tabs">
+          <button class="tab-button active" data-tab="detalles">
+            <i class="fas fa-file-alt"></i> Detalles
+          </button>
+          <button class="tab-button" data-tab="inmuebles">
+            <i class="fas fa-home"></i> Inmuebles
+          </button>
+          <button class="tab-button" data-tab="cronograma">
+            <i class="fas fa-calendar-alt"></i> Cronograma
+          </button>
+        </div>
+
+        <!-- Pestaña de detalles -->
+        <div id="detalles" class="tab-content active">
+          <div class="details-container">
+            <% liveData.forEach((auction) => { %> <% if (auction.detalles &&
+            auction.detalles.length > 0) { %> <%
+            auction.detalles.forEach(detalle => { %>
+            <div class="detail-section">
+              <h3>Información General</h3>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <strong>Expediente:</strong>
+                  <span><%= detalle.expediente %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Distrito Judicial:</strong>
+                  <span><%= detalle.distrito_judicial %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Órgano Jurisdiccional:</strong>
+                  <span><%= detalle.organo_juridiccional %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Instancia:</strong>
+                  <span><%= detalle.instancia %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Juez:</strong>
+                  <span><%= detalle.juez %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Especialista:</strong>
+                  <span><%= detalle.especialista %></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>Detalles del Caso</h3>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <strong>Materia:</strong>
+                  <span><%= detalle.materia %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Resolución:</strong>
+                  <span><%= detalle.resolucion %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Fecha Resolución:</strong>
+                  <span><%= detalle.fecha_resolucion %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Archivo:</strong>
+                  <span><%= detalle.archivo %></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>Detalles del Remate</h3>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <strong>Convocatoria:</strong>
+                  <span><%= detalle.convocatoria %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Tipo Cambio:</strong>
+                  <span><%= detalle.tipo_cambio %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Tasación:</strong>
+                  <span><%= detalle.tasacion %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Precio Base:</strong>
+                  <span><%= detalle.precio_base %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Incremento entre ofertas:</strong>
+                  <span><%= detalle.incremento_ofertas %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Arancel:</strong>
+                  <span><%= detalle.arancel %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>Oblaje:</strong>
+                  <span><%= detalle.oblaje %></span>
+                </div>
+                <div class="detail-item">
+                  <strong>N° inscritos:</strong>
+                  <span><%= detalle.n_inscritos %></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>Descripción</h3>
+              <p class="description-text"><%= detalle.descripcion %></p>
+            </div>
+            <% }); %> <% } else { %>
+            <p class="no-data-message">
+              No hay detalles disponibles para esta subasta.
+            </p>
+            <% } %> <% }); %>
+          </div>
+        </div>
+
+        <!-- pestaña de inmuebles -->
+        <div id="inmuebles" class="tab-content">
+          <div class="board">
+            <div class="board-header">
+              <h2>Inmuebles del Remate</h2>
+            </div>
+            <div class="board-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>PARTIDA REGISTRAL</th>
+                    <th>TIPO INMUEBLE</th>
+                    <th>DIRECCIÓN</th>
+                    <th>CARGA Y/O GRAVAMEN</th>
+                    <th>PORCENTAJE A REMATAR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (liveData && liveData.length > 0 &&
+                  liveData[0].inmuebles && liveData[0].inmuebles.length > 0) {
+                  %> <% liveData[0].inmuebles.forEach(inmueble => { %>
+                  <tr>
+                    <td><%= inmueble.partida_registral %></td>
+                    <td><%= inmueble.tipo_inmueble %></td>
+                    <td><%= inmueble.direccion %></td>
+                    <td><%= inmueble.carga_ogravamen %></td>
+                    <td><%= inmueble.porcentaje_rematar %>%</td>
+                  </tr>
+                  <% }); %> <% } else { %>
+                  <tr>
+                    <td colspan="5" class="no-data-message">
+                      No hay inmuebles para este remate.
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pestaña de Cronograma -->
+        <div id="cronograma" class="tab-content">
+          <div class="board">
+            <div class="board-header">
+              <h2>Cronograma del Remate</h2>
+            </div>
+            <div class="board-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>FASE</th>
+                    <th>FECHA INICIO</th>
+                    <th>FECHA FIN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% liveData.forEach(auction => { %> <%
+                  auction.cronograma.forEach((fase, index) => { %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= fase.actividad %></td>
+                    <td><%= fase.fecha_actividad %></td>
+                    <td><%= fase.fecha_actividad %></td>
+                  </tr>
+                  <% }); %> <% }); %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      <% }); %>
     </div>
-  </section>
 
+    <!-- Modal de Seguimiento -->
+    <div id="trackingModal" class="modal">
+      <div class="modal-content">
+        <button class="close-button">&times;</button>
+        <h2 class="modal-title">Seguimiento del Remate</h2>
 
-
-
-  <!-- Modal de detalles -->
-  <div id="detailsModal" class="modal">
-    <div class="modal-content">
-      <button class="close-button">&times;</button>
-
-      <div class="tabs">
-        <span>
-          <a class="tab-button active" data-tab="detalles">
-            <span>
-              Detalles
-            </span>
-          </a>
-        </span>
-        <span>
-          <a class="tab-button" data-tab="inmuebles">
-            <span>
-              Inmuebles
-            </span>
-          </a>
-        </span>
-        <span>
-          <a class="tab-button" data-tab="cronograma">
-            <span>
-              Cronograma
-            </span>
-          </a>
-        </span>
-      </div>
-
-
-
-
-      <!-- Pestaña de detalles -->
-      <div id="detalles" class="tab-content active">
-        <div class="details-container">
-          <% liveData.forEach((auction) => { %>
-          <% if (auction.detalles && auction.detalles.length > 0) { %>
-          <% auction.detalles.forEach(detalle => { %>
-          <div class="details-column">
-            <div class="detail-row"><strong>Expediente:</strong> <%= detalle.expediente %></div>
-            <div class="detail-row"><strong>Distrito Judicial:</strong> <%= detalle.distrito_judicial %></div>
-            <div class="detail-row"><strong>Órgano Jurisdiccional:</strong> <%= detalle.organo_juridiccional %></div>
-            <div class="detail-row"><strong>Instancia:</strong> <%= detalle.instancia %></div>
-            <div class="detail-row"><strong>Juez:</strong> <%= detalle.juez %></div>
-            <div class="detail-row"><strong>Especialista:</strong> <%= detalle.especialista %></div>
-            <div class="detail-row"><strong>Materia:</strong> <%= detalle.materia %></div>
-            <div class="detail-row"><strong>Resolución:</strong> <%= detalle.resolucion %></div>
-            <div class="detail-row"><strong>Fecha Resolución:</strong> <%= detalle.fecha_resolucion %></div>
-            <div class="detail-row"><strong>Archivo:</strong> <%= detalle.archivo %></div>
+        <% liveData.forEach((auction) => { %> <% if (auction.seguimiento &&
+        auction.seguimiento.length > 0) { %> <%
+        auction.seguimiento.forEach(seguimiento => { %>
+        <div class="tracking-section">
+          <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
+          <div class="tracking-row">
+            <strong>N° Expediente:</strong> <%= detalle.n_expediente %>
           </div>
-          <div class="detail-row"><strong>Convocatoria:</strong> <%= detalle.convocatoria %></div>
-          <div class="detail-row"><strong>Tipo Cambio:</strong> <%= detalle.tipo_cambio%></div>
-          <div class="detail-row"><strong>Tasación:</strong> <%= detalle.tasacion %></div>
-          <div class="detail-row"><strong>Precio Base:</strong> <%= detalle.precio_base %></div>
-          <div class="detail-row"><strong>Incremento entre ofertas:</strong> <%= detalle.incremento_ofertas %></div>
-          <div class="detail-row"><strong>Arancel:</strong> <%= detalle.arancel %></div>
-          <div class="detail-row"><strong>Oblaje:</strong> <%= detalle.oblaje %></div>
-          <div class="detail-row"><strong>Descripción:</strong> <%= detalle.descripcion %></div>
-          <div class="detail-row"><strong>N inscritos:</strong> <%= detalle.n_inscritos %></div>
-          <% }); %>
-          <% } else { %>
-          <p>No hay detalles disponibles para esta subasta.</p>
-          <% } %>
-          <% }); %>
-        </div>
-      </div>
-
-
-
-      <!-- Pestaña de Inmuebles -->
-      <div id="inmuebles" class="tab-content">
-        <div class="board">
-          <div class="board-header">
-            <h2>Inmuebles del Remate</h2>
+          <div class="tracking-row">
+            <strong>Distrito judicial:</strong> <%= detalle.didstrito_judicial
+            %>
           </div>
-          <div class="board-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>PARTIDA REGISTRAL</th>
-                  <th>TIPO INMUEBLE</th>
-                  <th>DIRECCIÓN</th>
-                  <th>CARGA Y/O GRAVAMEN</th>
-                  <th>PORCENTAJE A REMATAR</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% liveData.forEach(auction => { %>
-                <% if (auction.inmuebles && auction.inmuebles.length > 0) { %>
-                <% auction.inmuebles.forEach(inmueble => { %>
-                <tr>
-                  <td><%= inmueble.partida_registral %></td>
-                  <td><%= inmueble.tipo_inmueble %></td>
-                  <td><%= inmueble.direccion %></td>
-                  <td><%= inmueble.carga_ogravamen %></td>
-                  <td><%= inmueble.porcentaje_rematar %>%</td>
-                </tr>
-                <% }); %>
-                <% } else { %>
-                <tr>
-                  <td colspan="5">No hay inmuebles para este remate.</td>
-                </tr>
-                <% } %>
-                <% }); %>
-              </tbody>
-            </table>
+          <div class="tracking-row">
+            <strong>Instancia:</strong> <%= detalle.instancia %>
+          </div>
+          <div class="tracking-row">
+            <strong>Especialidad:</strong> <%= detalle.especialidad %>
           </div>
         </div>
-      </div>
 
-
-
-      <!-- Pestaña de Cronograma -->
-      <div id="cronograma" class="tab-content">
-        <div class="board">
-          <div class="board-header">
-            <h2>Cronograma del Remate</h2>
+        <div class="tracking-section">
+          <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
+          <div class="tracking-row">
+            <strong>N° Convocatoria:</strong> <%= detalle.n_covocatoria %>
           </div>
-          <div class="board-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>N°</th>
-                  <th>FASE</th>
-                  <th>FECHA INICIO</th>
-                  <th>FECHA FIN</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% liveData.forEach(auction => { %>
-                <% auction.cronograma.forEach((fase, index) => { %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= fase.actividad %></td>
-                  <td><%= fase.fecha_actividad %></td>
-                  <td><%= fase.fecha_actividad %></td>
-                </tr>
-                <% }); %>
-                <% }); %>
-              </tbody>
-            </table>
+          <div class="tracking-row">
+            <strong>Fecha de registro:</strong> <%= detalle.fecha_registro %>
+          </div>
+          <div class="tracking-row">
+            <strong>Procesado por:</strong> <%= detalle.procesado %>
+          </div>
+          <div class="tracking-row">
+            <strong>Fase convocatoria:</strong> <%= detalle.fase_convocatoria %>
+          </div>
+          <div class="tracking-row">
+            <strong>Estado convocatoria:</strong> <%=
+            detalle.estado_convocatoria %>
+          </div>
+          <div class="tracking-row">
+            <strong>¿Reanudado?:</strong> <%= detalle.reanudado %>
           </div>
         </div>
+        <% }); %> <% } else { %>
+        <p>No hay detalles disponibles para esta subasta.</p>
+        <% } %> <% }); %>
       </div>
     </div>
-  </div>
 
-  <!-- Modal de Seguimiento -->
-  <div id="trackingModal" class="modal">
-    <div class="modal-content">
-      <button class="close-button">&times;</button>
-      <% liveData.forEach((auction) => { %>
-      <% if (auction.seguimiento && auction.seguimiento.length > 0) { %>
-      <% auction.seguimiento.forEach(seguimiento => { %>
-      <div class="tracking-section">
-        <h3><span class="red-dot"></span>DETALLE DE EXPEDIENTE</h3>
-        <div class="tracking-row"><strong>N° Expediente:</strong> <%= detalle.n_expediente %></div>
-        <div class="tracking-row"><strong>Distrito judicial:</strong> <%= detalle.didstrito_judicial %></div>
-        <div class="tracking-row"><strong>Instancia:</strong> <%= detalle.instancia %></div>
-        <div class="tracking-row"><strong>Especialidad:</strong> <%= detalle.especialidad %></div>
-      </div>
+    <script type="module">
+      import { NetworkAnimationL } from "../../js/componentes/network.live.js";
 
-      <div class="tracking-section">
-        <h3><span class="red-dot"></span>DETALLE DE SEGUIMIENTO</h3>
-        <div class="tracking-row"><strong>N° Convocatoria:</strong> <%= detalle.n_covocatoria %></div>
-        <div class="tracking-row"><strong>Fecha de registro:</strong> <%= detalle.fecha_registro %></div>
-        <div class="tracking-row"><strong>Procesado por:</strong> <%= detalle.procesado %></div>
-        <div class="tracking-row"><strong>Fase convocatoria:</strong> <%= detalle.fase_convocatoria %></div>
-        <div class="tracking-row"><strong>Estado convocatoria:</strong> <%= detalle.estado_convocatoria %></div>
-        <div class="tracking-row"><strong>¿Reanudado?:</strong> <%= detalle.reanudado %></div>
-      </div>
-      <% }); %>
-      <% } else { %>
-      <p>No hay detalles disponibles para esta subasta.</p>
-      <% } %>
-      <% }); %>
-    </div>
-  </div>
+      const canvas = document.getElementById("particleCanvas");
+      if (canvas) {
+        const resizeCanvas = () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        const networkAnimationL = new NetworkAnimationL(canvas);
 
-
-  <!-- Diseño live -->
-  <link rel="stylesheet" href="/css/live/live.css">
-
-
-  <script type="module">
-    import {
-      NetworkAnimationL
-    } from '../../js/componentes/network.live.js';
-
-    const canvas = document.getElementById('particleCanvas');
-    if (canvas) {
-      const resizeCanvas = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      };
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-      const networkAnimationL = new NetworkAnimationL(canvas);
-
-      function animate() {
-        networkAnimationL.update();
-        networkAnimationL.render();
-        requestAnimationFrame(animate);
-      }
-      animate();
-    } else {
-      console.error('No se encontró el canvas con el id "particleCanvas".');
-    }
-  </script>
-
-  <!-- nabvar -->
-  <script>
-    let lastScrollTop = 0; // Posición previa del scroll
-    const header = document.getElementById('header'); // Encabezado
-    const propertyContainer = document.querySelector('.property-container'); // Contenedor de propiedades
-
-    window.addEventListener('scroll', () => {
-      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-
-      // Desaparece al bajar el scroll
-      if (currentScrollTop > lastScrollTop && currentScrollTop > propertyContainer.offsetTop) {
-        header.style.transform = 'translateY(-100%)'; // Desliza hacia arriba
-        header.style.opacity = '0'; // Desvanece
+        function animate() {
+          networkAnimationL.update();
+          networkAnimationL.render();
+          requestAnimationFrame(animate);
+        }
+        animate();
       } else {
-        // Aparece al subir el scroll
-        header.style.transform = 'translateY(0)'; // Vuelve a su posición
-        header.style.opacity = '1'; // Reaparece
+        console.error('No se encontró el canvas con el id "particleCanvas".');
       }
+    </script>
 
-      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
-    });
-  </script>
+    <!-- nabvar -->
+    <script>
+      let lastScrollTop = 0; // Posición previa del scroll
+      const header = document.getElementById("header"); // Encabezado
+      const propertyContainer = document.querySelector(".property-container"); // Contenedor de propiedades
 
+      window.addEventListener("scroll", () => {
+        const currentScrollTop =
+          window.scrollY || document.documentElement.scrollTop;
 
-  <!-- script live -->
-  <script src="/js/script_live.js"></script>
+        // Desaparece al bajar el scroll
+        if (
+          currentScrollTop > lastScrollTop &&
+          currentScrollTop > propertyContainer.offsetTop
+        ) {
+          header.style.transform = "translateY(-100%)"; // Desliza hacia arriba
+          header.style.opacity = "0"; // Desvanece
+        } else {
+          // Aparece al subir el scroll
+          header.style.transform = "translateY(0)"; // Vuelve a su posición
+          header.style.opacity = "1"; // Reaparece
+        }
 
-</body>
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+      });
+    </script>
 
+    <!-- script live -->
+    <script src="/js/script_live.js"></script>
+  </body>
 </html>

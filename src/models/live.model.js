@@ -46,10 +46,11 @@ class Live {
     // Obtener seguimiento de un remate específico
     static async getSeguimiento(remates_id) {
         const query = `
-        SELECT * FROM seguimiento WHERE remates_id = ?`;
+    SELECT * FROM seguimientos WHERE remates_id = ?`; // Cambiar el nombre de la tabla
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
+
 
 }
 module.exports = Live;

@@ -14,17 +14,19 @@
           <div class="items_filtro">
             <select name="categoria" id="categoria">
               <option value="">Eliga una categoria</option>
-              <option value="casa">Casas</option>
+              <option value="casa">Casa</option>
               <option value="departamento">Departamento</option>
-              <option value="cochera">Cochera</option>
-              <option value="terreno">Terreno</option>
+              <option value="cochera">cochera</option>
+              <option value="terreno">Terreno_urbano</option>
               <option value="local_comercial">Local Comercial</option>
-              <option value="azotea">Azotea</option>
-              <option value="terreno_rural">Terreno Rural</option>
-              <option value="oficina">Oficina</option>
+              <option value="terreno_urbano">terreno_urbano</option>
+              <option value="casa_playa">casa_playa</option>
+              <option value="terreno">Terreno</option>
+              <option value="local">Local</option>
+              <option value="residencial">residencial</option>
             </select>
           </div>
-          <div class="items_filtro">
+        <!--   <div class="items_filtro">
             <select name="ubicacion" id="ubicacion">
               <option value="">Seleccione la ubicación</option>
               <option value="lima">Lima</option>
@@ -38,7 +40,7 @@
               <option value="tacna">Tacna</option>
               <option value="juliaca">Juliaca</option>
             </select>
-          </div>
+          </div> -->
           <div class="items_filtro">
             <select name="precio_min" id="precio_min">
               <option value="">Elija el monto mínimo</option>
@@ -63,6 +65,7 @@
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </section>
@@ -180,19 +183,6 @@
 
 
 <script>
-  const departamentosPorCiudad = {
-    arequipa: ["Cayma", "Yanahuara", "Cerro Colorado", "José Luis Bustamante y Rivero", "Paucarpata"],
-    lima: ["Miraflores", "San Isidro", "Barranco", "Surco", "San Borja"],
-    trujillo: ["Víctor Larco", "El Porvenir", "Florencia de Mora", "La Esperanza", "Huanchaco"],
-    chiclayo: ["Pimentel", "Lambayeque", "Monsefú", "Reque", "Ferreñafe"],
-    piura: ["Sullana", "Catacaos", "Paita", "Sechura", "Talara"],
-    cusco: ["San Sebastián", "Wanchaq", "San Jerónimo", "Santiago", "Ollantaytambo"],
-    iquitos: ["Punchana", "Belén", "San Juan Bautista", "Iquitos", "Nauta"],
-    huancayo: ["El Tambo", "San Agustín de Cajas", "Sapallanga", "Huancán", "Chilca"],
-    tacna: ["Alto de la Alianza", "Ciudad Nueva", "Pocollay", "Calana", "Gregorio Albarracín"],
-    juliaca: ["Caracoto", "Cabana", "Cabanillas", "Coata", "Huata"]
-  };
-
   document.getElementById("ciudad").addEventListener("change", function () {
     const ciudadSeleccionada = this.value;
     const departamentoSelect = document.getElementById("departamento");

@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const { getImagenesInmuebles } = require('../models/admin.model');
 
 // Validación de conexión
 (async () => {
@@ -13,11 +14,12 @@ const db = require('../config/database');
 
 // Función para obtener todos los remates
 const getAllRemates = async () => {
+    const img_inmuebles = await getImagenesInmuebles();
     const query = `
         SELECT
             id, ubicacion, precios, descripcion, categoria, N_banos, N_habitacion,
             pisina, patio, cocina, cochera, balcon, jardin, pisos, comedor, sala_start,
-            studio, lavanderia, fecha_remate, hora_remate, estado
+            studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
         FROM remates
         ORDER BY id DESC
     `;
@@ -38,7 +40,7 @@ const getRemateById = async (remateId) => {
             studio, lavanderia, fecha_remate, hora_remate, estado
         FROM remates
         WHERE id = ?
-    `; 
+    `;
     try {
         const [result] = await db.query(query, [remateId]);
         return result[0];

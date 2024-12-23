@@ -1,36 +1,48 @@
-<!-- vistas/remates/filtrados.ejs -->
+<!-- vistas/remates/index.ejs -->
 <link rel="stylesheet" href="/css/remates/remates.css">
 <div class="banner_remates2" id="banner_remates">
-    <div id="banner" class="overlay">
-      <h1>REMATES</h1>
-    </div>
+  <div id="banner" class="overlay">
+    <h1>REMATES</h1>
   </div>
-  
-  <div class="prueva1">
-    <!-- Iteramos sobre los remates para renderizar cada tarjeta -->
-    <% remates.forEach(remate => { %>
-      <div class="card">
-        <div class="image-container">
-          <!-- Imagen del remate --> 
-          <img class="foto_casa" src="<%= remate.imagen %>" alt="<%= remate.titulo %>">
-          
-          <!-- Enlace para más información -->
-          <a href="/remates/<%= remate.id %>" class="etiqueta_imagen">más información</a>
-          
-          <!-- Imagen de estado de la propiedad -->
-          <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info">
-          <h6 class="info_img_tex"><%= remate.estado %></h6>
-        </div>
-        <a class="enlaces_carta" href="/remates/<%=remate.id %>">
-          <div class="card-content">
-            <!-- Título y descripción del remate -->
-            <h2><%= remate.descripcion %></h2>
-            <p class="address"><%= remate.ubicacion %></p>
-            <p class="price">$<%= remate.precios %></p>
-            <p class="details"><%= remate.N_habitacion %> habitaciones | <%= remate.N_banos%> baños | <%= remate.tamaño %> metros</p>
-          </div>
-        </a>
+</div>
+
+<div class="prueva1">
+  <!-- Iteramos sobre los remates para renderizar cada tarjeta -->
+  <% remates.forEach(remate => { %>
+    <div class="card">
+      <div class="image-container">
+        <!-- Imagen del remate -->
+        <% if (remate.imagen) { %>
+          <img class="foto_casa" src="data:image/jpeg;base64,<%= remate.imagen %>" alt="<%= remate.descripcion %>">
+        <% } else { %>
+          <img class="foto_casa" src="/img/default_image.png" alt="<%= remate.descripcion %>">
+        <% } %>
+
+        <!-- Enlace para más información -->
+        <a href="/remates/<%= remate.id %>" class="etiqueta_imagen">más información</a>
+
+        <!-- Imagen de estado de la propiedad -->
+        <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info">
+        <h6 class="info_img_tex">
+          <%= remate.estado %>
+        </h6>
       </div>
-    <% }) %>
-  </div>
-  
+      <a class="enlaces_carta" href="/remates/<%= remate.id %>">
+        <div class="card-content">
+          <!-- Título y descripción del remate -->
+          <h2>
+            <%= remate.descripcion %>
+          </h2>
+          <p class="address">
+            <%= remate.ubicacion %>
+          </p>
+          <p class="price">$<%= remate.precios %>
+          </p>
+          <p class="details">
+            <%= remate.N_habitacion %> habitaciones | <%= remate.N_banos %> baños | <%= remate.tamaño_propiedad %> metros
+          </p>
+        </div>
+      </a>
+    </div>
+  <% }) %>
+</div>

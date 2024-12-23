@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <section class="banner" id="banner">
   <div class="banner_contenedor">
     <div class="banner_video">
@@ -8,25 +9,24 @@
         <p>_____BIENVENIDO A REMAJUD_____</p>
         <h1>Nuestro Compromiso es que Encuentres tu remate.</h1>
       </div>
-      <form action="/filtrar" method="post">
-
+      <form action="/filtrar" method="get">
         <div class="contenedor_filtro_items">
           <div class="items_filtro">
-            <select name="categoria" id="cotegoria">
+            <select name="categoria" id="categoria">
               <option value="">Eliga una categoria</option>
               <option value="casa">Casas</option>
               <option value="departamento">Departamento</option>
-              <option value="cocheras">Cocheras</option>
-              <option value="terrenos">Terrenos</option>
-              <option value="locales_comerciales">Locales Comerciales</option>
-              <option value="azoteas">Azoteas</option>
+              <option value="cochera">Cochera</option>
+              <option value="terreno">Terreno</option>
+              <option value="local_comercial">Local Comercial</option>
+              <option value="azotea">Azotea</option>
               <option value="terreno_rural">Terreno Rural</option>
-              <option value="oficina">Oficinas</option>
+              <option value="oficina">Oficina</option>
             </select>
           </div>
           <div class="items_filtro">
-            <select name="ciudad" id="ciudad">
-              <option value="">Seleccione una ciudad</option>
+            <select name="ubicacion" id="ubicacion">
+              <option value="">Seleccione la ubicación</option>
               <option value="lima">Lima</option>
               <option value="arequipa">Arequipa</option>
               <option value="trujillo">Trujillo</option>
@@ -40,11 +40,6 @@
             </select>
           </div>
           <div class="items_filtro">
-            <select name="departamento" id="departamento">
-              <option value="">Seleccione un distrito</option>
-            </select>
-          </div>
-          <div class="items_filtro">
             <select name="precio_min" id="precio_min">
               <option value="">Elija el monto mínimo</option>
               <option value="10000">10,000</option>
@@ -52,7 +47,6 @@
               <option value="30000">30,000</option>
             </select>
           </div>
-      
           <div class="items_filtro">
             <select name="precio_max" id="precio_max">
               <option value="">Elija el monto máximo</option>
@@ -61,7 +55,6 @@
               <option value="50000">50,000</option>
             </select>
           </div>
-
           <div class="btn_filtrar">
             <button type="submit">
               Buscar
@@ -133,41 +126,54 @@
 <section class="subastas" id="subastas">
 
   <div class="contenedor_card_subastas">
-    <% remates.forEach(remate => { %>
-    <div class="carta">
+    <% remates.forEach(remate=> { %>
+      <div class="carta">
         <div class="imagen-contenedor">
-            <% if (remate.imagen) { %>
-            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>" alt="Imagen del inmueble" class="imagen-propiedad">
+          <% if (remate.imagen) { %>
+            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>"
+              alt="Imagen del inmueble" class="imagen-propiedad">
             <% } else { %>
-            <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
-            <% } %>
-            <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
+              <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
+              <% } %>
+                <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
         </div>
         <div class="contenido">
-            <div class="label"><%= remate.categoria %></div>
-            <h2 class="nombre_proyecto">Edificio los canarios</h2>
-            <div class="label">Dirección</div>
-            <p class="direccion"><%= remate.ubicacion %></p>
-            <div class="detalles">
-                <div class="detalles-item">
-                    <div class="label">M2</div>
-                    <div class="detalles-valor"><%= remate.tamaño_propiedad %></div>
-                </div>
-                <div class="detalles-item">
-                    <div class="label">N° Pisos</div>
-                    <div class="detalles-valor"><%= remate.pisos %></div>
-                </div>
-                <div class="detalles-item">
-                    <div class="label">N° de cuartos</div>
-                    <div class="detalles-valor"><%= remate.N_habitacion %></div>
-                </div>
+          <div class="label">
+            <%= remate.categoria %>
+          </div>
+          <h2 class="nombre_proyecto">Edificio los canarios</h2>
+          <div class="label">Dirección</div>
+          <p class="direccion">
+            <%= remate.ubicacion %>
+          </p>
+          <div class="detalles">
+            <div class="detalles-item">
+              <div class="label">M2</div>
+              <div class="detalles-valor">
+                <%= remate.tamaño_propiedad %>
+              </div>
             </div>
-            <div class="label">Precio</div>
-            <div class="precio"><%= remate.precios %></div>
+            <div class="detalles-item">
+              <div class="label">N° Pisos</div>
+              <div class="detalles-valor">
+                <%= remate.pisos %>
+              </div>
+            </div>
+            <div class="detalles-item">
+              <div class="label">N° de cuartos</div>
+              <div class="detalles-valor">
+                <%= remate.N_habitacion %>
+              </div>
+            </div>
+          </div>
+          <div class="label">Precio</div>
+          <div class="precio">
+            <%= remate.precios %>
+          </div>
         </div>
-    </div>
-    <% }) %>
-</div>
+      </div>
+      <% }) %>
+  </div>
 
 
 </section>
@@ -187,7 +193,7 @@
     juliaca: ["Caracoto", "Cabana", "Cabanillas", "Coata", "Huata"]
   };
 
-  document.getElementById("ciudad").addEventListener("change", function() {
+  document.getElementById("ciudad").addEventListener("change", function () {
     const ciudadSeleccionada = this.value;
     const departamentoSelect = document.getElementById("departamento");
 

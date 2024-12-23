@@ -24,17 +24,16 @@ exports.getAllRemates = async (req, res) => {
     }
 };
 
-
 exports.getFiltarRemates = async (req, res) => {
     try {
-        const { categoria, ciudad, departamento, precio_min, precio_max } = req.query;  // Asegúrate de que la variable esté bien escrita
+        const { categoria, ubicacion, departamento, precio_min, precio_max } = req.query;
 
         const rematesFiltrados = await Home.getFiltrarBanner({
             categoria,
-            ciudad,
+            ubicacion,
             departamento,
             montoMin: precio_min,
-            montoMax: precio_max  // Aquí se debe usar precio_max y no precionmax
+            montoMax: precio_max
         });
 
         if (rematesFiltrados.length === 0) {

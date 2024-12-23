@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const homeContraller = require('../controllers/home.controller');
+const homeController = require('../controllers/home.controller');
 
-router.get('/', homeContraller.getAllRemates);
-router.post('/filtrar', homeContraller.getFiltarRemates);
+router.get('/', homeController.getAllRemates);
+router.get('/filtrar', homeController.getFiltarRemates); // Cambia a GET
 
 module.exports = router;

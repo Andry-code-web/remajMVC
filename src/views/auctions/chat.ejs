@@ -244,22 +244,21 @@
   }
 </script>
 
-<script>
+<!-- <script>
   const btnUnirse = document.getElementById('unirse');
-  const chat_crono = document.getElementById('auction-chat'); 
+  const chat = document.getElementById('auction-chat');
   const panelEnCurso = document.getElementById('en_curso');
 
   btnUnirse.addEventListener('click', () => {
     panelEnCurso.style.display = 'none';
-    chat_crono.style.display = 'block';
+    chat.style.display = 'block';
   });
-
-</script>
+</script> -->
 
 <script type="module">
   import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-  const socket = io();
 
+  const socket = io();
 
   // Elementos del DOM
   const formBid = document.getElementById("form-bid");
@@ -315,6 +314,19 @@
     timerDisplay.textContent = `Tiempo restante: ${countdown}s`;
   });
 
+socket.on("start-aution-timer",(remates_id) => {
+  
+})
+  if (timeDiff > 0) {
+    // Si la subasta está por comenzar, inicia el temporizador
+    setTimeout(() => {
+      socket.emit('start-auction-timer', remates_id); // Enviar evento al servidor para iniciar el temporizador
+    }, timeDiff);
+  } else {
+    // Si ya es la hora de inicio, comienza el temporizador de inmediato
+    socket.emit('start-auction-timer', remates_id);
+  }
+
   // Enviar oferta manual
   formBid.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -326,64 +338,7 @@
       alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
-  // Variables para manejar el temporizador y el chat
-  let remates_id = 103; // Suponiendo que el ID del remate es 1, cámbialo según sea necesario
-  const user_id = 1; // Suponiendo que el ID del usuario es 123, cámbialo según sea necesario
 
-  // Unirse al remate
-  socket.emit('join-auction', remates_id);
-
-  // Escuchar actualizaciones del cronómetro
-  socket.on('timer-update', (remainingTime) => {
-    updateTimer(remainingTime);
-  });
-
-  // Función para actualizar el temporizador
-  function updateTimer(remainingTime) {
-    const hours = Math.floor(remainingTime / 3600);
-    const minutes = Math.floor((remainingTime % 3600) / 60);
-    const seconds = remainingTime % 60;
-
-    document.getElementById('time').textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
-  }
-
-  // Función para agregar ceros a los números menores de 10
-  function padZero(num) {
-    return num < 10 ? '0' + num : num;
-  }
-
-  // Escuchar el mensaje de chat
-  socket.on('chat-message', (message) => {
-    const chatMessages = document.getElementById('chat-messages');
-    const messageItem = document.createElement('li');
-    messageItem.textContent = `${message.usuario}: $${message.monto}`;
-    chatMessages.appendChild(messageItem);
-  });
-
-  // Escuchar el mensaje de error
-  socket.on('error-message', (errorMessage) => {
-    alert(errorMessage);
-  });
-
-  // Enviar un mensaje de chat
-  document.getElementById('send-message').addEventListener('click', () => {
-    const messageInput = document.getElementById('message');
-    const monto = parseFloat(messageInput.value);
-
-    if (isNaN(monto) || monto <= 0) {
-      alert('Por favor ingresa una oferta válida.');
-      return;
-    }
-
-    const message = {
-      monto: monto,
-      usuarios_id: user_id,
-      remates_id: remates_id
-    };
-
-    socket.emit('chat-message', message);
-    messageInput.value = ''; // Limpiar el input del mensaje
-  });
 </script>
 
 <script>
@@ -432,3 +387,60 @@
       });
   });
 </script>
+
+<script>
+  // Variables Globales
+  var tiempo = {}; 
+  var clock = null; // Fecha y hora original, que será enviada desde el servidor
+  var intervalo = null; // Variable para almacenar el intervalo
+  var started = false; // Indicador de si el cronómetro ya comenzó
+  
+  // Cuando el cliente se conecta al socket, recibir la fecha y hora original
+  socket.on('auction-start-time', function(data) {
+    clock = new Date(data.startTime); // Asignamos la fecha recibida desde el servidor
+    console.log('Fecha y hora de inicio de la subasta: ', clock);
+  
+    // Comenzamos a verificar si el cronómetro debe iniciarse
+    window.setInterval(mostrar_hora, 1000); // Verifica cada segundo
+  });
+  
+  function mostrar_hora() {
+    var now = new Date();
+    
+    // Verificar si la hora actual coincide con la hora original
+    if (!started && now.getTime() >= clock.getTime()) {
+      // Iniciar el cronómetro solo cuando la fecha y hora coincidan
+      started = true;
+      intervalo = window.setInterval(actualizar_cronometro, 1000); // Inicia la actualización cada segundo
+    }
+  }
+  
+  function actualizar_cronometro() {
+    var now = new Date();
+    var diferencia = clock - now; // Diferencia en milisegundos
+  
+    // Calculamos las horas, minutos y segundos restantes
+    var horasRestantes = Math.floor(diferencia / (1000 * 60 * 60));
+    var minutosRestantes = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+    var segundosRestantes = Math.floor((diferencia % (1000 * 60)) / 1000);
+  
+    // Inserta la hora restante en el span con id hora
+    tiempo.horas = document.getElementById('hora');
+    tiempo.horas.innerHTML = horasRestantes < 10 ? '0' + horasRestantes : horasRestantes;
+  
+    // Inserta los minutos restantes en el span con id minuto
+    tiempo.minuto = document.getElementById('minuto');
+    tiempo.minuto.innerHTML = minutosRestantes < 10 ? '0' + minutosRestantes : minutosRestantes;
+  
+    // Inserta los segundos restantes en el span con id segundo
+    tiempo.segundos = document.getElementById('segundo');
+    tiempo.segundos.innerHTML = segundosRestantes < 10 ? '0' + segundosRestantes : segundosRestantes;
+  
+    // Si el cronómetro llega a cero, detener el intervalo
+    if (diferencia <= 0) {
+      clearInterval(intervalo);
+      console.log("⏰ El cronómetro ha finalizado.");
+    }
+  }
+  </script>
+  

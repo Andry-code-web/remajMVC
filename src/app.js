@@ -8,6 +8,8 @@ const morgan = require('morgan');
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
 const db = require('./config/database');
+const { zonedTimeToUtc } = require('date-fns-tz');
+
 require('dotenv').config();
 
 const app = express();
@@ -62,50 +64,57 @@ app.get('/unauthorized', (req, res) => {
 });
 
 // Socket.IO
-let highestAmount = 0;
 const timers = {};
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
   socket.on('join-auction', async (remates_id) => {
-    socket.join(remates_id);
-    console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
-
     try {
-      // Retrieve persisted messages from the database
-      const [messages] = await db.execute(
-        'SELECT m.monto, u.usuario, m.remates_id FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
-        [remates_id]
-      );
+      socket.join(remates_id);
+      console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
-      // Emit messages to the client
-      socket.emit('load-messages', messages);
+      // Función para calcular el tiempo restante
+      async function calculateRemainingTime(remates_id) {
+        try {
+          const [remateRows] = await db.execute(
+            'SELECT fecha_remate, hora_remate FROM remates WHERE id = ?',
+            [remates_id]
+          );
 
-      // Emit initial alert
-      const mensaje = `Bienvenido al remate ${remates_id}`;
-      socket.emit('site-alert', mensaje);
+          if (remateRows.length === 0) {
+            console.error('❌ No se encontró el remate con el ID proporcionado');
+            return 0;
+          }
 
+          const { fecha_remate, hora_remate } = remateRows[0];
+          console.log(`Fecha del remate: ${fecha_remate}, Hora del remate: ${hora_remate}`);
+          const remateTime = zonedTimeToUtc(`${fecha_remate}T${hora_remate}`, 'UTC');
+          const currentTime = zonedTimeToUtc(new Date(), 'UTC');
+
+          return Math.max(remateTime - currentTime, 0);
+        } catch (error) {
+          console.error('❌ Error al calcular el tiempo restante:', error.message);
+          return 0;
+        }
+      }
+
+      const remainingTime = await calculateRemainingTime(remates_id);
+      console.log(`Tiempo restante: ${remainingTime / 1000}s`);
+
+      if (remainingTime > 0) {
+        console.log(`⏳ Tiempo restante para el remate: ${remainingTime / 1000}s`);
+        setTimeout(() => startAuctionTimer(remates_id), remainingTime);
+      } else {
+        console.log('El remate ya debería haber iniciado.');
+      }
     } catch (error) {
-      console.error('❌ Error al cargar mensajes persistentes:', error.message);
+      console.error('❌ Error al procesar join-auction:', error.message);
+      socket.emit('error-message', 'Ocurrió un error al unirse al remate');
     }
   });
 
-  socket.on('start-auction-timer', (remates_id) => {
-    console.log(`⏳ Temporizador iniciado para remate ${remates_id}`);
-    
-    let countdown = 30;  // Timer duration in seconds
-    timers[remates_id] = setInterval(() => {
-      if (countdown > 0) {
-        io.to(remates_id).emit('timer-update', countdown);
-        countdown--;
-      } else {
-        clearInterval(timers[remates_id]);
-        io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-      }
-    }, 1000);
-  });
-
+  // Evento de chat
   socket.on('chat-message', async (msg) => {
     const { monto, usuarios_id, remates_id } = msg;
 
@@ -113,14 +122,12 @@ io.on('connection', (socket) => {
       const [remateRows] = await db.execute('SELECT id FROM remates WHERE id = ?', [remates_id]);
       if (remateRows.length === 0) {
         socket.emit('error-message', 'El ID del remate no existe.');
-        console.log(`❌ Remate ID inválido: ${remates_id}`);
         return;
       }
 
       const [userRows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
       if (userRows.length === 0) {
         socket.emit('error-message', 'Usuario no encontrado');
-        console.log('❌ Usuario no encontrado en la base de datos');
         return;
       }
 
@@ -137,16 +144,9 @@ io.on('connection', (socket) => {
           'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
           [monto, usuarios_id, remates_id]
         );
-
-        console.log('✅ Mensaje guardado en la base de datos');
-        io.to(remates_id).emit('chat-message', {
-          monto,
-          usuario: usuarioNombre,
-          remates_id,
-        });
+        io.to(remates_id).emit('chat-message', { monto, usuario: usuarioNombre, remates_id });
       } else {
         socket.emit('error-message', `El monto debe ser mayor a USD$${highestAmount}`);
-        console.log(`❌ Monto rechazado: ${monto}. Debe ser mayor a ${highestAmount}`);
       }
     } catch (error) {
       console.error('❌ Error al procesar el mensaje:', error.message);
@@ -155,12 +155,24 @@ io.on('connection', (socket) => {
   });
 });
 
+// Función para iniciar el temporizador
+function startAuctionTimer(remates_id) {
+  let countdown = 18000; // 5 horas en segundos
+  timers[remates_id] = setInterval(async () => {
+    if (countdown > 0) {
+      io.to(remates_id).emit('timer-update', countdown);
+      countdown--;
+    } else {
+      clearInterval(timers[remates_id]);
+      io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      delete timers[remates_id];
+      await db.execute('UPDATE remates SET estado = ? WHERE id = ?', ['finalizado', remates_id]);
+    }
+  }, 1000);
+}
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;
 server.listen(PORT, () => {
   console.log(`✅ Servidor ejecutándose en el puerto ${PORT}`);
 });
-
-
-/*  hola*/

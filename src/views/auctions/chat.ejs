@@ -98,11 +98,9 @@
     <div id="auction-chat" class="chat" style="display: none;">
       <section id="chat">
         <!-- Contenedor de la barra de progreso -->
-        <div onLoad="mostrar_hora()">
-          <div id="fecha">
-            <span id="hora"></span>:<span id="minuto"></span>:<span id="segundo"></span>
-          </div>
-        </div>
+        <p class="fecha-subasta" id="countdown">
+          <span id="countdown-timer">00:00:00</span>
+        </p>
         <ul id="messages"></ul>
 
         <!-- Formulario de oferta -->
@@ -244,16 +242,45 @@
   }
 </script>
 
-<!-- <script>
-  const btnUnirse = document.getElementById('unirse');
-  const chat = document.getElementById('auction-chat');
-  const panelEnCurso = document.getElementById('en_curso');
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-  btnUnirse.addEventListener('click', () => {
-    panelEnCurso.style.display = 'none';
-    chat.style.display = 'block';
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const countdownElement = document.getElementById("countdown-timer");
+
+    // Obtener el timestamp de la fecha de inicio de la subasta desde el servidor
+    const idRemate = <%= auction.id %>; // Cambia este valor por el ID real del remate
+    const response = await fetch(`/obtener-fecha-remate/${idRemate}`);
+    const data = await response.json();
+
+    const fechaInicioSubasta = new Date(data.fechaInicioSubasta).getTime();
+
+    // Inicializar el cronómetro en 5:00:00
+    let countdown = 5 * 60 * 60; // 5 horas en segundos
+    countdownElement.innerHTML = `5:00:00`;
+
+    // Función para actualizar el contador
+    const intervalId = setInterval(() => {
+      const now = new Date().getTime();
+      const timeLeft = fechaInicioSubasta - now;
+
+      if (timeLeft <= 0) {
+        clearInterval(intervalId);
+        countdownElement.innerHTML = "00:00:00";
+        return;
+      }
+
+      const hours = Math.floor(countdown / 3600);
+      const minutes = Math.floor((countdown % 3600) / 60);
+      const seconds = countdown % 60;
+
+      countdownElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      countdown--;
+    }, 1000);
   });
-</script> -->
+</script>
+
 
 <script type="module">
   import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
@@ -264,7 +291,7 @@
   const formBid = document.getElementById("form-bid");
   const inputBid = document.getElementById("input-bid");
   const messages = document.getElementById("messages");
-  const timerDisplay = document.getElementById("timer-display");  // To display the countdown
+  const timerDisplay = document.getElementById("countdown-timer"); // Para mostrar el temporizador
 
   // Variables
   let highestAmount = 0;
@@ -311,21 +338,42 @@
 
   // Mostrar actualización del temporizador
   socket.on("timer-update", (countdown) => {
-    timerDisplay.textContent = `Tiempo restante: ${countdown}s`;
+    const hours = Math.floor(countdown / 3600);
+    const minutes = Math.floor((countdown % 3600) / 60);
+    const seconds = countdown % 60;
+    timerDisplay.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   });
 
-socket.on("start-aution-timer",(remates_id) => {
-  
-})
-  if (timeDiff > 0) {
-    // Si la subasta está por comenzar, inicia el temporizador
-    setTimeout(() => {
-      socket.emit('start-auction-timer', remates_id); // Enviar evento al servidor para iniciar el temporizador
-    }, timeDiff);
-  } else {
-    // Si ya es la hora de inicio, comienza el temporizador de inmediato
-    socket.emit('start-auction-timer', remates_id);
-  }
+  // Recibir la fecha y hora de inicio del servidor
+  socket.on("auction-start-time", ({ startTime }) => {
+    const auctionStartTime = new Date(startTime);
+    const now = new Date();
+
+    // Calcular la diferencia y programar el temporizador
+    const timeDiff = auctionStartTime - now;
+
+    if (timeDiff > 0) {
+      setTimeout(() => {
+        socket.emit("start-auction-timer", auctionId);
+      }, timeDiff);
+    } else {
+      socket.emit("start-auction-timer", auctionId);
+    }
+  });
+
+  socket.on("timer-update", (remaining) => {
+    const hours = Math.floor(remaining / 3600);
+    const minutes = Math.floor((remaining % 3600) / 60);
+    const seconds = remaining % 60;
+
+    document.getElementById("hora").textContent = hours.toString().padStart(2, "0");
+    document.getElementById("minuto").textContent = minutes.toString().padStart(2, "0");
+    document.getElementById("segundo").textContent = seconds.toString().padStart(2, "0");
+
+    if (remaining === 0) {
+      console.log("⏰ El cronómetro ha terminado.");
+    }
+  });
 
   // Enviar oferta manual
   formBid.addEventListener("submit", (e) => {
@@ -338,8 +386,8 @@ socket.on("start-aution-timer",(remates_id) => {
       alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
   });
-
 </script>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -390,23 +438,23 @@ socket.on("start-aution-timer",(remates_id) => {
 
 <script>
   // Variables Globales
-  var tiempo = {}; 
+  var tiempo = {};
   var clock = null; // Fecha y hora original, que será enviada desde el servidor
   var intervalo = null; // Variable para almacenar el intervalo
   var started = false; // Indicador de si el cronómetro ya comenzó
-  
+
   // Cuando el cliente se conecta al socket, recibir la fecha y hora original
-  socket.on('auction-start-time', function(data) {
+  socket.on('auction-start-time', function (data) {
     clock = new Date(data.startTime); // Asignamos la fecha recibida desde el servidor
     console.log('Fecha y hora de inicio de la subasta: ', clock);
-  
+
     // Comenzamos a verificar si el cronómetro debe iniciarse
     window.setInterval(mostrar_hora, 1000); // Verifica cada segundo
   });
-  
+
   function mostrar_hora() {
     var now = new Date();
-    
+
     // Verificar si la hora actual coincide con la hora original
     if (!started && now.getTime() >= clock.getTime()) {
       // Iniciar el cronómetro solo cuando la fecha y hora coincidan
@@ -414,33 +462,32 @@ socket.on("start-aution-timer",(remates_id) => {
       intervalo = window.setInterval(actualizar_cronometro, 1000); // Inicia la actualización cada segundo
     }
   }
-  
+
   function actualizar_cronometro() {
     var now = new Date();
     var diferencia = clock - now; // Diferencia en milisegundos
-  
+
     // Calculamos las horas, minutos y segundos restantes
     var horasRestantes = Math.floor(diferencia / (1000 * 60 * 60));
     var minutosRestantes = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
     var segundosRestantes = Math.floor((diferencia % (1000 * 60)) / 1000);
-  
+
     // Inserta la hora restante en el span con id hora
     tiempo.horas = document.getElementById('hora');
     tiempo.horas.innerHTML = horasRestantes < 10 ? '0' + horasRestantes : horasRestantes;
-  
+
     // Inserta los minutos restantes en el span con id minuto
     tiempo.minuto = document.getElementById('minuto');
     tiempo.minuto.innerHTML = minutosRestantes < 10 ? '0' + minutosRestantes : minutosRestantes;
-  
+
     // Inserta los segundos restantes en el span con id segundo
     tiempo.segundos = document.getElementById('segundo');
     tiempo.segundos.innerHTML = segundosRestantes < 10 ? '0' + segundosRestantes : segundosRestantes;
-  
+
     // Si el cronómetro llega a cero, detener el intervalo
     if (diferencia <= 0) {
       clearInterval(intervalo);
       console.log("⏰ El cronómetro ha finalizado.");
     }
   }
-  </script>
-  
+</script>

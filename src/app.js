@@ -7,7 +7,7 @@ const socketIO = require('socket.io');
 const morgan = require('morgan');
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
-const db = require('./config/database');
+const db = require('./config/database'); // Usando la conexión pool
 require('dotenv').config();
 
 const app = express();
@@ -64,6 +64,7 @@ app.get('/unauthorized', (req, res) => {
 // Socket.IO
 let highestAmount = 0;
 const timers = {};
+const auctionTimers = {};
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
@@ -74,59 +75,63 @@ io.on('connection', (socket) => {
       socket.emit('error-message', 'ID del remate no proporcionado');
       return;
     }
-  
+
     socket.join(remates_id);
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
-  
+
     try {
-      // Consulta la hora de inicio desde la base de datos
-      const [rows] = await db.execute('SELECT hora_remate FROM remates WHERE id = ?', [remates_id]);
-      console.log
-  
+      // Consulta la fecha y hora de inicio desde la base de datos usando el pool
+      const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates WHERE id = ?', [remates_id]);
+
       if (rows.length === 0) {
         socket.emit('error-message', 'Remate no encontrado');
         return;
       }
-  
+
+      const fechaInicio = rows[0].fecha_remate; // Fecha de inicio de la subasta desde la base de datos
       const horaInicio = rows[0].hora_remate; // Hora de inicio de la subasta desde la base de datos
-      console.log('Hora de inicio:', horaInicio);
-  
-      // Enviar la hora de inicio al cliente
-      socket.emit('auction-hora_remateS', { hora_remate: horaInicio });
-  
+      const fechaHoraInicio = new Date(`${fechaInicio}T${horaInicio}`); // Combinar fecha y hora
+      console.log('Fecha y hora de inicio servidor:', fechaHoraInicio);
+
+      // Enviar la fecha y hora de inicio al cliente
+      socket.emit('auction-start-time', { startTime: fechaHoraInicio });
+
       // Recuperar los mensajes persistentes (si los hay)
       const [messages] = await db.execute(
         'SELECT m.monto, u.usuario, m.remates_id FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
         [remates_id]
       );
-  
+
       // Emitir los mensajes al cliente
       socket.emit('load-messages', messages);
-  
+
       // Emitir un mensaje de bienvenida
       const mensaje = `Bienvenido al remate ${remates_id}`;
       socket.emit('site-alert', mensaje);
-  
+
+      // Iniciar el temporizador si no está ya iniciado
+      if (!auctionTimers[remates_id]) {
+        const now = new Date();
+        const timeDiff = fechaHoraInicio - now;
+
+        if (timeDiff > 0) {
+          setTimeout(() => {
+            startAuctionTimer(remates_id);
+          }, timeDiff);
+        } else {
+          startAuctionTimer(remates_id);
+        }
+      }
+
     } catch (error) {
-      console.error('❌ Error al cargar la hora de inicio o los mensajes:', error.message || error);
+      console.error('❌ Error al cargar la fecha y hora de inicio o los mensajes:', error.message || error);
       socket.emit('error-message', 'Ocurrió un error al cargar la información');
     }
   });
-  
 
   socket.on('start-auction-timer', (remates_id) => {
     console.log(`⏳ Temporizador iniciado para remate ${remates_id}`);
-
-    let countdown = 30;  // Timer duration in seconds
-    timers[remates_id] = setInterval(() => {
-      if (countdown > 0) {
-        io.to(remates_id).emit('timer-update', countdown);
-        countdown--;
-      } else {
-        clearInterval(timers[remates_id]);
-        io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-      }
-    }, 1000);
+    startAuctionTimer(remates_id);
   });
 
   socket.on('chat-message', async (msg) => {
@@ -176,7 +181,24 @@ io.on('connection', (socket) => {
       socket.emit('error-message', 'Ocurrió un error al procesar tu oferta');
     }
   });
+
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado:', socket.id);
+  });
 });
+
+function startAuctionTimer(remates_id) {
+  let countdown = 5 * 60 * 60;  // Timer duration in seconds (5 hours)
+  auctionTimers[remates_id] = setInterval(() => {
+    if (countdown > 0) {
+      io.to(remates_id).emit('timer-update', countdown);
+      countdown--;
+    } else {
+      clearInterval(auctionTimers[remates_id]);
+      io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+    }
+  }, 1000);
+}
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

@@ -137,53 +137,54 @@
               <div class="property-card" data-id="<%= remate.id %>">
                 <% if (remate.imagen) { %>
                   <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                <% } else { %>
-                  <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-                <% } %>
-                <div class="property-content">
-                  <span
-                    class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
-                    <%= remate.estado %>
-                  </span>
-                  <h3 class="property-title">
-                    <%= remate.ubicacion %>
-                  </h3>
-                  <div class="property-price">$<%= remate.precios %></div>
-                  <div class="property-details">
-                    <div class="detail-item">
-                      <i class="bi bi-building"></i>
-                      <%= remate.categoria %>
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-door-closed"></i>
-                      <%= remate.N_habitacion %> hab.
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-droplet"></i>
-                      <%= remate.N_banos %> baños
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-calendar"></i>
-                      <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                    </div>
-                  </div>
-                  <p class="property-description">
-                    <%= remate.descripcion %>
-                  </p>
-                  <div class="property-actions">
-                    <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                      <i class="bi bi-pencil"></i>
-                      Editar
-                    </button>
-                    <button class="action-button"
-                      onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                      <i class="bi bi-trash"></i>
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
+                  <% } else { %>
+                    <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+                    <% } %>
+                      <div class="property-content">
+                        <span
+                          class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                          <%= remate.estado %>
+                        </span>
+                        <h3 class="property-title">
+                          <%= remate.ubicacion %>
+                        </h3>
+                        <div class="property-price">$<%= remate.precios %>
+                        </div>
+                        <div class="property-details">
+                          <div class="detail-item">
+                            <i class="bi bi-building"></i>
+                            <%= remate.categoria %>
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-door-closed"></i>
+                            <%= remate.N_habitacion %> hab.
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-droplet"></i>
+                            <%= remate.N_banos %> baños
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-calendar"></i>
+                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                          </div>
+                        </div>
+                        <p class="property-description">
+                          <%= remate.descripcion %>
+                        </p>
+                        <div class="property-actions">
+                          <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                            <i class="bi bi-pencil"></i>
+                            Editar
+                          </button>
+                          <button class="action-button"
+                            onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                            <i class="bi bi-trash"></i>
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
               </div>
-            <% }); %>
+              <% }); %>
           </div>
         </div>
 
@@ -206,7 +207,29 @@
                     <i class="bi bi-geo-alt"></i>
                     Ubicación
                   </label>
-                  <input type="text" id="ubicacion" name="ubicacion" required>
+                  <select name="ubicacion" id="ubicacion">
+                    <option value="">Seleccione la ubicación</option>
+                    <option value="lima">Lima</option>
+                    <option value="arequipa">Arequipa</option>
+                    <option value="trujillo">Trujillo</option>
+                    <option value="chiclayo">Chiclayo</option>
+                    <option value="piura">Piura</option>
+                    <option value="cusco">Cusco</option>
+                    <option value="iquitos">Iquitos</option>
+                    <option value="huancayo">Huancayo</option>
+                    <option value="tacna">Tacna</option>
+                    <option value="juliaca">Juliaca</option>
+                    <option value="pucallpa">Pucallpa</option>
+                    <option value="tarapoto">Tarapoto</option>
+                    <option value="chimbote">Chimbote</option>
+                    <option value="moquegua">Moquegua</option>
+                    <option value="ayacucho">Ayacucho</option>
+                    <option value="huaraz">Huaraz</option>
+                    <option value="ica">Ica</option>
+                    <option value="tumbes">Tumbes</option>
+                    <option value="cajamarca">Cajamarca</option>
+                    <option value="puerto_maldonado">Puerto Maldonado</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="precios">

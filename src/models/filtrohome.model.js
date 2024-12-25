@@ -22,7 +22,7 @@ class FiltroHome {
             }
 
             if (ubicacion) {
-                query += ' AND ciudad = ?';
+                query += ' AND ubicacion = ?'
                 params.push(ubicacion);
             }
 

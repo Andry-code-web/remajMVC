@@ -10,13 +10,6 @@ exports.getFiltarRemates = async (req, res) => {
             montoMin: precio_min,
             montoMax: precio_max
         });
-
-        if (rematesFiltrados.length === 0) {
-            return res.status(404).render('error', {
-                message: 'No se encontraron remates con esos filtros'
-            });
-        }
-
         // Agrupamos las imágenes por remate, tomando solo la primera imagen
         const remates = rematesFiltrados.reduce((acc, row) => {
             if (!acc[row.id]) {

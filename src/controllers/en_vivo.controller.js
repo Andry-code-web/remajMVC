@@ -53,7 +53,7 @@ exports.getSeguimiento = async (req, res) => {
             return res.status(404).render("error", { message: "Seguimiento no encontrado" });
         }
 
-        res.render("en_vivo/seguimiento", { seguimiento, auctionId });
+        res.render("en_vivo/en_vivo", { seguimiento, auctionId });
     } catch (error) {
         console.error("Error en getSeguimiento:", error);
         res.status(500).render("error", { message: "Error al cargar el seguimiento" });
@@ -74,7 +74,7 @@ exports.getDetalles = async (req, res) => {
             return res.status(404).render("error", { message: "Detalles no encontrados" });
         }
 
-        res.render("en_vivo/detalles", { detalles, auctionId });
+        res.render("en_vivo/en_vivo", { detalles, auctionId });
     } catch (error) {
         console.error("Error en getDetalles:", error);
         res.status(500).render("error", { message: "Error al cargar los detalles" });
@@ -90,7 +90,7 @@ exports.getInmuebles = async (req, res) => {
         const inmuebles = await EnVivo.getInmuebles(auctionId);
         console.log('Datos de inmuebles:', inmuebles);
 
-        res.render("en_vivo/inmuebles", { inmuebles, auctionId });
+        res.render("en_vivo/en_vivo", { inmuebles, auctionId });
     } catch (error) {
         console.error("Error en getInmuebles:", error);
         res.status(500).render("error", { message: "Error al cargar los inmuebles" });
@@ -106,7 +106,7 @@ exports.getCronograma = async (req, res) => {
         const cronograma = await EnVivo.getCronograma(auctionId);
         console.log('Datos de cronograma:', cronograma);
 
-        res.render("en_vivo/cronograma", { cronograma, auctionId });
+        res.render("en_vivo/en_vivo", { cronograma, auctionId });
     } catch (error) {
         console.error("Error en getCronograma:", error);
         res.status(500).render("error", { message: "Error al cargar el cronograma" });
@@ -127,7 +127,7 @@ exports.getPdf = async (req, res) => {
             return res.status(404).render("error", { message: "Aviso no encontrado" });
         }
         
-        res.render("en_vivo/aviso", { aviso, auctionId });
+        res.render("en_vivo/en_vivo", { aviso, auctionId });
     } catch (error) {
         console.error("Error en getPdf:", error);
         res.status(500).render("error", { message: "Error al cargar el aviso" });

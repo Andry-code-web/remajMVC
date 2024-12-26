@@ -1,13 +1,11 @@
-// live.model.js
 const db = require('../config/database');
 
-class Live {
+class EnVivo {
     static async getAll() {
         const query = "SELECT * FROM remajud.remates WHERE estado = 'en_curso'";
         return await db.execute(query).then(([rows]) => rows);
     }
 
-    // Obtener imágenes de inmuebles
     static async getImagenesInmuebles() {
         const query = `
         SELECT id, imagenes_inmueble, remates_id FROM img_inmuebles`;
@@ -18,7 +16,6 @@ class Live {
         }));
     }
 
-    // Obtener inmuebles de un remate específico
     static async getInmuebles(remates_id) {
         const query = `
         SELECT * FROM inmuebles WHERE remates_id = ?`;
@@ -26,7 +23,6 @@ class Live {
         return rows;
     }
 
-    // Obtener cronograma de un remate específico
     static async getCronograma(remates_id) {
         const query = `
         SELECT * FROM cronograma WHERE remates_id = ?`;
@@ -34,7 +30,6 @@ class Live {
         return rows;
     }
 
-    // Obtener detalles de un remate específico
     static async getDetalles(remates_id) {
         const query = `
         SELECT * FROM detalles WHERE remates_id = ?`;
@@ -42,17 +37,13 @@ class Live {
         return rows;
     }
 
-
-    // Obtener seguimiento de un remate específico
     static async getSeguimiento(remates_id) {
         const query = `
-    SELECT * FROM seguimientos WHERE remates_id = ?`; // Cambiar el nombre de la tabla
+        SELECT * FROM seguimientos WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
 
-
-    // Obtener detalles de seguimiento de un remate específico
     static async getTrackingDetails(remates_id) {
         const query = `
         SELECT 
@@ -81,4 +72,5 @@ class Live {
         return rows;
     }
 }
-module.exports = Live;
+
+module.exports = EnVivo;

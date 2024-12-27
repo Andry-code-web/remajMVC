@@ -115,6 +115,7 @@ io.on('connection', (socket) => {
         auctionTimers[remates_id] = {
           startTime: fechaHoraInicio,
           remainingTime: timeDiffInSeconds > 0 ? timeDiffInSeconds : 0,
+          chatEnabled: true, // Inicialmente el chat está habilitado
         };
       }
 
@@ -135,37 +136,65 @@ io.on('connection', (socket) => {
     }
   });
 
-  function startAuctionTimer(remates_id, durationInSeconds = 5 * 60 * 60) {
+  function startAuctionTimer(remates_id, durationInSeconds = 0.005 * 60 * 60) {
+    // Cancelar temporizador existente si existe
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
       console.log(`⏹️ Temporizador existente cancelado para la subasta ${remates_id}`);
     }
 
+    // Inicializar tiempo restante
     let remainingTime = durationInSeconds;
 
-    const intervalId = setInterval(() => {
+    // Función para finalizar la subasta
+    async function finalizeAuction() {
+      clearInterval(auctionTimers[remates_id]?.intervalId);
+      const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
+
+      if (winner) {
+        try {
+          // Actualizar la base de datos con los resultados de la subasta
+          await db.execute(
+            'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
+            ['finalizado', winner, highestAmount, remates_id]
+          );
+          console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
+        } catch (error) {
+          console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
+        }
+      }
+
+      // Emitir eventos de finalización y deshabilitar el chat
+      io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
+      delete auctionTimers[remates_id];
+    }
+
+    // Iniciar el temporizador
+    const intervalId = setInterval(async () => {
       if (remainingTime > 0) {
+        // Actualizar el tiempo restante
         io.to(remates_id).emit('timer-update', remainingTime);
         remainingTime--;
       } else {
-        clearInterval(intervalId);
-        delete auctionTimers[remates_id];
-        io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-        console.log(`⏰ Subasta ${remates_id} finalizada`);
+        await finalizeAuction();
       }
     }, 1000);
 
-    auctionTimers[remates_id] = {
-      ...auctionTimers[remates_id],
-      intervalId,
-    };
-
-    console.log(`⏳ Temporizador iniciado para la subasta ${remates_id} con ${durationInSeconds} segundos`);
+    // Guardar el temporizador en la estructura global
+    auctionTimers[remates_id] = { intervalId, remainingTime };
+    console.log(`⏳ Temporizador iniciado para la subasta ${remates_id}, duración: ${durationInSeconds} segundos`);
   }
 
   socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {
     if (!remates_id || !usuarios_id || monto === undefined) {
       socket.emit('error-message', 'Datos incompletos para el mensaje');
+      return;
+    }
+
+    // Verificar si el chat está habilitado para esta subasta
+    if (!auctionTimers[remates_id]?.chatEnabled) {
+      socket.emit('error-message', 'El chat está deshabilitado para esta subasta');
       return;
     }
 
@@ -186,6 +215,9 @@ io.on('connection', (socket) => {
       // Actualizar el monto más alto si corresponde
       if (auctionTimers[remates_id]) {
         auctionTimers[remates_id].highestAmount = Math.max(monto, auctionTimers[remates_id].highestAmount || 0);
+        if (auctionTimers[remates_id].highestAmount === monto) {
+          auctionTimers[remates_id].highestBidder = usuario;
+        }
       }
     } catch (error) {
       console.error('❌ Error al guardar el mensaje:', error.message || error);
@@ -193,7 +225,6 @@ io.on('connection', (socket) => {
     }
   });
 });
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

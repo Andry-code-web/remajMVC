@@ -1,0 +1,47 @@
+<div class="seguimiento-container">
+    <div class="seguimiento-table">
+      <table>
+        <thead>
+          <tr>
+            <th>N° Expediente</th>
+            <th>Distrito Judicial</th>
+            <th>Especialista</th>
+            <th>Instancia</th>
+            <th>Órgano Jurisdiccional</th>
+            <th>N° Convocatoria</th>
+            <th>Fecha Registro</th>
+            <th>Procesado por</th>
+            <th>Reanudado</th>
+            <th>Fase Convocatoria</th>
+            <th>Estado Convocatoria</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% if (seguimientos && seguimientos.length > 0) { %>
+              <% seguimientos.forEach(seguimiento => { %>
+                <tr>
+                  <td><%= seguimiento.n_expediente %></td>
+                  <td><%= seguimiento.distrito_judicial %></td>
+                  <td><%= seguimiento.especialista %></td>
+                  <td><%= seguimiento.instancia %></td>
+                  <td><%= seguimiento.organo_juridiccional %></td>
+                  <td><%= seguimiento.n_convocatoria %></td>
+                  <td><%= seguimiento.fecha_registro %></td>
+                  <td><%= seguimiento.procesado_por %></td>
+                  <td><%= seguimiento.reanudado %></td>
+                  <td><%= seguimiento.fase_convocatoria %></td>
+                  <td><%= seguimiento.estado_convocatoria %></td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="9">No hay seguimientos disponibles</td>
+              </tr>
+            <% } %>
+          </tbody>
+      </table>
+    </div>
+  
+  <a href="/en_vivo" class="back-button">Volver a Remates</a>
+</div>
+

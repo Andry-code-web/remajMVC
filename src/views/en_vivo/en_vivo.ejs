@@ -1,223 +1,79 @@
+<!-- en_vivo.ejs -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remates en Vivo</title>
-    <!-- bootstrap js y css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-    <!-- CDN DE ICONOS REMIX -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
-    <!-- script en_vivo -->
-    <script src="/js/script_en_vivo.js"></script>
-    <style>
-      .seguimiento-id {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 5px 10px;
-        border-radius: 5px;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/en_vivo/en_vivo.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
   </head>
   <body>
-    <!-- COMPONENTE HEADER -->
-    <%- include('../partials/navbar') %>
-
-    <!-- tarjeta -->
-    <section class="property-container container mt-4">
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <section class="property-container">
+      <div class="auction-grid">
         <% if (enVivoData && enVivoData.length > 0) { %>
           <% enVivoData.forEach((auction) => { %>
-          <div class="col">
-            <div class="card h-100">
-              <div class="position-absolute top-0 start-0 m-2 bg-light rounded-pill px-2 py-1">
-                <span class="fw-bold">Remate N°</span>
-                <span class="ms-1"><%= auction.id %></span>
+            <div class="auction-card">
+              <div class="auction-header">
+                <span class="auction-number">Remate N° <%= auction.id %></span>
               </div>
-              <!-- Imagen -->
-              <div class="ratio ratio-16x9">
-                <img src="<%= auction.imagen %>" alt="Imagen de propiedad" class="card-img-top object-fit-cover" />
+    
+              <div class="auction-image">
+                <img src="<%= auction.imagen %>" alt="Imagen de propiedad" />
               </div>
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="fas fa-map-marker-alt text-danger me-2"></i><%= auction.ubicacion %>
+    
+              <div class="auction-content">
+                <h5 class="auction-title">
+                  <i class="fas fa-map-marker-alt"></i> <%= auction.ubicacion %>
                 </h5>
-                <p class="small text-muted mb-2">
-                  <i class="fas fa-calendar me-2"></i>Presentación de ofertas:
-                  <%= auction.fecha_presentacion %>
-                </p>
-                <p class="small text-muted mb-2">
-                  <i class="fas fa-clock me-2"></i><%= auction.hora_presentacion %>
-                </p>
     
-                <h6 class="mt-3">Descripción</h6>
-                <p class="card-text"><%= auction.descripcion %></p>
-    
-                <div class="mt-3">
-                  <span class="text-muted">Precio Base:</span>
-                  <p class="h5 text-primary">USD$ <%= auction.precios %></p>
+                <div class="auction-info">
+                  <p>
+                    <i class="fas fa-calendar"></i> Presentación de ofertas: <%= auction.fecha_presentacion %>
+                  </p>
+                  <p>
+                    <i class="fas fa-clock"></i> <%= auction.hora_presentacion %>
+                  </p>
                 </div>
-              </div>
     
-              <!-- Botones -->
-              <div class="card-footer bg-transparent border-top-0">
-                <div class="d-flex justify-content-between">
-                  <a href="/en_vivo/seguimiento/<%= auction.id %>" class="btn btn-outline-primary btn-sm">
-                    <i class="fas fa-chart-line me-1"></i> Seguimiento
+                <div class="description-section">
+                  <h6>Descripción</h6>
+                  <p><%= auction.descripcion %></p>
+                </div>
+    
+                <div class="price-section">
+                  <span class="price-label">Precio Base:</span>
+                  <p class="price-value">USD$ <%= auction.precios %></p>
+                </div>
+    
+                <div class="action-buttons">
+                  <a href="/en_vivo/seguimiento/<%= auction.id %>" class="action-btn seguimiento">
+                    <i class="fas fa-chart-line"></i> Seguimiento
                   </a>
-                  <a href="/en_vivo/detalles/<%= auction.id %>" class="btn btn-outline-secondary btn-sm">
-                    <i class="fas fa-info-circle me-1"></i> Detalles
+                  <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
+                    <i class="fas fa-info-circle"></i> Detalles
                   </a>
-                  <a href="/en_vivo/pdf/<%= auction.id %>" class="btn btn-outline-success btn-sm">
-                    <i class="fas fa-building me-1"></i> Aviso
+                  <a href="/en_vivo/pdf/<%= auction.id %>" class="action-btn aviso">
+                    <i class="fas fa-building"></i> Aviso
                   </a>
                 </div>
               </div>
             </div>
-          </div>
           <% }); %>
         <% } else { %>
-          <div class="col-12 text-center">
+          <div class="no-results">
             <p>No se encontraron subastas en vivo.</p>
           </div>
         <% } %>
       </div>
     </section>
-    
-    
-    <!-- Modal Detalles/Inmuebles/Cronograma -->
-    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="detailsModalLabel">
-              Detalles del Remate
-            </h5>
-          </div>
-          <div class="modal-body">
-            <!-- Botones dentro del modal -->
-            <% enVivoData.forEach((auction) => { %>
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <a href="en_vivo/detalles/<%= auction.id %>" class="nav-link active tab-button" id="detalles-tab" data-bs-toggle="tab" role="tab" aria-controls="detalles" aria-selected="true">Detalles</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <a href="en_vivo/inmuebles/<%= auction.id %>" class="nav-link tab-button" id="inmuebles-tab" data-bs-toggle="tab" role="tab" aria-controls="inmuebles" aria-selected="false">Inmuebles</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <a href="en_vivo/cronograma/<%= auction.id %>" class="nav-link tab-button" id="cronograma-tab" data-bs-toggle="tab" role="tab" aria-controls="cronograma" aria-selected="false">Cronograma</a>
-                </li>
-              </ul>
-            <% }); %>
-    
-            <div class="tab-content" id="myTabContent">
-              <!-- Detalles -->
-              <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="detalles-tab">
-                <table class="table table-striped">
-                  <caption>
-                    Detalles del Remate
-                  </caption>
-                  <tbody>
-                    <% if (detalles && detalles.length > 0) { %>
-                      <% detalles.forEach(detalle => { %>
-                        <tr>
-                          <th>Expediente:</th>
-                          <td><%= detalle.expediente %></td>
-                        </tr>
-                        <tr>
-                          <th>Distrito Judicial:</th>
-                          <td><%= detalle.distritoJudicial %></td>
-                        </tr>
-                        <tr>
-                          <th>Instancia:</th>
-                          <td><%= detalle.instancia %></td>
-                        </tr>
-                      <% }); %>
-                    <% } else { %>
-                      <tr>
-                        <td colspan="2" class="text-center">No hay detalles disponibles.</td>
-                      </tr>
-                    <% } %>
-                  </tbody>
-                </table>
-              </div>
-    
-              <!-- Inmuebles -->
-              <div class="tab-pane fade" id="inmuebles" role="tabpanel" aria-labelledby="inmuebles-tab">
-                <table class="table table-striped">
-                  <caption>Inmuebles del Remate</caption>
-                  <thead>
-                    <tr>
-                      <th>Partida Registral</th>
-                      <th>Tipo Inmueble</th>
-                      <th>Dirección</th>
-                      <th>Carga y/o Gravamen</th>
-                      <th>Porcentaje a Rematar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% if (inmuebles && inmuebles.length > 0) { %>
-                      <% inmuebles.forEach(inmueble => { %>
-                        <tr>
-                          <td><%= inmueble.partidaRegistral %></td>
-                          <td><%= inmueble.tipoInmueble %></td>
-                          <td><%= inmueble.direccion %></td>
-                          <td><%= inmueble.cargaGravamen %></td>
-                          <td><%= inmueble.porcentajeRematar %></td>
-                        </tr>
-                      <% }); %>
-                    <% } else { %>
-                      <tr>
-                        <td colspan="5" class="text-center">No hay inmuebles disponibles.</td>
-                      </tr>
-                    <% } %>
-                  </tbody>
-                </table>
-              </div>
-    
-              <!-- Cronograma -->
-              <div class="tab-pane fade" id="cronograma" role="tabpanel" aria-labelledby="cronograma-tab">
-                <table class="table table-striped">
-                  <caption>Cronograma del Remate</caption>
-                  <thead>
-                    <tr>
-                      <th>N°</th>
-                      <th>Fase</th>
-                      <th>Fecha Inicio</th>
-                      <th>Fecha Fin</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% if (cronogramas && cronogramas.length > 0) { %>
-                      <% cronogramas.forEach((cronograma, index) => { %>
-                        <tr>
-                          <td><%= index + 1 %></td>
-                          <td><%= cronograma.fase %></td>
-                          <td><%= cronograma.fechaInicio %></td>
-                          <td><%= cronograma.fechaFin %></td>
-                        </tr>
-                      <% }); %>
-                    <% } else { %>
-                      <tr>
-                        <td colspan="4" class="text-center">No hay cronograma disponible.</td>
-                      </tr>
-                    <% } %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    
-    <!-- nabvar -->
-    <script>
+
+    <script src="/js/script_en_vivo.js"></script>
+  </body>
+</html>
+
+<!-- nabvar -->
+<!--   <script>
       let lastScrollTop = 0; // Posición previa del scroll
       const header = document.getElementById("header"); // Encabezado
       const propertyContainer = document.querySelector(".property-container"); // Contenedor de propiedades
@@ -241,8 +97,4 @@
 
         lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
       });
-    </script>
-
-  
-  </body>
-</html>
+    </script> -->

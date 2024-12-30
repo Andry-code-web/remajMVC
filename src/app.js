@@ -168,7 +168,9 @@ io.on('connection', (socket) => {
             ['finalizado', winner, highestAmount, remates_id]
           );
           console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
-        } catch (error) {
+        } 
+        
+        catch (error) {
           console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
         }
       }

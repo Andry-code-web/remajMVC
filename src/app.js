@@ -7,6 +7,7 @@ const socketIO = require('socket.io');
 const morgan = require('morgan');
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
+const MySQLStore = require('express-mysql-session')(session);
 const db = require('./config/database'); // Usando la conexión pool
 require('dotenv').config();
 
@@ -15,6 +16,15 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   connectionStateRecovery: {},
 });
+
+const options = {
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'remajud',
+}
+
+const sessionStore = new MySQLStore(options);
 
 // Middleware
 app.use(cookieParser());
@@ -25,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {

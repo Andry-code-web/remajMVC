@@ -307,15 +307,20 @@
   });
 
   formBid.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const amount = parseFloat(inputBid.value);
-    if (amount > highestAmount) {
+  e.preventDefault();
+  const amount = parseFloat(inputBid.value);
+
+  if (amount > highestAmount) {
+    const confirmSend = confirm(`¿Estás seguro de enviar la oferta de USD$${amount}?`);
+    if (confirmSend) {
       socket.emit("chat-message", { monto: amount, usuarios_id: userId, remates_id: auctionId });
       inputBid.value = "";
-    } else {
-      alert(`La oferta debe ser mayor a USD$${highestAmount}`);
     }
-  });
+  } else {
+    alert(`La oferta debe ser mayor a USD$${highestAmount}`);
+  }
+});
+
 </script>
 
 

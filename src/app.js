@@ -145,7 +145,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, durationInSeconds = 0.05 * 60 * 60) {
+  async function startAuctionTimer(remates_id, durationInSeconds = 0.005 * 60 * 60) {
     // Cancelar temporizador existente si existe
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
@@ -159,7 +159,7 @@ io.on('connection', (socket) => {
     async function finalizeAuction() {
       clearInterval(auctionTimers[remates_id]?.intervalId);
       const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
-
+    
       if (winner) {
         try {
           // Actualizar la base de datos con los resultados de la subasta
@@ -168,17 +168,16 @@ io.on('connection', (socket) => {
             ['finalizado', winner, highestAmount, remates_id]
           );
           console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
-        } 
-        
-        catch (error) {
+        } catch (error) {
           console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
         }
       }
-
+    
       // Emitir eventos de finalización y deshabilitar el chat
       io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` }); // Emitir evento alert-auction-ended con mensaje personalizado
       console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-
+    
       // Cambiar estado a "finalizado" cuando la subasta termine
       try {
         await db.execute(
@@ -189,10 +188,11 @@ io.on('connection', (socket) => {
       } catch (error) {
         console.error(`❌ Error al actualizar el estado de la subasta ${remates_id}:`, error.message || error);
       }
-
+    
       // Eliminar el temporizador de la memoria
       delete auctionTimers[remates_id];
     }
+    
 
     // Iniciar el temporizador
     const intervalId = setInterval(async () => {

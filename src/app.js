@@ -84,13 +84,22 @@ io.on('connection', (socket) => {
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {
-      // Obtener la fecha y hora de inicio del remate desde la base de datos
-      const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates WHERE id = ?', [remates_id]);
-      if (rows.length === 0) {
+      // Verificar el estado de la subasta
+      const [row] = await db.execute('SELECT estado FROM remates WHERE id = ?', [remates_id]);
+      if (row.length === 0) {
         socket.emit('error-message', 'Remate no encontrado');
         return;
       }
 
+      const estadoRemate = row[0].estado;
+
+      if (estadoRemate === 'finalizado') {
+        socket.emit('error-message', 'La subasta ha finalizado, el chat está deshabilitado');
+        return;
+      }
+
+      // Obtener la fecha y hora de inicio del remate
+      const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates WHERE id = ?', [remates_id]);
       const fechaInicio = rows[0].fecha_remate;
       const horaInicio = rows[0].hora_remate;
       const fechaHoraInicio = new Date(`${fechaInicio}T${horaInicio}`);
@@ -136,7 +145,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  function startAuctionTimer(remates_id, durationInSeconds = 0.005 * 60 * 60) {
+  async function startAuctionTimer(remates_id, durationInSeconds = 0.05 * 60 * 60) {
     // Cancelar temporizador existente si existe
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
@@ -167,6 +176,19 @@ io.on('connection', (socket) => {
       // Emitir eventos de finalización y deshabilitar el chat
       io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
       console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
+
+      // Cambiar estado a "finalizado" cuando la subasta termine
+      try {
+        await db.execute(
+          'UPDATE remates SET estado = ? WHERE id = ?',
+          ['finalizado', remates_id] // Cambiar estado a "finalizado"
+        );
+        console.log(`✅ Estado de la subasta ${remates_id} actualizado a "finalizado"`);
+      } catch (error) {
+        console.error(`❌ Error al actualizar el estado de la subasta ${remates_id}:`, error.message || error);
+      }
+
+      // Eliminar el temporizador de la memoria
       delete auctionTimers[remates_id];
     }
 
@@ -181,6 +203,21 @@ io.on('connection', (socket) => {
       }
     }, 1000);
 
+    // Actualizar el estado de la subasta a "en curso" en la base de datos
+    try {
+      await db.execute(
+        'UPDATE remates SET estado = ? WHERE id = ?',
+        ['en_curso', remates_id] // Cambiar estado a "en_curso"
+      );
+      console.log(`✅ Estado de la subasta ${remates_id} actualizado a "en curso"`);
+    } catch (error) {
+      console.error(`❌ Error al actualizar el estado de la subasta ${remates_id}:`, error.message || error);
+    }
+
+    // Emitir el evento de que la subasta ha comenzado
+    io.to(remates_id).emit('auction-started', 'La subasta ha comenzado');
+    io.to(remates_id).emit('chat-enabled', true); // Habilitar el chat
+
     // Guardar el temporizador en la estructura global
     auctionTimers[remates_id] = { intervalId, remainingTime };
     console.log(`⏳ Temporizador iniciado para la subasta ${remates_id}, duración: ${durationInSeconds} segundos`);
@@ -192,9 +229,10 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // Verificar si el chat está habilitado para esta subasta
-    if (!auctionTimers[remates_id]?.chatEnabled) {
-      socket.emit('error-message', 'El chat está deshabilitado para esta subasta');
+    // Verificar el estado de la subasta antes de permitir el mensaje
+    const [row] = await db.execute('SELECT estado FROM remates WHERE id = ?', [remates_id]);
+    if (row.length === 0 || row[0].estado !== 'en_curso') {
+      socket.emit('error-message', 'El chat no está habilitado en este momento');
       return;
     }
 
@@ -225,6 +263,7 @@ io.on('connection', (socket) => {
     }
   });
 });
+
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

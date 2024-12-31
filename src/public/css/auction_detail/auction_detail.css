@@ -9,7 +9,10 @@
 
 .property-header {
   grid-column: 1/-1;
-  background-color: #b3b1b1;
+  background-image: url("/img/remates-judiciales-de-inmuebles-barra-inmuebles2.png"); /* Ruta absoluta */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el recuadro */
+  background-position: center; /* Centra la imagen dentro del recuadro */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
   color: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -335,6 +338,13 @@
 .classification-table tr:first-child td {
   color: #2196F3;
   font-weight: bold;
+}
+
+/* cronometro */
+.fecha-subasta {
+  text-align: center;
+  font-size: 2rem;
+  font-family: auto;
 }
 
 /*# sourceMappingURL=auction_detail.css.map */

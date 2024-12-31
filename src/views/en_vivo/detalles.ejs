@@ -1,90 +1,75 @@
-
+<link rel="stylesheet" href="/css/tags/tags.css">
 <div class="detalles-container">
   <div class="navigation-tabs">
     <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
     <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
     <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
   </div>
-  
   <% if (detalles && detalles.length > 0) { %>
     <% detalles.forEach(detalle => { %>
-      <div class="detalles-grid">
-        <div class="detail-item">
-          <span class="label">Expediente:</span>
-          <span class="value"><%= detalle.expediente %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Distrito Judicial:</span>
-          <span class="value"><%= detalle.distrito_judicial %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Órgano Jurisdisccional:</span>
-          <span class="value"><%= detalle.organo_juridiccional %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Instancia:</span>
-          <span class="value"><%= detalle.instancia %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Juez:</span>
-          <span class="value"><%= detalle.juez %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Especialista:</span>
-          <span class="value"><%= detalle.especialista %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Materia:</span>
-          <span class="value"><%= detalle.materia %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Resolución:</span>
-          <span class="value"><%= detalle.resolucion %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Fecha Resolución:</span>
-          <span class="value"><%= detalle.fecha_resolucion %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Archivo:</span>
-          <span class="value"><%= detalle.archivo %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Convocatoria:</span>
-          <span class="value"><%= detalle.convocatoria %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Tipo Cambio:</span>
-          <span class="value"><%= detalle.tipo_cambio %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Tasación:</span>
-          <span class="value"><%= detalle.tasacion %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Precio Base:</span>
-          <span class="value"><%= detalle.precio_base %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Incremento entre ofertas:</span>
-          <span class="value"><%= detalle.incremento_ofertas %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Arancel:</span>
-          <span class="value"><%= detalle.arancel %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Oblaje:</span>
-          <span class="value"><%= detalle.oblaje %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Descripción:</span>
-          <span class="value"><%= detalle.descripcion %></span>
-        </div>
-        <div class="detail-item">
-          <span class="label">N° inscritos:</span>
-          <span class="value"><%= detalle.n_descripcion %></span>
-        </div>
+      <div class="detalles-table">
+        <table>
+          <tbody>
+            <tr>
+              <td class="label">Expediente:</td>
+              <td class="value"><%= detalle.expediente %></td>
+              <td class="label">Distrito Judicial:</td>
+              <td class="value"><%= detalle.distrito_judicial %></td>
+            </tr>
+            <tr>
+              <td class="label">Órgano Jurisdiccional:</td>
+              <td class="value"><%= detalle.organo_juridiccional %></td>
+              <td class="label">Instancia:</td>
+              <td class="value"><%= detalle.instancia %></td>
+            </tr>
+            <tr>
+              <td class="label">Juez:</td>
+              <td class="value"><%= detalle.juez %></td>
+              <td class="label">Especialista:</td>
+              <td class="value"><%= detalle.especialista %></td>
+            </tr>
+            <tr>
+              <td class="label">Materia:</td>
+              <td class="value"><%= detalle.materia %></td>
+              <td class="label">Resolución:</td>
+              <td class="value"><%= detalle.resolucion %></td>
+            </tr>
+            <tr>
+              <td class="label">Fecha Resolución:</td>
+              <td class="value"><%= detalle.fecha_resolucion %></td>
+              <td class="label">Archivo:</td>
+              <td class="value"><%= detalle.archivo %></td>
+            </tr>
+            <tr>
+              <td class="label">Convocatoria:</td>
+              <td class="value"><%= detalle.convocatoria %></td>
+              <td class="label">Tipo Cambio:</td>
+              <td class="value"><%= detalle.tipo_cambio %></td>
+            </tr>
+            <tr>
+              <td class="label">Tasación:</td>
+              <td class="value"><%= detalle.tasacion %></td>
+              <td class="label">Precio Base:</td>
+              <td class="value"><%= detalle.precio_base %></td>
+            </tr>
+            <tr>
+              <td class="label">Incremento entre ofertas:</td>
+              <td class="value"><%= detalle.incremento_ofertas %></td>
+              <td class="label">Arancel:</td>
+              <td class="value"><%= detalle.arancel %></td>
+            </tr>
+            <tr>
+              <td class="label">Oblaje:</td>
+              <td class="value"><%= detalle.oblaje %></td>
+              <td class="label">N° inscritos:</td>
+              <td class="value"><%= detalle.n_descripcion %></td>
+            </tr>
+            <tr>
+              <td class="label">Descripción:</td>
+              <td class="value" colspan="3"><%= detalle.descripcion %></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     <% }); %>
   <% } else { %>

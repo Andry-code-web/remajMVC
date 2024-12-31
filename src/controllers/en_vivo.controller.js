@@ -7,20 +7,13 @@ exports.getEnVivo = async (req, res) => {
         const enVivoData = await EnVivo.getAll();
         const imgInmuebles = await EnVivo.getImagenesInmuebles();
 
-        const dataConImagenes = await Promise.all(enVivoData.map(async (auction) => {
-            const imagePath = imgInmuebles.find((img) => img.remates_id === auction.id)?.imagenes_inmueble || "/img/default.png";
-            let base64Image;
+        console.log("Datos de remates:", enVivoData);
+        console.log("Imágenes de inmuebles:", imgInmuebles);
 
-            try {
-                const imageBuffer = await fs.readFile(path.join(__dirname, '..', 'public', imagePath));
-                base64Image = `data:image/${path.extname(imagePath).slice(1)};base64,${imageBuffer.toString('base64')}`;
-            } catch (error) {
-                console.error('Error al cargar imagen:', error);
-                base64Image = "/img/default.png";
-            }
-
-            return { ...auction, imagen: base64Image };
-        }));
+        const dataConImagenes = enVivoData.map((auction) => {
+            const imagenBase64 = imgInmuebles.find((img) => img.remates_id === auction.id)?.imagenes_inmueble || "";
+            return { ...auction, imagen: imagenBase64 };
+        });
 
         res.render("en_vivo/en_vivo", { enVivoData: dataConImagenes });
     } catch (error) {
@@ -28,6 +21,7 @@ exports.getEnVivo = async (req, res) => {
         res.render("error", { message: "Error al obtener datos de subastas en vivo" });
     }
 };
+
 
 exports.getSeguimiento = async (req, res) => {
     try {
@@ -75,6 +69,9 @@ exports.getInmuebles = async (req, res) => {
             inmuebles: inmuebles || [],
             auctionId
         });
+
+    
+
     } catch (error) {
         console.error('Error en getInmuebles:', error);
         res.render("error", {
@@ -87,6 +84,8 @@ exports.getCronograma = async (req, res) => {
     try {
         const auctionId = req.params.id;
         const cronograma = await EnVivo.getCronograma(auctionId);
+        console.log('datos cronograma: ', cronograma);
+        
 
         res.render("en_vivo/cronograma", {
             cronograma: cronograma || [],

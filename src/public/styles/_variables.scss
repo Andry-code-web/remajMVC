@@ -27,6 +27,35 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 $glass-effect: rgba(255, 255, 255, 0.1);
 $card-transition: all 0.3s ease;
 
+// Colors
+$primary-cream: #F5E6D3;
+$secondary-cream: #E2D1BC;
+$gold: #B38B59;
+$light-gold: #D4B483;
+$dark-gold: #8B6B43;
+$bg-cream: #FAF7F2;
+$card-bg: rgba(255, 255, 255, 0.9);
+
+// Shadows & Effects
+$card-shadow: 0 8px 20px rgba($dark-gold, 0.1);
+$hover-shadow: 0 12px 25px rgba($dark-gold, 0.15);
+$glass-effect: rgba(255, 255, 255, 0.8);
+
+// Transitions
+$card-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+$hover-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Border Radius
+$border-radius-sm: 8px;
+$border-radius: 12px;
+$border-radius-lg: 16px;
+
+// Variables locales
+$bg-color: #1A1A1A;
+$card-bg: rgba(26, 26, 26, 0.95);
+$text-color: #E5D0B1;
+$accent-gold: #B38B59;
+$hover-gold: #D4B483;
 
 @font-face {
     font-family: 'fuentePrincipal';

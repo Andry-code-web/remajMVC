@@ -6,95 +6,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remates en Vivo</title>
     <link rel="stylesheet" href="/css/en_vivo/en_vivo.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/globales/globales.css" />
   </head>
   <body>
+    <%- include('../partials/navbar.ejs') %>
+
     <section class="property-container">
       <div class="auction-grid">
-        <% if (enVivoData && enVivoData.length > 0) { %>
-          <% enVivoData.forEach((auction) => { %>
-            <div class="auction-card">
-              <div class="auction-header">
-                <span class="auction-number">Remate N° <%= auction.id %></span>
-              </div>
-    
-              <div class="auction-image">
-                <img src="<%= auction.imagen %>" alt="Imagen de propiedad" />
-              </div>
-    
-              <div class="auction-content">
-                <h5 class="auction-title">
-                  <i class="fas fa-map-marker-alt"></i> <%= auction.ubicacion %>
-                </h5>
-    
-                <div class="auction-info">
-                  <p>
-                    <i class="fas fa-calendar"></i> Presentación de ofertas: <%= auction.fecha_presentacion %>
-                  </p>
-                  <p>
-                    <i class="fas fa-clock"></i> <%= auction.hora_presentacion %>
-                  </p>
-                </div>
-    
-                <div class="description-section">
-                  <h6>Descripción</h6>
-                  <p><%= auction.descripcion %></p>
-                </div>
-    
-                <div class="price-section">
-                  <span class="price-label">Precio Base:</span>
-                  <p class="price-value">USD$ <%= auction.precios %></p>
-                </div>
-    
-                <div class="action-buttons">
-                  <a href="/en_vivo/seguimiento/<%= auction.id %>" class="action-btn seguimiento">
-                    <i class="fas fa-chart-line"></i> Seguimiento
-                  </a>
-                  <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
-                    <i class="fas fa-info-circle"></i> Detalles
-                  </a>
-                  <a href="/en_vivo/pdf/<%= auction.id %>" class="action-btn aviso">
-                    <i class="fas fa-building"></i> Aviso
-                  </a>
-                </div>
-              </div>
-            </div>
-          <% }); %>
-        <% } else { %>
-          <div class="no-results">
-            <p>No se encontraron subastas en vivo.</p>
+        <% if (enVivoData && enVivoData.length > 0) { %> <%
+        enVivoData.forEach((auction) => { %>
+        <div class="auction-card">
+          <div class="auction-header">
+            <span class="auction-number">Remate N° <%= auction.id %></span>
           </div>
+
+          <div class="auction-image">
+            <img
+            src="data:image/jpeg;base64,<%= auction.imagen || '' %>"
+            alt="Imagen de propiedad"
+            class="property-image"/>
+          </div>
+
+          <div class="auction-content">
+            <h5 class="auction-title">
+              <i class="fas fa-map-marker-alt"></i> <%= auction.ubicacion %>
+            </h5>
+
+            <div class="auction-info">
+              <p>
+                <i class="fas fa-calendar"></i> Presentación de ofertas: <%=
+                auction.fecha_presentacion %>
+              </p>
+              <p>
+                <i class="fas fa-clock"></i> <%= auction.hora_presentacion %>
+              </p>
+            </div>
+
+            <div class="description-section">
+              <h6>Descripción</h6>
+              <p><%= auction.descripcion %></p>
+            </div>
+
+            <div class="price-section">
+              <span class="price-label">Precio Base:</span>
+              <p class="price-value">USD$ <%= auction.precios %></p>
+            </div>
+
+            <div class="action-buttons">
+              <a
+                href="/en_vivo/seguimiento/<%= auction.id %>"
+                class="action-btn seguimiento"
+              >
+                <i class="fas fa-chart-line"></i> Seguimiento
+              </a>
+              <a
+                href="/en_vivo/detalles/<%= auction.id %>"
+                class="action-btn detalles"
+              >
+                <i class="fas fa-info-circle"></i> Detalles
+              </a>
+              <a href="/en_vivo/pdf/<%= auction.id %>" class="action-btn aviso">
+                <i class="fas fa-building"></i> Aviso
+              </a>
+            </div>
+          </div>
+        </div>
+        <% }); %> <% } else { %>
+        <div class="no-results">
+          <p>No se encontraron subastas en vivo.</p>
+        </div>
         <% } %>
       </div>
     </section>
 
     <script src="/js/script_en_vivo.js"></script>
-  </body>
-</html>
 
-<!-- nabvar -->
-<!--   <script>
-      let lastScrollTop = 0; // Posición previa del scroll
-      const header = document.getElementById("header"); // Encabezado
-      const propertyContainer = document.querySelector(".property-container"); // Contenedor de propiedades
+    <script>
+      let lastScrollTop = 0; // Última posición de scroll
+      const header = document.getElementById("header"); // Selección del encabezado
 
       window.addEventListener("scroll", () => {
         const currentScrollTop =
           window.scrollY || document.documentElement.scrollTop;
 
-        // Desaparece al bajar el scroll
-        if (
-          currentScrollTop > lastScrollTop &&
-          currentScrollTop > propertyContainer.offsetTop
-        ) {
-          header.style.transform = "translateY(-100%)"; // Desliza hacia arriba
-          header.style.opacity = "0"; // Desvanece
+        // Desaparece al hacer scroll hacia abajo
+        if (currentScrollTop > lastScrollTop) {
+          header.style.transform = "translateY(-100%)";
+          header.style.opacity = "0";
         } else {
-          // Aparece al subir el scroll
-          header.style.transform = "translateY(0)"; // Vuelve a su posición
-          header.style.opacity = "1"; // Reaparece
+          // Aparece al hacer scroll hacia arriba
+          header.style.transform = "translateY(0)";
+          header.style.opacity = "1";
         }
 
-        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Previene valores negativos
       });
-    </script> -->
+    </script>
+  </body>
+</html>

@@ -345,6 +345,11 @@
   display: block;
 }
 
+.finished-winner {
+  text-align: center;
+  font-weight: bold;
+}
+
 /* en progreso */
 /* Progress auction specific styles */
 .progress-auction-container {

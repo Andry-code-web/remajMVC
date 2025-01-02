@@ -1,12 +1,18 @@
 <div class="container_detalles">
   <div class="property-header">
-    <h1 class="property-title">
-      <%= auction.ubicacion %>
-    </h1>
-    <p class="property-address">
-      <%= auction.categoria %>
+    <div class="property-content">
+      <h1 class="property-title">
+        <%= auction.ubicacion %>
+      </h1>
+      <p class="property-address">
+        <%= auction.categoria %>
+      </p>
+    </div>
+    <p class="id_remate_header" id="id_remate_header1">
+      Remate N° <%= auction.id %>
     </p>
   </div>
+
 
   <div class="main-content">
     <div class="carousel">
@@ -23,9 +29,9 @@
     <div class="section">
       <h2 class="section-title">Sobre la Propiedad</h2>
       <!-- Mostrar nombre del usuario si está autenticado -->
-            <p>
-              <%= auction.descripcion %>
-            </p>
+      <p>
+        <%= auction.descripcion %>
+      </p>
     </div>
   </div>
   <div class="sidebar" id="chatdesubastas">
@@ -41,7 +47,7 @@
       <i class="fas fa-bed detail-icon"></i>
       <div class="detail-value">Habitaciones
         <img class="imagenes_detalle" src="/img/habitaciones.png" alt="Habitaciones">
-      </div>      
+      </div>
       <div class="detail-label">
         <%= auction.N_habitacion %>
       </div>

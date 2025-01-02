@@ -9,14 +9,23 @@
 
 .property-header {
   grid-column: 1/-1;
-  background-image: url("/img/remates-judiciales-de-inmuebles-barra-inmuebles2.png"); /* Ruta absoluta */
-  background-size: cover; /* Ajusta la imagen para cubrir todo el recuadro */
-  background-position: center; /* Centra la imagen dentro del recuadro */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-image: url("/img/remates-judiciales-de-inmuebles-barra-inmuebles2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
   padding: 20px;
   border-radius: 10px;
   margin-top: 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.property-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .property-title {
@@ -27,6 +36,14 @@
 .property-address {
   font-size: 1.2em;
   color: #ccc;
+}
+
+.id_remate_header {
+  text-align: right;
+  font-size: 1rem;
+  color: #fff;
+  align-self: flex-start;
+  font-weight: 700;
 }
 
 .carousel {

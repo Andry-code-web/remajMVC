@@ -4,7 +4,7 @@ const {
   getImagenesInmuebles,
   createRemate,
   agregarImagenes,
-  agregarAnexos,
+  agregarAnexoUrl,
   deleteRemate,
   getUsuarioAdmin,
   getRemateById,
@@ -85,7 +85,7 @@ exports.crearRemate = async (req, res) => {
   try {
     const {
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, anexo_url
     } = req.body;
 
     // Verifica que req.session.userId esté definido
@@ -100,15 +100,15 @@ exports.crearRemate = async (req, res) => {
       req.session.userId // Aquí agregamos usuario_admin_id
     ]);
 
-    // Procesar imágenes y anexos
+    // Procesar imágenes
     if (req.files["photo"]) {
       const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
       await agregarImagenes(imagenes);
     }
 
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
+    // Procesar la URL del anexo
+    if (anexo_url) {
+      await agregarAnexoUrl(anexo_url, remateId);
     }
 
     res.status(200).json({ message: "Remate creado exitosamente" });
@@ -130,15 +130,16 @@ exports.updateRemate = async (req, res) => {
       res.status(404).json({ success: false, error: 'Remate no encontrado' });
     }
 
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
+    // Procesar la URL del anexo
+    if (req.body.anexo_url) {
+      const anexoUrl = req.body.anexo_url;
+      await agregarAnexoUrl(anexoUrl, remateId);
     }
 
-    res.status(200).json({ message: "Remate creado exitosamente" });
+    res.status(200).json({ message: "Remate actualizado exitosamente" });
   } catch (error) {
-    console.error("Error al crear el remate:", error);
-    res.status(500).json({ message: "Hubo un problema al crear el remate" });
+    console.error("Error al actualizar el remate:", error);
+    res.status(500).json({ message: "Hubo un problema al actualizar el remate", error: error.message });
   }
 };
 
@@ -167,38 +168,5 @@ exports.getRemateForEdit = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener los datos del remate:', error);
     res.status(500).json({ error: 'Error al obtener los datos del remate' });
-  }
-};
-
-// Guardar los cambios de un remate
-exports.updateRemate = async (req, res) => {
-  try {
-    const remateId = req.params.id;
-    const {
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-    } = req.body;
-
-    // Actualizar el remate en la base de datos
-    await updateRemate(remateId, [
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-    ]);
-
-    // Procesar imágenes y anexos
-    if (req.files["photo"]) {
-      const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
-      await agregarImagenes(imagenes);
-    }
-
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
-    }
-
-    res.status(200).json({ success: true, message: "Remate actualizado exitosamente" });
-  } catch (error) {
-    console.error("Error al actualizar el remate:", error);
-    res.status(500).json({ success: false, message: "Hubo un problema al actualizar el remate", error: error.message });
   }
 };

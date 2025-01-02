@@ -18,7 +18,7 @@ router.get('/logout', adminController.logoutAdmin);
 router.get('/index', isAuthenticated, adminController.getAlladmin);
 
 // Ruta para crear un nuevo remate (protegida)
-router.post("/nuevo-remate", isAuthenticated, upload.fields([{ name: "photo" }, { name: "anexos" }]), adminController.crearRemate);
+router.post("/nuevo-remate", isAuthenticated, upload.fields([{ name: "photo" }]), adminController.crearRemate);
 
 // Ruta para eliminar un remate (protegida)
 router.delete('/eliminar-remate', isAuthenticated, adminController.deleteRemate);
@@ -27,7 +27,7 @@ router.delete('/eliminar-remate', isAuthenticated, adminController.deleteRemate)
 router.get('/editar-remate/:id', isAuthenticated, adminController.getRemateForEdit);
 
 // Ruta para guardar los cambios de un remate (protegida)
-router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo" }, { name: "anexos" }]), adminController.updateRemate);
+router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo" }]), adminController.updateRemate);
 
 // Ruta para la vista de subasta (protegida)
 router.get('/subasta', isAuthenticated, (req, res) => {

@@ -95,12 +95,12 @@ const agregarImagenes = async (imagenes) => {
     await db.query(query, [imagenes]);
 };
 
-const agregarAnexos = async (anexos) => {
+const agregarAnexoUrl = async (anexoUrl, remateId) => {
     const query = `
         INSERT INTO anexos (papeles_inmuebles, remates_id)
-        VALUES ?
+        VALUES (?, ?)
     `;
-    await db.query(query, [anexos]);
+    await db.query(query, [anexoUrl, remateId]);
 };
 
 // Función para eliminar un remate
@@ -171,6 +171,7 @@ const getRemateById = async (remateId) => {
         throw new Error('Error al obtener los datos del remate: ' + error.message);
     }
 };
+
 // Función para actualizar un remate
 const updateRemate = async (remateId, datosRemate) => {
     const query = `
@@ -188,7 +189,7 @@ module.exports = {
     getImagenesInmuebles,
     createRemate,
     agregarImagenes,
-    agregarAnexos,
+    agregarAnexoUrl,
     deleteRemate,
     getUsuarioAdmin,
     getRemateById,

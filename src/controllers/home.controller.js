@@ -9,7 +9,8 @@ exports.getAllRemates = async (req, res) => {
             if (!acc[row.id]) {
                 acc[row.id] = {
                     ...row,
-                    imagen: row.imagenes_inmueble || null // Guardar la primera imagen encontrada
+                    imagen: row.imagenes_inmueble || null, // Guardar la primera imagen encontrada
+                    anexos: [] // Inicializar anexos como un array vacío
                 };
             }
             return acc;
@@ -29,6 +30,16 @@ exports.getRemateDetails = async (req, res) => {
     try {
         const remateDetails = await Home.getRemateDetails(id);
         res.json(remateDetails);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getAnexos = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const anexos = await Home.getAnexos(id);
+        res.json(anexos);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

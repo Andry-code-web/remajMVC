@@ -149,7 +149,7 @@
                 <div class="botones-contenedor">
                   <a href="#" class="seguimiento-button">Seguimiento</a>
                   <a href="#" class="detalle-button">Detalle</a>
-                  <a href="#" class="aviso-button">Aviso</a>
+                  <a href="#" target="_blank" class="aviso-button" data-aviso-url="<%= remate.anexos[0] ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
                 </div>
         </div>
 
@@ -393,6 +393,7 @@
     <button class="return-button-l6789" onclick="hideSeguimientoCard()">← Regresar</button>
   </div>
 </section>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const seguimientoButtons = document.querySelectorAll('.seguimiento-button');
@@ -445,31 +446,49 @@
       document.body.removeChild(nubladoDetalle);
     };
 
+    const avisoButtons = document.querySelectorAll('.aviso-button');
+
+    avisoButtons.forEach(button => {
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        const avisoUrl = this.getAttribute('data-aviso-url');
+        if (avisoUrl && avisoUrl !== '#') {
+          window.open(avisoUrl, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay enlace disponible para este aviso.',
+          });
+        }
+      });
+    });
+
     function fillDetailCard(data) {
-      const remate = data.remate;
+      const detalles = data.detalles;
       const inmuebles = data.inmuebles;
       const cronograma = data.cronograma;
 
       // Llenar la sección de remate
-      document.getElementById('expediente').textContent = remate.expediente || 'N/A';
-      document.getElementById('distrito_judicial').textContent = remate.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional').textContent = remate.organo_jurisdiccional || 'N/A';
-      document.getElementById('instancia').textContent = remate.instancia || 'N/A';
-      document.getElementById('juez').textContent = remate.juez || 'N/A';
-      document.getElementById('especialista').textContent = remate.especialista || 'N/A';
-      document.getElementById('materia').textContent = remate.materia || 'N/A';
-      document.getElementById('resolucion').textContent = remate.resolucion || 'N/A';
-      document.getElementById('fecha_resolucion').textContent = remate.fecha_resolucion || 'N/A';
-      document.getElementById('archivo_link').textContent = remate.archivo || 'N/A';
-      document.getElementById('convocatoria').textContent = remate.convocatoria || 'N/A';
-      document.getElementById('tipo_cambio').textContent = remate.tipo_cambio || 'N/A';
-      document.getElementById('tasacion').textContent = remate.tasacion || 'N/A';
-      document.getElementById('precio_base').textContent = remate.precio_base || 'N/A';
-      document.getElementById('incremento_ofertas').textContent = remate.incremento_ofertas || 'N/A';
-      document.getElementById('arancel').textContent = remate.arancel || 'N/A';
-      document.getElementById('oblaje').textContent = remate.oblaje || 'N/A';
-      document.getElementById('descripcion').textContent = remate.descripcion || 'N/A';
-      document.getElementById('numero_inscritos').textContent = remate.numero_inscritos || 'N/A';
+      document.getElementById('expediente').textContent = detalles.expediente || 'N/A';
+      document.getElementById('distrito_judicial').textContent = detalles.distrito_judicial || 'N/A';
+      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_juridiccional || 'N/A';
+      document.getElementById('instancia').textContent = detalles.instancia || 'N/A';
+      document.getElementById('juez').textContent = detalles.juez || 'N/A';
+      document.getElementById('especialista').textContent = detalles.especialista || 'N/A';
+      document.getElementById('materia').textContent = detalles.materia || 'N/A';
+      document.getElementById('resolucion').textContent = detalles.resolucion || 'N/A';
+      document.getElementById('fecha_resolucion').textContent = detalles.fecha_resolucion || 'N/A';
+      document.getElementById('archivo_link').textContent = detalles.archivo || 'N/A';
+      document.getElementById('convocatoria').textContent = detalles.convocatoria || 'N/A';
+      document.getElementById('tipo_cambio').textContent = detalles.tipo_cambio || 'N/A';
+      document.getElementById('tasacion').textContent = detalles.tasacion || 'N/A';
+      document.getElementById('precio_base').textContent = detalles.precio_base || 'N/A';
+      document.getElementById('incremento_ofertas').textContent = detalles.incremento_ofertas || 'N/A';
+      document.getElementById('arancel').textContent = detalles.arancel || 'N/A';
+      document.getElementById('oblaje').textContent = detalles.oblaje || 'N/A';
+      document.getElementById('descripcion').textContent = detalles.descripcion || 'N/A';
+      document.getElementById('numero_inscritos').textContent = detalles.n_inscritos || 'N/A';
 
       // Llenar la sección de inmuebles
       const inmueblesTableBody = document.getElementById('inmuebles_tbody');
@@ -508,14 +527,27 @@
       document.getElementById('expediente_seguimiento').textContent = seguimiento.expediente || 'N/A';
       document.getElementById('instancia_seguimiento').textContent = seguimiento.instancia || 'N/A';
       document.getElementById('distrito_judicial_seguimiento').textContent = seguimiento.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional_seguimiento').textContent = seguimiento.organo_jurisdiccional || 'N/A';
+      document.getElementById('organo_jurisdiccional_seguimiento').textContent = seguimiento.organo_juridiccional || 'N/A';
       document.getElementById('especialidad_seguimiento').textContent = seguimiento.especialidad || 'N/A';
-      document.getElementById('convocatoria_seguimiento').textContent = seguimiento.convocatoria || 'N/A';
+      document.getElementById('convocatoria_seguimiento').textContent = seguimiento.nro_convocatoria || 'N/A';
       document.getElementById('fase_convocatoria_seguimiento').textContent = seguimiento.fase_convocatoria || 'N/A';
       document.getElementById('fecha_registro_seguimiento').textContent = seguimiento.fecha_registro || 'N/A';
       document.getElementById('estado_convocatoria_seguimiento').textContent = seguimiento.estado_convocatoria || 'N/A';
       document.getElementById('procesado_por_seguimiento').textContent = seguimiento.procesado_por || 'N/A';
       document.getElementById('reanudado_seguimiento').textContent = seguimiento.reanudado || 'N/A';
+
+      // Generar enlaces de Google Drive
+      const enlacesContainer = document.createElement('div');
+      enlacesContainer.classList.add('enlaces-container');
+      seguimiento.papeles_inmuebles.forEach(papel => {
+        const enlace = document.createElement('a');
+        enlace.href = papel.url;
+        enlace.textContent = papel.nombre;
+        enlace.target = '_blank';
+        enlacesContainer.appendChild(enlace);
+        enlacesContainer.appendChild(document.createElement('br'));
+      });
+      document.getElementById('procesado_por_seguimiento').parentNode.appendChild(enlacesContainer);
     }
   });
 

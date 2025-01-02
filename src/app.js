@@ -7,7 +7,6 @@ const socketIO = require('socket.io');
 const morgan = require('morgan');
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
-const MySQLStore = require('express-mysql-session')(session);
 const db = require('./config/database'); // Usando la conexión pool
 require('dotenv').config();
 
@@ -16,15 +15,6 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   connectionStateRecovery: {},
 });
-
-const options = {
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'remajud',
-}
-
-const sessionStore = new MySQLStore(options);
 
 // Middleware
 app.use(cookieParser());
@@ -35,11 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
-    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 3600000,
     },
   })
@@ -67,7 +56,10 @@ app.use('/auctions', require('./routes/auction.routes'));
 app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
-app.use('/', require('./routes/filtrohome.routes'));
+
+app.get('/unauthorized', (req, res) => {
+  res.render('unauthorized/unauthorized');
+});
 
 // Socket.IO
 
@@ -183,6 +175,7 @@ io.on('connection', (socket) => {
 
       // Emitir eventos de finalización y deshabilitar el chat
       io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` }); // Emitir evento alert-auction-ended con mensaje personalizado
       console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
 
       // Cambiar estado a "finalizado" cuando la subasta termine
@@ -199,6 +192,7 @@ io.on('connection', (socket) => {
       // Eliminar el temporizador de la memoria
       delete auctionTimers[remates_id];
     }
+
 
     // Iniciar el temporizador
     const intervalId = setInterval(async () => {

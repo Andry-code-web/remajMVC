@@ -1,12 +1,18 @@
 <div class="container_detalles">
   <div class="property-header">
-    <h1 class="property-title">
-      <%= auction.ubicacion %>
-    </h1>
-    <p class="property-address">
-      <%= auction.categoria %>
+    <div class="property-content">
+      <h1 class="property-title">
+        <%= auction.ubicacion %>
+      </h1>
+      <p class="property-address">
+        <%= auction.categoria %>
+      </p>
+    </div>
+    <p class="id_remate_header" id="id_remate_header1">
+      Remate N° <%= auction.id %>
     </p>
   </div>
+
 
   <div class="main-content">
     <div class="carousel">
@@ -23,12 +29,6 @@
     <div class="section">
       <h2 class="section-title">Sobre la Propiedad</h2>
       <!-- Mostrar nombre del usuario si está autenticado -->
-      <% if (user && user?.usuario) { %>
-      <p>Usuario: <%= user?.usuario %>
-      </p>
-      <% } else { %>
-      <p>Usuario: Anónimo</p>
-      <% } %>
       <p>
         <%= auction.descripcion %>
       </p>
@@ -45,42 +45,54 @@
   <div class="details-grid">
     <div class="detail-item">
       <i class="fas fa-bed detail-icon"></i>
-      <div class="detail-value">Habitaciones</div>
+      <div class="detail-value">Habitaciones
+        <img class="imagenes_detalle" src="/img/habitaciones.png" alt="Habitaciones">
+      </div>
       <div class="detail-label">
         <%= auction.N_habitacion %>
       </div>
     </div>
     <div class="detail-item">
       <i class="fas fa-bath detail-icon"></i>
-      <div class="detail-value">Baños</div>
+      <div class="detail-value">Baños
+        <img class="imagenes_detalle" src="/img/baños.png" alt="Baños">
+      </div>
       <div class="detail-label">
         <%= auction.N_banos %>
       </div>
     </div>
     <div class="detail-item">
       <i class="fas fa-vector-square detail-icon"></i>
-      <div class="detail-value">Tamaño</div>
+      <div class="detail-value">Tamaño
+        <img class="imagenes_detalle" src="/img/tamaño.png" alt="Tamaño">
+      </div>
       <div class="detail-label">
         <%= auction.tamaño_propiedad %> ft²
       </div>
     </div>
     <div class="detail-item">
       <i class="fas fa-utensils detail-icon"></i>
-      <div class="detail-value">Cocina</div>
+      <div class="detail-value">Cocina
+        <img class="imagenes_detalle" src="/img/kitchen_864615.png" alt="Cocina">
+      </div>
       <div class="detail-label">
         <%= auction.cocina %>
       </div>
     </div>
     <div class="detail-item">
       <i class="fas fa-warehouse detail-icon"></i>
-      <div class="detail-value">Garaje</div>
+      <div class="detail-value">Cochera
+        <img class="imagenes_detalle" src="/img/garage_11549405.png" alt="Cochera">
+      </div>
       <div class="detail-label">
         <%= auction.cochera %>
       </div>
     </div>
     <div class="detail-item">
       <i class="fas fa-tag detail-icon"></i>
-      <div class="detail-value">Precio oferta</div>
+      <div class="detail-value">Oferta
+        <img class="imagenes_detalle" src="/img/oferta.png" alt="Oferta">
+      </div>
       <div class="detail-label">
         <%= auction.precios %>
       </div>
@@ -88,11 +100,11 @@
   </div>
 </div>
 
-
-<link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
+<!-- 
+<link rel="stylesheet" href="/css/auction_detail/auction_detail.css"> -->
 <link rel="stylesheet" href="/css/chatsubastas/chatsubastas.css">
 <link rel="stylesheet" href="/css/auction_detail/auction_detail.css">
-<link rel="stylesheet" href="/css/chat/chat_subasta.css">
+<!-- <link rel="stylesheet" href="/css/chat/chat_subasta.css"> -->
 
 <script src="/socket.io/socket.io.js"></script>
 

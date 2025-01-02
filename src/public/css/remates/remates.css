@@ -326,11 +326,4 @@ form {
   text-align: center;
 }
 
-#timer-bar {
-  height: 10px;
-  width: 100%;
-  background-color: #f43a3a;
-  transition: width 1s linear;
-}
-
 /*# sourceMappingURL=remates.css.map */

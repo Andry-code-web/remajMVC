@@ -10,6 +10,7 @@
 
 .active-auction-header {
   padding: 16px;
+  margin-top: 6%;
 }
 
 .active-property-type {
@@ -342,6 +343,11 @@
 
 .finished-content-section.active {
   display: block;
+}
+
+.finished-winner {
+  text-align: center;
+  font-weight: bold;
 }
 
 /* en progreso */

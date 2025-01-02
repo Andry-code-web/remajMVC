@@ -1,225 +1,298 @@
 @use 'variables' as *;
 
+/* Reset y estilos base */
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
-/* Estilos base y contenedor principal */
-.tag-container {
+
+/* Estructura principal */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+/* Contenedor principal con espaciado ajustado */
+.content-wrapper {
+  flex: 1;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.95), rgba(28, 28, 28, 0.98));
-  min-height: 100vh;
 }
 
-/* Navegación de pestañas mejorada */
+/* Contenedores específicos con nuevo espaciado */
+.seguimiento-container,
+.detalles-container,
+.inmuebles-container,
+.cronograma-container {
+  padding-top: 120px; /* Aumentado el espaciado superior */
+  margin-bottom: 2rem;
+}
+
+/* Navegación de pestañas */
 .navigation-tabs {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin: 0 auto 2rem;
   padding: 1rem;
-  background: rgba(30, 30, 30, 0.95);
+  background: white;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba($gold, 0.1);
-  
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+
   .tab-link {
-    padding: 1rem 2.5rem;
-    color: $gold;
+    padding: 0.75rem 1.5rem;
+    color: #64748b;
     text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
     font-family: $fuentePrincipal;
     font-size: 0.95rem;
-    background: linear-gradient(45deg, rgba(40, 40, 40, 0.5), rgba(50, 50, 50, 0.5));
-    border: 1px solid rgba($gold, 0.2);
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba($gold, 0.1), transparent);
-      transition: 0.5s;
-    }
-    
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: transparent;
+
     &:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(45deg, rgba(50, 50, 50, 0.8), rgba(60, 60, 60, 0.8));
-      border-color: rgba($gold, 0.4);
-      
-      &::before {
-        left: 100%;
-      }
+      color: #1e293b;
+      background: #f1f5f9;
     }
-    
+
     &.active {
-      background: linear-gradient(45deg, rgba($gold, 0.15), rgba($gold, 0.05));
-      color: $gold;
-      border-color: rgba($gold, 0.4);
-      box-shadow: 0 4px 15px rgba($gold, 0.1);
+      color: #ffffff;
+      background: #2563eb;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
     }
   }
 }
 
-/* Tablas mejoradas */
+/* Tablas de contenido */
 .seguimiento-table,
 .inmuebles-table,
 .cronograma-table,
 .detalles-table {
-  background: rgba(25, 25, 25, 0.95);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba($gold, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   
   table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 0.5rem;
-    
-    th, td {
-      padding: 1rem;
-      text-align: left;
-    }
+    border-spacing: 0;
     
     th {
-      background: linear-gradient(45deg, rgba($gold, 0.15), rgba($gold, 0.05));
-      color: $gold;
+      background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+      color: #1e293b;
       font-family: $fuentePrincipal;
       font-size: 0.9rem;
+      font-weight: 600;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      border-bottom: 2px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      border-bottom: 2px solid rgba($gold, 0.2);
     }
     
     td {
-      background: rgba(35, 35, 35, 0.95);
-      color: rgba(255, 255, 255, 0.9);
-      border-radius: 6px;
-      transition: all 0.3s ease;
+      padding: 1.25rem 1.5rem;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
       
       &.label {
-        color: rgba($gold, 0.8);
-        font-family: $fuentePrincipal;
-        font-size: 0.9rem;
+        font-weight: 500;
+        color: #1e293b;
+        background: #f8fafc;
         width: 25%;
-        background: rgba(40, 40, 40, 0.95);
       }
       
       &.value {
-        font-family: $fuenteSecundaria;
-        color: rgba(255, 255, 255, 0.9);
+        color: #334155;
+        width: 75%;
       }
     }
     
-    tr:hover td {
-      background: rgba(45, 45, 45, 0.95);
+    tr {
+      transition: all 0.3s ease;
       
-      &.label {
-        background: rgba(50, 50, 50, 0.95);
+      &:hover {
+        background: rgba(37, 99, 235, 0.02);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        
+        td {
+          color: #1e293b;
+        }
+      }
+      
+      &:last-child td {
+        border-bottom: none;
       }
     }
   }
 }
 
-/* Botón de regreso mejorado */
-.back-button {
-  display: block;
-  width: fit-content;
-  margin: 3rem auto;
-  padding: 1rem 2.5rem;
-  color: $gold;
-  text-decoration: none;
-  border-radius: 8px;
-  font-family: $fuentePrincipal;
-  font-size: 0.95rem;
-  background: linear-gradient(45deg, rgba(40, 40, 40, 0.9), rgba(50, 50, 50, 0.9));
-  border: 1px solid rgba($gold, 0.2);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba($gold, 0.1), transparent);
-    transition: 0.5s;
+/* Estilos específicos para cada área */
+.seguimiento-table {
+  th {
+    background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+    color: #0369a1;
   }
-  
-  &:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(45deg, rgba(50, 50, 50, 0.9), rgba(60, 60, 60, 0.9));
-    border-color: rgba($gold, 0.4);
-    box-shadow: 0 4px 15px rgba($gold, 0.1);
-    
-    &::before {
-      left: 100%;
-    }
+}
+
+.detalles-table {
+  th {
+    background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+    color: #166534;
+  }
+}
+
+.inmuebles-table {
+  th {
+    background: linear-gradient(145deg, #fef2f2, #fee2e2);
+    color: #991b1b;
+  }
+}
+
+.cronograma-table {
+  th {
+    background: linear-gradient(145deg, #faf5ff, #f3e8ff);
+    color: #6b21a8;
   }
 }
 
 /* Mensaje sin datos */
 .no-data {
   text-align: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: $fuenteSecundaria;
+  padding: 3rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+  margin: 2rem auto;
+  max-width: 500px;
   font-style: italic;
 }
 
+/* Botón de regreso */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: $fuentePrincipal;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  margin: 2rem auto;
+  display: block;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Footer */
+.footer {
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 3rem 0;
+  margin-top: auto;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 2rem 2rem 0;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
 /* Media queries */
-@media (max-width: 1024px) {
-  .detalles-table table td {
-    &.label {
-      width: 30%;
+@media (max-width: 768px) {
+  .seguimiento-container,
+  .detalles-container,
+  .inmuebles-container,
+  .cronograma-container {
+    padding-top: 100px;
+  }
+
+  .navigation-tabs {
+    flex-wrap: wrap;
+    padding: 0.75rem;
+    
+    .tab-link {
+      flex: 1 1 auto;
+      text-align: center;
+      font-size: 0.875rem;
+      padding: 0.625rem 1rem;
+    }
+  }
+
+  .seguimiento-table,
+  .inmuebles-table,
+  .cronograma-table,
+  .detalles-table {
+    margin: 1rem;
+    
+    table {
+      th, td {
+        padding: 1rem;
+        font-size: 0.875rem;
+      }
     }
   }
 }
 
-@media (max-width: 768px) {
-  .navigation-tabs {
-    flex-direction: column;
-    
-    .tab-link {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  
-  .detalles-table {
+@media (max-width: 640px) {
+  .content-wrapper {
     padding: 1rem;
+  }
+
+  .footer {
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
     
-    table {
-      td {
-        display: block;
-        width: 100%;
-        
-        &.label {
-          width: 100%;
-          padding-bottom: 0.5rem;
-        }
-        
-        &.value {
-          padding-top: 0.5rem;
-          padding-bottom: 1rem;
-        }
-      }
-      
-      tr {
-        display: block;
-        margin-bottom: 1rem;
-      }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
     }
   }
 }

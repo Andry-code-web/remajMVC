@@ -9,28 +9,32 @@
 
 /* Estilos generales */
 body {
-  background: $bg-color;
-  color: $text-color;
   line-height: 1.5;
   font-family: 'fuenteParrafos', sans-serif;
 }
 
 #header {
-  color: white; 
-}
-/* Contenedor principal */
-.property-container {
-  max-width: 1400px;
-  margin: 6rem auto 2rem; /* Increased top margin from 2rem to 6rem */
-  padding: 0 1.5rem;
+  color: rgb(0, 0, 0); 
 }
 
-/* Grid de subastas */
+/* Contenedor principal */
+.property-container {
+  min-height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+  width: 100%;
+  background: white; /* Usa la variable de color de fondo */
+  position: relative; /* Necesario para el posicionamiento correcto */
+  max-width: 100%; /* Permite que cubra todo el ancho */
+  margin: 0; /* Elimina los márgenes */
+  padding: 6rem 1.5rem 2rem; /* Mantiene el padding superior para el contenido */
+}
+
+/* Contenedor interno para mantener el ancho máximo del contenido */
 .auction-grid {
+  max-width: 1400px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  margin-top: 2rem;
 
   @media (max-width: 1400px) {
     grid-template-columns: repeat(3, 1fr);
@@ -45,7 +49,7 @@ body {
   }
 }
 
-/* Tarjeta de subasta */
+/* El resto de los estilos se mantienen igual */
 .auction-card {
   min-width: 300px;
   background: $card-bg;
@@ -155,14 +159,13 @@ body {
   }
 
   .action-buttons {
-    display: flex; /* Changed from grid to flex */
-    justify-content: space-between; /* Distribute space evenly */
-    gap: 0.5rem; /* Reduced gap slightly */
-    padding: 0.75rem 0rem; /* Added more horizontal padding */
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 0rem;
   }
 }
 
-/* Botones de acción */
 .action-btn {
   flex: 1;
   padding: 0.75rem 0.5rem;

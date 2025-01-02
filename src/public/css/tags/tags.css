@@ -12,80 +12,85 @@
   font-family: "fuenteParrafos";
   src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
 }
+/* Reset y estilos base */
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
 }
 
-/* Estilos base y contenedor principal */
-.tag-container {
+/* Estructura principal */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+/* Contenedor principal con espaciado ajustado */
+.content-wrapper {
+  flex: 1;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.95), rgba(28, 28, 28, 0.98));
-  min-height: 100vh;
 }
 
-/* Navegación de pestañas mejorada */
+/* Contenedores específicos con nuevo espaciado */
+.seguimiento-container,
+.detalles-container,
+.inmuebles-container,
+.cronograma-container {
+  padding-top: 120px; /* Aumentado el espaciado superior */
+  margin-bottom: 2rem;
+}
+
+/* Navegación de pestañas */
 .navigation-tabs {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin: 0 auto 2rem;
   padding: 1rem;
-  background: rgba(30, 30, 30, 0.95);
+  background: white;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(179, 139, 89, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 }
 .navigation-tabs .tab-link {
-  padding: 1rem 2.5rem;
-  color: #B38B59;
+  padding: 0.75rem 1.5rem;
+  color: #64748b;
   text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
   font-family: "fuentePrincipal";
   font-size: 0.95rem;
-  background: linear-gradient(45deg, rgba(40, 40, 40, 0.5), rgba(50, 50, 50, 0.5));
-  border: 1px solid rgba(179, 139, 89, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-.navigation-tabs .tab-link::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(179, 139, 89, 0.1), transparent);
-  transition: 0.5s;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: transparent;
 }
 .navigation-tabs .tab-link:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(45deg, rgba(50, 50, 50, 0.8), rgba(60, 60, 60, 0.8));
-  border-color: rgba(179, 139, 89, 0.4);
-}
-.navigation-tabs .tab-link:hover::before {
-  left: 100%;
+  color: #1e293b;
+  background: #f1f5f9;
 }
 .navigation-tabs .tab-link.active {
-  background: linear-gradient(45deg, rgba(179, 139, 89, 0.15), rgba(179, 139, 89, 0.05));
-  color: #B38B59;
-  border-color: rgba(179, 139, 89, 0.4);
-  box-shadow: 0 4px 15px rgba(179, 139, 89, 0.1);
+  color: #ffffff;
+  background: #2563eb;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
 }
 
-/* Tablas mejoradas */
+/* Tablas de contenido */
 .seguimiento-table,
 .inmuebles-table,
 .cronograma-table,
 .detalles-table {
-  background: rgba(25, 25, 25, 0.95);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(179, 139, 89, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 .seguimiento-table table,
 .inmuebles-table table,
@@ -93,147 +98,213 @@
 .detalles-table table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 0.5rem;
-}
-.seguimiento-table table th, .seguimiento-table table td,
-.inmuebles-table table th,
-.inmuebles-table table td,
-.cronograma-table table th,
-.cronograma-table table td,
-.detalles-table table th,
-.detalles-table table td {
-  padding: 1rem;
-  text-align: left;
+  border-spacing: 0;
 }
 .seguimiento-table table th,
 .inmuebles-table table th,
 .cronograma-table table th,
 .detalles-table table th {
-  background: linear-gradient(45deg, rgba(179, 139, 89, 0.15), rgba(179, 139, 89, 0.05));
-  color: #B38B59;
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+  color: #1e293b;
   font-family: "fuentePrincipal";
   font-size: 0.9rem;
+  font-weight: 600;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(179, 139, 89, 0.2);
 }
 .seguimiento-table table td,
 .inmuebles-table table td,
 .cronograma-table table td,
 .detalles-table table td {
-  background: rgba(35, 35, 35, 0.95);
-  color: rgba(255, 255, 255, 0.9);
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  padding: 1.25rem 1.5rem;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 .seguimiento-table table td.label,
 .inmuebles-table table td.label,
 .cronograma-table table td.label,
 .detalles-table table td.label {
-  color: rgba(179, 139, 89, 0.8);
-  font-family: "fuentePrincipal";
-  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e293b;
+  background: #f8fafc;
   width: 25%;
-  background: rgba(40, 40, 40, 0.95);
 }
 .seguimiento-table table td.value,
 .inmuebles-table table td.value,
 .cronograma-table table td.value,
 .detalles-table table td.value {
-  font-family: "fuenteSecundaria";
-  color: rgba(255, 255, 255, 0.9);
+  color: #334155;
+  width: 75%;
+}
+.seguimiento-table table tr,
+.inmuebles-table table tr,
+.cronograma-table table tr,
+.detalles-table table tr {
+  transition: all 0.3s ease;
+}
+.seguimiento-table table tr:hover,
+.inmuebles-table table tr:hover,
+.cronograma-table table tr:hover,
+.detalles-table table tr:hover {
+  background: rgba(37, 99, 235, 0.02);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .seguimiento-table table tr:hover td,
 .inmuebles-table table tr:hover td,
 .cronograma-table table tr:hover td,
 .detalles-table table tr:hover td {
-  background: rgba(45, 45, 45, 0.95);
+  color: #1e293b;
 }
-.seguimiento-table table tr:hover td.label,
-.inmuebles-table table tr:hover td.label,
-.cronograma-table table tr:hover td.label,
-.detalles-table table tr:hover td.label {
-  background: rgba(50, 50, 50, 0.95);
+.seguimiento-table table tr:last-child td,
+.inmuebles-table table tr:last-child td,
+.cronograma-table table tr:last-child td,
+.detalles-table table tr:last-child td {
+  border-bottom: none;
 }
 
-/* Botón de regreso mejorado */
-.back-button {
-  display: block;
-  width: fit-content;
-  margin: 3rem auto;
-  padding: 1rem 2.5rem;
-  color: #B38B59;
-  text-decoration: none;
-  border-radius: 8px;
-  font-family: "fuentePrincipal";
-  font-size: 0.95rem;
-  background: linear-gradient(45deg, rgba(40, 40, 40, 0.9), rgba(50, 50, 50, 0.9));
-  border: 1px solid rgba(179, 139, 89, 0.2);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* Estilos específicos para cada área */
+.seguimiento-table th {
+  background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
 }
-.back-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(179, 139, 89, 0.1), transparent);
-  transition: 0.5s;
+
+.detalles-table th {
+  background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+  color: #166534;
 }
-.back-button:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(45deg, rgba(50, 50, 50, 0.9), rgba(60, 60, 60, 0.9));
-  border-color: rgba(179, 139, 89, 0.4);
-  box-shadow: 0 4px 15px rgba(179, 139, 89, 0.1);
+
+.inmuebles-table th {
+  background: linear-gradient(145deg, #fef2f2, #fee2e2);
+  color: #991b1b;
 }
-.back-button:hover::before {
-  left: 100%;
+
+.cronograma-table th {
+  background: linear-gradient(145deg, #faf5ff, #f3e8ff);
+  color: #6b21a8;
 }
 
 /* Mensaje sin datos */
 .no-data {
   text-align: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: "fuenteSecundaria";
+  padding: 3rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+  margin: 2rem auto;
+  max-width: 500px;
   font-style: italic;
 }
 
-/* Media queries */
-@media (max-width: 1024px) {
-  .detalles-table table td.label {
-    width: 30%;
-  }
+/* Botón de regreso */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: "fuentePrincipal";
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  margin: 2rem auto;
+  display: block;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.back-button:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 3rem 0;
+  margin-top: auto;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+.footer .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+.footer .footer-bottom {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 2rem 2rem 0;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Media queries */
 @media (max-width: 768px) {
+  .seguimiento-container,
+  .detalles-container,
+  .inmuebles-container,
+  .cronograma-container {
+    padding-top: 100px;
+  }
   .navigation-tabs {
-    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0.75rem;
   }
   .navigation-tabs .tab-link {
-    width: 100%;
+    flex: 1 1 auto;
     text-align: center;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
   }
+  .seguimiento-table,
+  .inmuebles-table,
+  .cronograma-table,
   .detalles-table {
+    margin: 1rem;
+  }
+  .seguimiento-table table th, .seguimiento-table table td,
+  .inmuebles-table table th,
+  .inmuebles-table table td,
+  .cronograma-table table th,
+  .cronograma-table table td,
+  .detalles-table table th,
+  .detalles-table table td {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 640px) {
+  .content-wrapper {
     padding: 1rem;
   }
-  .detalles-table table td {
-    display: block;
-    width: 100%;
+  .footer .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
-  .detalles-table table td.label {
-    width: 100%;
-    padding-bottom: 0.5rem;
-  }
-  .detalles-table table td.value {
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
-  }
-  .detalles-table table tr {
-    display: block;
-    margin-bottom: 1rem;
+  .footer .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
   }
 }
 

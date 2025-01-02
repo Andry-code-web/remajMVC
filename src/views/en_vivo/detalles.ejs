@@ -1,4 +1,10 @@
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/globales/globales.css" />
 <link rel="stylesheet" href="/css/tags/tags.css">
+
+<%- include('../partials/navbar.ejs') %>
+
 <div class="detalles-container">
   <div class="navigation-tabs">
     <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
@@ -76,6 +82,35 @@
     <p class="no-data">No hay detalles disponibles.</p>
   <% } %>
 
+
   <a href="/en_vivo" class="back-button">Volver a Remates</a>
 </div>
 
+    <!-- COMPONENTE FOOTER -->
+    <%- include('../partials/footer') %>
+
+
+    <script>
+      let lastScrollTop = 0;
+      const header = document.getElementById("header");
+      const detallesContainer = document.querySelector(".detalles-container");
+    
+      window.addEventListener("scroll", () => {
+        const currentScrollTop =
+          window.scrollY || document.documentElement.scrollTop;
+    
+        if (
+          currentScrollTop > lastScrollTop &&
+          currentScrollTop > detallesContainer.offsetTop
+        ) {
+          header.style.transform = "translateY(-100%)";
+          header.style.opacity = "0";
+        } else {
+          header.style.transform = "translateY(0)";
+          header.style.opacity = "1";
+        }
+    
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+      });
+    </script>
+    

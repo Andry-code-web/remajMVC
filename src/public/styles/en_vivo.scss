@@ -1,0 +1,234 @@
+@use 'variables' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
+}
+
+/* Estilos generales */
+body {
+  line-height: 1.5;
+  font-family: 'fuenteParrafos', sans-serif;
+}
+
+#header {
+  color: rgb(0, 0, 0); 
+}
+
+/* Contenedor principal */
+.property-container {
+  min-height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+  width: 100%;
+  background: white; /* Usa la variable de color de fondo */
+  position: relative; /* Necesario para el posicionamiento correcto */
+  max-width: 100%; /* Permite que cubra todo el ancho */
+  margin: 0; /* Elimina los márgenes */
+  padding: 6rem 1.5rem 2rem; /* Mantiene el padding superior para el contenido */
+}
+
+/* Contenedor interno para mantener el ancho máximo del contenido */
+.auction-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* El resto de los estilos se mantienen igual */
+.auction-card {
+  min-width: 300px;
+  background: $card-bg;
+  border-radius: 12px;
+  border: 1px solid rgba($accent-gold, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  
+  &:nth-child(odd) {
+    animation: slideFromLeft 0.6s forwards;
+  }
+  
+  &:nth-child(even) {
+    animation: slideFromRight 0.6s forwards;
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba($accent-gold, 0.4);
+    box-shadow: 0 8px 25px rgba($accent-gold, 0.15);
+  }
+
+  .auction-header {
+    background: linear-gradient(135deg, rgba($accent-gold, 0.2), rgba($accent-gold, 0.1));
+    padding: 1rem;
+    border-bottom: 1px solid rgba($accent-gold, 0.2);
+    
+    .auction-number {
+      color: $text-color;
+      font-family: 'fuentePrincipal', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .auction-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  .auction-content {
+    padding: 1.25rem;
+    
+    .auction-title {
+      color: $text-color;
+      font-family: 'fuenteSecundaria', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      
+      i {
+        color: $accent-gold;
+        margin-right: 0.5rem;
+      }
+    }
+
+    .auction-info {
+      margin: 1rem 0;
+      
+      p {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba($text-color, 0.8);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        
+        i {
+          color: $accent-gold;
+        }
+      }
+    }
+  }
+
+  .price-section {
+    background: linear-gradient(135deg, rgba($accent-gold, 0.15), rgba($accent-gold, 0.05));
+    padding: 1rem;
+    margin: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba($accent-gold, 0.2);
+    
+    .price-label {
+      color: rgba($text-color, 0.8);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .price-value {
+      color: $accent-gold;
+      font-family: 'fuentePrincipal', sans-serif;
+      font-size: 1.3rem;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 0rem;
+  }
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  border-radius: 8px;
+  color: $text-color;
+  font-family: 'fuentePrincipal', sans-serif;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba($accent-gold, 0.2);
+  
+  i {
+    font-size: 0.9rem;
+  }
+  
+  &.seguimiento {
+    background: rgba($accent-gold, 0.15);
+    &:hover {
+      background: rgba($accent-gold, 0.25);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.detalles {
+    background: rgba($hover-gold, 0.15);
+    &:hover {
+      background: rgba($hover-gold, 0.25);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.aviso {
+    background: rgba($text-color, 0.15);
+    &:hover {
+      background: rgba($text-color, 0.25);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

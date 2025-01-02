@@ -1,0 +1,79 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/globales/globales.css" />
+<%- include('../partials/navbar.ejs') %>
+
+
+  <link rel="stylesheet" href="/css/tags/tags.css">
+  <div class="inmuebles-container">
+    <div class="navigation-tabs">
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link active">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+    </div>
+
+    <div class="inmuebles-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Partida Registral</th>
+            <th>Tipo Inmueble</th>
+            <th>Dirección</th>
+            <th>Carga y/o Gravamen</th>
+            <th>Porcentaje a Rematar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (inmuebles && inmuebles.length> 0) { %> <% inmuebles.forEach(inmueble=> { %>
+              <tr>
+                <td>
+                  <%= inmueble.partida_registral %>
+                </td>
+                <td>
+                  <%= inmueble.tipo_inmueble %>
+                </td>
+                <td>
+                  <%= inmueble.direccion %>
+                </td>
+                <td>
+                  <%= inmueble.carga_ogravamen %>
+                </td>
+                <td>
+                  <%= inmueble.porcentaje_rematar %>
+                </td>
+              </tr>
+              <% }); %>
+                <% } else { %>
+                  <p class="no-data">No hay inmuebles disponibles.</p>
+                  <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <a href="/en_vivo" class="back-button">Volver a Remates</a>
+  </div>
+  <!-- COMPONENTE FOOTER -->
+  <%- include('../partials/footer') %>
+
+    <script>
+      let lastScrollTop = 0;
+      const header = document.getElementById("header");
+      const inmueblesTable = document.querySelector(".inmuebles-table");
+
+      window.addEventListener("scroll", () => {
+        const currentScrollTop =
+          window.scrollY || document.documentElement.scrollTop;
+
+        if (
+          currentScrollTop > lastScrollTop &&
+          currentScrollTop > inmueblesTable.offsetTop
+        ) {
+          header.style.transform = "translateY(-100%)";
+          header.style.opacity = "0";
+        } else {
+          header.style.transform = "translateY(0)";
+          header.style.opacity = "1";
+        }
+
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+      });
+    </script>

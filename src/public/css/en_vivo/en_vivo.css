@@ -1,0 +1,228 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
+}
+
+/* Estilos generales */
+body {
+  line-height: 1.5;
+  font-family: "fuenteParrafos", sans-serif;
+}
+
+#header {
+  color: rgb(0, 0, 0);
+}
+
+/* Contenedor principal */
+.property-container {
+  min-height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+  width: 100%;
+  background: white; /* Usa la variable de color de fondo */
+  position: relative; /* Necesario para el posicionamiento correcto */
+  max-width: 100%; /* Permite que cubra todo el ancho */
+  margin: 0; /* Elimina los márgenes */
+  padding: 6rem 1.5rem 2rem; /* Mantiene el padding superior para el contenido */
+}
+
+/* Contenedor interno para mantener el ancho máximo del contenido */
+.auction-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 1400px) {
+  .auction-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1100px) {
+  .auction-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* El resto de los estilos se mantienen igual */
+.auction-card {
+  min-width: 300px;
+  background: rgba(26, 26, 26, 0.95);
+  border-radius: 12px;
+  border: 1px solid rgba(179, 139, 89, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.auction-card:nth-child(odd) {
+  animation: slideFromLeft 0.6s forwards;
+}
+.auction-card:nth-child(even) {
+  animation: slideFromRight 0.6s forwards;
+}
+.auction-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(179, 139, 89, 0.4);
+  box-shadow: 0 8px 25px rgba(179, 139, 89, 0.15);
+}
+.auction-card .auction-header {
+  background: linear-gradient(135deg, rgba(179, 139, 89, 0.2), rgba(179, 139, 89, 0.1));
+  padding: 1rem;
+  border-bottom: 1px solid rgba(179, 139, 89, 0.2);
+}
+.auction-card .auction-header .auction-number {
+  color: #E5D0B1;
+  font-family: "fuentePrincipal", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+.auction-card .auction-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+.auction-card .auction-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.auction-card .auction-image:hover img {
+  transform: scale(1.05);
+}
+.auction-card .auction-content {
+  padding: 1.25rem;
+}
+.auction-card .auction-content .auction-title {
+  color: #E5D0B1;
+  font-family: "fuenteSecundaria", serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.auction-card .auction-content .auction-title i {
+  color: #B38B59;
+  margin-right: 0.5rem;
+}
+.auction-card .auction-content .auction-info {
+  margin: 1rem 0;
+}
+.auction-card .auction-content .auction-info p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(229, 208, 177, 0.8);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.auction-card .auction-content .auction-info p i {
+  color: #B38B59;
+}
+.auction-card .price-section {
+  background: linear-gradient(135deg, rgba(179, 139, 89, 0.15), rgba(179, 139, 89, 0.05));
+  padding: 1rem;
+  margin: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(179, 139, 89, 0.2);
+}
+.auction-card .price-section .price-label {
+  color: rgba(229, 208, 177, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+.auction-card .price-section .price-value {
+  color: #B38B59;
+  font-family: "fuentePrincipal", sans-serif;
+  font-size: 1.3rem;
+}
+.auction-card .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 0rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  border-radius: 8px;
+  color: #E5D0B1;
+  font-family: "fuentePrincipal", sans-serif;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(179, 139, 89, 0.2);
+}
+.action-btn i {
+  font-size: 0.9rem;
+}
+.action-btn.seguimiento {
+  background: rgba(179, 139, 89, 0.15);
+}
+.action-btn.seguimiento:hover {
+  background: rgba(179, 139, 89, 0.25);
+  transform: translateY(-2px);
+}
+.action-btn.detalles {
+  background: rgba(212, 180, 131, 0.15);
+}
+.action-btn.detalles:hover {
+  background: rgba(212, 180, 131, 0.25);
+  transform: translateY(-2px);
+}
+.action-btn.aviso {
+  background: rgba(229, 208, 177, 0.15);
+}
+.action-btn.aviso:hover {
+  background: rgba(229, 208, 177, 0.25);
+  transform: translateY(-2px);
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/*# sourceMappingURL=en_vivo.css.map */

@@ -30,7 +30,6 @@ export class NetworkAnimationL {
         }
     }
 
-    
     drawLines(point, index) {
         for (let i = index + 1; i < this.points.length; i++) {
             const point2 = this.points[i];

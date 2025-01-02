@@ -1,0 +1,100 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/globales/globales.css" />
+<%- include('../partials/navbar.ejs') %>
+
+
+  <link rel="stylesheet" href="/css/tags/tags.css">
+  <div class="seguimiento-container">
+    <div class="seguimiento-table">
+      <table>
+        <thead>
+          <tr>
+            <th>N° Expediente</th>
+            <th>Distrito Judicial</th>
+            <th>Especialista</th>
+            <th>Instancia</th>
+            <th>Órgano Jurisdiccional</th>
+            <th>N° Convocatoria</th>
+            <th>Fecha Registro</th>
+            <th>Procesado por</th>
+            <th>Reanudado</th>
+            <th>Fase Convocatoria</th>
+            <th>Estado Convocatoria</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (seguimientos && seguimientos.length> 0) { %>
+            <% seguimientos.forEach(seguimiento=> { %>
+              <tr>
+                <td>
+                  <%= seguimiento.n_expediente %>
+                </td>
+                <td>
+                  <%= seguimiento.distrito_judicial %>
+                </td>
+                <td>
+                  <%= seguimiento.especialista %>
+                </td>
+                <td>
+                  <%= seguimiento.instancia %>
+                </td>
+                <td>
+                  <%= seguimiento.organo_juridiccional %>
+                </td>
+                <td>
+                  <%= seguimiento.n_convocatoria %>
+                </td>
+                <td>
+                  <%= seguimiento.fecha_registro %>
+                </td>
+                <td>
+                  <%= seguimiento.procesado_por %>
+                </td>
+                <td>
+                  <%= seguimiento.reanudado %>
+                </td>
+                <td>
+                  <%= seguimiento.fase_convocatoria %>
+                </td>
+                <td>
+                  <%= seguimiento.estado_convocatoria %>
+                </td>
+              </tr>
+              <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="9">No hay seguimientos disponibles</td>
+                  </tr>
+                  <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <a href="/en_vivo" class="back-button">Volver a Remates</a>
+  </div>
+  <!-- COMPONENTE FOOTER -->
+  <%- include('../partials/footer') %>
+
+    <script>
+      let lastScrollTop = 0;
+      const header = document.getElementById("header");
+      const seguimientoContainer = document.querySelector(".seguimiento-container");
+
+      window.addEventListener("scroll", () => {
+        const currentScrollTop =
+          window.scrollY || document.documentElement.scrollTop;
+
+        if (
+          currentScrollTop > lastScrollTop &&
+          currentScrollTop > seguimientoContainer.offsetTop
+        ) {
+          header.style.transform = "translateY(-100%)";
+          header.style.opacity = "0";
+        } else {
+          header.style.transform = "translateY(0)";
+          header.style.opacity = "1";
+        }
+
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+      });
+    </script>

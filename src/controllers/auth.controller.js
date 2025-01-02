@@ -5,7 +5,7 @@ require('dotenv').config();
 
 exports.register_vista = async (req, res) => {
   try {
-    res.render('layouts/main', {
+    res.render('layouts/auth', {
       content: 'auth/register'
     });
   } catch (error) {
@@ -49,7 +49,9 @@ exports.login_vista = async (req, res) => {
     if (req.cookies.auth_token) {
       return res.redirect('/');
     }
-    res.render('auth/login');
+    res.render('layouts/auth', {
+      content: 'auth/login'
+    });
   } catch (error) {
     console.error('Error al cargar la vista de login:', error);
     res.status(500).render('error', { message: 'Error al cargar la página de login' });

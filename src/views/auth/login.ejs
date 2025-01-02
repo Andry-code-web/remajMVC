@@ -1,3 +1,4 @@
+<section class="login_general" id="login_general">
 <div class="contenido_login" id="contenedor_login">
   <canvas id="particleCanvas"></canvas>
   <div class="login-box">
@@ -12,18 +13,16 @@
         <label for="contrasena">Contraseña</label>
       </div>
       <button type="submit" class="submit-btn">
-        <span></span>
-        <span></span>
-        <span></span>
         Iniciar sesión
       </button>
     </form>
     <p class="register-link">¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
   </div>
 </div>
+</section>
 
+  <!-- script particulas login -->
 <script type="module" src="/js/componentes/network_login.js"></script>
-
 <link rel="stylesheet" href="/css/login/login.css">
 
 <script type="module">
@@ -33,7 +32,6 @@
   const canvas = document.getElementById("particleCanvas");
   const networkAnimationL = new NetworkAnimationL(canvas);
 
-  // Handle form submission
   document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -57,6 +55,20 @@
       }
     } catch (error) {
       alert(error.message);
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
+    const loginSection = document.getElementById('login_general');
+
+    // Verificar si el login está visible
+    if (loginSection) {
+      header.style.color = '#ffffff'; // Cambiar al color deseado (Blanco)
+    } else {
+      header.style.color = 'black'; // Color por defecto si no es el login
     }
   });
 </script>

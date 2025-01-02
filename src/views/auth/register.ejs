@@ -1,4 +1,3 @@
-
   <!-- Títulos principales fijos -->
   <div class="fixed-titles">
     <h1>BIENVENIDO</h1>
@@ -13,8 +12,11 @@
       <div class="progress-dot"></div>
     </div>
   </div>
+
   <div class="container_formulario">
-    <div class="seccion seccion1 active">
+
+    <!-- Primera seccion -->
+    <div class="seccion seccion1 active" id="seccion1" >
       <div class="texto_grande">
         <h2 class="subtitle">REGISTRO</h2>
       </div>
@@ -38,49 +40,16 @@
           <div class="row">
             <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
           </div>
-
-          <!-- Fila de Estado Civil, Fecha de Nacimiento y Sexo -->
-          <div class="row">
-            <div class="col">
-              <select class="form-input" name="estado_civil" required>
-                <option value="" disabled selected>ESTADO CIVIL</option>
-                <option value="soltero">Soltero(a)</option>
-                <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
-                <option value="viudo">Viudo(a)</option>
-              </select>
-            </div>
-            <div class="col">
-              <input type="date" class="form-input" placeholder="FECHA NACIMIENTO" name="fecha_nacimiento" required>
-            </div>
-            <div class="col">
-              <select class="form-input" name="sexo" required>
-                <option value="" disabled selected>SEXO</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Fila de DNI y Celular -->
-          <div class="row">
-            <div class="col">
-              <input type="number" class="form-input" placeholder="DNI" name="dni" required>
-            </div>
-            <div class="col">
-              <input type="number" class="form-input" placeholder="CELULAR" name="celular" required>
-            </div>
-          </div>
-
+ 
           <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
         </form>
       </div>
     </div>
 
-
-
     <canvas id="particleCanvas"></canvas>
-    <div class="seccion seccion2">
+
+    <!-- Segunda seccion -->
+    <div class="seccion seccion2" id="seccion2">
       <div class="texto_grande">
         <h2 class="subtitle">UBICACIÓN</h2>
       </div>
@@ -97,11 +66,13 @@
             <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
           </div>
           <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-          <button type="button" class="submit-btn siguiente">SIGUIENTE →</button>
+          <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
         </form>
       </div>
     </div>
-    <div class="seccion seccion3">
+
+    <!-- Tercera seccion -->
+    <div class="seccion seccion3" id="seccion3">
       <div class="texto_grande">
         <h2 class="subtitle">USUARIO</h2>
       </div>
@@ -113,17 +84,68 @@
         <form>
           <input type="text" class="form-input" placeholder="USUARIO" name="usuario" required>
           <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
-          <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones" class="custom-checkbox">
+            <label for="terminos_condiciones" class="checkbox-label">
+                Acepto los <a href="#" class="terms-link">términos y condiciones</a>
+            </label>
+        </div>
           <button type="button" class="submit-btn anterior"> ANTERIOR</button>
           <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
         </form>
       </div>
     </div>
   </div>
+  </section> 
+
+  <!-- diseño registro -->
   <link rel="stylesheet" href="/css/registro/registro.css">
+
+  <!-- script y particulas de registro -->
   <script type="module" src="/js/componentes/script_formulario.js"></script>
   <script type="module" src="/js/componentes/network.js"></script>
   
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.getElementById('header');
+      const sections = document.querySelectorAll('.seccion');
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5, // Cambiar cuando el 50% de la sección sea visible
+      };
+  
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+  
+            // Cambiar el color del header basado en la sección visible
+            switch (sectionId) {
+              case 'seccion1':
+                header.style.color = '#ffffff'; // Blanco
+                break;
+              case 'seccion2':
+                header.style.color = '#000000'; // Negro
+                break;
+              case 'seccion3':
+                header.style.color = '#ffffff'; // Blanco
+                break;
+              default:
+                header.style.color = 'black';
+            }
+          }
+        });
+      }, options);
+  
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+    });
+  </script>
+  
+
+  <!-- script de datos formulario -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".finalizar").addEventListener("click", async (e) => {
@@ -176,4 +198,5 @@
         }
       });
     });
+    
   </script>

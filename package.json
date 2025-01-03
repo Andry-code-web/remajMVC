@@ -28,7 +28,6 @@
     "build:adminhf": "sass src/public/styles/adminhf.scss src/public/css/adminhf/adminhf.css",
     "build:en_vivo": "sass src/public/styles/en_vivo.scss src/public/css/en_vivo/en_vivo.css",
     "build:tags": "sass src/public/styles/tags.scss src/public/css/tags/tags.css",
-  
     "dev:server": "nodemon app.js"
   },
   "dependencies": {

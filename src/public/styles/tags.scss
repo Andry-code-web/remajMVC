@@ -176,25 +176,41 @@
     }
 }
 
-/* Estilos específicos para cada tabla */
+/* Tabla de seguimiento */
 .seguimiento-table {
-    @extend .table-base;
-    max-width: 1600px;
-    /* Tabla más ancha para seguimiento */
-
-    th {
-        background: linear-gradient(145deg, #FFF3E6, #FFE5CC);
-        color: #B38B59;
-        padding: 0.75rem 1rem;
-        /* Padding más compacto */
+    width: 100%;
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      
+      th {
+        background: #FFF3E6;
+        color: #8B6B43;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: left;
+        padding: 0.7rem;
+        border-bottom: 1px solid #E6D5C1;
+      }
+      
+      td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        color: #666;
+        border-bottom: 1px solid #F0E6DB;
+      }
+      
+      tr:last-child td {
+        border-bottom: none;
+      }
+      
+      tr:hover td {
+        background: rgba(#FFF3E6, 0.3);
+      }
     }
-
-    td {
-        padding: 0.625rem 1rem;
-        /* Padding más compacto */
-        font-size: 0.875rem;
-    }
-}
+  }
+  
 
 .detalles-table {
     @extend .table-base;
@@ -297,7 +313,6 @@
 }
 
 /* Contenedores específicos con nuevo espaciado */
-.seguimiento-container,
 .detalles-container,
 .inmuebles-container,
 .cronograma-container {
@@ -306,35 +321,106 @@
     margin-bottom: 2rem;
 }
 
-/* Media queries */
+
+/* Estilos para los bloques de sección */
+.section-block {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: $border-radius-lg;
+    box-shadow: 0 4px 20px rgba($light-gold, 0.1);
+    overflow: hidden;
+    border: 1px solid rgba($primary-cream, 0.2);
+    
+    .section-title {
+      padding: 1.5rem 1rem;
+      margin: 0;
+      font-family: $fuentePrincipal;
+      font-size: 1.9rem;
+      color: #8B6B43;
+      background: linear-gradient(145deg, #FFF9F5, #FFF3E6);
+      border-bottom: 1px solid rgba($light-gold, 0.1);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: linear-gradient(to bottom, #D4B483, #B38B59);
+      }
+    }
+  }
+  
+
+ /* Contenedor principal */
+.seguimiento-container {
+    padding-top: 70px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+/* Estilos para los bloques de sección */
+.section-block {
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    
+    .section-title {
+      padding: 0.5rem 1rem;
+      margin: 0;
+      font-family: $fuentePrincipal;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #8B6B43;
+      background: linear-gradient(145deg, #FFF9F5, #FFF3E6);
+      border-bottom: 2px solid #B38B59;
+      display: flex;
+      align-items: center;
+      height: 35px;
+    }
+  
+    .content {
+      padding: 0;
+    }
+  }
+
+
+/* Ajustes responsive */
 @media (max-width: 768px) {
-    .navigation-tabs {
-        flex-wrap: wrap;
-        padding: 0.75rem;
-        margin: 1rem;
-
-        .tab-link {
-            flex: 1 1 auto;
-            text-align: center;
-            font-size: 0.875rem;
-            padding: 0.625rem 1rem;
-        }
+    .seguimiento-container {
+      padding-top: 60px;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
-
-    .table-base {
-        margin: 1rem;
-
-        table {
-
-            th,
-            td {
-                padding: 0.75rem;
-                font-size: 0.875rem;
-            }
-        }
+    
+    .section-block {
+      margin-bottom: 0.75rem;
+      
+      .section-title {
+        padding: 0.4rem 0.75rem;
+      }
     }
-}
-
+    
+    .seguimiento-table {
+      overflow-x: auto;
+      
+      table {
+        th, td {
+          padding: 0.35rem 0.5rem;
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
 @media (max-width: 640px) {
     .page-container {
         padding: 0.5rem;
@@ -344,7 +430,6 @@
         padding: 0.5rem;
     }
 
-    .seguimiento-container,
     .detalles-container,
     .inmuebles-container,
     .cronograma-container {

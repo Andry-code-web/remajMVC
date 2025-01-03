@@ -3,17 +3,46 @@
 <%- include('../partials/navbar.ejs') %>
 
 
-  <link rel="stylesheet" href="/css/tags/tags.css">
-  <div class="seguimiento-container">
+<link rel="stylesheet" href="/css/tags/tags.css">
+<div class="seguimiento-container">
+  <!-- Bloque de Detalle de Expediente -->
+  <div class="section-block">
+    <h2 class="section-title">Detalle de Expediente</h2>
     <div class="seguimiento-table">
       <table>
         <thead>
           <tr>
             <th>N° Expediente</th>
             <th>Distrito Judicial</th>
-            <th>Especialista</th>
+            <th>Especialidad</th>
             <th>Instancia</th>
             <th>Órgano Jurisdiccional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (seguimientos && seguimientos.length > 0) { %>
+            <% seguimientos.forEach(seguimiento => { %>
+              <tr>
+                <td><%= seguimiento.n_expediente %></td>
+                <td><%= seguimiento.distrito_judicial %></td>
+                <td><%= seguimiento.especialidad %></td>
+                <td><%= seguimiento.instancia %></td>
+                <td><%= seguimiento.organo_juridiccional %></td>
+              </tr>
+            <% }); %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bloque de Detalle de Seguimiento -->
+  <div class="section-block">
+    <h2 class="section-title">Detalle de Seguimiento</h2>
+    <div class="seguimiento-table">
+      <table>
+        <thead>
+          <tr>
             <th>N° Convocatoria</th>
             <th>Fecha Registro</th>
             <th>Procesado por</th>
@@ -23,55 +52,29 @@
           </tr>
         </thead>
         <tbody>
-          <% if (seguimientos && seguimientos.length> 0) { %>
-            <% seguimientos.forEach(seguimiento=> { %>
+          <% if (seguimientos && seguimientos.length > 0) { %>
+            <% seguimientos.forEach(seguimiento => { %>
               <tr>
-                <td>
-                  <%= seguimiento.n_expediente %>
-                </td>
-                <td>
-                  <%= seguimiento.distrito_judicial %>
-                </td>
-                <td>
-                  <%= seguimiento.especialista %>
-                </td>
-                <td>
-                  <%= seguimiento.instancia %>
-                </td>
-                <td>
-                  <%= seguimiento.organo_juridiccional %>
-                </td>
-                <td>
-                  <%= seguimiento.n_convocatoria %>
-                </td>
-                <td>
-                  <%= seguimiento.fecha_registro %>
-                </td>
-                <td>
-                  <%= seguimiento.procesado_por %>
-                </td>
-                <td>
-                  <%= seguimiento.reanudado %>
-                </td>
-                <td>
-                  <%= seguimiento.fase_convocatoria %>
-                </td>
-                <td>
-                  <%= seguimiento.estado_convocatoria %>
-                </td>
+                <td><%= seguimiento.convocatoria %></td>
+                <td><%= seguimiento.fecha_registro %></td>
+                <td><%= seguimiento.procesado_por %></td>
+                <td><%= seguimiento.reanudado %></td>
+                <td><%= seguimiento.fase_convocatoria %></td>
+                <td><%= seguimiento.estado_convocatoria %></td>
               </tr>
-              <% }); %>
-                <% } else { %>
-                  <tr>
-                    <td colspan="9">No hay seguimientos disponibles</td>
-                  </tr>
-                  <% } %>
+            <% }); %>
+          <% } else { %>
+            <tr>
+              <td colspan="6" class="no-data">No hay seguimientos disponibles</td>
+            </tr>
+          <% } %>
         </tbody>
       </table>
     </div>
-
-    <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>
+
+  <a href="/en_vivo" class="back-button">Volver a Remates</a>
+</div>
   <!-- COMPONENTE FOOTER -->
   <%- include('../partials/footer') %>
 

@@ -122,26 +122,33 @@ exports.crearRemate = async (req, res) => {
 exports.updateRemate = async (req, res) => {
   try {
     const remateId = req.params.id;
-    const remateData = req.body;
-    const success = await updateRemate(remateId, remateData);
+    const {
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+    } = req.body;
+
+    const success = await updateRemate(remateId, [
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+    ]);
+
     if (success) {
+      // Procesar la URL del anexo
+      if (req.body.anexo_url) {
+        const anexoUrl = req.body.anexo_url;
+        await agregarAnexoUrl(anexoUrl, remateId);
+      }
+
       res.json({ success: true, message: 'Remate actualizado correctamente' });
     } else {
       res.status(404).json({ success: false, error: 'Remate no encontrado' });
     }
-
-    // Procesar la URL del anexo
-    if (req.body.anexo_url) {
-      const anexoUrl = req.body.anexo_url;
-      await agregarAnexoUrl(anexoUrl, remateId);
-    }
-
-    res.status(200).json({ message: "Remate actualizado exitosamente" });
   } catch (error) {
     console.error("Error al actualizar el remate:", error);
     res.status(500).json({ message: "Hubo un problema al actualizar el remate", error: error.message });
   }
 };
+
 
 // Eliminar un remate
 exports.deleteRemate = async (req, res) => {

@@ -40,7 +40,8 @@ const getAllRemates = async () => {
       r.ganador,
       r.like_count,
       r.monto_venta,
-      r.estado
+      r.estado,
+      r.tamaño_propiedad
     FROM remates r
     ORDER BY r.id DESC
   `;
@@ -160,7 +161,8 @@ const getRemateById = async (remateId) => {
           r.lavanderia,
           r.fecha_remate,
           r.hora_remate,
-          r.estado
+          r.estado,
+          r.tamaño_propiedad
         FROM remates r
         WHERE r.id = ?
     `;
@@ -178,10 +180,11 @@ const updateRemate = async (remateId, datosRemate) => {
         UPDATE remates
         SET ubicacion = ?, precios = ?, descripcion = ?, categoria = ?, N_banos = ?, N_habitacion = ?,
             pisina = ?, patio = ?, cocina = ?, cochera = ?, balcon = ?, jardin = ?, pisos = ?, comedor = ?,
-            sala_start = ?, studio = ?, lavanderia = ?, fecha_remate = ?, hora_remate = ?, estado = ?
+            sala_start = ?, studio = ?, lavanderia = ?, fecha_remate = ?, hora_remate = ?, estado = ?, tamaño_propiedad = ?
         WHERE id = ?
     `;
-    await db.query(query, [...datosRemate, remateId]);
+    const [result] = await db.query(query, [...datosRemate, remateId]);
+    return result.affectedRows > 0;
 };
 
 module.exports = {

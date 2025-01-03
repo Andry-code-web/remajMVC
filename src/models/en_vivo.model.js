@@ -21,12 +21,14 @@ class EnVivo {
 
     static async getSeguimiento(remates_id) {
         const query = `
-        SELECT 
+       SELECT 
     d.expediente AS n_expediente,
     d.distrito_judicial,
     d.instancia,
-    d.especialista,
-    c.actividad AS n_convocatoria,
+    d.especialidad,
+    d.convocatoria,
+    d.organo_juridiccional AS organo_juridiccional,
+    c.actividad AS fase_convocatoria,
     c.fecha_actividad AS fecha_registro,
     r.descripcion AS procesado_por,
     r.estado AS estado_convocatoria,

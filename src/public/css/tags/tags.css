@@ -118,7 +118,7 @@
 }
 
 /* Estilos base para tablas */
-.table-base, .cronograma-table, .inmuebles-table, .detalles-table, .seguimiento-table {
+.table-base, .cronograma-table, .inmuebles-table, .detalles-table {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 0.75rem;
   box-shadow: 0 8px 30px rgba(212, 180, 131, 0.1);
@@ -130,12 +130,12 @@
   border: 1px solid rgba(245, 230, 211, 0.2);
   backdrop-filter: blur(8px);
 }
-.table-base table, .cronograma-table table, .inmuebles-table table, .detalles-table table, .seguimiento-table table {
+.table-base table, .cronograma-table table, .inmuebles-table table, .detalles-table table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
-.table-base table th, .cronograma-table table th, .inmuebles-table table th, .detalles-table table th, .seguimiento-table table th {
+.table-base table th, .cronograma-table table th, .inmuebles-table table th, .detalles-table table th {
   padding: 0.875rem 1.25rem;
   font-family: "fuentePrincipal";
   text-transform: uppercase;
@@ -149,7 +149,7 @@
   background: linear-gradient(145deg, #FFF3E6, #FFE5CC);
   color: #B38B59;
 }
-.table-base table td, .cronograma-table table td, .inmuebles-table table td, .detalles-table table td, .seguimiento-table table td {
+.table-base table td, .cronograma-table table td, .inmuebles-table table td, .detalles-table table td {
   padding: 0.75rem 1.25rem;
   /* Reducido el padding */
   font-family: "fuenteparrafos";
@@ -160,33 +160,46 @@
   white-space: nowrap;
   /* Evita que el texto se rompa en múltiples líneas */
 }
-.table-base table tr, .cronograma-table table tr, .inmuebles-table table tr, .detalles-table table tr, .seguimiento-table table tr {
+.table-base table tr, .cronograma-table table tr, .inmuebles-table table tr, .detalles-table table tr {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.table-base table tr:hover, .cronograma-table table tr:hover, .inmuebles-table table tr:hover, .detalles-table table tr:hover, .seguimiento-table table tr:hover {
+.table-base table tr:hover, .cronograma-table table tr:hover, .inmuebles-table table tr:hover, .detalles-table table tr:hover {
   background: rgba(212, 180, 131, 0.03);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(212, 180, 131, 0.1);
 }
-.table-base table tr:hover td, .cronograma-table table tr:hover td, .inmuebles-table table tr:hover td, .detalles-table table tr:hover td, .seguimiento-table table tr:hover td {
+.table-base table tr:hover td, .cronograma-table table tr:hover td, .inmuebles-table table tr:hover td, .detalles-table table tr:hover td {
   color: #B38B59;
 }
 
-/* Estilos específicos para cada tabla */
+/* Tabla de seguimiento */
 .seguimiento-table {
-  max-width: 1600px;
-  /* Tabla más ancha para seguimiento */
+  width: 100%;
 }
-.seguimiento-table th {
-  background: linear-gradient(145deg, #FFF3E6, #FFE5CC);
-  color: #B38B59;
-  padding: 0.75rem 1rem;
-  /* Padding más compacto */
+.seguimiento-table table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.seguimiento-table td {
-  padding: 0.625rem 1rem;
-  /* Padding más compacto */
-  font-size: 0.875rem;
+.seguimiento-table table th {
+  background: #FFF3E6;
+  color: #8B6B43;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.7rem;
+  border-bottom: 1px solid #E6D5C1;
+}
+.seguimiento-table table td {
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  color: #666;
+  border-bottom: 1px solid #F0E6DB;
+}
+.seguimiento-table table tr:last-child td {
+  border-bottom: none;
+}
+.seguimiento-table table tr:hover td {
+  background: rgba(255, 243, 230, 0.3);
 }
 
 .detalles-table {
@@ -279,7 +292,6 @@
 }
 
 /* Contenedores específicos con nuevo espaciado */
-.seguimiento-container,
 .detalles-container,
 .inmuebles-container,
 .cronograma-container {
@@ -288,30 +300,92 @@
   margin-bottom: 2rem;
 }
 
-/* Media queries */
+/* Estilos para los bloques de sección */
+.section-block {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(212, 180, 131, 0.1);
+  overflow: hidden;
+  border: 1px solid rgba(245, 230, 211, 0.2);
+}
+.section-block .section-title {
+  padding: 1.5rem 1rem;
+  margin: 0;
+  font-family: "fuentePrincipal";
+  font-size: 1.9rem;
+  color: #8B6B43;
+  background: linear-gradient(145deg, #FFF9F5, #FFF3E6);
+  border-bottom: 1px solid rgba(212, 180, 131, 0.1);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.section-block .section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, #D4B483, #B38B59);
+}
+
+/* Contenedor principal */
+.seguimiento-container {
+  padding-top: 70px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Estilos para los bloques de sección */
+.section-block {
+  margin-bottom: 1rem;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.section-block .section-title {
+  padding: 0.5rem 1rem;
+  margin: 0;
+  font-family: "fuentePrincipal";
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #8B6B43;
+  background: linear-gradient(145deg, #FFF9F5, #FFF3E6);
+  border-bottom: 2px solid #B38B59;
+  display: flex;
+  align-items: center;
+  height: 35px;
+}
+.section-block .content {
+  padding: 0;
+}
+
+/* Ajustes responsive */
 @media (max-width: 768px) {
-  .navigation-tabs {
-    flex-wrap: wrap;
-    padding: 0.75rem;
-    margin: 1rem;
+  .seguimiento-container {
+    padding-top: 60px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
-  .navigation-tabs .tab-link {
-    flex: 1 1 auto;
-    text-align: center;
-    font-size: 0.875rem;
-    padding: 0.625rem 1rem;
+  .section-block {
+    margin-bottom: 0.75rem;
   }
-  .table-base, .seguimiento-table, .detalles-table, .inmuebles-table, .cronograma-table {
-    margin: 1rem;
+  .section-block .section-title {
+    padding: 0.4rem 0.75rem;
   }
-  .table-base table th, .seguimiento-table table th, .detalles-table table th, .inmuebles-table table th, .cronograma-table table th,
-  .table-base table td,
-  .seguimiento-table table td,
-  .detalles-table table td,
-  .inmuebles-table table td,
-  .cronograma-table table td {
-    padding: 0.75rem;
-    font-size: 0.875rem;
+  .seguimiento-table {
+    overflow-x: auto;
+  }
+  .seguimiento-table table th, .seguimiento-table table td {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
   }
 }
 @media (max-width: 640px) {
@@ -321,7 +395,6 @@
   .content-wrapper {
     padding: 0.5rem;
   }
-  .seguimiento-container,
   .detalles-container,
   .inmuebles-container,
   .cronograma-container {

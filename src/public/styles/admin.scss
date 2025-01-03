@@ -508,3 +508,30 @@ input[type="file"] {
     border: 2px solid #0a0000;
     border-radius: 10px;
 }
+
+article {
+    scrollbar-color: blue;
+    scrollbar-width: auto;
+}
+
+.form-grid-seguimiento {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.form-grid-detalles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+.form-grid-inmuebles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+.form-grid-cronograma {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}

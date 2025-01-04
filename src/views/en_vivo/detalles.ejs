@@ -2,92 +2,95 @@
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
 <link rel="stylesheet" href="/css/globales/globales.css" />
 <link rel="stylesheet" href="/css/tags/tags.css">
-
 <%- include('../partials/navbar.ejs') %>
 
-<div class="detalles-container">
-  <div class="navigation-tabs">
-    <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
-    <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
-    <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+<canvas id="background-canvas"></canvas>
+<main class="main-wrapper">
+  <div class="detalles-container">
+    <div class="navigation-tabs">
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+    </div>
+    <% if (detalles && detalles.length > 0) { %>
+      <% detalles.forEach(detalle => { %>
+        <div class="detalles-table">
+          <table>
+            <tbody>
+              <tr>
+                <td class="label">Expediente:</td>
+                <td class="value"><%= detalle.expediente %></td>
+                <td class="label">Distrito Judicial:</td>
+                <td class="value"><%= detalle.distrito_judicial %></td>
+              </tr>
+              <tr>
+                <td class="label">Órgano Jurisdiccional:</td>
+                <td class="value"><%= detalle.organo_juridiccional %></td>
+                <td class="label">Instancia:</td>
+                <td class="value"><%= detalle.instancia %></td>
+              </tr>
+              <tr>
+                <td class="label">Juez:</td>
+                <td class="value"><%= detalle.juez %></td>
+                <td class="label">Especialidad: </td>
+                <td class="value"><%= detalle.especialidad %></td>
+              </tr>
+              <tr>
+                <td class="label">Materia:</td>
+                <td class="value"><%= detalle.materia %></td>
+                <td class="label">Resolución:</td>
+                <td class="value"><%= detalle.resolucion %></td>
+              </tr>
+              <tr>
+                <td class="label">Fecha Resolución:</td>
+                <td class="value"><%= detalle.fecha_resolucion %></td>
+                <td class="label">Archivo:</td>
+                <td class="value"><%= detalle.archivo %></td>
+              </tr>
+              <tr>
+                <td class="label">Convocatoria:</td>
+                <td class="value"><%= detalle.convocatoria %></td>
+                <td class="label">Tipo Cambio:</td>
+                <td class="value"><%= detalle.tipo_cambio %></td>
+              </tr>
+              <tr>
+                <td class="label">Tasación:</td>
+                <td class="value"><%= detalle.tasacion %></td>
+                <td class="label">Precio Base:</td>
+                <td class="value"><%= detalle.precio_base %></td>
+              </tr>
+              <tr>
+                <td class="label">Incremento entre ofertas:</td>
+                <td class="value"><%= detalle.incremento_ofertas %></td>
+                <td class="label">Arancel:</td>
+                <td class="value"><%= detalle.arancel %></td>
+              </tr>
+              <tr>
+                <td class="label">Oblaje:</td>
+                <td class="value"><%= detalle.oblaje %></td>
+                <td class="label">N° inscritos:</td>
+                <td class="value"><%= detalle.n_inscritos %></td>
+              </tr>
+              <tr>
+                <td class="label">Descripción:</td>
+                <td class="value" colspan="3"><%= detalle.descripcion %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p class="no-data">No hay detalles disponibles.</p>
+    <% } %>
+  
+  
+    <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>
-  <% if (detalles && detalles.length > 0) { %>
-    <% detalles.forEach(detalle => { %>
-      <div class="detalles-table">
-        <table>
-          <tbody>
-            <tr>
-              <td class="label">Expediente:</td>
-              <td class="value"><%= detalle.expediente %></td>
-              <td class="label">Distrito Judicial:</td>
-              <td class="value"><%= detalle.distrito_judicial %></td>
-            </tr>
-            <tr>
-              <td class="label">Órgano Jurisdiccional:</td>
-              <td class="value"><%= detalle.organo_juridiccional %></td>
-              <td class="label">Instancia:</td>
-              <td class="value"><%= detalle.instancia %></td>
-            </tr>
-            <tr>
-              <td class="label">Juez:</td>
-              <td class="value"><%= detalle.juez %></td>
-              <td class="label">Especialidad: </td>
-              <td class="value"><%= detalle.especialidad %></td>
-            </tr>
-            <tr>
-              <td class="label">Materia:</td>
-              <td class="value"><%= detalle.materia %></td>
-              <td class="label">Resolución:</td>
-              <td class="value"><%= detalle.resolucion %></td>
-            </tr>
-            <tr>
-              <td class="label">Fecha Resolución:</td>
-              <td class="value"><%= detalle.fecha_resolucion %></td>
-              <td class="label">Archivo:</td>
-              <td class="value"><%= detalle.archivo %></td>
-            </tr>
-            <tr>
-              <td class="label">Convocatoria:</td>
-              <td class="value"><%= detalle.convocatoria %></td>
-              <td class="label">Tipo Cambio:</td>
-              <td class="value"><%= detalle.tipo_cambio %></td>
-            </tr>
-            <tr>
-              <td class="label">Tasación:</td>
-              <td class="value"><%= detalle.tasacion %></td>
-              <td class="label">Precio Base:</td>
-              <td class="value"><%= detalle.precio_base %></td>
-            </tr>
-            <tr>
-              <td class="label">Incremento entre ofertas:</td>
-              <td class="value"><%= detalle.incremento_ofertas %></td>
-              <td class="label">Arancel:</td>
-              <td class="value"><%= detalle.arancel %></td>
-            </tr>
-            <tr>
-              <td class="label">Oblaje:</td>
-              <td class="value"><%= detalle.oblaje %></td>
-              <td class="label">N° inscritos:</td>
-              <td class="value"><%= detalle.n_inscritos %></td>
-            </tr>
-            <tr>
-              <td class="label">Descripción:</td>
-              <td class="value" colspan="3"><%= detalle.descripcion %></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    <% }); %>
-  <% } else { %>
-    <p class="no-data">No hay detalles disponibles.</p>
-  <% } %>
-
-
-  <a href="/en_vivo" class="back-button">Volver a Remates</a>
-</div>
+</main>
 
     <!-- COMPONENTE FOOTER -->
     <%- include('../partials/footer') %>
+    <script src="/js/componentes/uvcanvas_envivo.js"></script>
 
 
     <script>

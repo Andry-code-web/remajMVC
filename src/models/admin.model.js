@@ -10,7 +10,12 @@ const db = require('../config/database');
         console.error('Error al conectar a la base de datos:', error.message);
     }
 })();
- 
+
+
+
+
+
+ //aca se inicia 
 // Función para obtener todos los remates
 const getAllRemates = async () => {
     const query = `

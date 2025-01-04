@@ -53,13 +53,15 @@ exports.loginAdmin = async (req, res) => {
     res.status(500).send('Error al iniciar sesión');
   }
 };
-
 // Lógica para logout
 exports.logoutAdmin = (req, res) => {
   res.clearCookie('auth_token');
   res.redirect('/admin/login');
 };
 
+//area de trabajo "moises"
+
+//aca comienza 
 // Obtener todos los remates
 exports.getAlladmin = async (req, res) => {
   try {
@@ -80,7 +82,7 @@ exports.getAlladmin = async (req, res) => {
     res.status(500).send('Error al cargar los datos');
   }
 };
-
+//aca igual
 exports.crearRemate = async (req, res) => {
   try {
     const {
@@ -117,7 +119,7 @@ exports.crearRemate = async (req, res) => {
     res.status(500).json({ message: "Hubo un problema al crear el remate" });
   }
 };
-
+//moises aca 
 // Actualizar un remate existente
 exports.updateRemate = async (req, res) => {
   try {
@@ -149,7 +151,7 @@ exports.updateRemate = async (req, res) => {
   }
 };
 
-
+//aca tambien 
 // Eliminar un remate
 exports.deleteRemate = async (req, res) => {
   try {
@@ -165,7 +167,7 @@ exports.deleteRemate = async (req, res) => {
     res.json({ success: false, error: error.message });
   }
 };
-
+//aca tambien 
 // Obtener los datos de un remate para editar
 exports.getRemateForEdit = async (req, res) => {
   try {

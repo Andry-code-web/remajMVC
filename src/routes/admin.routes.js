@@ -32,15 +32,6 @@ router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo
 // Ruta para la vista de subasta (protegida)
 router.get('/subasta', isAuthenticated, (req, res) => {
   res.render("subasta")
-  
-  /* // Rutas del dashboard
-  router.get('/', adminController.getAdminDashboard);
-  
-  // API endpoints para remates
-  router.post('/api/remates', adminController.createRemate);
-  router.put('/api/remates/:id', adminController.updateRemate);
-  router.get('/api/remates/:id', adminController.getRemateById);
-  ; */
 });
   
 module.exports = router;

@@ -1118,7 +1118,7 @@
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
           const reader = new FileReader();
-
+ 
           reader.onload = function (e) {
             const img = document.createElement('img');
             img.src = e.target.result;
@@ -1130,7 +1130,7 @@
         }
       });
     });
-
+ 
     // Obtener parámetros de URL
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');

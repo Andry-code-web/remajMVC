@@ -10,7 +10,7 @@ const {
   getRemateById,
   updateRemate
 } = require('../models/admin.model');
-
+  
 // Vista administrador
 exports.getloginadmin = async (req, res) => {
   try {

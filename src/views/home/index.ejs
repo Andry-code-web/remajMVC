@@ -91,7 +91,7 @@
         <div class="img_categorias">
           <img src="/img/departamento.png" alt="">
         </div>
-        <p>Departamanetos</p>
+        <p>Departamentos</p>
       </a>
       <a href="#" class="cate_remates">
         <div class="img_categorias">
@@ -149,11 +149,12 @@
                 <div class="botones-contenedor">
                   <a href="#" class="seguimiento-button">Seguimiento</a>
                   <a href="#" class="detalle-button">Detalle</a>
-                  <a href="#" target="_blank" class="aviso-button" data-aviso-url="<%= remate.anexos[0] ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+                  <a href="#" target="_blank" class="aviso-button"
+                    data-aviso-url="<%= remate.anexos[0] ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
                 </div>
         </div>
 
-        <a href="/auctions/<%= remate.id %>" href="#$" style="text-decoration: none;">
+        <a href="/auctions/<%= remate.id %>" style="text-decoration: none;">
           <div class="contenido">
             <div class="label">
               <%= remate.categoria %>
@@ -451,6 +452,7 @@
       button.addEventListener('click', function (event) {
         event.preventDefault();
         const avisoUrl = this.getAttribute('data-aviso-url');
+        console.log(avisoUrl); // Verifica la URL
         if (avisoUrl && avisoUrl !== '#') {
           window.open(avisoUrl, '_blank');
         } else {
@@ -471,7 +473,7 @@
       // Llenar la sección de remate
       document.getElementById('expediente').textContent = detalles.expediente || 'N/A';
       document.getElementById('distrito_judicial').textContent = detalles.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_juridiccional || 'N/A';
+      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_jurisdiccional || 'N/A';
       document.getElementById('instancia').textContent = detalles.instancia || 'N/A';
       document.getElementById('juez').textContent = detalles.juez || 'N/A';
       document.getElementById('especialista').textContent = detalles.especialista || 'N/A';
@@ -534,19 +536,6 @@
       document.getElementById('estado_convocatoria_seguimiento').textContent = seguimiento.estado_convocatoria || 'N/A';
       document.getElementById('procesado_por_seguimiento').textContent = seguimiento.procesado_por || 'N/A';
       document.getElementById('reanudado_seguimiento').textContent = seguimiento.reanudado || 'N/A';
-
-      // Generar enlaces de Google Drive
-      const enlacesContainer = document.createElement('div');
-      enlacesContainer.classList.add('enlaces-container');
-      seguimiento.papeles_inmuebles.forEach(papel => {
-        const enlace = document.createElement('a');
-        enlace.href = papel.url;
-        enlace.textContent = papel.nombre;
-        enlace.target = '_blank';
-        enlacesContainer.appendChild(enlace);
-        enlacesContainer.appendChild(document.createElement('br'));
-      });
-      document.getElementById('procesado_por_seguimiento').parentNode.appendChild(enlacesContainer);
     }
   });
 

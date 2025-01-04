@@ -149,8 +149,8 @@
                 <div class="botones-contenedor">
                   <a href="#" class="seguimiento-button">Seguimiento</a>
                   <a href="#" class="detalle-button">Detalle</a>
-                  <a href="#" target="_blank" class="aviso-button"
-                    data-aviso-url="<%= remate.anexos[0] ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+                  <a href="#" class="aviso-button"
+                    data-aviso-url="<%= remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
                 </div>
         </div>
 
@@ -452,7 +452,6 @@
       button.addEventListener('click', function (event) {
         event.preventDefault();
         const avisoUrl = this.getAttribute('data-aviso-url');
-        console.log(avisoUrl); // Verifica la URL
         if (avisoUrl && avisoUrl !== '#') {
           window.open(avisoUrl, '_blank');
         } else {
@@ -473,7 +472,7 @@
       // Llenar la sección de remate
       document.getElementById('expediente').textContent = detalles.expediente || 'N/A';
       document.getElementById('distrito_judicial').textContent = detalles.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_jurisdiccional || 'N/A';
+      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_juridiccional || 'N/A';
       document.getElementById('instancia').textContent = detalles.instancia || 'N/A';
       document.getElementById('juez').textContent = detalles.juez || 'N/A';
       document.getElementById('especialista').textContent = detalles.especialista || 'N/A';
@@ -497,12 +496,12 @@
       inmuebles.forEach(inmueble => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${inmueble.partida_registral}</td>
-          <td>${inmueble.tipo_inmueble}</td>
-          <td>${inmueble.direccion}</td>
-          <td>${inmueble.carga_ogravamen}</td>
-          <td>${inmueble.porcentaje_rematar}</td>
-        `;
+      <td>${inmueble.partida_registral}</td>
+      <td>${inmueble.tipo_inmueble}</td>
+      <td>${inmueble.direccion}</td>
+      <td>${inmueble.carga_ogravamen}</td>
+      <td>${inmueble.porcentaje_rematar}</td>
+    `;
         inmueblesTableBody.appendChild(row);
       });
 
@@ -512,11 +511,11 @@
       cronograma.forEach((actividad, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${actividad.actividad}</td>
-          <td>${actividad.fecha_actividad}</td>
-          <td>${actividad.fecha_actividad}</td>
-        `;
+      <td>${index + 1}</td>
+      <td>${actividad.actividad}</td>
+      <td>${actividad.fecha_actividad}</td>
+      <td>${actividad.fecha_actividad}</td>
+    `;
         cronogramaTableBody.appendChild(row);
       });
     }

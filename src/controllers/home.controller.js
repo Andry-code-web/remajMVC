@@ -16,6 +16,12 @@ exports.getAllRemates = async (req, res) => {
       return acc;
     }, {});
 
+    // Obtener anexos para cada remate
+    for (const remateId in remates) {
+      const anexos = await Home.getAnexos(remateId);
+      remates[remateId].anexos = anexos;
+    }
+
     res.render('layouts/main', {
       content: 'home/index',
       remates: Object.values(remates)

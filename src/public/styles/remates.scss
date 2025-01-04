@@ -155,7 +155,7 @@ form {
 }
 
 .card-content h2 {
-    color: #0a0000;
+    color: #0a0000ca;
 }
 
 .info_img {
@@ -178,12 +178,22 @@ form {
     font-size: 1.2rem;
 }
 
+.decripcion_remates {
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 .card-content {
     padding: 20px;
 }
 
 .card-content h2 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 10px 0;
 }
 

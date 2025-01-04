@@ -28,3 +28,17 @@
         </a>
     </div>
 
+    <div id="resultados">
+        <% if (productos && productos.length> 0) { %>
+            <ul>
+                <% productos.forEach(function(producto) { %>
+                    <li>
+                        <%= producto.nombre %> - <%= producto.descripcion %>
+                    </li>
+                    <% }); %>
+            </ul>
+            <% } else { %>
+                <p>No se encontraron productos para esta categoría.</p>
+                <% } %>
+                          
+    </div>

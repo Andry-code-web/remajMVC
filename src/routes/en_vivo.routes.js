@@ -10,4 +10,6 @@ router.get("/inmuebles/:id", enVivoController.getInmuebles);
 router.get("/cronograma/:id", enVivoController.getCronograma);
 router.get('/pdf/:id', enVivoController.getPdf);
 
+
+
 module.exports = router;

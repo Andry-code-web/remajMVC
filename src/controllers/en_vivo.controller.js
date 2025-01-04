@@ -116,3 +116,4 @@ exports.getPdf = async (req, res) => {
         res.render("error", { message: "Error al descargar el PDF" });
     }
 };
+

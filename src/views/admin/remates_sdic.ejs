@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Remates</title>
+    <link rel="stylesheet" href="/css/remates_sdic/remates_sdic">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Gestión de Remates</h1>
+            <button id="btnNuevoRemate" class="btn-primary">
+                <i class="fas fa-plus"></i> Nuevo Remate
+            </button>
+        </header>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <i class="fas fa-home"></i>
+                <div class="stat-info">
+                    <h3>Total Remates</h3>
+                    <p><%= totalRemates %></p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-info">
+                    <h3>Remates Activos</h3>
+                    <p><%= rematesActivos %></p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <div class="stat-info">
+                    <h3>Monto Total</h3>
+                    <p>$<%= montoTotal %></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="remates-list">
+            <div class="filters">
+                <input type="text" id="searchRemate" placeholder="Buscar por ubicación, precio o categoría...">
+                <select id="filterEstado">
+                    <option value="">Todos los estados</option>
+                    <option value="activo">Activo</option>
+                    <option value="finalizado">Finalizado</option>
+                </select>
+            </div>
+
+            <table class="remates-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ubicación</th>
+                        <th>Precio Base</th>
+                        <th>Estado</th>
+                        <th>Fecha Remate</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% remates.forEach(remate => { %>
+                    <tr>
+                        <td><%= remate.id %></td>
+                        <td><%= remate.ubicacion %></td>
+                        <td>$<%= remate.precios %></td>
+                        <td><span class="estado-badge <%= remate.estado %>"><%= remate.estado %></span></td>
+                        <td><%= remate.fecha_presentacion %></td>
+                        <td class="acciones">
+                            <button onclick="editarRemate(<%= remate.id %>)" class="btn-edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="verDetalles(<%= remate.id %>)" class="btn-view">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Nuevo/Editar Remate -->
+    <div id="modalRemate" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Nuevo Remate</h2>
+            <form id="formRemate">
+                <div class="form-grid">
+                    <!-- Información Básica -->
+                    <div class="form-section">
+                        <h3>Información Básica</h3>
+                        <div class="form-group">
+                            <label>Ubicación</label>
+                            <input type="text" name="ubicacion" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Precio Base</label>
+                            <input type="number" name="precio_base" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select name="estado" required>
+                                <option value="activo">Activo</option>
+                                <option value="finalizado">Finalizado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Detalles del Inmueble -->
+                    <div class="form-section">
+                        <h3>Detalles del Inmueble</h3>
+                        <div class="form-group">
+                            <label>Tipo Inmueble</label>
+                            <select name="tipo_inmueble" required>
+                                <option value="residencial">Residencial</option>
+                                <option value="comercial">Comercial</option>
+                                <option value="terreno">Terreno</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Habitaciones</label>
+                            <input type="number" name="habitaciones">
+                        </div>
+                        <div class="form-group">
+                            <label>Baños</label>
+                            <input type="number" name="banos">
+                        </div>
+                    </div>
+
+                    <!-- Información Legal -->
+                    <div class="form-section">
+                        <h3>Información Legal</h3>
+                        <div class="form-group">
+                            <label>Expediente</label>
+                            <input type="text" name="expediente" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Distrito Judicial</label>
+                            <input type="text" name="distrito_judicial" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Órgano Jurisdiccional</label>
+                            <input type="text" name="organo_juridiccional" required>
+                        </div>
+                    </div>
+
+                    <!-- Fechas y Cronograma -->
+                    <div class="form-section">
+                        <h3>Fechas y Cronograma</h3>
+                        <div class="form-group">
+                            <label>Fecha Presentación</label>
+                            <input type="date" name="fecha_presentacion" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora Presentación</label>
+                            <input type="time" name="hora_presentacion" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar Remate</button>
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/componentes/script_remates_sdic.js"></script>
+</body>
+</html>

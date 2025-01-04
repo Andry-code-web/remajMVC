@@ -1,4 +1,35 @@
-@use 'variables' as *;
+
+/* Variables globales */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(0, 0, 0, 0.15);
+  --text-primary: #1a1a2e;
+  --text-secondary: #2d3748;
+  --accent-color: #2c3e50;
+  --gradient-start: rgba(44, 62, 80, 0.1);
+  --gradient-end: rgba(44, 62, 80, 0.05);
+  --glow-color: rgba(44, 62, 80, 0.3);
+  --white-glow: rgba(255, 255, 255, 0.6);
+}
+
+/* Estilo del scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(107, 77, 230, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 4px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
 
 * {
   margin: 0;
@@ -7,228 +38,331 @@
   cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
 
-/* Estilos generales */
 body {
   line-height: 1.5;
-  font-family: 'fuenteParrafos', sans-serif;
+  font-family: 'Arial', sans-serif;
+  background: transparent;
+  overflow-y: overlay;
 }
 
 #header {
-  color: rgb(0, 0, 0); 
+  color: black;
 }
 
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: white;
+}
 /* Contenedor principal */
 .property-container {
-  min-height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+  min-height: 100vh;
   width: 100%;
-  background: white; /* Usa la variable de color de fondo */
-  position: relative; /* Necesario para el posicionamiento correcto */
-  max-width: 100%; /* Permite que cubra todo el ancho */
-  margin: 0; /* Elimina los márgenes */
-  padding: 6rem 1.5rem 2rem; /* Mantiene el padding superior para el contenido */
+  background: transparent;
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  padding: 6rem 1.5rem 2rem;
 }
 
-/* Contenedor interno para mantener el ancho máximo del contenido */
+/* Grid de subastas */
 .auction-grid {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 1100px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
 }
 
-/* El resto de los estilos se mantienen igual */
+/* Tarjeta de subasta */
 .auction-card {
-  min-width: 300px;
-  background: $card-bg;
-  border-radius: 12px;
-  border: 1px solid rgba($accent-gold, 0.2);
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 20px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  
-  &:nth-child(odd) {
-    animation: slideFromLeft 0.6s forwards;
-  }
-  
-  &:nth-child(even) {
-    animation: slideFromRight 0.6s forwards;
-  }
-  
-  &:hover {
-    transform: translateY(-5px);
-    border-color: rgba($accent-gold, 0.4);
-    box-shadow: 0 8px 25px rgba($accent-gold, 0.15);
-  }
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.08),
+    0 0 0 1px var(--card-border),
+    0 0 15px var(--glow-color);
+  perspective: 1000px;
+  min-width: 320px;
+  border: 1px solid var(--card-border);
+}
 
-  .auction-header {
-    background: linear-gradient(135deg, rgba($accent-gold, 0.2), rgba($accent-gold, 0.1));
-    padding: 1rem;
-    border-bottom: 1px solid rgba($accent-gold, 0.2);
-    
-    .auction-number {
-      color: $text-color;
-      font-family: 'fuentePrincipal', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-    }
-  }
+.auction-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    var(--gradient-start),
+    var(--gradient-end)
+  );
+  border-radius: 20px 20px 0 0;
+  z-index: 0;
+}
 
-  .auction-image {
-    position: relative;
-    height: 180px;
-    overflow: hidden;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    
-    &:hover img {
-      transform: scale(1.05);
-    }
-  }
+.auction-card:hover {
+  transform-origin: center bottom;
+  transform: perspective(1000px) rotateX(4deg) translateY(-15px);
+  box-shadow: 
+    0 40px 45px -5px rgba(0, 0, 0, 0.2),
+    0 30px 30px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 2px var(--glow-color),
+    0 0 30px var(--glow-color),
+    0 0 40px var(--white-glow);
+}
 
-  .auction-content {
-    padding: 1.25rem;
-    
-    .auction-title {
-      color: $text-color;
-      font-family: 'fuenteSecundaria', serif;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      
-      i {
-        color: $accent-gold;
-        margin-right: 0.5rem;
-      }
-    }
+/* Encabezado de la tarjeta */
+.auction-header {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 1;
+}
 
-    .auction-info {
-      margin: 1rem 0;
-      
-      p {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: rgba($text-color, 0.8);
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-        
-        i {
-          color: $accent-gold;
-        }
-      }
-    }
-  }
+.auction-number {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .price-section {
-    background: linear-gradient(135deg, rgba($accent-gold, 0.15), rgba($accent-gold, 0.05));
-    padding: 1rem;
-    margin: 0.75rem;
-    border-radius: 8px;
-    border: 1px solid rgba($accent-gold, 0.2);
-    
-    .price-label {
-      color: rgba($text-color, 0.8);
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
-    }
-    
-    .price-value {
-      color: $accent-gold;
-      font-family: 'fuentePrincipal', sans-serif;
-      font-size: 1.3rem;
-    }
-  }
+/* Contenedor de imagen */
+.auction-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin: 0 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .action-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.75rem 0rem;
-  }
+.property-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.auction-card:hover .property-image {
+  transform: scale(1.05);
+}
+
+/* Contenido de la tarjeta */
+.auction-content {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+/* Título de la subasta */
+.auction-title {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auction-title i {
+  color: var(--accent-color);
+}
+
+/* Información de la subasta */
+.auction-info {
+  margin: 1rem 0;
+  color: var(--text-secondary);
+}
+
+.auction-info p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.auction-info i {
+  color: var(--accent-color);
+}
+
+/* Sección de descripción */
+.description-section {
+  margin: 1rem 0;
+  background: rgba(44, 62, 80, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+
+.description-section h6 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.description-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+/* Sección de precio */
+.price-section {
+  background: linear-gradient(
+    135deg,
+    rgba(44, 62, 80, 0.1),
+    rgba(44, 62, 80, 0.05)
+  );
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border: 1px solid rgba(44, 62, 80, 0.15);
+}
+
+.price-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.price-value {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
 }
 
 .action-btn {
-  flex: 1;
-  padding: 0.75rem 0.5rem;
-  border-radius: 8px;
-  color: $text-color;
-  font-family: 'fuentePrincipal', sans-serif;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  flex: 0 1 auto;
+  min-width: 95px;
+  max-width: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  border: 1px solid rgba($accent-gold, 0.2);
-  
-  i {
-    font-size: 0.9rem;
-  }
-  
-  &.seguimiento {
-    background: rgba($accent-gold, 0.15);
-    &:hover {
-      background: rgba($accent-gold, 0.25);
-      transform: translateY(-2px);
-    }
-  }
-  
-  &.detalles {
-    background: rgba($hover-gold, 0.15);
-    &:hover {
-      background: rgba($hover-gold, 0.25);
-      transform: translateY(-2px);
-    }
-  }
-  
-  &.aviso {
-    background: rgba($text-color, 0.15);
-    &:hover {
-      background: rgba($text-color, 0.25);
-      transform: translateY(-2px);
-    }
+  gap: 0.4rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: rgba(44, 62, 80, 0.1);
+  color: var(--text-primary);
+  border: 1px solid rgba(44, 62, 80, 0.2);
+}
+
+.action-btn:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+}
+
+.action-btn i {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Estilos específicos para cada botón */
+.action-btn.seguimiento {
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.action-btn.detalles {
+  background: rgba(52, 73, 94, 0.1);
+}
+
+.action-btn.aviso {
+  background: rgba(39, 55, 77, 0.1);
+}
+
+/* Mensaje de no resultados */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 20px;
+  color: var(--text-secondary);
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+  .auction-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@keyframes slideFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+@media (max-width: 1100px) {
+  .auction-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@keyframes slideFromRight {
+@media (max-width: 768px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .property-container {
+    padding: 4rem 1rem 1rem;
+  }
+  
+  .auction-card {
+    min-width: 300px;
+  }
+  
+  .action-buttons {
+    padding: 0 1rem 1rem;
+  }
+  
+  .action-btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    min-width: 85px;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
+}
+
+.auction-card {
+  animation: fadeIn 0.5s ease-out forwards;
 }

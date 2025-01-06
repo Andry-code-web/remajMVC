@@ -93,25 +93,30 @@ exports.crearRemate = async (req, res) => {
       return res.status(401).json({ message: "Usuario no autenticado" });
     }
 
+    console.log("Contenido de req.body:", req.body);
     const {
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, anexo_url,
-      expediente, distrito_judicial, instancia, organo_jurisdiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad, anexo_url,
+      expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado,
       partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar,
       actividad, fecha_actividad, fecha_fin,
-      expediente_detalle, distrito_vocal, organo_jurisdiccional_detalle, instancia_detalle, juez, especialidad_detalle, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos
+      expediente_detalle, distrito_vocal, organo_juridiccional_detalle, instancia_detalle, juez, especialista, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos
     } = req.body;
+
+    console.log("Valor de tamano_propiedad:", tamano_propiedad);
 
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad,
       req.user.id // Aquí agregamos usuario_admin_id
     ]);
 
+    console.log("ID del remate creado:", remateId);
+
     // Crear un nuevo seguimiento en la base de datos
     await createSeguimiento([
-      expediente, distrito_judicial, instancia, organo_jurisdiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado, remateId
+      expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado, remateId
     ]);
 
     // Crear un nuevo inmueble en la base de datos
@@ -126,7 +131,7 @@ exports.crearRemate = async (req, res) => {
 
     // Crear un nuevo detalle en la base de datos
     await createDetalles([
-      expediente_detalle, distrito_vocal, organo_jurisdiccional_detalle, instancia_detalle, juez, especialidad_detalle, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos, remateId
+      expediente_detalle, distrito_vocal, organo_juridiccional_detalle, instancia_detalle, juez, especialista, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos, remateId
     ]);
 
     // Procesar imágenes
@@ -147,19 +152,18 @@ exports.crearRemate = async (req, res) => {
   }
 };
 
-
 // Actualizar un remate existente
 exports.updateRemate = async (req, res) => {
   try {
     const remateId = req.params.id;
     const {
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
     } = req.body;
 
     const success = await updateRemate(remateId, [
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
     ]);
 
     if (success) {

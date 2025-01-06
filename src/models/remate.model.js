@@ -49,7 +49,28 @@ const getRemateById = async (remateId) => {
     }
 };
 
+// Función para obtener los remates filtrados por categoría
+const getRematesByCategoria = async (categoria) => {
+    const query = `
+        SELECT
+            id, ubicacion, precios, descripcion, categoria, N_banos, N_habitacion,
+            pisina, patio, cocina, cochera, balcon, jardin, pisos, comedor, sala_start,
+            studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
+        FROM remates
+        WHERE categoria = ?
+        ORDER BY id DESC
+    `;
+    try {
+        const [remates] = await db.query(query, [categoria]);
+        return remates;
+    } catch (error) {
+        throw new Error('Error al obtener los remates filtrados: ' + error.message);
+    }
+};
+
+
 module.exports = {
     getAllRemates,
     getRemateById,
+    getRematesByCategoria,
 };

@@ -20,50 +20,62 @@
 <body>
   <%- include('../partials/navbar') %>
 
-  <main class="">
-    <%- include('../' + remate) %>
-  </main>
+    <main class="">
+      <%- include('../' + remate) %>
+    </main>
+    <div id="resultados">
+      <% if (productos && productos.length> 0) { %>
+        <ul>
+          <% productos.forEach(function(producto) { %>
+            <li>
+              <%= producto.nombre %> - <%= producto.descripcion %>
+            </li>
+            <% }); %>
+        </ul>
+        <% } else { %>
+          <p>No se encontraron productos para esta categoría.</p>
+          <% } %>
+    </div>
 
+    <%- include('../partials/footer') %>
 
-  <%- include('../partials/footer') %>
+      <script>
+        window.addEventListener('scroll', () => {
+          const header = document.getElementById('header');
+          const banner = document.getElementById('banner_remates2');
+          const categorias = document.getElementById('prueva1');
+          const subastas = document.getElementById('subastas');
+          const bannerBottom = banner.getBoundingClientRect().bottom;
+          const categoriasBottom = categorias.getBoundingClientRect().bottom;
+          const subastasTop = subastas.getBoundingClientRect().top;
+          if (bannerBottom > 0) {
+            header.style.color = '#fffcfc';
+          } else if (categoriasBottom > 0) {
+            header.style.color = '#0a0000';
+          } else if (subastasTop < window.innerHeight) {
+            header.style.color = '#0a0000';
+          } else {
+            header.style.color = 'black';
+          }
+        });
+      </script>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      const banner = document.getElementById('banner_remates2');
-      const categorias = document.getElementById('prueva1');
-      const subastas = document.getElementById('subastas');
-      const bannerBottom = banner.getBoundingClientRect().bottom;
-      const categoriasBottom = categorias.getBoundingClientRect().bottom;
-      const subastasTop = subastas.getBoundingClientRect().top;
-      if (bannerBottom > 0) {
-        header.style.color = '#fffcfc';
-      } else if (categoriasBottom > 0) {
-        header.style.color = '#0a0000';
-      } else if (subastasTop < window.innerHeight) {
-        header.style.color = '#0a0000';
-      } else {
-        header.style.color = 'black';
-      }
-    });
-  </script>
+      <script>
+        let lastScrollPosition = 0;
+        const navbar = document.querySelector('.navbar');
 
-  <script>
-    let lastScrollPosition = 0;
-    const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function () {
+          const currentScrollPosition = window.pageYOffset;
 
-    window.addEventListener('scroll', function() {
-      const currentScrollPosition = window.pageYOffset;
+          if (currentScrollPosition > lastScrollPosition) {
+            navbar.classList.add('hidden');
+          } else {
+            navbar.classList.remove('hidden');
+          }
 
-      if (currentScrollPosition > lastScrollPosition) {
-        navbar.classList.add('hidden');
-      } else {
-        navbar.classList.remove('hidden');
-      }
-
-      lastScrollPosition = currentScrollPosition;
-    });
-  </script>
+          lastScrollPosition = currentScrollPosition;
+        });
+      </script>
 </body>
 
 </html>

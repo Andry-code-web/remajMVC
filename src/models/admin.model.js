@@ -247,19 +247,26 @@ const deleteRemate = async (remateId) => {
   const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
   const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
   const queryRemate = 'DELETE FROM remates WHERE id = ?';
-
+  const querySeguimiento = 'DELETE FROM seguimiento WHERE remates_id = ?';
+  const queryDetalles = 'DELETE FROM detalles WHERE remates_id = ?';
+  const queryInmuebles = 'DELETE FROM inmuebles WHERE remates_id = ?';
+  const queryCronograma = 'DELETE FROM cronograma WHERE remates_id = ?';
   try {
-    await db.query(queryMensajes, [remateId]);
-    await db.query(queryAnexos, [remateId]);
-    await db.query(queryImagenes, [remateId]);
-    const [result] = await db.query(queryRemate, [remateId]);
-    if (result.affectedRows > 0) {
-      return true;
-    } else {
-      return false;
-    }
+      await db.query(queryMensajes, [remateId]);
+      await db.query(queryAnexos, [remateId]);
+      await db.query(queryImagenes, [remateId]);
+      await db.query(queryDetalles, [remateId]);
+      await db.query(querySeguimiento, [remateId]);
+      await db.query(queryInmuebles, [remateId]);
+      await db.query(queryCronograma, [remateId]);
+      const [result] = await db.query(queryRemate, [remateId]);
+      if (result.affectedRows > 0) {
+          return true;
+      } else {
+          return false;
+      }
   } catch (error) {
-    throw new Error('Error al eliminar el remate: ' + error.message);
+      throw new Error('Error al eliminar el remate: ' + error.message);
   }
 };
 

@@ -60,21 +60,23 @@ body {
 }
 /* Contenedor principal */
 .property-container {
-  min-height: 100vh;
   width: 100%;
+  height: auto;
   background: transparent;
   position: relative;
   max-width: 100%;
   margin: 0;
   padding: 6rem 1.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Grid de subastas */
 .auction-grid {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 85%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   padding: 1rem;
 }

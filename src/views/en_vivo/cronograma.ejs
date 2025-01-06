@@ -21,6 +21,7 @@
     </div>
 
     <div class="cronograma-table">
+      <% if (cronograma && cronograma.length > 0) { %> 
       <table>
         <thead>
           <tr>
@@ -30,18 +31,19 @@
           </tr>
         </thead>
         <tbody>
-          <% if (cronograma && cronograma.length > 0) { %> <%
-          cronograma.forEach(cronogramas => { %>
+          
+          <% cronograma.forEach(cronogramas => { %>
           <tr>
             <td><%= cronogramas.actividad %></td>
             <td><%= cronogramas.fecha_actividad %></td>
             <td><%= cronogramas.fecha_actividad %></td>
           </tr>
-          <% }); %> <% } else { %>
-          <p class="no-data">No hay cronogramas disponibles.</p>
-          <% } %>
+          <% }); %> 
         </tbody>
       </table>
+      <% } else { %>
+        <p class="no-data">No hay cronogramas disponibles.</p>
+        <% } %>
     </div>
 
     <a href="/en_vivo" class="back-button">Volver a Remates</a>

@@ -15,7 +15,10 @@ exports.getAllremates = async (req, res) => {
             }
         });
 
-        res.render('remates/index', { remates });
+        res.render('layouts/remates', { 
+            remates,
+            remate: 'remates/index'
+         });
     } catch (error) {
         console.error('Error al obtener los remates:', error);
         res.status(500).send('Error al cargar los remates');

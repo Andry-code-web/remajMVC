@@ -19,7 +19,7 @@ const getAllRemates = async () => {
         SELECT
             id, ubicacion, precios, descripcion, categoria, N_banos, N_habitacion,
             pisina, patio, cocina, cochera, balcon, jardin, pisos, comedor, sala_start,
-            studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+            studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
         FROM remates
         ORDER BY id DESC
     `;

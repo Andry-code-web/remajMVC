@@ -3,6 +3,10 @@ const {
   getAllRemates,
   getImagenesInmuebles,
   createRemate,
+  createSeguimiento,
+  createDetalles,
+  createInmuebles,
+  createCronograma,
   agregarImagenes,
   agregarAnexoUrl,
   deleteRemate,
@@ -10,7 +14,7 @@ const {
   getRemateById,
   updateRemate
 } = require('../models/admin.model');
-  
+
 // Vista administrador
 exports.getloginadmin = async (req, res) => {
   try {
@@ -53,15 +57,13 @@ exports.loginAdmin = async (req, res) => {
     res.status(500).send('Error al iniciar sesión');
   }
 };
+
 // Lógica para logout
 exports.logoutAdmin = (req, res) => {
   res.clearCookie('auth_token');
   res.redirect('/admin/login');
 };
 
-//area de trabajo "moises"
-
-//aca comienza 
 // Obtener todos los remates
 exports.getAlladmin = async (req, res) => {
   try {
@@ -82,24 +84,49 @@ exports.getAlladmin = async (req, res) => {
     res.status(500).send('Error al cargar los datos');
   }
 };
-//aca igual
+
+// Crear un nuevo remate
 exports.crearRemate = async (req, res) => {
   try {
-    const {
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, anexo_url
-    } = req.body;
-
     // Verifica que req.session.userId esté definido
-    if (!req.session.userId) {
+    if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Usuario no autenticado" });
     }
+
+    const {
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, anexo_url,
+      expediente, distrito_judicial, instancia, organo_jurisdiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado,
+      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar,
+      actividad, fecha_actividad, fecha_fin,
+      expediente_detalle, distrito_vocal, organo_jurisdiccional_detalle, instancia_detalle, juez, especialidad_detalle, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos
+    } = req.body;
 
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
       balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad,
-      req.session.userId // Aquí agregamos usuario_admin_id
+      req.user.id // Aquí agregamos usuario_admin_id
+    ]);
+
+    // Crear un nuevo seguimiento en la base de datos
+    await createSeguimiento([
+      expediente, distrito_judicial, instancia, organo_jurisdiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado, remateId
+    ]);
+
+    // Crear un nuevo inmueble en la base de datos
+    await createInmuebles([
+      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remateId
+    ]);
+
+    // Crear un nuevo cronograma en la base de datos
+    await createCronograma([
+      actividad, fecha_actividad, fecha_fin, remateId
+    ]);
+
+    // Crear un nuevo detalle en la base de datos
+    await createDetalles([
+      expediente_detalle, distrito_vocal, organo_jurisdiccional_detalle, instancia_detalle, juez, especialidad_detalle, materia, resolucion, fch_resolucion, archivo, nro_convocatoria_detalle, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_detalle, n_inscritos, remateId
     ]);
 
     // Procesar imágenes
@@ -119,7 +146,8 @@ exports.crearRemate = async (req, res) => {
     res.status(500).json({ message: "Hubo un problema al crear el remate" });
   }
 };
-//moises aca 
+
+
 // Actualizar un remate existente
 exports.updateRemate = async (req, res) => {
   try {
@@ -151,7 +179,6 @@ exports.updateRemate = async (req, res) => {
   }
 };
 
-//aca tambien 
 // Eliminar un remate
 exports.deleteRemate = async (req, res) => {
   try {
@@ -167,7 +194,7 @@ exports.deleteRemate = async (req, res) => {
     res.json({ success: false, error: error.message });
   }
 };
-//aca tambien 
+
 // Obtener los datos de un remate para editar
 exports.getRemateForEdit = async (req, res) => {
   try {

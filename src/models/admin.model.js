@@ -88,11 +88,10 @@ const createRemate = async (datosRemate) => {
   return result.insertId;
 };
 
-// Crear un nuevo seguimiento
 const createSeguimiento = async (datosSeguimiento) => {
   const query = `INSERT INTO seguimiento
-  (expediente, distrito_judicial, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  (expediente, distrito_judicial, instancia, organo_jurisdiccional, especialidad, nro_convocatoria, fecha_registro, estado_convocatoria, fase_convocatoria, procesado_por, reanudado, remates_id)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   await db.query(query, datosSeguimiento);
 };
@@ -100,7 +99,7 @@ const createSeguimiento = async (datosSeguimiento) => {
 // Crear nuevos detalles
 const createDetalles = async (datosDetalles) => {
   const query = `INSERT INTO detalles
-  (expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion, fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, oblaje, descripcion, n_inscritos, remates_id)
+  (expediente, distrito_judicial, organo_jurisdiccional, instancia, juez, especialista, materia, resolucion, fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion, n_inscritos, remates_id)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   await db.query(query, datosDetalles);
@@ -109,8 +108,8 @@ const createDetalles = async (datosDetalles) => {
 // Crear nuevos inmuebles
 const createInmuebles = async (datosInmuebles) => {
   const query = `INSERT INTO inmuebles
-  (partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, imagenes, remates_id)
-  VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  (partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remates_id)
+  VALUES (?, ?, ?, ?, ?, ?)`;
 
   await db.query(query, datosInmuebles);
 };
@@ -159,13 +158,15 @@ const updateSeguimiento = async (remateId, datosSeguimiento) => {
   const query = `UPDATE seguimiento SET
     expediente = ?,
     distrito_judicial = ?,
+    instancia = ?,
+    organo_jurisdiccional = ?,
     especialidad = ?,
     nro_convocatoria = ?,
     fecha_registro = ?,
-    procesado_por = ?,
-    reanudado = ?,
+    estado_convocatoria = ?,
     fase_convocatoria = ?,
-    estado_convocatoria = ?
+    procesado_por = ?,
+    reanudado = ?
   WHERE remates_id = ?`;
 
   await db.query(query, [...datosSeguimiento, remateId]);
@@ -176,7 +177,7 @@ const updateDetalles = async (remateId, datosDetalles) => {
   const query = `UPDATE detalles SET
     expediente = ?,
     distrito_judicial = ?,
-    organo_juridiccional = ?,
+    organo_jurisdiccional = ?,
     instancia = ?,
     juez = ?,
     especialista = ?,
@@ -190,7 +191,7 @@ const updateDetalles = async (remateId, datosDetalles) => {
     precio_base = ?,
     incremento_ofertas = ?,
     arancel = ?,
-    oblaje = ?,
+    objeto = ?,
     descripcion = ?,
     n_inscritos = ?
   WHERE remates_id = ?`;
@@ -205,8 +206,7 @@ const updateInmuebles = async (remateId, datosInmuebles) => {
     tipo_inmueble = ?,
     direccion = ?,
     carga_ogravamen = ?,
-    porcentaje_rematar = ?,
-    imagenes = ?
+    porcentaje_rematar = ?
   WHERE remates_id = ?`;
 
   await db.query(query, [...datosInmuebles, remateId]);

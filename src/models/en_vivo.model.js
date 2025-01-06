@@ -17,8 +17,6 @@ class EnVivo {
 
 
 
-
-
     static async getSeguimiento(remates_id) {
         const query = `SELECT * FROM remajud.seguimiento WHERE remates_id = ?`;
 
@@ -40,6 +38,18 @@ class EnVivo {
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
+
+    /* ARREGLASR POR ID IMG  */
+
+   /*  static async getImagenesInmueblesById(remates_id) {
+        const [rows] = await db.execute(`
+            SELECT id, TO_BASE64(imagenes_inmueble) AS imagenes_inmueble, remates_id 
+            FROM img_inmuebles
+        `);
+        return rows;
+    }
+ */
+/* ------ */
 
 
     static async getCronograma(remates_id) {

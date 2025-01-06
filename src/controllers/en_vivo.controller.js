@@ -64,9 +64,11 @@ exports.getInmuebles = async (req, res) => {
     try {
         const auctionId = req.params.id;
         const inmuebles = await EnVivo.getInmuebles(auctionId);
+       /*  const img_inmuebles = await EnVivo.getImagenesInmueblesById(auctionId); */
 
         res.render("en_vivo/inmuebles", {
             inmuebles: inmuebles || [],
+            /* img_inmuebles: img_inmuebles || [], */
             auctionId
         });
 

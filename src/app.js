@@ -58,8 +58,8 @@ app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
 app.use('/filtrar', require('./routes/filtrohome.routes'))
 app.use('/en_vivo', require('./routes/en_vivo.routes'));
-
-app.get('/unauthorized', (req, res) => {
+app.use('/filtrar',require('./routes/filtrohome.routes'));  
+app.get('/unauthorized', (req, res) => {  
   res.render('unauthorized/unauthorized');
 });
 

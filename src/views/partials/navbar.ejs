@@ -1,48 +1,27 @@
-<header id="header" class="navbar">
-    <div class="container">
-      <!-- Logo -->
-      <div class="logo">
-        <h1 class="titulo_logo">
-          <a href="/"> remajud</a>
-        </h1>
-      </div>
-      <!-- Enlaces de navegación -->
-      <nav class="nav-links">
-        <div class="iconos_header" style="font-size: 2rem;">
-          <a href="/" class="links_redireccion">
-            <i class="ri-home-line"></i>
-          </a>
-          <a href="/remates/index/" class="links_redireccion">
-            <i class="ri-book-shelf-line"></i>
-          </a>
-          <a href="/contacto/" class="links_redireccion">
-            <i class="ri-customer-service-2-line"></i>
-          </a>
-        </div>
-      </nav>
-      <!-- Usuario -->
-      <nav class="nav-links">
-        <div class="iconos_header usuario" style="font-size: 2rem;">
-          <% if (user) { %>
-            <a href="/me/likes" title="Me gusta" class="links_redireccion">
-              <i class="ri-heart-line"></i>
-            </a>
-            <a href="/auth/logout" title="Cerrar sesión" class="links_redireccion">
-              <i class="ri-logout-circle-line"></i>
-            </a>
-            <p>Hola, <%= user.usuario %>!</p>
-          <% } else { %>
-            <a href="/auth/login" title="Iniciar sesión" class="links_redireccion">
-              <i class="ri-login-box-line"></i>
-            </a>
-            <a href="/auth/register" title="Registrarme" class="links_redireccion">
-              <i class="ri-user-add-line"></i>
-            </a>
-          <% } %>
-        </div>
-        
-      </nav>
-            
-    </div>
-  </header>
+<header class="header" id="header">
+  <div class="logo-container">
+      <a href="#" class="logo">
+        <img src="/img/logo_header.jpeg" alt="">
+      </a>
+  </div>
+  <nav class="nav">
+      <a href="/">INICIO</a>
+      <a href="/remates/index">REMATES</a>
+      <a href="/vender/">VENDER</a>
+      <a href="/comprar">COMPRAR</a>
+  </nav>
+  <div class="contenedor_user_login">
+    <% if (user) { %>
+      <a href="/auth/logout" title="Registrarme" class="login-btn">
+        <%= user.usuario %>
+      </a>
+    <% } else { %>
+      <a href="/auth/login" title="Registrarme" class="login-btn">
+        INICIAR SESIÓN
+      </a>
+    <% } %>
+    
+  </div>
+  
+</header>
   

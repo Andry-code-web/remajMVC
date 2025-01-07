@@ -1,58 +1,56 @@
 @use 'variables' as *;
 
 /* HEADER */
-.navbar {
-    padding: 15px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .navbar.hidden {
-    transform: translateY(-100%);
-  }
-  
-  .links_redireccion {
-    color: inherit; /* Hereda el color del contenedor */
-    text-decoration: none;
-    transition: color 0.3s ease; /* Suaviza el cambio */
-  }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-  }
-  
-  .logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .logo-icon {
-    font-size: 28px;
-    color: #00665e;
-  }
-  
-  .titulo_logo {
-    font-family: "fuentePrincipal";
-    font-size: 2.8rem;
-  }
 
-  header .titulo_logo a{
-    text-decoration: none;
-    color: inherit;
-  }
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   
-  .iconos_header {
-    display: flex;
-    gap: 2rem;
-  }
+  padding: 15px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo-container {
+  width: 8%;
+}
+
+.logo {
+  width: 100%;
+}
+
+.logo img{
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.login-btn {
+  background: red;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
 
 /* BOTON */
 

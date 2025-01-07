@@ -24,7 +24,7 @@
             <% if (seguimientos && seguimientos.length > 0) { %>
               <% seguimientos.forEach(seguimiento => { %>
                 <tr>
-                  <td><%= seguimiento.n_expediente %></td>
+                  <td><%= seguimiento.expediente %></td>
                   <td><%= seguimiento.distrito_judicial %></td>
                   <td><%= seguimiento.especialidad %></td>
                   <td><%= seguimiento.instancia %></td>
@@ -56,7 +56,7 @@
             <% if (seguimientos && seguimientos.length > 0) { %>
               <% seguimientos.forEach(seguimiento => { %>
                 <tr>
-                  <td><%= seguimiento.convocatoria %></td>
+                  <td><%= seguimiento.nro_convocatoria %></td>
                   <td><%= seguimiento.fecha_registro %></td>
                   <td><%= seguimiento.procesado_por %></td>
                   <td><%= seguimiento.reanudado %></td>

@@ -3,7 +3,7 @@
   <canvas id="particleCanvas"></canvas>
   <div class="login-box">
     <h1>Iniciar Sesión</h1>
-    <form id="loginForm">
+    <form method="post" action="/auth/login" id="loginForm">
       <div class="user-box">
         <input type="text" id="usuario" name="usuario" required>
         <label for="usuario">Nombre de usuario</label>
@@ -31,32 +31,6 @@
   } from '../../js/componentes/network_login.js';
   const canvas = document.getElementById("particleCanvas");
   const networkAnimationL = new NetworkAnimationL(canvas);
-
-  document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-
-    try {
-      const response = await fetch('/auth/loginP', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        const responseData = await response.json();
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  });
 </script>
 
 <script>

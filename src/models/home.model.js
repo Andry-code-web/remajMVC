@@ -1,30 +1,27 @@
 const db = require('../config/database');
 
 class Home {
-  static async getAll(page, limit) {
-    // Validar que page y limit sean números válidos, con valores predeterminados si no lo son
-    page = Number.isInteger(page) && page > 0 ? page : 1;
-    limit = Number.isInteger(limit) && limit > 0 ? limit : 10;
-  
-    // Calcular el OFFSET
-    const offset = (page - 1) * limit;
-  
-    // Ejecutar la consulta con los parámetros LIMIT y OFFSET
-    const [rows] = await db.execute(`
-      SELECT
-        r.*,
-        i.id AS imagen_id,
-        i.imagenes_inmueble
-      FROM
-        remates r
-      LEFT JOIN
-        img_inmuebles i ON r.id = i.remates_id
-      LIMIT ? OFFSET ?
-    `, [limit, offset]);  // Asegúrate de pasar los valores de limit y offset correctamente
-  
-    return rows;
+  static async getAll({ limit, offset }) {
+    try {
+      const [rows] = await db.query(
+        `SELECT DISTINCT
+            r.*,
+            i.id AS imagen_id,
+            i.imagenes_inmueble
+          FROM
+            remates r
+          LEFT JOIN
+            img_inmuebles i ON r.id = i.remates_id
+          GROUP BY r.id
+          ORDER BY r.id
+          LIMIT ${limit} OFFSET ${offset}`
+      );
+      return rows;
+    } catch (error) {
+      console.error('Error en Home.getAll:', error);
+      throw error;
+    }
   }
-  
 
   static async getRemateDetails(id) {
     const [remateRows] = await db.execute(`SELECT * FROM detalles WHERE remates_id = ?`, [id]);
@@ -40,7 +37,7 @@ class Home {
       seguimiento: seguimientoRows[0],
       anexos: anexosRows || [] // Asegúrate de que siempre sea un array
     };
-}
+  }
 
   static async getAnexos(id) {
     const [anexosRows] = await db.execute(`
@@ -49,6 +46,7 @@ class Home {
   }
 
   static async getFiltro(filtro) {
+    // Consulta base para obtener resultados
     let query = `
       SELECT 
         r.id, 
@@ -62,46 +60,72 @@ class Home {
         inmuebles i 
       ON 
         r.id = i.remates_id
-      WHERE 1=1`; // Para facilitar la concatenación de condiciones
-  
+      WHERE 1=1`;
+
+    // Consulta para contar total de registros
+    let countQuery = `
+      SELECT COUNT(DISTINCT r.id) as total
+      FROM remates r
+      LEFT JOIN inmuebles i 
+      ON r.id = i.remates_id
+      WHERE 1=1`;
+
     const valores = [];
-  
+    const countValores = [];
+
+    // Agregar condiciones de filtro
     if (filtro.id) {
       query += " AND r.id = ?";
+      countQuery += " AND r.id = ?";
       valores.push(filtro.id);
+      countValores.push(filtro.id);
     }
-  
+
     if (filtro.ubicacion) {
       query += " AND r.ubicacion LIKE ?";
+      countQuery += " AND r.ubicacion LIKE ?";
       valores.push(`%${filtro.ubicacion}%`);
+      countValores.push(`%${filtro.ubicacion}%`);
     }
-  
+
     if (filtro.precio) {
       query += " AND r.precios >= ?";
+      countQuery += " AND r.precios >= ?";
       valores.push(filtro.precio);
+      countValores.push(filtro.precio);
     }
-  
+
     if (filtro.partida_registral) {
       query += " AND i.partida_registral LIKE ?";
+      countQuery += " AND i.partida_registral LIKE ?";
       valores.push(`%${filtro.partida_registral}%`);
+      countValores.push(`%${filtro.partida_registral}%`);
     }
-  
+
     if (filtro.categoria) {
       query += " AND r.categoria LIKE ?";
+      countQuery += " AND r.categoria LIKE ?";
       valores.push(`%${filtro.categoria}%`);
+      countValores.push(`%${filtro.categoria}%`);
     }
-  
+
+    // Agregar paginación
+    query += ` LIMIT ${filtro.limit} OFFSET ${filtro.offset}`;
+
     try {
+      // Ejecutar ambas consultas
       const [remates] = await db.query(query, valores);
-      return remates;
+      const [[{ total }]] = await db.query(countQuery, countValores);
+
+      return { remates, total };
     } catch (error) {
       console.error("Error al filtrar remates:", error);
       throw error;
     }
-  }
-  
-  
-  
+}
+
+
+
 }
 
 module.exports = Home;

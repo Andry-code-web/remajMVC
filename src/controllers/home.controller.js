@@ -1,21 +1,30 @@
 const Home = require('../models/home.model');
+const db = require('../config/database');
 
 exports.getAllRemates = async (req, res) => {
   try {
-    // Obtener la página desde los parámetros de la solicitud (por defecto 1)
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 10; // Elementos por página
+    const offset = (page - 1) * limit;
 
-    // Obtener los remates solo para la página solicitada
-    const rematesData = await Home.getAll(page, limit);
+    // Obtener total de registros para calcular páginas
+    const [[{ total }]] = await db.query(`
+      SELECT COUNT(DISTINCT r.id) as total 
+      FROM remates r
+    `);
 
-    // Agrupar las imágenes por remate, tomando solo la primera imagen
+    const totalPages = Math.ceil(total / limit);
+
+    // Obtener remates paginados
+    const rematesData = await Home.getAll({ limit, offset });
+
+    // Agrupamos las imágenes por remate
     const remates = rematesData.reduce((acc, row) => {
       if (!acc[row.id]) {
         acc[row.id] = {
           ...row,
-          imagen: row.imagenes_inmueble || null, // Guardar la primera imagen encontrada
-          anexos: [] // Inicializar anexos como un array vacío
+          imagen: row.imagenes_inmueble || null,
+          anexos: []
         };
       }
       return acc;
@@ -27,24 +36,44 @@ exports.getAllRemates = async (req, res) => {
       remates[remateId].anexos = anexos;
     }
 
-    // Calcular el total de remates (para la paginación)
-    const [totalRemates] = await db.execute('SELECT COUNT(*) AS total FROM remates');
-    const totalPaginas = Math.ceil(totalRemates[0].total / limit);
+    // Verificar que tengamos exactamente 'limit' resultados o menos en la última página
+    const rematesList = Object.values(remates);
+    console.log(`Número de remates en la página ${page}: ${rematesList.length}`);
 
-    // Renderizar la vista con los remates y la paginación
+    const pagination = {
+      currentPage: page,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      nextPage: page + 1,
+      prevPage: page - 1,
+      total
+    };
+
     res.render('layouts/main', {
       content: 'home/index',
-      remates: Object.values(remates),
-      page, // Pasar la página actual a la vista
-      totalPaginas // Pasar el total de páginas a la vista
+      remates: rematesList,
+      pagination
     });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error en la consulta");
+    console.error('Error en getAllRemates:', error);
+    res.render('layouts/main', {
+      content: 'home/index',
+      remates: [],
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+        nextPage: 1,
+        prevPage: 1,
+        total: 0
+      },
+      error: 'Ha ocurrido un error al cargar los remates.'
+    });
   }
 };
-
-
 
 
 exports.getRemateDetails = async (req, res) => {
@@ -71,38 +100,74 @@ exports.getAnexos = async (req, res) => {
 
 exports.getFiltrarRemate = async (req, res) => {
   try {
-    // Obtener los parámetros de filtro desde el cuerpo de la solicitud
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    // Obtener los parámetros de filtro
     const filtro = {
       id: req.body.id,
       ubicacion: req.body.ubicacion,
       precio: req.body.precio,
       partida_registral: req.body.partida_registral,
-      categoria: req.body.categoria, // Asegúrate de que este campo esté en el cuerpo de la solicitud
+      categoria: req.body.categoria,
+      limit,
+      offset
     };
 
-    // Obtener el número de página desde la solicitud (por defecto es 1)
-    const pagina = parseInt(req.query.page) || 1;
-    const limite = 10; // O puedes definirlo como lo desees, por ejemplo 10 resultados por página
+    // Obtener resultados y total
+    const { remates, total } = await Home.getFiltro(filtro);
+    
+    // Si no hay resultados, mostrar mensaje
+    if (remates.length === 0) {
+      return res.render('layouts/main', {
+        content: 'home/index',
+        remates: [],
+        error: 'No se encontraron resultados para tu búsqueda.',
+        pagination: {
+          currentPage: 1,
+          totalPages: 1,
+          hasNextPage: false,
+          hasPrevPage: false,
+          nextPage: 1,
+          prevPage: 1,
+          total: 0
+        }
+      });
+    }
 
-    // Llama al modelo para obtener los resultados filtrados con paginación
-    const remates = await Home.getFiltro(filtro, pagina, limite);
+    // Calcular paginación
+    const totalPages = Math.ceil(total / limit);
 
-    // Obtener el total de remates para calcular el número de páginas
-    const totalRemates = await Home.getTotalRemates(filtro);
-
-    // Calcular el número total de páginas
-    const totalPaginas = Math.ceil(totalRemates / limite);
-
-    // Renderiza la vista con los resultados y la paginación
+    // Renderizar con resultados
     res.render('layouts/main', {
       content: 'home/index',
       remates,
-      pagina,
-      totalPaginas,
-      filtro,  // Opcional: si deseas que los filtros seleccionados se mantengan
+      pagination: {
+        currentPage: page,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page + 1,
+        prevPage: page - 1,
+        total
+      }
     });
   } catch (error) {
     console.error("Error al obtener remates filtrados:", error);
-    res.status(500).send("Ocurrió un error al filtrar los remates.");
+    res.render('layouts/main', {
+      content: 'home/index',
+      remates: [],
+      error: 'Ocurrió un error al filtrar los remates.',
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+        nextPage: 1,
+        prevPage: 1,
+        total: 0
+      }
+    });
   }
 };

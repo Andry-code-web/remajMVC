@@ -1,15 +1,7 @@
 const db = require('../config/database');
 
 class Home {
-  static async getAll(page, limit) {
-    // Validar que page y limit sean números válidos, con valores predeterminados si no lo son
-    page = Number.isInteger(page) && page > 0 ? page : 1;
-    limit = Number.isInteger(limit) && limit > 0 ? limit : 10;
-  
-    // Calcular el OFFSET
-    const offset = (page - 1) * limit;
-  
-    // Ejecutar la consulta con los parámetros LIMIT y OFFSET
+static async getAll() {
     const [rows] = await db.execute(`
       SELECT
         r.*,
@@ -19,12 +11,9 @@ class Home {
         remates r
       LEFT JOIN
         img_inmuebles i ON r.id = i.remates_id
-      LIMIT ? OFFSET ?
-    `, [limit, offset]);  // Asegúrate de pasar los valores de limit y offset correctamente
-  
+    `);
     return rows;
   }
-  
 
   static async getRemateDetails(id) {
     const [remateRows] = await db.execute(`SELECT * FROM detalles WHERE remates_id = ?`, [id]);

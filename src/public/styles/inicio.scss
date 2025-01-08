@@ -1,7 +1,5 @@
 @use 'variables' as *;
 
-
-
 .banner {
     /*   position: relative; */
     width: 100%;
@@ -798,32 +796,30 @@
 
 .barraLateralFiltros {
     width: 20%;
-    height: 355px;
     background: #fff;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.formulario{
+.form_filtro{
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
 
 .barraLateralFiltros label {
+    font-size: .9rem;
     font-family: $fuentePrincipal;
     color: $colorterciario;
-    font-size: 1rem;
 }
 
-/* .barraLateralFiltros input {
-    width: 100%;
-    height: 40px;
+.barraLateralFiltros input {
+    width: 90%;
     padding: 0.5rem;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #ddd;
     border-radius: .8rem;
-    border-radius: 4px;
+
 }
 
 .barraLateralFiltros input:focus{
@@ -833,13 +829,13 @@
 .btn_filtrar{
     width: 100px;
     height: 35px;
-    border: none;
     background: red;
-    color: #fff;
+    border: none;
     border-radius: .5rem;
-    font-family: $fuenteParrafos;
+    color: #fff;
     font-size: 1.1rem;
-    margin-top: .5rem;
+    font-family: $fuentePrincipal;
+    margin-top: 1rem;
 }
 
 .listaSubastasDisponibles {
@@ -911,93 +907,4 @@
 
 .botonAccionSubasta:hover {
     background-color: #e0e0e0;
-}
-
-//nueva version barra lateral prueba 1 
-
-
-.barraLateralFiltros {
-    width: 300px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.barraLateralFiltros .input-group {
-    margin-bottom: 15px;
-    position: relative;
-}
-
-.barraLateralFiltros label {
-    display: block;
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.barraLateralFiltros label i {
-    margin-right: 8px;
-    color: #8B0000;
-    width: 16px;
-}
-
-.barraLateralFiltros input {
-    width: 100%;
-    padding: 8px 8px 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #666;
-}
-
-.barraLateralFiltros input:focus {
-    border-color: #999;
-    outline: none;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-}
-
-.barraLateralFiltros button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #8B0000;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.barraLateralFiltros button[type="submit"]:hover {
-    background-color: #660000;
-}
-
-.barraLateralFiltros button[type="submit"] i {
-    font-size: 16px;
-}
-
-/* Optional: Add a title style if you want to match the "FILTROS" header */
-.barraLateralFiltros::before {
-    content: "FILTROS";
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Hover effect for icons */
-.barraLateralFiltros label:hover i {
-    transform: scale(1.1);
-    transition: transform 0.2s ease;
 }

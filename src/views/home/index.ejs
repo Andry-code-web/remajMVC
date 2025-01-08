@@ -81,28 +81,53 @@
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
 
-    <form action="" method="post">
+    <form action="/filtrar/" method="post" class="formulario">
       <div>
-        <label for="numeroIdentificacionRemate">Numero de Remate</label>
-        <input type="text" id="numeroIdentificacionRemate" name="numeroIdentificacionRemate">
+        <label for="numeroIdentificacionRemate">Número de Remate</label>
+        <input type="text" id="numeroIdentificacionRemate" name="id">
       </div>
       <div>
-        <label for="numeroExpedienteJudicial">Numero de Expediente</label>
-        <input type="text" id="numeroExpedienteJudicial" name="numeroExpedienteJudicial">
+        <label for="numeroExpedienteJudicial">Partida registral</label>
+        <input type="text" id="numeroExpedienteJudicial" name="partida_registral">
       </div>
       <div>
         <label for="valorBasePropiedad">Precio Base</label>
-        <input type="text" id="valorBasePropiedad" name="valorBasePropiedad">
+        <input type="text" id="valorBasePropiedad" name="precio">
       </div>
       <div>
         <label for="ubicacionGeograficaPropiedad">Ubicación</label>
-        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacionGeograficaPropiedad">
+        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacion">
       </div>
-      <button type="submit">Buscar</button>
+      <div>
+        <label for="categoria">Categoría</label>
+        <input type="text" id="categoria" name="categoria">
+      </div>
+      <button type="submit" class="btn_filtrar">Buscar</button>
     </form>
+    
 
   </aside>
   <main class="listaSubastasDisponibles">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= pagina === 1 ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagina - 1 %>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <% for (let i = 1; i <= totalPaginas; i++) { %>
+          <li class="page-item <%= pagina === i ? 'active' : '' %>">
+            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+        <li class="page-item <%= pagina === totalPaginas ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagina + 1 %>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
     <% remates.forEach(remate=> { %>
     <div class="carta elementoSubastaIndividual">
       <div class="imagenPropiedadSubasta">
@@ -140,7 +165,11 @@
           <button class="botonAccionSubasta">Aviso</button> -->
           <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
           <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
-          <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+          <a href="#" class="botonAccionSubasta aviso-button" 
+   data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+   Aviso
+</a>
+
         </div>
       </div>
     </div>

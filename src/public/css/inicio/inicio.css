@@ -780,25 +780,49 @@
 }
 
 .barraLateralFiltros {
-  width: 300px;
+  width: 20%;
+  height: 355px;
   background: #fff;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .barraLateralFiltros label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-family: "fuentePrincipal";
+  color: #0a0000;
+  font-size: 1rem;
 }
 
 .barraLateralFiltros input {
   width: 100%;
+  height: 40px;
   padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.8rem;
   border-radius: 4px;
+}
+
+.barraLateralFiltros input:focus {
+  outline: none;
+}
+
+.btn_filtrar {
+  width: 100px;
+  height: 35px;
+  border: none;
+  background: red;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-family: "fuenteparrafos";
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
 }
 
 .listaSubastasDisponibles {

@@ -107,6 +107,34 @@
 
   </aside>
   <main class="listaSubastasDisponibles">
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+    <% } %>
+    <nav aria-label="Navegación de remates">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            Anterior
+          </a>
+        </li>
+        
+        <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+          <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+        
+        <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            Siguiente
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
     <% remates.forEach(remate=> { %>
     <div class="carta elementoSubastaIndividual">
       <div class="imagenPropiedadSubasta">

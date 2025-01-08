@@ -4,7 +4,7 @@ const db = require('../config/database');
 exports.getAllRemates = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10; // Elementos por página
+    const limit = 6; // Elementos por página
     const offset = (page - 1) * limit;
 
     // Obtener total de registros para calcular páginas
@@ -76,6 +76,7 @@ exports.getAllRemates = async (req, res) => {
 };
 
 
+
 exports.getRemateDetails = async (req, res) => {
   const { id } = req.params;
   try {
@@ -101,7 +102,7 @@ exports.getAnexos = async (req, res) => {
 exports.getFiltrarRemate = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 6;
     const offset = (page - 1) * limit;
 
     // Obtener los parámetros de filtro

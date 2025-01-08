@@ -6,16 +6,16 @@
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="2000">
-        <img src="/img/casa.png" class="d-block w-100" alt="...">
+        <img src="/img/banner1.jpeg" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="/img/casa.png" class="d-block w-100" alt="...">
+        <img src="/img/banner2.jpeg" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="/img/casa.png" class="d-block w-100" alt="...">
+        <img src="/img/banner3.jpeg" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="/img/casa.png" class="d-block w-100" alt="...">
+        <img src="/img/banner4.jpeg" class="d-block w-100" alt="...">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -80,7 +80,8 @@
 
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
-
+    <h4>FILTROS</h4>
+    <hr>
     <form action="/filtrar/" method="post" class="form_filtro">
       <div>
         <label for="numeroIdentificacionRemate">Número de Remate</label>
@@ -108,33 +109,28 @@
   </aside>
   <main class="listaSubastasDisponibles">
 
-    <% if (typeof error !== 'undefined' && error) { %>
-      <div class="alert alert-danger" role="alert">
-        <%= error %>
-      </div>
-    <% } %>
     <nav aria-label="Navegación de remates">
       <ul class="pagination justify-content-end">
         <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
           <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
-            Anterior
+            <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        
+
         <% for(let i = 1; i <= pagination.totalPages; i++) { %>
-          <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
-            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
-          </li>
+        <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
         <% } %>
-        
+
         <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
           <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
-            Siguiente
+            <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
     </nav>
-    
+
     <% remates.forEach(remate=> { %>
     <div class="carta elementoSubastaIndividual">
       <div class="imagenPropiedadSubasta">
@@ -161,26 +157,69 @@
             <p><strong>Precio Base:</strong> S/ <%= remate.precios %>
             </p>
           </div>
-          <div class="estadoActualSubasta">
-            <p><strong><%= remate.estado %></strong></p>
-            <p>Publicación e inscripción</p>
-          </div>
+          
+          <% 
+            const estados = {
+              finalizado: {
+                clase: 'bg-danger',
+                texto: 'Publicacion e Inscripcion'
+              },
+              activo: {
+                clase: 'bg-secondary',
+                texto: 'Publicacion e Inscripcion'
+              },
+              en_curso: {
+                clase: 'bg-success',
+                texto: 'Publicacion e Inscripcion'
+              }
+            }
+
+            const estadoActual = estados[remate.estado];
+          %>
+
+          <% if (estadoActual) { %>
+           <div class="estadoActualSubasta <%= estadoActual.clase %> text-light">
+              <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
+              <p><%= estadoActual.texto %></p>
+           </div>
+          <% } %>
+
+
+
         </div>
         <div class="contenedorBotonesAccion">
-<!--           <button class="botonAccionSubasta">Detalle</button>
-          <button class="botonAccionSubasta">Seguimiento</button>
-          <button class="botonAccionSubasta">Aviso</button> -->
           <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
           <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
-          <a href="#" class="botonAccionSubasta aviso-button" 
-   data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
-   Aviso
-</a>
+          <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+            Aviso
+          </a>
 
         </div>
       </div>
     </div>
     <% }) %>
+
+    <nav aria-label="Navegación de remates">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+        <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
+        <% } %>
+
+        <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </main>
 </div>
 

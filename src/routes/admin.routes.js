@@ -31,7 +31,7 @@ router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo
 
 // Ruta para la vista de subasta (protegida)
 router.get('/subasta', isAuthenticated, (req, res) => {
-  res.render("subasta")
+  res.render("subasta");
 });
-  
+
 module.exports = router;

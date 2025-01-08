@@ -216,6 +216,46 @@ body {
   left: 100%;
 }
 
+/* Diseño para la columna de imágenes */
+.imagen-cell img {
+  width: 100px;
+  height: auto;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo del modal */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 10px #fff;
+  border: 2px solid #fff;
+}
+
+.image-modal .close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
   .table-base, .seguimiento-table,

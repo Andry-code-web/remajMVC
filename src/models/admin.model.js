@@ -81,55 +81,105 @@ const getImagenesInmuebles = async () => {
 
 // Crear un nuevo remate
 const createRemate = async (datosRemate) => {
-  const query = `INSERT INTO remates
-    (ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-    balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_activacion, fecha_remate, hora_remate, estado, tamano_propiedad, usuario_admin_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO remates (
+    ubicacion,
+    precios,
+    descripcion,
+    categoria,
+    N_banos,
+    N_habitacion,
+    pisina,
+    patio,
+    cocina,
+    cochera,
+    balcon,
+    jardin,
+    pisos,
+    comedor,
+    sala_start,
+    studio,
+    lavanderia,
+    fecha_activacion,
+    hora_activacion,
+    fecha_remate,
+    hora_remate,
+    usuario_admin_id,
+    ganador,
+    like_count,
+    monto_venta,
+    estado
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   const [result] = await db.query(query, datosRemate);
-  return result.insertId; // Retorna el ID del remate creado
+  return result.insertId;
 };
 
 // Crear nuevos seguimientos
 const createSeguimiento = async (datosSeguimiento) => {
-    const query = `
+  const query = `
     INSERT INTO seguimiento (
+  expediente,
+  distrito_judicial,
+  especialidad,
+  instancia,
+  organo_juridiccional,
+  nro_convocatoria,
+  fecha_registro,
+  estado_convocatoria,
+  fase_convocatoria,
+  procesado_por,
+  reanudado,
+  remates_id
+)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  await db.query(query, datosSeguimiento);
+};
+
+// Crear detalles
+const createDetalles = async (datosDetalles) => {
+  const query = `
+    INSERT INTO detalles (
       expediente,
       distrito_judicial,
-      especialidad,
-      instancia,
       organo_juridiccional,
+      instancia,
+      juez,
+      especialista,
+      materia,
+      resolucion,
+      fecha_resolucion,
+      archivo,
       nro_convocatoria,
-      fecha_registro,
-      procesado_por,
-      reanudado,
-      fase_convocatoria,
-      estado_convocatoria,
+      tipo_cambio,
+      tasacion,
+      precio_base,
+      incremento_ofertas,
+      arancel,
+      oblaje,
+      descripcion,
+      n_inscritos,
       remates_id
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  
-    await db.query(query, datosSeguimiento); // Se inserta en la tabla seguimiento
-  };
-  
-// Crear nuevos detalles
-const createDetalles = async (datosDetalles) => {
-    const query = `INSERT INTO detalles
-    (expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion, fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas, arancel, objeto, descripcion_de_details, n_inscritos, remates_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  
-    await db.query(query, datosDetalles); // Se inserta en la tabla detalles
-  };
-  
-// Crear nuevos inmuebles
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  await db.query(query, datosDetalles);
+};
+
+// Crear inmuebles
 const createInmuebles = async (datosInmuebles) => {
-    const query = `INSERT INTO inmuebles
-    (partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remates_id)
+  const query = `
+    INSERT INTO inmuebles (
+      partida_registral,
+      tipo_inmueble,
+      direccion,
+      carga_ogravamen,
+      porcentaje_rematar,
+      remates_id
+    )
     VALUES (?, ?, ?, ?, ?, ?)`;
-  
-    await db.query(query, datosInmuebles); // Se inserta en la tabla inmuebles
-  };
-  
+
+  await db.query(query, datosInmuebles);
+};
 
 // Crear nuevo cronograma
 const createCronograma = async (datosCronograma) => {
@@ -139,7 +189,6 @@ const createCronograma = async (datosCronograma) => {
 
   await db.query(query, datosCronograma); // Se inserta en la tabla cronograma
 };
-
 
 // Actualizar un remate existente
 const updateRemate = async (remateId, datosRemate) => {
@@ -210,8 +259,8 @@ const updateDetalles = async (remateId, datosDetalles) => {
     precio_base = ?,
     incremento_ofertas = ?,
     arancel = ?,
-    objeto = ?,
-    descripcion_de_details = ?,
+    oblaje = ?,
+    descripcion = ?,
     n_inscritos = ?
   WHERE remates_id = ?`;
 
@@ -224,7 +273,7 @@ const updateInmuebles = async (remateId, datosInmuebles) => {
     partida_registral = ?,
     tipo_inmueble = ?,
     direccion = ?,
-    carga_gravamen = ?,
+    carga_ogravamen = ?,
     porcentaje_rematar = ?
   WHERE remates_id = ?`;
 

@@ -100,26 +100,74 @@ exports.getAnexos = async (req, res) => {
 
 exports.getFiltrarRemate = async (req, res) => {
   try {
-    // Obtener los parámetros de filtro desde el cuerpo de la solicitud
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    // Obtener los parámetros de filtro
     const filtro = {
       id: req.body.id,
       ubicacion: req.body.ubicacion,
       precio: req.body.precio,
       partida_registral: req.body.partida_registral,
-      categoria: req.body.categoria, // Asegúrate de que este campo esté en el cuerpo de la solicitud
+      categoria: req.body.categoria,
+      limit,
+      offset
     };
 
-    // Llama al modelo para obtener los resultados filtrados con paginación
-    const remates = await Home.getFiltro(filtro);
+    // Obtener resultados y total
+    const { remates, total } = await Home.getFiltro(filtro);
+    
+    // Si no hay resultados, mostrar mensaje
+    if (remates.length === 0) {
+      return res.render('layouts/main', {
+        content: 'home/index',
+        remates: [],
+        error: 'No se encontraron resultados para tu búsqueda.',
+        pagination: {
+          currentPage: 1,
+          totalPages: 1,
+          hasNextPage: false,
+          hasPrevPage: false,
+          nextPage: 1,
+          prevPage: 1,
+          total: 0
+        }
+      });
+    }
 
+    // Calcular paginación
+    const totalPages = Math.ceil(total / limit);
 
-    // Renderiza la vista con los resultados y la paginación
+    // Renderizar con resultados
     res.render('layouts/main', {
       content: 'home/index',
       remates,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page + 1,
+        prevPage: page - 1,
+        total
+      }
     });
   } catch (error) {
     console.error("Error al obtener remates filtrados:", error);
-    res.status(500).send("Ocurrió un error al filtrar los remates.");
+    res.render('layouts/main', {
+      content: 'home/index',
+      remates: [],
+      error: 'Ocurrió un error al filtrar los remates.',
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+        nextPage: 1,
+        prevPage: 1,
+        total: 0
+      }
+    });
   }
 };

@@ -46,6 +46,7 @@ class Home {
   }
 
   static async getFiltro(filtro) {
+    // Consulta base para obtener resultados
     let query = `
       SELECT 
         r.id, 
@@ -59,43 +60,69 @@ class Home {
         inmuebles i 
       ON 
         r.id = i.remates_id
-      WHERE 1=1`; // Para facilitar la concatenación de condiciones
+      WHERE 1=1`;
+
+    // Consulta para contar total de registros
+    let countQuery = `
+      SELECT COUNT(DISTINCT r.id) as total
+      FROM remates r
+      LEFT JOIN inmuebles i 
+      ON r.id = i.remates_id
+      WHERE 1=1`;
 
     const valores = [];
+    const countValores = [];
 
+    // Agregar condiciones de filtro
     if (filtro.id) {
       query += " AND r.id = ?";
+      countQuery += " AND r.id = ?";
       valores.push(filtro.id);
+      countValores.push(filtro.id);
     }
 
     if (filtro.ubicacion) {
       query += " AND r.ubicacion LIKE ?";
+      countQuery += " AND r.ubicacion LIKE ?";
       valores.push(`%${filtro.ubicacion}%`);
+      countValores.push(`%${filtro.ubicacion}%`);
     }
 
     if (filtro.precio) {
       query += " AND r.precios >= ?";
+      countQuery += " AND r.precios >= ?";
       valores.push(filtro.precio);
+      countValores.push(filtro.precio);
     }
 
     if (filtro.partida_registral) {
       query += " AND i.partida_registral LIKE ?";
+      countQuery += " AND i.partida_registral LIKE ?";
       valores.push(`%${filtro.partida_registral}%`);
+      countValores.push(`%${filtro.partida_registral}%`);
     }
 
     if (filtro.categoria) {
       query += " AND r.categoria LIKE ?";
+      countQuery += " AND r.categoria LIKE ?";
       valores.push(`%${filtro.categoria}%`);
+      countValores.push(`%${filtro.categoria}%`);
     }
 
+    // Agregar paginación
+    query += ` LIMIT ${filtro.limit} OFFSET ${filtro.offset}`;
+
     try {
+      // Ejecutar ambas consultas
       const [remates] = await db.query(query, valores);
-      return remates;
+      const [[{ total }]] = await db.query(countQuery, countValores);
+
+      return { remates, total };
     } catch (error) {
       console.error("Error al filtrar remates:", error);
       throw error;
     }
-  }
+}
 
 
 

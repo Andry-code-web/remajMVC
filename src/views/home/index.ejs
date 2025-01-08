@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <section class="banner" id="banner">
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -80,29 +80,35 @@
 
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
-
     <form action="/filtrar/remates" method="get">
-      <div>
-        <label for="numeroIdentificacionRemate">Numero de Remate</label>
+      <div class="input-group">
+        <label for="numeroIdentificacionRemate">
+          <i class="fas fa-gavel"></i> Numero de Remate
+        </label>
         <input type="text" id="numeroIdentificacionRemate" name="remates_id">
       </div>
-      <div>
-        <label for="numeroExpedienteJudicial">Numero de Expediente</label>
+      <div class="input-group">
+        <label for="numeroExpedienteJudicial">
+          <i class="fas fa-folder-open"></i> Numero de Expediente
+        </label>
         <input type="text" id="numeroExpedienteJudicial" name="expediente">
       </div>
-      <div>
-        <label for="valorBasePropiedad">Precio Base</label>
+      <div class="input-group">
+        <label for="valorBasePropiedad">
+          <i class="fas fa-dollar-sign"></i> Precio Base
+        </label>
         <input type="text" id="valorBasePropiedad" name="precio_base">
       </div>
-      <div>
-        <label for="ubicacionGeograficaPropiedad">Ubicación</label>
+      <div class="input-group">
+        <label for="ubicacionGeograficaPropiedad">
+          <i class="fas fa-map-marker-alt"></i> Ubicación
+        </label>
         <input type="text" id="ubicacionGeograficaPropiedad" name="distrito_judicial">
       </div>
-      <button type="submit">Buscar</button>
+      <button type="submit">
+        <i class="fas fa-search"></i> Buscar
+      </button>
     </form>
-    
-
-
   </aside>
   <main class="listaSubastasDisponibles">
     <% remates.forEach(remate=> { %>

@@ -129,4 +129,13 @@ i {
   cursor: pointer;
 }
 
+.property-description {
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /*# sourceMappingURL=adminhf.css.map */

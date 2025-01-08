@@ -23,6 +23,7 @@
     <main class="">
       <%- include('../' + remate) %>
     </main>
+
     <div id="resultados">
       <% if (productos && productos.length> 0) { %>
         <ul>
@@ -37,45 +38,81 @@
           <% } %>
     </div>
 
-    <%- include('../partials/footer') %>
 
-      <script>
-        window.addEventListener('scroll', () => {
-          const header = document.getElementById('header');
-          const banner = document.getElementById('banner_remates2');
-          const categorias = document.getElementById('prueva1');
-          const subastas = document.getElementById('subastas');
-          const bannerBottom = banner.getBoundingClientRect().bottom;
-          const categoriasBottom = categorias.getBoundingClientRect().bottom;
-          const subastasTop = subastas.getBoundingClientRect().top;
-          if (bannerBottom > 0) {
-            header.style.color = '#fffcfc';
-          } else if (categoriasBottom > 0) {
-            header.style.color = '#0a0000';
-          } else if (subastasTop < window.innerHeight) {
-            header.style.color = '#0a0000';
-          } else {
-            header.style.color = 'black';
-          }
-        });
-      </script>
+    <% if (remates && remates.length> 0) { %>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Expediente</th>
+            <th>Precio Base</th>
+            <th>Distrito Judicial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% remates.forEach(remate=> { %>
+            <tr>
+              <td>
+                <%= remate.remates_id %>
+              </td>
+              <td>
+                <%= remate.expediente %>
+              </td>
+              <td>
+                <%= remate.precio_base %>
+              </td>
+              <td>
+                <%= remate.distrito_judicial %>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <p>No se encontraron resultados.</p>
+        <% } %>
 
-      <script>
-        let lastScrollPosition = 0;
-        const navbar = document.querySelector('.navbar');
 
-        window.addEventListener('scroll', function () {
-          const currentScrollPosition = window.pageYOffset;
 
-          if (currentScrollPosition > lastScrollPosition) {
-            navbar.classList.add('hidden');
-          } else {
-            navbar.classList.remove('hidden');
-          }
+          <%- include('../partials/footer') %>
 
-          lastScrollPosition = currentScrollPosition;
-        });
-      </script>
+            <script>
+              window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                const banner = document.getElementById('banner_remates2');
+                const categorias = document.getElementById('prueva1');
+                const subastas = document.getElementById('subastas');
+                const bannerBottom = banner.getBoundingClientRect().bottom;
+                const categoriasBottom = categorias.getBoundingClientRect().bottom;
+                const subastasTop = subastas.getBoundingClientRect().top;
+                if (bannerBottom > 0) {
+                  header.style.color = '#fffcfc';
+                } else if (categoriasBottom > 0) {
+                  header.style.color = '#0a0000';
+                } else if (subastasTop < window.innerHeight) {
+                  header.style.color = '#0a0000';
+                } else {
+                  header.style.color = 'black';
+                }
+              });
+            </script>
+
+            <script>
+              let lastScrollPosition = 0;
+              const navbar = document.querySelector('.navbar');
+
+              window.addEventListener('scroll', function () {
+                const currentScrollPosition = window.pageYOffset;
+
+                if (currentScrollPosition > lastScrollPosition) {
+                  navbar.classList.add('hidden');
+                } else {
+                  navbar.classList.remove('hidden');
+                }
+
+                lastScrollPosition = currentScrollPosition;
+              });
+            </script>
 </body>
 
 </html>

@@ -81,70 +81,76 @@
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
 
-    <form action="" method="post">
+    <form action="/filtrar/remates" method="get">
       <div>
         <label for="numeroIdentificacionRemate">Numero de Remate</label>
-        <input type="text" id="numeroIdentificacionRemate" name="numeroIdentificacionRemate">
+        <input type="text" id="numeroIdentificacionRemate" name="remates_id">
       </div>
       <div>
         <label for="numeroExpedienteJudicial">Numero de Expediente</label>
-        <input type="text" id="numeroExpedienteJudicial" name="numeroExpedienteJudicial">
+        <input type="text" id="numeroExpedienteJudicial" name="expediente">
       </div>
       <div>
         <label for="valorBasePropiedad">Precio Base</label>
-        <input type="text" id="valorBasePropiedad" name="valorBasePropiedad">
+        <input type="text" id="valorBasePropiedad" name="precio_base">
       </div>
       <div>
         <label for="ubicacionGeograficaPropiedad">Ubicación</label>
-        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacionGeograficaPropiedad">
+        <input type="text" id="ubicacionGeograficaPropiedad" name="distrito_judicial">
       </div>
       <button type="submit">Buscar</button>
     </form>
+    
+
 
   </aside>
   <main class="listaSubastasDisponibles">
     <% remates.forEach(remate=> { %>
-    <div class="carta elementoSubastaIndividual">
-      <div class="imagenPropiedadSubasta">
-        <div class="contenedor_image">
-          <% if (remate.imagen) { %>
-          <a href="/auctions/<%= remate.id %>" style="text-decoration: none;">
-            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>" alt="Imagen del inmueble" class="imagen-propiedad">
-          </a>
-          <% } else { %>
-          <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
-          <% } %>
-        </div>
-      </div>
-      <div class="contenidoInformativoSubasta">
-        <div class="detallesEspecificosSubasta">
-          <div class="informacionGeneralSubasta">
-            <h2>Remate N°12345 - CONVOCATORIA</h2>
-            <p><strong>TIPO DE REMATE:</strong> Judicial</p>
-            <p><strong>LUGAR:</strong>
-              <%= remate.ubicacion %> Perú
-            </p>
-            <h3>OFERTAS</h3>
-            <p>10:00 AM</p>
-            <p><strong>Precio Base:</strong> S/ <%= remate.precios %>
-            </p>
-          </div>
-          <div class="estadoActualSubasta">
-            <p><strong><%= remate.estado %></strong></p>
-            <p>Publicación e inscripción</p>
+      <div class="carta elementoSubastaIndividual">
+        <div class="imagenPropiedadSubasta">
+          <div class="contenedor_image">
+            <% if (remate.imagen) { %>
+              <a href="/auctions/<%= remate.id %>" style="text-decoration: none;">
+                <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>"
+                  alt="Imagen del inmueble" class="imagen-propiedad">
+              </a>
+              <% } else { %>
+                <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
+                <% } %>
           </div>
         </div>
-        <div class="contenedorBotonesAccion">
-<!--           <button class="botonAccionSubasta">Detalle</button>
+        <div class="contenidoInformativoSubasta">
+          <div class="detallesEspecificosSubasta">
+            <div class="informacionGeneralSubasta">
+              <h2>Remate N°12345 - CONVOCATORIA</h2>
+              <p><strong>TIPO DE REMATE:</strong> Judicial</p>
+              <p><strong>LUGAR:</strong>
+                <%= remate.ubicacion %> Perú
+              </p>
+              <h3>OFERTAS</h3>
+              <p>10:00 AM</p>
+              <p><strong>Precio Base:</strong> S/ <%= remate.precios %>
+              </p>
+            </div>
+            <div class="estadoActualSubasta">
+              <p><strong>
+                  <%= remate.estado %>
+                </strong></p>
+              <p>Publicación e inscripción</p>
+            </div>
+          </div>
+          <div class="contenedorBotonesAccion">
+            <!--           <button class="botonAccionSubasta">Detalle</button>
           <button class="botonAccionSubasta">Seguimiento</button>
           <button class="botonAccionSubasta">Aviso</button> -->
-          <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
-          <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
-          <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+            <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
+            <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
+            <a href="#" class="botonAccionSubasta aviso-button"
+              data-aviso-url="<%= remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+          </div>
         </div>
       </div>
-    </div>
-    <% }) %>
+      <% }) %>
   </main>
 </div>
 
@@ -349,14 +355,14 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const seguimientoButtons = document.querySelectorAll('.seguimiento-button');
     const tarjetaSeguimientoSeguimiento = document.querySelector('.tarjeta_seguimiento_seguimiento');
     const nubladoSeguimiento = document.createElement('div');
     nubladoSeguimiento.classList.add('nublado');
 
     seguimientoButtons.forEach(button => {
-      button.addEventListener('click', function(event) {
+      button.addEventListener('click', function (event) {
         event.preventDefault();
         const remateId = this.closest('.carta').dataset.remateId;
         fetch(`/remate/${remateId}`)
@@ -370,7 +376,7 @@
       });
     });
 
-    window.hideSeguimientoCard = function() {
+    window.hideSeguimientoCard = function () {
       tarjetaSeguimientoSeguimiento.style.display = 'none';
       document.body.removeChild(nubladoSeguimiento);
     };
@@ -381,7 +387,7 @@
     nubladoDetalle.classList.add('nublado');
 
     detalleButtons.forEach(button => {
-      button.addEventListener('click', function(event) {
+      button.addEventListener('click', function (event) {
         event.preventDefault();
         const remateId = this.closest('.carta').dataset.remateId;
         fetch(`/remate/${remateId}`)
@@ -395,7 +401,7 @@
       });
     });
 
-    window.hideDetailCard = function() {
+    window.hideDetailCard = function () {
       tarjetaSeguimientoDetalle.style.display = 'none';
       document.body.removeChild(nubladoDetalle);
     };
@@ -403,7 +409,7 @@
     const avisoButtons = document.querySelectorAll('.aviso-button');
 
     avisoButtons.forEach(button => {
-      button.addEventListener('click', function(event) {
+      button.addEventListener('click', function (event) {
         event.preventDefault();
         const avisoUrl = this.getAttribute('data-aviso-url');
         if (avisoUrl && avisoUrl !== '#') {

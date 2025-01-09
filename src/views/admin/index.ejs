@@ -32,14 +32,12 @@
           <div class="user-actions">
             <button>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                  d="M13.094 2.085l-1.013-.082a1.082 1.082 0 0 0-.161 0l-1.063.087C6.948 2.652 4 6.053 4 10v3.838l-.948 2.846A1 1 0 0 0 4 18h4.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5H20a1 1 0 0 0 .889-1.495L20 13.838V10c0-3.94-2.942-7.34-6.906-7.915zM12 19.5c-.841 0-1.5-.659-1.5-1.5h3c0 .841-.659 1.5-1.5 1.5zM5.388 16l.561-1.684A1.03 1.03 0 0 0 6 14v-4c0-2.959 2.211-5.509 5.08-5.923l.921-.074.868.068C15.794 4.497 18 7.046 18 10v4c0 .107.018.214.052.316l.56 1.684H5.388z" />
+                <path d="M13.094 2.085l-1.013-.082a1.082 1.082 0 0 0-.161 0l-1.063.087C6.948 2.652 4 6.053 4 10v3.838l-.948 2.846A1 1 0 0 0 4 18h4.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5H20a1 1 0 0 0 .889-1.495L20 13.838V10c0-3.94-2.942-7.34-6.906-7.915zM12 19.5c-.841 0-1.5-.659-1.5-1.5h3c0 .841-.659 1.5-1.5 1.5zM5.388 16l.561-1.684A1.03 1.03 0 0 0 6 14v-4c0-2.959 2.211-5.509 5.08-5.923l.921-.074.868.068C15.794 4.497 18 7.046 18 10v4c0 .107.018.214.052.316l.56 1.684H5.388z" />
               </svg>
             </button>
             <button id="logout-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                  d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z" />
+                <path d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z" />
                 <path d="M11 2h2v10h-2z" />
               </svg>
             </button>
@@ -49,9 +47,7 @@
           <header class="menu-wrap">
             <figure class="user">
               <div class="user-avatar">
-                <img
-                  src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80"
-                  alt="Amanda King">
+                <img src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80" alt="Amanda King">
               </div>
               <figcaption>
                 ADMIN
@@ -128,70 +124,72 @@
 
           <div class="search-container">
             <i class="bi bi-search search-icon"></i>
-            <input type="text" id="buscador" class="search-input"
-              placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
+            <input type="text" id="buscador" class="search-input" placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
           </div>
 
           <div class="properties-grid" id="rematesGrid">
             <% remates.forEach(function(remate) { %>
-              <div class="property-card" data-id="<%= remate.id %>">
-                <div class="property-image-container">
-                  <% if (remate.imagen) { %>
-                    <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                    <% } else { %>
-                      <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-                      <% } %>
-                        <span
-                          class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
-                          <%= remate.estado %>
-                        </span>
+            <div class="property-card" data-id="<%= remate.id %>">
+              <div class="auction-number-container">
+                <span class="auction-number">Remate N° <%= remate.id %></span>
+              </div>
+
+              <div class="property-image-container">
+                <% if (remate.imagen) { %>
+                <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
+                <% } else { %>
+                <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+                <% } %>
+                <span class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                  <%= remate.estado %>
+                </span>
+              </div>
+              <div class="property-buttons">
+                <button class="property-button">Seguimiento</button>
+                <button class="property-button">Detalles</button>
+                <button class="property-button">Inmuebles</button>
+                <button class="property-button">Cronograma</button>
+              </div>
+              <div class="property-content">
+                <h3 class="property-title">
+                  <%= remate.ubicacion %>
+                </h3>
+                <div class="property-price">$<%= remate.precios %>
                 </div>
-                <div class="property-buttons">
-                  <button class="property-button">Seguimiento</button>
-                  <button class="property-button">Detalles</button>
-                  <button class="property-button">Inmuebles</button>
-                  <button class="property-button">Cronograma</button>
+                <div class="property-details">
+                  <div class="detail-item">
+                    <i class="bi bi-building"></i>
+                    <%= remate.categoria %>
+                  </div>
+                  <div class="detail-item">
+                    <i class="bi bi-door-closed"></i>
+                    <%= remate.N_habitacion %> hab.
+                  </div>
+                  <div class="detail-item">
+                    <i class="bi bi-droplet"></i>
+                    <%= remate.N_banos %> baños
+                  </div>
+                  <div class="detail-item">
+                    <i class="bi bi-calendar"></i>
+                    <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                  </div>
                 </div>
-                <div class="property-content">
-                  <h3 class="property-title">
-                    <%= remate.ubicacion %>
-                  </h3>
-                  <div class="property-price">$<%= remate.precios %>
-                  </div>
-                  <div class="property-details">
-                    <div class="detail-item">
-                      <i class="bi bi-building"></i>
-                      <%= remate.categoria %>
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-door-closed"></i>
-                      <%= remate.N_habitacion %> hab.
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-droplet"></i>
-                      <%= remate.N_banos %> baños
-                    </div>
-                    <div class="detail-item">
-                      <i class="bi bi-calendar"></i>
-                      <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                    </div>
-                  </div>
-                  <p class="property-description">
-                    <%= remate.descripcion %>
-                  </p>
-                  <div class="property-actions">
-                    <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                      <i class="bi bi-pencil"></i>
-                      Editar
-                    </button>
-                    <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                      <i class="bi bi-trash"></i>
-                      Eliminar
-                    </button>
-                  </div>
+                <p class="property-description">
+                  <%= remate.descripcion %>
+                </p>
+                <div class="property-actions">
+                  <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                    <i class="bi bi-pencil"></i>
+                    Editar
+                  </button>
+                  <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                    <i class="bi bi-trash"></i>
+                    Eliminar
+                  </button>
                 </div>
               </div>
-              <% }); %>
+            </div>
+            <% }); %>
           </div>
 
 
@@ -433,8 +431,7 @@
 
               <!-- Campo para ingresar la URL del anexo PDF -->
               <div class="subir_anexo">
-                <input type="text" id="anexo-url" name="anexo_url" placeholder="Ingrese la URL del anexo PDF"
-                  class="input">
+                <input type="text" id="anexo-url" name="anexo_url" placeholder="Ingrese la URL del anexo PDF" class="input">
               </div>
               <!-- Sección para subir imágenes -->
               <div class="subir_img">
@@ -688,54 +685,254 @@
       </div>
     </div>
   </div>
-  <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades">
-    <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
-    <form method="post" action="/guardar-cronograma-actividades" id="formulario_cronograma_actividades">
-      <div class="fila_campos_formulario_cronograma">
-        <div class="columna_campo_formulario_cronograma">
-          <div class="grupo_campo_formulario_cronograma">
-            <label for="actividad_cronograma" class="etiqueta_campo_formulario_cronograma">Actividad Programada</label>
-            <input type="text" id="actividad_cronograma" name="actividad_cronograma"
-              class="entrada_texto_formulario_cronograma" required>
+
+  <!-- Modal de Detalles -->
+  <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
+    <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
+    <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
+            <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
-        <div class="columna_campo_formulario_cronograma">
-          <div class="grupo_campo_formulario_cronograma">
-            <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">Identificador del
-              Remate Asociado</label>
-            <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
-              class="entrada_texto_formulario_cronograma" required>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito Judicial</label>
+            <input type="text" id="distrito_judicial" name="distrito_judicial" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
       </div>
-
-      <div class="fila_campos_formulario_cronograma">
-        <div class="columna_campo_formulario_cronograma">
-          <div class="grupo_campo_formulario_cronograma">
-            <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha de Inicio de la
-              Actividad</label>
-            <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
-              class="entrada_fecha_formulario_cronograma" required>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano Jurisdiccional</label>
+            <input type="text" id="organo_juridiccional" name="organo_juridiccional" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
-        <div class="columna_campo_formulario_cronograma">
-          <div class="grupo_campo_formulario_cronograma">
-            <label for="fecha_finalizacion_actividad" class="etiqueta_campo_formulario_cronograma">Fecha de Finalización
-              de la Actividad</label>
-            <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
-              class="entrada_fecha_formulario_cronograma" required>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
+            <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
       </div>
-
-      <div class="contenedor_botones_formulario_cronograma">
-        <button type="button" class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
-          Registro</button>
-        <button type="submit" class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar Cronograma
-          de Actividades</button>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
+            <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
+            <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
+            <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
+            <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha Resolución</label>
+            <input type="date" id="fecha_resolucion" name="fecha_resolucion" class="entrada_fecha_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
+            <input type="file" id="archivo" name="archivo" accept="application/pdf" class="entrada_archivo_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
+            <input type="text" id="nro_convocatoria" name="nro_convocatoria" class="entrada_texto_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
+            <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
+            <input type="number" id="tasacion" name="tasacion" step="0.01" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
+            <input type="number" id="precio_base" name="precio_base" step="0.01" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento entre ofertas</label>
+            <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
+            <input type="number" id="arancel" name="arancel" step="0.01" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_detalles">
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
+            <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
+            <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="contenedor_botones_formulario_detalles">
+        <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles">Cancelar Registro</button>
+        <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar Detalles</button>
       </div>
     </form>
   </div>
+
+  <!-- Modal de Inmuebles -->
+  <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none; position: absolute;">
+    <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
+    <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida Registral</label>
+            <input type="text" id="partida_registral" name="partida_registral" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo Inmueble</label>
+            <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
+            <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="carga_ogravamen" class="etiqueta_campo_formulario_inmuebles">Carga Y/O gravamen</label>
+            <input type="text" id="carga_ogravamen" name="carga_ogravamen" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+      </div>
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje a Rematar</label>
+            <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01" class="entrada_numero_formulario_inmuebles" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="imagenes" class="etiqueta_campo_formulario_inmuebles">Imagen</label>
+            <input type="file" id="imagenes" name="imagenes" accept="image/*" class="entrada_archivo_formulario_inmuebles" required>
+          </div>
+        </div>
+      </div>
+      <div class="contenedor_botones_formulario_inmuebles">
+        <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles">Cancelar Registro</button>
+        <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar Inmuebles</button>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- Modal de Cronograma -->
+  <% remates.forEach(function(remate) { %>
+    <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades">
+      <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
+      <form method="post" action="/guardar-cronograma-actividades" id="formulario_cronograma_actividades">
+        <div class="fila_campos_formulario_cronograma">
+          <div class="columna_campo_formulario_cronograma">
+            <div class="grupo_campo_formulario_cronograma">
+              <label for="actividad_cronograma" class="etiqueta_campo_formulario_cronograma">FASE</label>
+              <select id="actividad_cronograma" name="actividad_cronograma" class="seleccion_formulario_cronograma"
+                required>
+                <option value="" disabled selected>Seleccione una fase</option>
+                <option value="publicacion_inscripcion">Publicación e Inscripción</option>
+                <option value="validacion_inscripcion">Validación de Inscripción</option>
+                <option value="presentacion_ofertas">Presentación de Ofertas</option>
+                <option value="pago_saldo">Pago Saldo</option>
+                <option value="validacion_saldo">Validación del Saldo</option>
+              </select>
+            </div>
+          </div>
+          <div class="columna_campo_formulario_cronograma">
+            <div class="grupo_campo_formulario_cronograma">
+              <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">ID REMATE</label>
+              <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
+                class="entrada_texto_formulario_cronograma" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="fila_campos_formulario_cronograma">
+          <div class="columna_campo_formulario_cronograma">
+            <div class="grupo_campo_formulario_cronograma">
+              <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha Inicio</label>
+              <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
+                class="entrada_fecha_formulario_cronograma" required>
+            </div>
+          </div>
+          <div class="columna_campo_formulario_cronograma">
+            <div class="grupo_campo_formulario_cronograma">
+              <label for="fecha_finalizacion_actividad" class="etiqueta_campo_formulario_cronograma">Fecha Fin</label>
+              <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
+                class="entrada_fecha_formulario_cronograma" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="contenedor_botones_formulario_cronograma">
+          <button type="button" class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
+            Registro</button>
+          <button type="submit" class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar
+            Cronograma</button>
+        </div>
+      </form>
+    </div>
+    <% }); %>
+
 
   <script>
     // Funciones de utilidad
@@ -788,8 +985,8 @@
       }).then((result) => {
         if (result.isConfirmed) {
           fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-            method: 'DELETE'
-          })
+              method: 'DELETE'
+            })
             .then(response => response.json())
             .then(data => {
               if (data.success) {
@@ -899,7 +1096,7 @@
       actualizarMetricas();
 
       // Manejador para cerrar modales al hacer clic fuera
-      window.onclick = function (event) {
+      window.onclick = function(event) {
         const modalNuevo = document.getElementById('modalNuevoRemate');
         const modalEditar = document.getElementById('editModal');
 
@@ -913,7 +1110,7 @@
       };
 
       // Manejador para la carga de imágenes
-      document.getElementById('file-upload').addEventListener('change', function (event) {
+      document.getElementById('file-upload').addEventListener('change', function(event) {
         const files = event.target.files;
         const minFiles = 1;
         const maxFiles = 10;
@@ -935,7 +1132,7 @@
           const file = files[i];
           const reader = new FileReader();
 
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             const img = document.createElement('img');
             img.src = e.target.result;
             img.className = 'preview-img';
@@ -967,39 +1164,96 @@
     }
 
     // Botón de cerrar sesión admin
-    document.getElementById('logout-button').addEventListener('click', function () {
+    document.getElementById('logout-button').addEventListener('click', function() {
       window.location.href = '/admin/logout';
     });
-
   </script>
 
+  <!-- Abrir modales-->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const cronogramaButtons = document.querySelectorAll('.property-button');
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.property-button');
+      const tarjetaDetalles = document.getElementById('tarjetaDetalles');
+      const tarjetaInmuebles = document.getElementById('tarjetaInmuebles');
       const tarjetaCronograma = document.getElementById('tarjetaCronograma');
-
-      cronogramaButtons.forEach(button => {
-        button.addEventListener('click', function () {
-          if (button.textContent.trim() === 'Cronograma') {
-            tarjetaCronograma.style.display = 'block';
+    
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      document.body.appendChild(overlay);
+    
+      let activeModal = null;
+    
+      const modalMap = {
+        'Detalles': tarjetaDetalles,
+        'Inmuebles': tarjetaInmuebles,
+        'Cronograma': tarjetaCronograma
+      };
+    
+      function openModal(modal) {
+        if (activeModal) {
+          closeModal(activeModal);
+        }
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
+        activeModal = modal;
+        document.body.style.overflow = 'hidden';
+      }
+    
+      function closeModal(modal) {
+        if (modal) {
+          modal.style.display = 'none';
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+          activeModal = null;
+        }
+      }
+    
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const buttonText = this.textContent.trim();
+          const modal = modalMap[buttonText];
+          
+          if (modal) {
+            openModal(modal);
           }
         });
       });
-
-      // Cerrar la tarjeta al hacer clic fuera de ella
-      window.addEventListener('click', function (event) {
-        if (event.target === tarjetaCronograma) {
-          tarjetaCronograma.style.display = 'none';
+    
+      overlay.addEventListener('click', function() {
+        closeModal(activeModal);
+      });
+    
+      const cancelButtons = document.querySelectorAll([
+        '.boton_cancelar_formulario_detalles',
+        '.boton_cancelar_formulario_inmuebles',
+        '.boton_cancelar_formulario_cronograma'
+      ].join(','));
+    
+      cancelButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeModal(activeModal);
+        });
+      });
+    
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && activeModal) {
+          closeModal(activeModal);
         }
       });
-
-      // Cerrar la tarjeta al hacer clic en el botón de cancelar
-      document.querySelector('.boton_cancelar_formulario_cronograma').addEventListener('click', function () {
-        tarjetaCronograma.style.display = 'none';
+    
+      [tarjetaDetalles, tarjetaInmuebles, tarjetaCronograma].forEach(modal => {
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            e.stopPropagation();
+          });
+        }
       });
     });
   </script>
-
 
 </body>
 

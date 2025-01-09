@@ -53,7 +53,8 @@ class Home {
         r.ubicacion, 
         r.precios, 
         r.categoria, 
-        i.partida_registral
+        i.partida_registral,
+        (SELECT imagenes_inmueble FROM img_inmuebles WHERE remates_id = r.id LIMIT 1) as imagen
       FROM 
         remates r
       LEFT JOIN 
@@ -68,10 +69,13 @@ class Home {
       FROM remates r
       LEFT JOIN inmuebles i 
       ON r.id = i.remates_id
+      LEFT JOIN img_inmuebles img
+      ON r.id = img.remates_id
       WHERE 1=1`;
 
     const valores = [];
     const countValores = [];
+
 
     // Agregar condiciones de filtro
     if (filtro.id) {
@@ -109,11 +113,14 @@ class Home {
       countValores.push(`%${filtro.categoria}%`);
     }
 
+
+    // Agregar agrupación por ID de remate para manejar múltiples imágenes
+    query += ' GROUP BY r.id';
+
     // Agregar paginación
     query += ` LIMIT ${filtro.limit} OFFSET ${filtro.offset}`;
 
     try {
-      // Ejecutar ambas consultas
       const [remates] = await db.query(query, valores);
       const [[{ total }]] = await db.query(countQuery, countValores);
 
@@ -122,7 +129,7 @@ class Home {
       console.error("Error al filtrar remates:", error);
       throw error;
     }
-}
+  }
 
 
 

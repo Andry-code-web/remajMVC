@@ -37,46 +37,49 @@
 <div class="slider_contenedor">
   <div class="slide-track">
     <div class="slide_img">
-      <img src="/img/casa.png" alt="">
+      <a href="javascript:void(0)" data-categoria="terreno_rural">
+        <img src="/img/casa de playa.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/departamento.png" alt="">
+      <a href="javascript:void(0)" data-categoria="casa">
+        <img src="/img/casa.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/cochera.png" alt="">
+      <a href="javascript:void(0)" data-categoria="cochera">
+        <img src="/img/cochera.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/terreno.png" alt="">
+      <a href="javascript:void(0)" data-categoria="departamento">
+        <img src="/img/Departamentos.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/local.png" alt="">
+      <a href="javascript:void(0)" data-categoria="terraza">
+        <img src="/img/terraza.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/terraza.png" alt="">
+      <a href="javascript:void(0)" data-categoria="terreno">
+        <img src="/img/terreno.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/terreno_rural.png" alt="">
+      <a href="javascript:void(0)" data-categoria="local">
+        <img src="/img/tienda.png" alt="">
+      </a>
     </div>
     <div class="slide_img">
-      <img src="/img/oficina.png" alt="">
-    </div>
-    <div class="slide_img">
-      <img src="/img/casa.png" alt="">
-    </div>
-    <div class="slide_img">
-      <img src="/img/terraza.png" alt="">
-    </div>
-    <div class="slide_img">
-      <img src="/img/local.png" alt="">
-    </div>
-    <div class="slide_img">
-      <img src="/img/terreno.png" alt="">
-    </div>
-    <div class="slide_img">
-      <img src="/img/casa.png" alt="">
+      <a href="javascript:void(0)" data-categoria="oficina">
+        <img src="/img/Urbanización.png" alt="">
+      </a>
     </div>
   </div>
 </div>
+
+
 
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
@@ -137,7 +140,7 @@
         <div class="contenedor_image">
           <% if (remate.imagen) { %>
           <a href="/auctions/<%= remate.id %>" style="text-decoration: none;">
-            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>" alt="Imagen del inmueble" class="imagen-propiedad">
+            <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Imagen del inmueble" class="imagen-propiedad">
           </a>
           <% } else { %>
           <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
@@ -582,6 +585,16 @@
   }
 </script>
 
+<script>
+  document.querySelectorAll('.slide_img a').forEach(item => {
+  item.addEventListener('click', function(e) {
+    e.preventDefault(); // Evita el comportamiento por defecto del enlace
+    const categoria = item.getAttribute('data-categoria');
+    window.location.href = `/filtrarG?categoria=${categoria}`; // Redirige a la ruta con el filtro
+  });
+});
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

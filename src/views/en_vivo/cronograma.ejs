@@ -25,7 +25,7 @@
       <table>
         <thead>
           <tr>
-            <th>ACTIVIDAD</th>
+            <th>FASE</th>
             <th>FECHA INICIO</th>
             <th>FECHA FIN</th>
           </tr>
@@ -35,8 +35,8 @@
           <% cronograma.forEach(cronogramas => { %>
           <tr>
             <td><%= cronogramas.actividad %></td>
-            <td><%= cronogramas.fecha_actividad %></td>
-            <td><%= cronogramas.fecha_actividad %></td>
+            <td><%= cronogramas.fecha_inicio %></td>
+            <td><%= cronogramas.fecha_fin %></td>
           </tr>
           <% }); %> 
         </tbody>

@@ -13,7 +13,7 @@
     </div>
 
     <div class="inmuebles-table">
-       <% if (inmuebles && inmuebles.length> 0) { %>
+      <% if (inmuebles && inmuebles.length> 0) { %>
       <table>
         <thead>
           <tr>
@@ -22,13 +22,12 @@
             <th>Dirección</th>
             <th>Carga y/o Gravamen</th>
             <th>Porcentaje a Rematar</th>
-            <!-- <th>Imagenes inmuebles</th> -->
+            <th class="imagen-column">Imagenes inmuebles</th>
           </tr>
         </thead>
 
         <tbody>
 
-         
           <% inmuebles.forEach(inmueble=> { %>
           <tr>
             <td><%= inmueble.partida_registral %></td>
@@ -36,19 +35,30 @@
             <td class="direccion-cell"><%= inmueble.direccion %></td>
             <td class="gravamen-cell"><%= inmueble.carga_ogravamen %></td>
             <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %></td>
-            <!-- <td ><%= inmueble.img_inmueble %></td> -->
+            <td  class="imagen-cell">
+              <% if (inmueble.img_inmueble) { %>
+              <img src="data:image/jpeg;base64,<%= inmueble.img_inmueble %>" alt="Imagen Inmueble" style="width: 100px; height: auto; cursor: pointer;" onclick="showImageModal('data:image/jpeg;base64,<%= inmueble.img_inmueble %>')">
+              <% } else { %>
+              <span>No disponible</span>
+              <% } %>
+            </td>
+
+
           </tr>
           <% }); %>
-          
-
         </tbody>
 
       </table>
       <% } else { %>
-          <p class="no-data">No hay inmuebles disponibles.</p>
-          <% } %>
+      <p class="no-data">No hay inmuebles disponibles.</p>
+      <% } %>
     </div>
 
+    <!-- Modal para mostrar la imagen -->
+<div id="imageModal" class="image-modal" onclick="closeImageModal()" style="display: none;">
+  <span class="close" onclick="closeImageModal()">&times;</span>
+  <img id="modalImage" src="" alt="Imagen Inmueble">
+</div>
     <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>
 </main>
@@ -79,4 +89,18 @@
 
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
   });
+</script>
+
+<script>
+  function showImageModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    modalImg.src = imageSrc;
+    modal.style.display = 'flex';
+  }
+
+  function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+  }
 </script>

@@ -541,31 +541,3 @@ input[type="file"] {
     box-shadow: 5.5px 7px 0 black;
 }
 
-//de moises 
-
-article {
-    scrollbar-color: blue;
-    scrollbar-width: auto;
-}
-
-.form-grid-seguimiento {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.form-grid-detalles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-.form-grid-inmuebles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-.form-grid-cronograma {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}

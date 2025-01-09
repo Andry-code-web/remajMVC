@@ -39,17 +39,20 @@ class EnVivo {
         return rows;
     }
 
-    /* ARREGLASR POR ID IMG  */
-
-   /*  static async getImagenesInmueblesById(remates_id) {
-        const [rows] = await db.execute(`
-            SELECT id, TO_BASE64(imagenes_inmueble) AS imagenes_inmueble, remates_id 
-            FROM img_inmuebles
-        `);
-        return rows;
+    static async getImagenInmuebleById(img_inmuebles_id) {
+        const query = `
+            SELECT 
+                id, 
+                TO_BASE64(imagenes_inmueble) AS imagenes_inmueble 
+            FROM 
+                img_inmuebles
+            WHERE 
+                id = ?
+        `;
+        const [rows] = await db.execute(query, [img_inmuebles_id]);
+        return rows.length ? rows[0] : null;
     }
- */
-/* ------ */
+
 
 
     static async getCronograma(remates_id) {
@@ -62,7 +65,7 @@ class EnVivo {
 
     static async getPdf(remates_id) {
         const query = `
-        SELECT aviso_pdf FROM remates WHERE id = ?`; // Asegúrate que el nombre de la columna sea correcto
+        SELECT aviso_pdf FROM remates WHERE id = ?`; 
         const [rows] = await db.execute(query, [remates_id]);
         return rows[0];
     }

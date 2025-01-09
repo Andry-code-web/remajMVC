@@ -135,57 +135,67 @@
           <div class="properties-grid" id="rematesGrid">
             <% remates.forEach(function(remate) { %>
               <div class="property-card" data-id="<%= remate.id %>">
-                <% if (remate.imagen) { %>
-                  <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                  <% } else { %>
-                    <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-                    <% } %>
-                      <div class="property-content">
+                <div class="property-image-container">
+                  <% if (remate.imagen) { %>
+                    <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
+                    <% } else { %>
+                      <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+                      <% } %>
                         <span
                           class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
                           <%= remate.estado %>
                         </span>
-                        <h3 class="property-title">
-                          <%= remate.ubicacion %>
-                        </h3>
-                        <div class="property-price">$<%= remate.precios %>
-                        </div>
-                        <div class="property-details">
-                          <div class="detail-item">
-                            <i class="bi bi-building"></i>
-                            <%= remate.categoria %>
-                          </div>
-                          <div class="detail-item">
-                            <i class="bi bi-door-closed"></i>
-                            <%= remate.N_habitacion %> hab.
-                          </div>
-                          <div class="detail-item">
-                            <i class="bi bi-droplet"></i>
-                            <%= remate.N_banos %> baños
-                          </div>
-                          <div class="detail-item">
-                            <i class="bi bi-calendar"></i>
-                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                          </div>
-                        </div>
-                        <p class="property-description">
-                          <%= remate.descripcion %>
-                        </p>
-                        <div class="property-actions">
-                          <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                            <i class="bi bi-pencil"></i>
-                            Editar
-                          </button>
-                          <button class="action-button"
-                            onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                            <i class="bi bi-trash"></i>
-                            Eliminar
-                          </button>
-                        </div>
-                      </div>
+                </div>
+                <div class="property-buttons">
+                  <button class="property-button">Seguimiento</button>
+                  <button class="property-button">Detalles</button>
+                  <button class="property-button">Inmuebles</button>
+                  <button class="property-button">Cronograma</button>
+                </div>
+                <div class="property-content">
+                  <h3 class="property-title">
+                    <%= remate.ubicacion %>
+                  </h3>
+                  <div class="property-price">$<%= remate.precios %>
+                  </div>
+                  <div class="property-details">
+                    <div class="detail-item">
+                      <i class="bi bi-building"></i>
+                      <%= remate.categoria %>
+                    </div>
+                    <div class="detail-item">
+                      <i class="bi bi-door-closed"></i>
+                      <%= remate.N_habitacion %> hab.
+                    </div>
+                    <div class="detail-item">
+                      <i class="bi bi-droplet"></i>
+                      <%= remate.N_banos %> baños
+                    </div>
+                    <div class="detail-item">
+                      <i class="bi bi-calendar"></i>
+                      <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                    </div>
+                  </div>
+                  <p class="property-description">
+                    <%= remate.descripcion %>
+                  </p>
+                  <div class="property-actions">
+                    <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                      <i class="bi bi-pencil"></i>
+                      Editar
+                    </button>
+                    <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                      <i class="bi bi-trash"></i>
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
               </div>
               <% }); %>
           </div>
+
+
+
         </div>
 
         <!-- añadir nuevo remate -->
@@ -660,7 +670,7 @@
                 <textarea id="editDescripcion" name="descripcion" required></textarea>
               </div>
 
-              
+
               <!-- Area botones -->
               <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
@@ -677,6 +687,54 @@
         </div>
       </div>
     </div>
+  </div>
+  <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades">
+    <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
+    <form method="post" action="/guardar-cronograma-actividades" id="formulario_cronograma_actividades">
+      <div class="fila_campos_formulario_cronograma">
+        <div class="columna_campo_formulario_cronograma">
+          <div class="grupo_campo_formulario_cronograma">
+            <label for="actividad_cronograma" class="etiqueta_campo_formulario_cronograma">Actividad Programada</label>
+            <input type="text" id="actividad_cronograma" name="actividad_cronograma"
+              class="entrada_texto_formulario_cronograma" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_cronograma">
+          <div class="grupo_campo_formulario_cronograma">
+            <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">Identificador del
+              Remate Asociado</label>
+            <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
+              class="entrada_texto_formulario_cronograma" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="fila_campos_formulario_cronograma">
+        <div class="columna_campo_formulario_cronograma">
+          <div class="grupo_campo_formulario_cronograma">
+            <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha de Inicio de la
+              Actividad</label>
+            <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
+              class="entrada_fecha_formulario_cronograma" required>
+          </div>
+        </div>
+        <div class="columna_campo_formulario_cronograma">
+          <div class="grupo_campo_formulario_cronograma">
+            <label for="fecha_finalizacion_actividad" class="etiqueta_campo_formulario_cronograma">Fecha de Finalización
+              de la Actividad</label>
+            <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
+              class="entrada_fecha_formulario_cronograma" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="contenedor_botones_formulario_cronograma">
+        <button type="button" class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
+          Registro</button>
+        <button type="submit" class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar Cronograma
+          de Actividades</button>
+      </div>
+    </form>
   </div>
 
   <script>
@@ -914,6 +972,35 @@
     });
 
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cronogramaButtons = document.querySelectorAll('.property-button');
+      const tarjetaCronograma = document.getElementById('tarjetaCronograma');
+
+      cronogramaButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          if (button.textContent.trim() === 'Cronograma') {
+            tarjetaCronograma.style.display = 'block';
+          }
+        });
+      });
+
+      // Cerrar la tarjeta al hacer clic fuera de ella
+      window.addEventListener('click', function (event) {
+        if (event.target === tarjetaCronograma) {
+          tarjetaCronograma.style.display = 'none';
+        }
+      });
+
+      // Cerrar la tarjeta al hacer clic en el botón de cancelar
+      document.querySelector('.boton_cancelar_formulario_cronograma').addEventListener('click', function () {
+        tarjetaCronograma.style.display = 'none';
+      });
+    });
+  </script>
+
+
 </body>
 
 </html>

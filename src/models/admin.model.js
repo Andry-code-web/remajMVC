@@ -187,6 +187,53 @@ const updateRemate = async (remateId, datosRemate) => {
     return result.affectedRows > 0;
 };
 
+const createSeguimiento = async (datosSeguimiento) => {
+    const query = `
+        INSERT INTO seguimiento
+        (expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria, 
+        fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    try {
+        const [result] = await db.query(query, datosSeguimiento);
+        return result.insertId;
+    } catch (error) {
+        throw new Error('Error al crear el seguimiento: ' + error.message);
+    }
+};
+
+// Función para obtener un seguimiento por ID
+const getSeguimientoById = async (seguimientoId) => {
+    const query = `
+        SELECT * FROM seguimiento WHERE id = ?
+    `;
+    try {
+        const [result] = await db.query(query, [seguimientoId]);
+        return result[0]; // Si el seguimiento existe, devolverá el primer elemento.
+    } catch (error) {
+        throw new Error('Error al obtener el seguimiento: ' + error.message);
+    }
+};
+
+// Función para actualizar un seguimiento
+const updateSeguimiento = async (seguimientoId, datosSeguimiento) => {
+    const query = `
+        UPDATE seguimiento
+        SET expediente = ?, distrito_judicial = ?, instancia = ?, organo_juridico = ?, especialidad = ?, 
+        nro_convocatoria = ?, fecha_registro = ?, procesado_por = ?, reanudado = ?, fase_convocatoria = ?, 
+        estado_convocatoria = ?, remates_id = ?
+        WHERE id = ?
+    `;
+    try {
+        const [result] = await db.query(query, [...datosSeguimiento, seguimientoId]);
+        return result.affectedRows > 0;
+    } catch (error) {
+        throw new Error('Error al actualizar el seguimiento: ' + error.message);
+    }
+};
+
+
+
 module.exports = {
     getAllRemates,
     getImagenesInmuebles,
@@ -196,5 +243,9 @@ module.exports = {
     deleteRemate,
     getUsuarioAdmin,
     getRemateById,
-    updateRemate
+    updateRemate,
+    createSeguimiento,
+    getSeguimientoById,
+    updateSeguimiento
+
 };

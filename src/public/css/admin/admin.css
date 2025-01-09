@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -160,6 +161,7 @@
 }
 
 .property-card {
+  position: relative;
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -530,6 +532,24 @@ input[type=file] {
 
 .input:focus {
   box-shadow: 5.5px 7px 0 black;
+}
+
+/* diseño id_moises */
+.auction-number-container {
+  position: absolute;
+  top: 13px;
+  left: 13rem;
+  z-index: 1000;
+}
+
+.auction-number {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(2, 1, 1);
+  background: rgba(223, 223, 223, 0.9);
+  padding: 0.47rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .property-description {

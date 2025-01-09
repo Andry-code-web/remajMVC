@@ -1,7 +1,5 @@
 @use 'variables' as *;
 
-
-
 .banner {
     /*   position: relative; */
     width: 100%;
@@ -797,25 +795,47 @@
 }
 
 .barraLateralFiltros {
-    width: 300px;
+    width: 20%;
     background: #fff;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.form_filtro{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
 .barraLateralFiltros label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-size: .9rem;
+    font-family: $fuentePrincipal;
+    color: $colorterciario;
 }
 
 .barraLateralFiltros input {
-    width: 100%;
+    width: 90%;
     padding: 0.5rem;
-    margin-bottom: 1rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: .8rem;
+
+}
+
+.barraLateralFiltros input:focus{
+    outline: none;
+}
+
+.btn_filtrar{
+    width: 100px;
+    height: 35px;
+    background: red;
+    border: none;
+    border-radius: .5rem;
+    color: #fff;
+    font-size: 1.1rem;
+    font-family: $fuentePrincipal;
+    margin-top: 1rem;
 }
 
 .listaSubastasDisponibles {

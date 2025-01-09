@@ -81,28 +81,60 @@
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
 
-    <form action="" method="post">
+    <form action="/filtrar/" method="post" class="form_filtro">
       <div>
-        <label for="numeroIdentificacionRemate">Numero de Remate</label>
-        <input type="text" id="numeroIdentificacionRemate" name="numeroIdentificacionRemate">
+        <label for="numeroIdentificacionRemate">Número de Remate</label>
+        <input type="text" id="numeroIdentificacionRemate" name="id">
       </div>
       <div>
-        <label for="numeroExpedienteJudicial">Numero de Expediente</label>
-        <input type="text" id="numeroExpedienteJudicial" name="numeroExpedienteJudicial">
+        <label for="numeroExpedienteJudicial">Partida registral</label>
+        <input type="text" id="numeroExpedienteJudicial" name="partida_registral">
       </div>
       <div>
         <label for="valorBasePropiedad">Precio Base</label>
-        <input type="text" id="valorBasePropiedad" name="valorBasePropiedad">
+        <input type="text" id="valorBasePropiedad" name="precio">
       </div>
       <div>
         <label for="ubicacionGeograficaPropiedad">Ubicación</label>
-        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacionGeograficaPropiedad">
+        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacion">
       </div>
-      <button type="submit">Buscar</button>
+      <div>
+        <label for="categoria">Categoría</label>
+        <input type="text" id="categoria" name="categoria">
+      </div>
+      <button type="submit" class="btn_filtrar">Buscar</button>
     </form>
 
   </aside>
   <main class="listaSubastasDisponibles">
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+    <% } %>
+    <nav aria-label="Navegación de remates">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            Anterior
+          </a>
+        </li>
+        
+        <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+          <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+          </li>
+        <% } %>
+        
+        <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            Siguiente
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
     <% remates.forEach(remate=> { %>
     <div class="carta elementoSubastaIndividual">
       <div class="imagenPropiedadSubasta">
@@ -140,7 +172,11 @@
           <button class="botonAccionSubasta">Aviso</button> -->
           <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
           <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
-          <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">Aviso</a>
+          <a href="#" class="botonAccionSubasta aviso-button" 
+   data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+   Aviso
+</a>
+
         </div>
       </div>
     </div>

@@ -64,15 +64,23 @@ exports.getInmuebles = async (req, res) => {
     try {
         const auctionId = req.params.id;
         const inmuebles = await EnVivo.getInmuebles(auctionId);
-       /*  const img_inmuebles = await EnVivo.getImagenesInmueblesById(auctionId); */
+        const inmueblesConImagenes = await Promise.all(
+            inmuebles.map(async (inmueble) => {
+                if (inmueble.img_inmuebles_id) {
+                    const imagen = await EnVivo.getImagenInmuebleById(inmueble.img_inmuebles_id);
+                    return {
+                        ...inmueble,
+                        imagen_base64: imagen ? imagen.imagenes_inmueble : null,
+                    };
+                }
+                return { ...inmueble, imagen_base64: null };
+            })
+        );
 
         res.render("en_vivo/inmuebles", {
-            inmuebles: inmuebles || [],
-            /* img_inmuebles: img_inmuebles || [], */
-            auctionId
+            inmuebles: inmueblesConImagenes || [],
+            auctionId,
         });
-
-    
 
     } catch (error) {
         console.error('Error en getInmuebles:', error);
@@ -81,6 +89,7 @@ exports.getInmuebles = async (req, res) => {
         });
     }
 };
+
 
 exports.getCronograma = async (req, res) => {
     try {

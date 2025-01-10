@@ -113,13 +113,22 @@
 }
 
 .slide_img a{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
+    text-decoration: none;
+    font-family: $fuentePrincipal;
+    color: $colorterciario;
+    font-size: 1.3rem;
+    transition: .2s ease;
 }
 
+
 .slide_img img {
-    width: 35%;
+    width: 23%;
     object-fit: contain;
 }
 
@@ -133,6 +142,9 @@
 .slider_contenedor .slide-track a:hover img {
     filter: brightness(0) saturate(100%) invert(34%) sepia(93%) saturate(659%) hue-rotate(-50deg) brightness(94%) contrast(90%);
     transition: filter 0.3s ease; /* Transición suave */
+}
+.slide_img a:hover{
+    color: $colorprimario;
 }
 
 /* SUBASTAS */

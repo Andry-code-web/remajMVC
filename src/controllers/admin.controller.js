@@ -29,9 +29,13 @@ exports.loginAdmin = async (req, res) => {
 
     if (usuario) {
       // Generar token JWT
-      const token = jwt.sign({ id: usuario.id, correo: usuario.correo }, process.env.JWT_SECRET, {
-        expiresIn: '1h'
-      });
+      const token = jwt.sign(
+        { id: usuario.id, correo: usuario.correo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '1h'
+        }
+      );
 
       // Almacenar el token en una cookie
       res.cookie('auth_token', token, {
@@ -81,6 +85,7 @@ exports.getAlladmin = async (req, res) => {
   }
 };
 
+// Crear un nuevo remate
 exports.crearRemate = async (req, res) => {
   try {
     const {
@@ -175,5 +180,56 @@ exports.getRemateForEdit = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener los datos del remate:', error);
     res.status(500).json({ error: 'Error al obtener los datos del remate' });
+  }
+};
+
+exports.createSeguimiento = async (req, res) => {
+  const {
+    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
+    fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
+  } = req.body;
+
+  const datosSeguimiento = [
+    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
+    fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
+  ];
+
+  try {
+    const nuevoSeguimientoId = await Seguimiento.createSeguimiento(datosSeguimiento);
+    res.status(201).json({ id: nuevoSeguimientoId, message: 'Seguimiento creado exitosamente' });
+  } catch (error) {
+    console.error('Error al crear el seguimiento:', error);
+    res.status(500).json({ message: 'Error al crear el seguimiento' });
+  }
+};
+
+// Obtener un seguimiento por ID
+exports.getSeguimientoById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const seguimiento = await Seguimiento.getSeguimientoById(id);
+    if (!seguimiento) {
+      return res.status(404).json({ message: 'Seguimiento no encontrado' });
+    }
+    res.json(seguimiento);
+  } catch (error) {
+    console.error('Error al obtener el seguimiento:', error);
+    res.status(500).json({ message: 'Error al obtener el seguimiento' });
+  }
+};
+
+// Actualizar seguimiento
+exports.updateSeguimiento = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const actualizado = await Seguimiento.updateSeguimiento(id, req.body);
+    if (actualizado) {
+      res.json({ message: 'Seguimiento actualizado correctamente' });
+    } else {
+      res.status(404).json({ message: 'Seguimiento no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al actualizar el seguimiento:', error);
+    res.status(500).json({ message: 'Error al actualizar el seguimiento' });
   }
 };

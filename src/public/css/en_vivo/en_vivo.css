@@ -1,17 +1,17 @@
 @charset "UTF-8";
-/* Variables globales */
-:root {
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --card-border: rgba(0, 0, 0, 0.15);
-  --text-primary: #1a1a2e;
-  --text-secondary: #2d3748;
-  --accent-color: #2c3e50;
-  --gradient-start: rgba(44, 62, 80, 0.1);
-  --gradient-end: rgba(44, 62, 80, 0.05);
-  --glow-color: rgba(44, 62, 80, 0.3);
-  --white-glow: rgba(255, 255, 255, 0.6);
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
 }
-
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
 /* Estilo del scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -35,13 +35,6 @@
   padding: 0;
   box-sizing: border-box;
   cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
-}
-
-body {
-  line-height: 1.5;
-  font-family: "Arial", sans-serif;
-  background: transparent;
-  overflow-y: overlay;
 }
 
 #header {
@@ -84,15 +77,15 @@ body {
 /* Tarjeta de subasta */
 .auction-card {
   position: relative;
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center bottom;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--card-border), 0 0 15px var(--glow-color);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 15px rgba(44, 62, 80, 0.3);
   perspective: 1000px;
   min-width: 320px;
-  border: 1px solid var(--card-border);
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .auction-card::before {
@@ -102,7 +95,7 @@ body {
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  background: linear-gradient(to bottom, rgba(44, 62, 80, 0.1), rgba(44, 62, 80, 0.05));
   border-radius: 20px 20px 0 0;
   z-index: 0;
 }
@@ -110,7 +103,7 @@ body {
 .auction-card:hover {
   transform-origin: center bottom;
   transform: perspective(1000px) rotateX(4deg) translateY(-15px);
-  box-shadow: 0 40px 45px -5px rgba(0, 0, 0, 0.2), 0 30px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px var(--glow-color), 0 0 30px var(--glow-color), 0 0 40px var(--white-glow);
+  box-shadow: 0 40px 45px -5px rgba(0, 0, 0, 0.2), 0 30px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(44, 62, 80, 0.3), 0 0 30px rgba(44, 62, 80, 0.3), 0 0 40px rgba(255, 255, 255, 0.6);
 }
 
 /* Encabezado de la tarjeta */
@@ -123,7 +116,7 @@ body {
 .auction-number {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #1a1a2e;
   background: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -161,7 +154,7 @@ body {
 /* Título de la subasta */
 .auction-title {
   font-size: 1.2rem;
-  color: var(--text-primary);
+  color: #1a1a2e;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -169,13 +162,13 @@ body {
 }
 
 .auction-title i {
-  color: var(--accent-color);
+  color: #2c3e50;
 }
 
 /* Información de la subasta */
 .auction-info {
   margin: 1rem 0;
-  color: var(--text-secondary);
+  color: #2d3748;
 }
 
 .auction-info p {
@@ -187,7 +180,7 @@ body {
 }
 
 .auction-info i {
-  color: var(--accent-color);
+  color: #2c3e50;
 }
 
 /* Sección de descripción */
@@ -200,14 +193,14 @@ body {
 }
 
 .description-section h6 {
-  color: var(--text-primary);
+  color: #1a1a2e;
   font-size: 1rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .description-text {
-  color: var(--text-secondary);
+  color: #2d3748;
   font-size: 0.9rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -226,13 +219,13 @@ body {
 }
 
 .price-label {
-  color: var(--text-secondary);
+  color: #2d3748;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .price-value {
-  color: var(--accent-color);
+  color: #2c3e50;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -261,12 +254,12 @@ body {
   text-decoration: none;
   transition: all 0.3s ease;
   background: rgba(44, 62, 80, 0.1);
-  color: var(--text-primary);
+  color: #1a1a2e;
   border: 1px solid rgba(44, 62, 80, 0.2);
 }
 
 .action-btn:hover {
-  background: var(--accent-color);
+  background: #2c3e50;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
@@ -279,6 +272,7 @@ body {
 
 /* Estilos específicos para cada botón */
 .action-btn.seguimiento {
+  font-size: 12px;
   background: rgba(44, 62, 80, 0.1);
 }
 
@@ -295,9 +289,9 @@ body {
   grid-column: 1/-1;
   text-align: center;
   padding: 2rem;
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  color: var(--text-secondary);
+  color: #2d3748;
 }
 
 /* Media Queries */

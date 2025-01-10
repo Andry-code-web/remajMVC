@@ -1,16 +1,5 @@
+@use 'variables' as *;
 
-/* Variables globales */
-:root {
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --card-border: rgba(0, 0, 0, 0.15);
-  --text-primary: #1a1a2e;
-  --text-secondary: #2d3748;
-  --accent-color: #2c3e50;
-  --gradient-start: rgba(44, 62, 80, 0.1);
-  --gradient-end: rgba(44, 62, 80, 0.05);
-  --glow-color: rgba(44, 62, 80, 0.3);
-  --white-glow: rgba(255, 255, 255, 0.6);
-}
 
 /* Estilo del scrollbar */
 ::-webkit-scrollbar {
@@ -31,18 +20,12 @@
   background: black;
 }
 
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
-}
-
-body {
-  line-height: 1.5;
-  font-family: 'Arial', sans-serif;
-  background: transparent;
-  overflow-y: overlay;
 }
 
 #header {
@@ -58,6 +41,7 @@ body {
   z-index: -1;
   background: white;
 }
+
 /* Contenedor principal */
 .property-container {
   width: 100%;
@@ -84,7 +68,7 @@ body {
 /* Tarjeta de subasta */
 .auction-card {
   position: relative;
-  background: var(--card-bg);
+  background: $card-bg;
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -92,11 +76,11 @@ body {
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.15),
     0 10px 10px -5px rgba(0, 0, 0, 0.08),
-    0 0 0 1px var(--card-border),
-    0 0 15px var(--glow-color);
+    0 0 0 1px $card-border,
+    0 0 15px $glow-color;
   perspective: 1000px;
   min-width: 320px;
-  border: 1px solid var(--card-border);
+  border: 1px solid $card-border;
 }
 
 .auction-card::before {
@@ -108,8 +92,8 @@ body {
   height: 50%;
   background: linear-gradient(
     to bottom,
-    var(--gradient-start),
-    var(--gradient-end)
+    $gradient-start,
+    $gradient-end
   );
   border-radius: 20px 20px 0 0;
   z-index: 0;
@@ -121,9 +105,9 @@ body {
   box-shadow: 
     0 40px 45px -5px rgba(0, 0, 0, 0.2),
     0 30px 30px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 2px var(--glow-color),
-    0 0 30px var(--glow-color),
-    0 0 40px var(--white-glow);
+    0 0 0 2px $glow-color,
+    0 0 30px $glow-color,
+    0 0 40px $white-glow;
 }
 
 /* Encabezado de la tarjeta */
@@ -136,7 +120,7 @@ body {
 .auction-number {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: $text-primary;
   background: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -174,7 +158,7 @@ body {
 /* Título de la subasta */
 .auction-title {
   font-size: 1.2rem;
-  color: var(--text-primary);
+  color: $text-primary;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -182,13 +166,13 @@ body {
 }
 
 .auction-title i {
-  color: var(--accent-color);
+  color: $accent-color;
 }
 
 /* Información de la subasta */
 .auction-info {
   margin: 1rem 0;
-  color: var(--text-secondary);
+  color: $text-secondary;
 }
 
 .auction-info p {
@@ -200,7 +184,7 @@ body {
 }
 
 .auction-info i {
-  color: var(--accent-color);
+  color: $accent-color;
 }
 
 /* Sección de descripción */
@@ -213,14 +197,14 @@ body {
 }
 
 .description-section h6 {
-  color: var(--text-primary);
+  color: $text-primary;
   font-size: 1rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .description-text {
-  color: var(--text-secondary);
+  color: $text-secondary;
   font-size: 0.9rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -243,16 +227,17 @@ body {
 }
 
 .price-label {
-  color: var(--text-secondary);
+  color: $text-secondary;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .price-value {
-  color: var(--accent-color);
+  color: $accent-color;
   font-size: 1.5rem;
   font-weight: 700;
 }
+
 /* Botones de acción */
 .action-buttons {
   display: flex;
@@ -277,12 +262,12 @@ body {
   text-decoration: none;
   transition: all 0.3s ease;
   background: rgba(44, 62, 80, 0.1);
-  color: var(--text-primary);
+  color: $text-primary;
   border: 1px solid rgba(44, 62, 80, 0.2);
 }
 
 .action-btn:hover {
-  background: var(--accent-color);
+  background: $accent-color;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
@@ -295,6 +280,7 @@ body {
 
 /* Estilos específicos para cada botón */
 .action-btn.seguimiento {
+  font-size: 12px;
   background: rgba(44, 62, 80, 0.1);
 }
 
@@ -311,9 +297,9 @@ body {
   grid-column: 1 / -1;
   text-align: center;
   padding: 2rem;
-  background: var(--card-bg);
+  background: $card-bg;
   border-radius: 20px;
-  color: var(--text-secondary);
+  color: $text-secondary;
 }
 
 /* Media Queries */

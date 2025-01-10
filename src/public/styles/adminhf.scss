@@ -1,393 +1,735 @@
-   .opciones_admin1 {
-     padding: 2rem;
-     list-style: none;
-   }
+.opciones_admin1 {
+  padding: 2rem;
+  list-style: none;
+}
 
-   .dashboardnav {
-     display: grid;
-     width: 100%;
-     height: 100%;
-     grid-gap: 0;
-     grid-template-columns: 300px auto;
-     grid-template-rows: 80px auto;
-     grid-template-areas: 'menu search' 'menu content';
-   }
+.dashboardnav {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-gap: 0;
+  grid-template-columns: 300px auto;
+  grid-template-rows: 80px auto;
+  grid-template-areas: 'menu search' 'menu content';
+}
 
-   .search-wrap {
-     grid-area: search;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 0 3em;
-   }
+.search-wrap {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3em;
+}
 
-   .search-wrap .search label input:focus {
-     background: #f5f5fa;
-   }
+.search-wrap .search label input:focus {
+  background: #f5f5fa;
+}
 
-   .search-wrap .search label:hover svg path,
-   .search-wrap .search label:hover svg circle {
-     fill: #2b3a60;
-   }
+.search-wrap .search label:hover svg path,
+.search-wrap .search label:hover svg circle {
+  fill: #2b3a60;
+}
 
-   .search-wrap .user-actions button {
-     border: 0;
-     background: none;
-     width: 32px;
-     height: 32px;
-     margin: 0;
-     padding: 0;
-     margin-left: 0.5em;
-   }
+.search-wrap .user-actions button {
+  border: 0;
+  background: none;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.5em;
+}
 
-   .search-wrap .user-actions button svg {
-     position: relative;
-     top: 2px;
-   }
+.search-wrap .user-actions button svg {
+  position: relative;
+  top: 2px;
+}
 
-   .search-wrap .user-actions button svg path,
-   .search-wrap .user-actions button svg circle {
-     fill: #b6bbc6;
-     transition: fill 0.15s ease;
-   }
+.search-wrap .user-actions button svg path,
+.search-wrap .user-actions button svg circle {
+  fill: #b6bbc6;
+  transition: fill 0.15s ease;
+}
 
-   .search-wrap .user-actions button:hover svg path,
-   .search-wrap .user-actions button:hover svg circle {
-     fill: #2b3a60;
-   }
+.search-wrap .user-actions button:hover svg path,
+.search-wrap .user-actions button:hover svg circle {
+  fill: #2b3a60;
+}
 
-   .menu-wrap {
-     grid-area: menu;
-     overflow: auto;
-     background: #fff;
-   }
+.menu-wrap {
+  grid-area: menu;
+  overflow: auto;
+  background: #fff;
+}
 
-   .menu-wrap .user {
-     height: 80px;
-     display: flex;
-     align-items: center;
-     justify-content: flex-start;
-     margin: 0;
-     padding: 0 3em;
-   }
+.menu-wrap .user {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0 3em;
+}
 
-   .menu-wrap .user .user-avatar {
-     width: 40px;
-     height: 40px;
-     border-radius: 50%;
-     overflow: hidden;
-   }
+.menu-wrap .user .user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
-   .menu-wrap .user .user-avatar img {
-     display: block;
-     width: 100%;
-     height: 100%;
-     -o-object-fit: cover;
-     object-fit: cover;
-   }
+.menu-wrap .user .user-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
 
-   .menu-wrap .user figcaption {
-     margin: 0;
-     padding: 0 0 0 1em;
-     color: #1b253d;
-     font-weight: 700;
-     font-size: 0.875em;
-     line-height: 100%;
-   }
+.menu-wrap .user figcaption {
+  margin: 0;
+  padding: 0 0 0 1em;
+  color: #1b253d;
+  font-weight: 700;
+  font-size: 0.875em;
+  line-height: 100%;
+}
 
-   .menu-wrap nav {
-     display: block;
-     padding: 0 3em;
-   }
+.menu-wrap nav {
+  display: block;
+  padding: 0 3em;
+}
 
-   .menu-wrap nav li {
-     display: block;
-     padding: 0;
-     margin: 1em 0 0;
-   }
+.menu-wrap nav li {
+  display: block;
+  padding: 0;
+  margin: 1em 0 0;
+}
 
-   .menu-wrap nav li a {
-     display: flex;
-     align-items: center;
-     justify-content: flex-start;
-     color: #99a0b0;
-     text-decoration: none;
-     font-weight: 600;
-     font-size: 0.875em;
-     transition: color 0.15s ease;
-   }
+.menu-wrap nav li a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #99a0b0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875em;
+  transition: color 0.15s ease;
+}
 
-   .menu-wrap nav li a:hover {
-     color: #1b253d;
-   }
+.menu-wrap nav li a:hover {
+  color: #1b253d;
+}
 
-   i {
-     font-size: 23px;
-   }
+i {
+  font-size: 23px;
+}
 
-   .user-actions svg {
-     cursor: pointer;
-   }
+.user-actions svg {
+  cursor: pointer;
+}
 
-
-
-
-   //nueva configuracion 
-
-
-   .property-image-container {
-     position: relative;
-     display: inline-block;
-   }
-
-   .property-image {
-     display: block;
-     width: 100%;
-     height: auto;
-   }
-
-   .property-status {
-     position: absolute;
-     top: 10px;
-     /* Ajusta este valor según sea necesario */
-     left: 10px;
-     /* Ajusta este valor según sea necesario */
-     background-color: rgba(0, 0, 0, 0.5);
-     /* Fondo semi-transparente */
-     color: white;
-     /* Color del texto */
-     padding: 5px 10px;
-     /* Espaciado interno */
-     border-radius: 5px;
-     /* Bordes redondeados */
-     font-size: 14px;
-     /* Tamaño de la fuente */
-   }
-
-   .status-active {
-     background-color: rgba(0, 128, 0, 0.7);
-     /* Verde para estado activo */
-   }
-
-   .status-inactive {
-     background-color: rgba(255, 0, 0, 0.7);
-     /* Rojo para estado inactivo */
-   }
-
-   //botones 4 seguimiento ,detalle, cronograma,inmuebles.property-buttons 
-   .property-buttons {
-     display: flex;
-     justify-content: space-between;
-     padding: 0.5rem;
-     background-color: #f8f9fa;
-     border-bottom: 1px solid #e0e0e0;
-   }
-
-   .property-button {
-     background-color: #6c757d;
-     /* Color plomo */
-     color: white;
-     border: none;
-     padding: 0.25rem 0.5rem;
-     border-radius: 4px;
-     font-size: 0.75rem;
-     cursor: pointer;
-     transition: background-color 0.3s ease;
-     margin: 0 0.25rem;
-     /* Ajusta el espaciado entre los botones */
-   }
-
-   .property-button:hover {
-     background-color: #5a6268;
-     /* Color plomo más oscuro al pasar el ratón */
-   }
-
-   //tarjeta cronograma
-   .tarjeta_formulario_cronograma_actividades {
-     max-width: 800px;
-     margin: 0 auto;
-     background-color: white;
-     padding: 30px;
-     border-radius: 15px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     border: 1px solid #e0e0e0;
-   }
-
-   .titulo_formulario_cronograma_actividades {
-     text-align: center;
-     margin-bottom: 30px;
-     color: #2c3e50;
-     font-size: 24px;
-     border-bottom: 2px solid #3498db;
-     padding-bottom: 10px;
-   }
-
-   .grupo_campo_formulario_cronograma {
-     margin-bottom: 25px;
-   }
-
-   .fila_campos_formulario_cronograma {
-     display: flex;
-     gap: 20px;
-     margin-bottom: 20px;
-   }
-
-   .columna_campo_formulario_cronograma {
-     flex: 1;
-   }
-
-   .etiqueta_campo_formulario_cronograma {
-     display: block;
-     margin-bottom: 8px;
-     font-weight: bold;
-     color: #34495e;
-   }
-
-   .entrada_texto_formulario_cronograma,
-   .entrada_fecha_formulario_cronograma,
-   .seleccion_formulario_cronograma,
-   .area_texto_formulario_cronograma {
-     width: 100%;
-     padding: 12px;
-     border: 1px solid #bdc3c7;
-     border-radius: 6px;
-     font-size: 14px;
-     transition: border-color 0.3s ease;
-   }
-
-   .entrada_texto_formulario_cronograma:focus,
-   .entrada_fecha_formulario_cronograma:focus,
-   .seleccion_formulario_cronograma:focus,
-   .area_texto_formulario_cronograma:focus {
-     border-color: #3498db;
-     outline: none;
-   }
-
-   .contenedor_botones_formulario_cronograma {
-     display: flex;
-     justify-content: flex-end;
-     gap: 15px;
-     margin-top: 30px;
-   }
-
-   .boton_formulario_cronograma {
-     padding: 12px 24px;
-     border: none;
-     border-radius: 6px;
-     cursor: pointer;
-     font-weight: bold;
-     transition: background-color 0.3s ease;
-   }
-
-   .boton_cancelar_formulario_cronograma {
-     background-color: #95a5a6;
-     color: white;
-   }
-
-   .boton_guardar_formulario_cronograma {
-     background-color: #2980b9;
-     color: white;
-   }
-
-   .boton_formulario_cronograma:hover {
-     opacity: 0.9;
-   }
+.property-description {
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
 
-   /* Estilos para centrar la tarjeta en la pantalla */
-   .tarjeta_formulario_cronograma_actividades {
-     max-width: 800px;
-     margin: 0 auto;
-     background-color: white;
-     padding: 30px;
-     border-radius: 15px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     border: 1px solid #e0e0e0;
-     position: fixed;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     z-index: 1000;
-     display: none;
-     /* Inicialmente oculto */
-   }
+}
+//nueva configuracion 
 
-   .titulo_formulario_cronograma_actividades {
-     text-align: center;
-     margin-bottom: 30px;
-     color: #2c3e50;
-     font-size: 24px;
-     border-bottom: 2px solid #3498db;
-     padding-bottom: 10px;
-   }
 
-   .grupo_campo_formulario_cronograma {
-     margin-bottom: 25px;
-   }
+.property-image-container {
+  position: relative;
+  display: inline-block;
+}
 
-   .fila_campos_formulario_cronograma {
-     display: flex;
-     gap: 20px;
-     margin-bottom: 20px;
-   }
+.property-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-   .columna_campo_formulario_cronograma {
-     flex: 1;
-   }
+.property-status {
+  position: absolute;
+  top: 10px;
+  /* Ajusta este valor según sea necesario */
+  left: 10px;
+  /* Ajusta este valor según sea necesario */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Fondo semi-transparente */
+  color: white;
+  /* Color del texto */
+  padding: 5px 10px;
+  /* Espaciado interno */
+  border-radius: 5px;
+  /* Bordes redondeados */
+  font-size: 14px;
+  /* Tamaño de la fuente */
+}
 
-   .etiqueta_campo_formulario_cronograma {
-     display: block;
-     margin-bottom: 8px;
-     font-weight: bold;
-     color: #34495e;
-   }
+.status-active {
+  background-color: rgba(0, 128, 0, 0.7);
+  /* Verde para estado activo */
+} 
 
-   .entrada_texto_formulario_cronograma,
-   .entrada_fecha_formulario_cronograma,
-   .seleccion_formulario_cronograma,
-   .area_texto_formulario_cronograma {
-     width: 100%;
-     padding: 12px;
-     border: 1px solid #bdc3c7;
-     border-radius: 6px;
-     font-size: 14px;
-     transition: border-color 0.3s ease;
-   }
+.status-inactive {
+  background-color: rgba(255, 0, 0, 0.7);
+  /* Rojo para estado inactivo */
+}
 
-   .entrada_texto_formulario_cronograma:focus,
-   .entrada_fecha_formulario_cronograma:focus,
-   .seleccion_formulario_cronograma:focus,
-   .area_texto_formulario_cronograma:focus {
-     border-color: #3498db;
-     outline: none;
-   }
+//botones 4 seguimiento ,detalle, cronograma,inmuebles.property-buttons 
+.property-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-   .contenedor_botones_formulario_cronograma {
-     display: flex;
-     justify-content: flex-end;
-     gap: 15px;
-     margin-top: 30px;
-   }
+.property-button {
+  background-color: #6c757d;
+  /* Color plomo */
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 0.25rem;
+  /* Ajusta el espaciado entre los botones */
+}
 
-   .boton_formulario_cronograma {
-     padding: 12px 24px;
-     border: none;
-     border-radius: 6px;
-     cursor: pointer;
-     font-weight: bold;
-     transition: background-color 0.3s ease;
-   }
+.property-button:hover {
+  background-color: #5a6268;
+  /* Color plomo más oscuro al pasar el ratón */
+}
 
-   .boton_cancelar_formulario_cronograma {
-     background-color: #95a5a6;
-     color: white;
-   }
 
-   .boton_guardar_formulario_cronograma {
-     background-color: #2980b9;
-     color: white;
-   }
 
-   .boton_formulario_cronograma:hover {
-     opacity: 0.9;
-   }
+//tarjeta cronograma
+
+/* Estilos generales del formulario */
+.tarjeta_formulario_cronograma_actividades {
+max-width: 800px;
+margin: 0 auto;
+background-color: white;
+padding: 30px;
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+border: 1px solid #e0e0e0;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1000;
+display: none; /* Inicialmente oculto */
+}
+
+.titulo_formulario_cronograma_actividades {
+text-align: center;
+margin-bottom: 30px;
+color: #2c3e50;
+font-size: 24px;
+border-bottom: 2px solid #3498db;
+padding-bottom: 10px;
+}
+
+.grupo_campo_formulario_cronograma {
+margin-bottom: 25px;
+}
+
+.fila_campos_formulario_cronograma {
+display: flex;
+gap: 20px;
+margin-bottom: 20px;
+}
+
+.columna_campo_formulario_cronograma {
+flex: 1;
+}
+
+.etiqueta_campo_formulario_cronograma {
+display: block;
+margin-bottom: 8px;
+font-weight: bold;
+color: #34495e;
+}
+
+.entrada_texto_formulario_cronograma,
+.entrada_fecha_formulario_cronograma,
+.area_texto_formulario_cronograma {
+width: 100%;
+padding: 12px;
+border: 1px solid #bdc3c7;
+border-radius: 6px;
+font-size: 14px;
+transition: border-color 0.3s ease;
+}
+
+.entrada_texto_formulario_cronograma:focus,
+.entrada_fecha_formulario_cronograma:focus,
+.area_texto_formulario_cronograma:focus {
+border-color: #3498db;
+outline: none;
+}
+
+.contenedor_botones_formulario_cronograma {
+display: flex;
+justify-content: flex-end;
+gap: 15px;
+margin-top: 30px;
+}
+
+.boton_formulario_cronograma {
+padding: 12px 24px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-weight: bold;
+transition: background-color 0.3s ease;
+}
+
+.boton_cancelar_formulario_cronograma {
+background-color: #95a5a6;
+color: white;
+}
+
+.boton_guardar_formulario_cronograma {
+background-color: #2980b9;
+color: white;
+}
+
+.boton_formulario_cronograma:hover {
+opacity: 0.9;
+}
+
+/* Estilos actualizados para el select dropdown */
+.seleccion_formulario_cronograma {
+width: 100%;
+padding: 12px;
+border: 1px solid #bdc3c7;
+border-radius: 6px;
+font-size: 14px;
+transition: border-color 0.3s ease, box-shadow 0.3s ease;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+background-repeat: no-repeat;
+background-position: right 12px center;
+background-color: #fff;
+cursor: pointer;
+}
+
+.seleccion_formulario_cronograma:focus {
+border-color: #3498db;
+outline: none;
+box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.seleccion_formulario_cronograma:hover {
+border-color: #3498db;
+}
+
+.seleccion_formulario_cronograma option {
+padding: 12px;
+background-color: #fff;
+color: #333;
+}
+
+.seleccion_formulario_cronograma option:hover,
+.seleccion_formulario_cronograma option:focus {
+background-color: #f0f0f0;
+}
+
+.seleccion_formulario_cronograma option[disabled] {
+color: #999;
+}
+
+.seleccion_formulario_cronograma::-ms-expand {
+display: none;
+}
+
+@keyframes pulse {
+0% {
+ box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
+}
+70% {
+ box-shadow: 0 0 0 6px rgba(52, 152, 219, 0);
+}
+100% {
+ box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+}
+}
+
+.seleccion_formulario_cronograma:focus {
+animation: pulse 1.5s infinite;
+.contenedor_botones_formulario_cronograma {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+}
+.boton_formulario_cronograma {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.boton_cancelar_formulario_cronograma {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.boton_guardar_formulario_cronograma {
+  background-color: #2980b9;
+  color: white;
+}
+
+.boton_formulario_cronograma:hover {
+  opacity: 0.9;
+}
+
+
+
+/* modal seguimiento */
+
+.seguimiento-modal-content {
+max-width: 800px;
+margin: 0 auto;
+background-color: white;
+padding: 30px;
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+border: 1px solid #e0e0e0;
+}
+
+.seguimiento-modal-title {
+text-align: center;
+margin-bottom: 30px;
+color: #2c3e50;
+font-size: 24px;
+border-bottom: 2px solid #3498db;
+padding-bottom: 10px;
+}
+
+.seguimiento-form {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+}
+
+.seguimiento-form-group {
+flex: 1 1 calc(50% - 20px); 
+display: flex;
+flex-direction: column;
+}
+
+.seguimiento-label {
+margin-bottom: 8px;
+font-weight: bold;
+color: #34495e;
+}
+
+.seguimiento-input,
+.seguimiento-select {
+width: 100%;
+padding: 12px;
+border: 1px solid #bdc3c7;
+border-radius: 6px;
+font-size: 14px;
+transition: border-color 0.3s ease;
+}
+
+.seguimiento-input:focus,
+.seguimiento-select:focus {
+border-color: #3498db;
+outline: none;
+}
+
+.seguimiento-modal-footer {
+display: flex;
+justify-content: flex-end;
+gap: 15px;
+margin-top: 30px;
+flex-basis: 100%; 
+}
+
+.seguimiento-save-button,
+.seguimiento-cancel-button {
+padding: 12px 24px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-weight: bold;
+transition: background-color 0.3s ease;
+}
+
+.seguimiento-cancel-button {
+background-color: #95a5a6;
+color: white;
+}
+
+.seguimiento-save-button {
+background-color: #2980b9;
+color: white;
+}
+
+.seguimiento-save-button:hover,
+.seguimiento-cancel-button:hover {
+opacity: 0.9;
+}
+
+
+
+/* Estilos comunes para modales */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+
+  /* Estilo para la barra de desplazamiento */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #3498db; /* Color azul para la barra de desplazamiento */
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+  }
+}
+
+/* Estilos para el formulario de detalles */
+.tarjeta_formulario_detalles {
+  @extend .modal;
+
+  .titulo_formulario_detalles {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 24px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+
+  .fila_campos_formulario_detalles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .columna_campo_formulario_detalles {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+  }
+
+  .grupo_campo_formulario_detalles {
+    margin-bottom: 25px;
+  }
+
+  .etiqueta_campo_formulario_detalles {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  .entrada_texto_formulario_detalles,
+  .entrada_fecha_formulario_detalles,
+  .entrada_numero_formulario_detalles,
+  .entrada_archivo_formulario_detalles {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+  }
+
+  /* Remover botones de incremento/decremento para inputs numéricos */
+  .entrada_numero_formulario_detalles {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  .contenedor_botones_formulario_detalles {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .boton_formulario_detalles {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .boton_cancelar_formulario_detalles {
+    background-color: #95a5a6;
+    color: white;
+  }
+
+  .boton_guardar_formulario_detalles {
+    background-color: #2980b9;
+    color: white;
+  }
+}
+
+/* Estilos para el formulario de inmuebles */
+.tarjeta_formulario_inmuebles {
+  @extend .modal;
+
+  .titulo_formulario_inmuebles {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 24px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+
+  .fila_campos_formulario_inmuebles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .columna_campo_formulario_inmuebles {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+  }
+
+  .grupo_campo_formulario_inmuebles {
+    margin-bottom: 25px;
+  }
+
+  .etiqueta_campo_formulario_inmuebles {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  .entrada_texto_formulario_inmuebles,
+  .entrada_fecha_formulario_inmuebles,
+  .entrada_numero_formulario_inmuebles,
+  .entrada_archivo_formulario_inmuebles {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+  }
+
+  /* Remover botones de incremento/decremento para inputs numéricos */
+  .entrada_numero_formulario_inmuebles {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  .contenedor_botones_formulario_inmuebles {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .boton_formulario_inmuebles {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .boton_cancelar_formulario_inmuebles {
+    background-color: #95a5a6;
+    color: white;
+  }
+
+  .boton_guardar_formulario_inmuebles {
+    background-color: #2980b9;
+    color: white;
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .tarjeta_formulario_detalles,
+  .tarjeta_formulario_inmuebles {
+    .columna_campo_formulario_detalles,
+    .columna_campo_formulario_inmuebles {
+      flex: 1 1 100%;
+    }
+  }
+}

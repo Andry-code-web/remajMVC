@@ -20,6 +20,9 @@
   <link rel="stylesheet" href="/css/adminhf/adminhf.css">
   <!-- CDN DE ICONOS REMIX -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <!-- script cronograma -->
+  <script src="/js/scriptsadmin/modalcronograma.js"></script>
 </head>
 
 <body>
@@ -463,7 +466,7 @@
         </div>
 
         <div id="seguimientoModal" class="modal seguimiento-modal">
-          <!-- <div class="modal-content seguimiento-modal-content"> -->
+          <div class="modal-content seguimiento-modal-content">
             <div class="modal-header seguimiento-modal-header">
               <h2 class="modal-title seguimiento-modal-title">
                 <i class="bi bi-house-gear"></i> Seguimiento
@@ -544,1266 +547,1445 @@
               </div>
 
               <div class="modal-footer seguimiento-modal-footer">
+                <button type="submit" class="save-button seguimiento-save-button">Guardar</button>
                 <button type="button" class="cancel-button seguimiento-cancel-button"
-                onclick="cerrarModal()">Cancelar Registro</button>
-                <button type="submit" class="save-button seguimiento-save-button">Guardar Seguimiento</button>
+                  onclick="cerrarModal()">Cancelar</button>
               </div>
             </form>
-          <!-- </div> -->
+          </div>
         </div>
 
 
         <!-- Modal de edición -->
-        <div id="editModal" class="modal" style="display: none;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title">
-                <i class="bi bi-house-gear"></i>
-                Editar Remate
-              </h2>
-              <button class="close-button" onclick="cerrarModal()">
-                <i class="bi bi-x"></i>
+        <div id="editModal" class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">
+              <i class="bi bi-house-gear"></i>
+              Editar Remate
+            </h2>
+            <button class="close-button" onclick="cerrarModalEditar()">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <form id="editForm" onsubmit="guardarCambios(event)">
+            <input type="hidden" id="editId" name="id">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="editUbicacion">
+                  <i class="bi bi-geo-alt"></i>
+                  Ubicación
+                </label>
+                <input type="text" id="editUbicacion" name="ubicacion" required>
+              </div>
+              <div class="form-group">
+                <label for="editPrecio">
+                  <i class="bi bi-currency-dollar"></i>
+                  Precio Base
+                </label>
+                <input type="number" id="editPrecio" name="precios" required>
+              </div>
+              <div class="form-group">
+                <label for="editCategoria">
+                  <i class="bi bi-building"></i>
+                  Categoría
+                </label>
+                <select id="editCategoria" name="categoria" required>
+                  <option value="departamento">Departamento</option>
+                  <option value="cochera">Cochera</option>
+                  <option value="terreno">Terreno</option>
+                  <option value="residencial">Residencial</option>
+                  <option value="casa">Casa</option>
+                  <option value="local">Local</option>
+                  <option value="casa_playa">Casa de Playa</option>
+                  <option value="terreno_urbano">Terreno Urbano</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editHabitaciones">
+                  <i class="bi bi-door-closed"></i>
+                  Habitaciones
+                </label>
+                <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
+              </div>
+              <div class="form-group">
+                <label for="editBanos">
+                  <i class="bi bi-droplet"></i>
+                  Baños
+                </label>
+                <input type="number" id="editBanos" name="N_banos" min="0">
+              </div>
+              <div class="form-group">
+                <label for="editFechaRemate">
+                  <i class="bi bi-calendar"></i>
+                  Fecha de Remate
+                </label>
+                <input type="date" id="editFechaRemate" name="fecha_remate" required>
+              </div>
+              <div class="form-group">
+                <label for="editHoraRemate">
+                  <i class="bi bi-clock"></i>
+                  Hora de Remate
+                </label>
+                <input type="time" id="editHoraRemate" name="hora_remate" required>
+              </div>
+              <div class="form-group">
+                <label for="editEstado">
+                  <i class="bi bi-toggle-on"></i>
+                  Estado
+                </label>
+                <select id="editEstado" name="estado" required>
+                  <option value="activo">Activo</option>
+                  <option value="en_curso">En Curso</option>
+                  <option value="finalizado">Finalizado</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editTamañoPropiedad">
+                  <i class="bi bi-bounding-box"></i>
+                  Tamaño de la propiedad
+                </label>
+                <input type="number" id="editTamañoPropiedad" name="tamano_propiedad" required>
+              </div>
+            </div>
+
+            <div class="amenities-grid">
+              <div class="form-group">
+                <label for="editPisina">
+                  <i class="bi bi-water"></i>
+                  Piscina
+                </label>
+                <select id="editPisina" name="pisina">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editPatio">
+                  <i class="bi bi-tree"></i>
+                  Patio
+                </label>
+                <select id="editPatio" name="patio">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editCocina">
+                  <i class="bi bi-cup-hot"></i>
+                  Cocina
+                </label>
+                <select id="editCocina" name="cocina">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editCochera">
+                  <i class="bi bi-car-front"></i>
+                  Cochera
+                </label>
+                <select id="editCochera" name="cochera">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editBalcon">
+                  <i class="bi bi-door-open"></i>
+                  Balcón
+                </label>
+                <select id="editBalcon" name="balcon">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editJardin">
+                  <i class="bi bi-flower1"></i>
+                  Jardín
+                </label>
+                <select id="editJardin" name="jardin">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editComedor">
+                  <i class="bi bi-cup-straw"></i>
+                  Comedor
+                </label>
+                <select id="editComedor" name="comedor">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editSalaStart">
+                  <i class="bi bi-house-heart"></i>
+                  Sala Star
+                </label>
+                <select id="editSalaStart" name="sala_start">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editStudio">
+                  <i class="bi bi-book"></i>
+                  Estudio
+                </label>
+                <select id="editStudio" name="studio">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="editLavanderia">
+                  <i class="bi bi-water"></i>
+                  Lavandería
+                </label>
+                <select id="editLavanderia" name="lavanderia">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="editPisos">
+                <i class="bi bi-layers"></i>
+                Número de Pisos
+              </label>
+              <input type="number" id="editPisos" name="pisos" min="1">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="editDescripcion">
+                <i class="bi bi-text-paragraph"></i>
+                Descripción
+              </label>
+              <textarea id="editDescripcion" name="descripcion" required></textarea>
+            </div>
+
+            <!-- Area botones -->
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">
+                <i class="bi bi-x-circle"></i>
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i>
+                Guardar Cambios
               </button>
             </div>
-            <form id="editForm" onsubmit="guardarCambios(event)">
-              <input type="hidden" id="editId" name="id">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="editUbicacion">
-                    <i class="bi bi-geo-alt"></i>
-                    Ubicación
-                  </label>
-                  <input type="text" id="editUbicacion" name="ubicacion" required>
+          </form>
+        </div>
+
+        <!-- Modal de Detalles -->
+        <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
+          <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
+          <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
+                  <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles"
+                    required>
                 </div>
-                <div class="form-group">
-                  <label for="editPrecio">
-                    <i class="bi bi-currency-dollar"></i>
-                    Precio Base
-                  </label>
-                  <input type="number" id="editPrecio" name="precios" required>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito
+                    Judicial</label>
+                  <input type="text" id="distrito_judicial" name="distrito_judicial"
+                    class="entrada_texto_formulario_detalles" required>
                 </div>
-                <div class="form-group">
-                  <label for="editCategoria">
-                    <i class="bi bi-building"></i>
-                    Categoría
-                  </label>
-                  <select id="editCategoria" name="categoria" required>
-                    <option value="departamento">Departamento</option>
-                    <option value="cochera">Cochera</option>
-                    <option value="terreno">Terreno</option>
-                    <option value="residencial">Residencial</option>
-                    <option value="casa">Casa</option>
-                    <option value="local">Local</option>
-                    <option value="casa_playa">Casa de Playa</option>
-                    <option value="terreno_urbano">Terreno Urbano</option>
-                  </select>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano
+                    Jurisdiccional</label>
+                  <input type="text" id="organo_juridiccional" name="organo_juridiccional"
+                    class="entrada_texto_formulario_detalles" required>
                 </div>
-                <div class="form-group">
-                  <label for="editHabitaciones">
-                    <i class="bi bi-door-closed"></i>
-                    Habitaciones
-                  </label>
-                  <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
+                  <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
                 </div>
-                <div class="form-group">
-                  <label for="editBanos">
-                    <i class="bi bi-droplet"></i>
-                    Baños
-                  </label>
-                  <input type="number" id="editBanos" name="N_banos" min="0">
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
+                  <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required>
                 </div>
-                <div class="form-group">
-                  <label for="editFechaRemate">
-                    <i class="bi bi-calendar"></i>
-                    Fecha de Remate
-                  </label>
-                  <input type="date" id="editFechaRemate" name="fecha_remate" required>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
+                  <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles"
+                    required>
                 </div>
-                <div class="form-group">
-                  <label for="editHoraRemate">
-                    <i class="bi bi-clock"></i>
-                    Hora de Remate
-                  </label>
-                  <input type="time" id="editHoraRemate" name="hora_remate" required>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
+                  <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
                 </div>
-                <div class="form-group">
-                  <label for="editEstado">
-                    <i class="bi bi-toggle-on"></i>
-                    Estado
-                  </label>
-                  <select id="editEstado" name="estado" required>
-                    <option value="activo">Activo</option>
-                    <option value="en_curso">En Curso</option>
-                    <option value="finalizado">Finalizado</option>
-                  </select>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
+                  <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles"
+                    required></textarea>
                 </div>
-                <div class="form-group">
-                  <label for="editTamañoPropiedad">
-                    <i class="bi bi-bounding-box"></i>
-                    Tamaño de la propiedad
-                  </label>
-                  <input type="number" id="editTamañoPropiedad" name="tamano_propiedad" required>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha Resolución</label>
+                  <input type="date" id="fecha_resolucion" name="fecha_resolucion"
+                    class="entrada_fecha_formulario_detalles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
+                  <input type="file" id="archivo" name="archivo" accept="application/pdf"
+                    class="entrada_archivo_formulario_detalles" required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
+                  <input type="text" id="nro_convocatoria" name="nro_convocatoria"
+                    class="entrada_texto_formulario_detalles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
+                  <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001"
+                    class="entrada_numero_formulario_detalles" required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
+                  <input type="number" id="tasacion" name="tasacion" step="0.01"
+                    class="entrada_numero_formulario_detalles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
+                  <input type="number" id="precio_base" name="precio_base" step="0.01"
+                    class="entrada_numero_formulario_detalles" required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento entre
+                    ofertas</label>
+                  <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01"
+                    class="entrada_numero_formulario_detalles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
+                  <input type="number" id="arancel" name="arancel" step="0.01"
+                    class="entrada_numero_formulario_detalles" required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_detalles">
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
+                  <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles"
+                    required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_detalles">
+                <div class="grupo_campo_formulario_detalles">
+                  <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
+                  <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles"
+                    required></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="contenedor_botones_formulario_detalles">
+              <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles">Cancelar
+                Registro</button>
+              <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
+                Detalles</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal de Inmuebles -->
+        <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none; position: absolute;">
+          <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
+          <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
+            <div class="fila_campos_formulario_inmuebles">
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida
+                    Registral</label>
+                  <input type="text" id="partida_registral" name="partida_registral"
+                    class="entrada_texto_formulario_inmuebles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo Inmueble</label>
+                  <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles"
+                    required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_inmuebles">
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
+                  <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles"
+                    required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="carga_ogravamen" class="etiqueta_campo_formulario_inmuebles">Carga Y/O
+                    gravamen</label>
+                  <input type="text" id="carga_ogravamen" name="carga_ogravamen"
+                    class="entrada_texto_formulario_inmuebles" required>
+                </div>
+              </div>
+            </div>
+            <div class="fila_campos_formulario_inmuebles">
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje a
+                    Rematar</label>
+                  <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01"
+                    class="entrada_numero_formulario_inmuebles" required>
+                </div>
+              </div>
+              <div class="columna_campo_formulario_inmuebles">
+                <div class="grupo_campo_formulario_inmuebles">
+                  <label for="imagenes" class="etiqueta_campo_formulario_inmuebles">Imagen</label>
+                  <input type="file" id="imagenes" name="imagenes" accept="image/*"
+                    class="entrada_archivo_formulario_inmuebles" required>
+                </div>
+              </div>
+            </div>
+            <div class="contenedor_botones_formulario_inmuebles">
+              <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles">Cancelar
+                Registro</button>
+              <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar
+                Inmuebles</button>
+            </div>
+          </form>
+        </div>
+
+
+        <!-- MODAL CRONOGRAMA -->
+        <% remates.forEach(function(remate) { %>
+          <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades" style="display: none;">
+            <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
+            <form method="post" action="/guardar-cronograma-actividades" id="formulario_cronograma_actividades">
+              <div class="fila_campos_formulario_cronograma">
+                <div class="columna_campo_formulario_cronograma">
+                  <div class="grupo_campo_formulario_cronograma">
+                    <label for="actividad_cronograma" class="etiqueta_campo_formulario_cronograma">FASE</label>
+                    <select id="actividad_cronograma" name="actividad_cronograma"
+                      class="seleccion_formulario_cronograma" required>
+                      <option value="" disabled selected>Seleccione una fase</option>
+                      <option value="publicacion_inscripcion">Publicación e Inscripción</option>
+                      <option value="validacion_inscripcion">Validación de Inscripción</option>
+                      <option value="presentacion_ofertas">Presentación de Ofertas</option>
+                      <option value="pago_saldo">Pago Saldo</option>
+                      <option value="validacion_saldo">Validación del Saldo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="columna_campo_formulario_cronograma">
+                  <div class="grupo_campo_formulario_cronograma">
+                    <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">ID
+                      REMATE</label>
+                    <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
+                      class="entrada_texto_formulario_cronograma" required>
+                  </div>
                 </div>
               </div>
 
-              <div class="amenities-grid">
-                <div class="form-group">
-                  <label for="editPisina">
-                    <i class="bi bi-water"></i>
-                    Piscina
-                  </label>
-                  <select id="editPisina" name="pisina">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
+              <div class="fila_campos_formulario_cronograma">
+                <div class="columna_campo_formulario_cronograma">
+                  <div class="grupo_campo_formulario_cronograma">
+                    <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha
+                      Inicio</label>
+                    <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
+                      class="entrada_fecha_formulario_cronograma" required>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="editPatio">
-                    <i class="bi bi-tree"></i>
-                    Patio
-                  </label>
-                  <select id="editPatio" name="patio">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editCocina">
-                    <i class="bi bi-cup-hot"></i>
-                    Cocina
-                  </label>
-                  <select id="editCocina" name="cocina">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editCochera">
-                    <i class="bi bi-car-front"></i>
-                    Cochera
-                  </label>
-                  <select id="editCochera" name="cochera">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editBalcon">
-                    <i class="bi bi-door-open"></i>
-                    Balcón
-                  </label>
-                  <select id="editBalcon" name="balcon">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editJardin">
-                    <i class="bi bi-flower1"></i>
-                    Jardín
-                  </label>
-                  <select id="editJardin" name="jardin">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editComedor">
-                    <i class="bi bi-cup-straw"></i>
-                    Comedor
-                  </label>
-                  <select id="editComedor" name="comedor">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editSalaStart">
-                    <i class="bi bi-house-heart"></i>
-                    Sala Star
-                  </label>
-                  <select id="editSalaStart" name="sala_start">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editStudio">
-                    <i class="bi bi-book"></i>
-                    Estudio
-                  </label>
-                  <select id="editStudio" name="studio">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editLavanderia">
-                    <i class="bi bi-water"></i>
-                    Lavandería
-                  </label>
-                  <select id="editLavanderia" name="lavanderia">
-                    <option value="no">No</option>
-                    <option value="si">Sí</option>
-                  </select>
+                <div class="columna_campo_formulario_cronograma">
+                  <div class="grupo_campo_formulario_cronograma">
+                    <label for="fecha_finalizacion_actividad" class="etiqueta_campo_formulario_cronograma">Fecha
+                      Fin</label>
+                    <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
+                      class="entrada_fecha_formulario_cronograma" required>
+                  </div>
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="editPisos">
-                  <i class="bi bi-layers"></i>
-                  Número de Pisos
-                </label>
-                <input type="number" id="editPisos" name="pisos" min="1">
-              </div>
-
-              <div class="form-group full-width">
-                <label for="editDescripcion">
-                  <i class="bi bi-text-paragraph"></i>
-                  Descripción
-                </label>
-                <textarea id="editDescripcion" name="descripcion" required></textarea>
-              </div>
-
-
-              <!-- Area botones -->
-              <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
-                  <i class="bi bi-x-circle"></i>
-                  Cancelar
-                </button>
-                <button type="submit" class="btn btn-primary">
-                  <i class="bi bi-check-circle"></i>
-                  Guardar Cambios
-                </button>
+              <div class="contenedor_botones_formulario_cronograma">
+                <button type="button" class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
+                  Registro</button>
+                <button type="button" class="boton_formulario_cronograma boton_editar_formulario_cronograma"
+                  (<%=remate.id %>)>Editar</button>
+                <button type="button" id="guardarCronogramaBtn"
+                  class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar Cronograma</button>
               </div>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          <% }); %>
 
-  <!-- MODAL CRONOGRAMA -->
-  <% remates.forEach(function(remate) { %>
-    <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades">
-      <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
-      <form method="post" action="/guardar-cronograma-actividades" id="formulario_cronograma_actividades">
-        <div class="fila_campos_formulario_cronograma">
-          <div class="columna_campo_formulario_cronograma">
-            <div class="grupo_campo_formulario_cronograma">
-              <label for="actividad_cronograma" class="etiqueta_campo_formulario_cronograma">FASE</label>
-              <select id="actividad_cronograma" name="actividad_cronograma" class="seleccion_formulario_cronograma"
-                required>
-                <option value="" disabled selected>Seleccione una fase</option>
-                <option value="publicacion_inscripcion">Publicación e Inscripción</option>
-                <option value="validacion_inscripcion">Validación de Inscripción</option>
-                <option value="presentacion_ofertas">Presentación de Ofertas</option>
-                <option value="pago_saldo">Pago Saldo</option>
-                <option value="validacion_saldo">Validación del Saldo</option>
-              </select>
-            </div>
-          </div>
-          <div class="columna_campo_formulario_cronograma">
-            <div class="grupo_campo_formulario_cronograma">
-              <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">ID REMATE</label>
-              <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
-                class="entrada_texto_formulario_cronograma" required>
-            </div>
-          </div>
-        </div>
+            <!-- edicion cronograma -->
+            <form method="post" action="/guardar-cronograma" id="formulario_cronograma_actividades">
 
-        <div class="fila_campos_formulario_cronograma">
-          <div class="columna_campo_formulario_cronograma">
-            <div class="grupo_campo_formulario_cronograma">
-              <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha Inicio</label>
-              <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
-                class="entrada_fecha_formulario_cronograma" required>
-            </div>
-          </div>
-          <div class="columna_campo_formulario_cronograma">
-            <div class="grupo_campo_formulario_cronograma">
-              <label for="fecha_finalizacion_actividad" class="etiqueta_campo_formulario_cronograma">Fecha Fin</label>
-              <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
-                class="entrada_fecha_formulario_cronograma" required>
-            </div>
-          </div>
-        </div>
+              <% remates.forEach(function(remate) { %>
+                <div method="post" action="/actualizar-cronograma" id="tarjetaEdicionCronograma"
+                  class="tarjeta_formulario_edicion_cronograma" style="display: none;">
+                  <h2 class="titulo_formulario_cronograma_actividades">Editar Cronograma de Actividades</h2>
+                  <form id="formulario_edicion_cronograma">
+                    <!-- Publicación e Inscripción -->
+                    <div class="seccion_fase">
+                      <h3 class="titulo_fase">Publicación e Inscripción</h3>
+                      <div class="contenedor_fechas">
+                        <div class="grupo_fecha">
+                          <label>Fecha Inicio:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                        <div class="grupo_fecha">
+                          <label>Fecha Fin:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-        <div class="contenedor_botones_formulario_cronograma">
-          <button type="button" class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
-            Registro</button>
-          <button type="submit" class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar
-            Cronograma</button>
-        </div>
-      </form>
-    </div>
-    <% }); %>
+                    <!-- Validación de Inscripción -->
+                    <div class="seccion_fase">
+                      <h3 class="titulo_fase">Validación de Inscripción</h3>
+                      <div class="contenedor_fechas">
+                        <div class="grupo_fecha">
+                          <label>Fecha Inicio:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                        <div class="grupo_fecha">
+                          <label>Fecha Fin:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-      <!-- Modal de Detalles -->
-      <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
-        <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
-        <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
-                <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito Judicial</label>
-                <input type="text" id="distrito_judicial" name="distrito_judicial"
-                  class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano Jurisdiccional</label>
-                <input type="text" id="organo_juridiccional" name="organo_juridiccional" class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
-                <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
-                <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
-                <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles"
-                  required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
-                <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
-                <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles"
-                  required></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha Resolución</label>
-                <input type="date" id="fecha_resolucion" name="fecha_resolucion"
-                  class="entrada_fecha_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
-                <input type="file" id="archivo" name="archivo" accept="application/pdf"
-                  class="entrada_archivo_formulario_detalles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
-                <input type="text" id="nro_convocatoria" name="nro_convocatoria"
-                  class="entrada_texto_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
-                <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001"
-                  class="entrada_numero_formulario_detalles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
-                <input type="number" id="tasacion" name="tasacion" step="0.01"
-                  class="entrada_numero_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
-                <input type="number" id="precio_base" name="precio_base" step="0.01"
-                  class="entrada_numero_formulario_detalles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento entre ofertas</label>
-                <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01"
-                  class="entrada_numero_formulario_detalles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
-                <input type="number" id="arancel" name="arancel" step="0.01" class="entrada_numero_formulario_detalles"
-                  required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_detalles">
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
-                <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles"
-                  required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_detalles">
-              <div class="grupo_campo_formulario_detalles">
-                <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
-                <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles"
-                  required></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="contenedor_botones_formulario_detalles">
-            <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles">Cancelar
-              Registro</button>
-            <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
-              Detalles</button>
-          </div>
-        </form>
-      </div>
+                    <!-- Presentación de Ofertas -->
+                    <div class="seccion_fase">
+                      <h3 class="titulo_fase">Presentación de Ofertas</h3>
+                      <div class="contenedor_fechas">
+                        <div class="grupo_fecha">
+                          <label>Fecha Inicio:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                        <div class="grupo_fecha">
+                          <label>Fecha Fin:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-      <!-- Modal de Inmuebles -->
-      <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none; position: absolute;">
-        <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
-        <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
-          <div class="fila_campos_formulario_inmuebles">
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida Registral</label>
-                <input type="text" id="partida_registral" name="partida_registral"
-                  class="entrada_texto_formulario_inmuebles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo Inmueble</label>
-                <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles"
-                  required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_inmuebles">
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
-                <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="carga_ogravamen" class="etiqueta_campo_formulario_inmuebles">Carga Y/O gravamen</label>
-                <input type="text" id="carga_ogravamen" name="carga_ogravamen"
-                  class="entrada_texto_formulario_inmuebles" required>
-              </div>
-            </div>
-          </div>
-          <div class="fila_campos_formulario_inmuebles">
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje a Rematar</label>
-                <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01"
-                  class="entrada_numero_formulario_inmuebles" required>
-              </div>
-            </div>
-            <div class="columna_campo_formulario_inmuebles">
-              <div class="grupo_campo_formulario_inmuebles">
-                <label for="imagenes" class="etiqueta_campo_formulario_inmuebles">Imagen</label>
-                <input type="file" id="imagenes" name="imagenes" accept="image/*"
-                  class="entrada_archivo_formulario_inmuebles" required>
-              </div>
-            </div>
-          </div>
-          <div class="contenedor_botones_formulario_inmuebles">
-            <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles">Cancelar
-              Registro</button>
-            <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar
-              Inmuebles</button>
-          </div>
-        </form>
-      </div>
+                    <!-- Pago Saldo -->
+                    <div class="seccion_fase">
+                      <h3 class="titulo_fase">Pago Saldo</h3>
+                      <div class="contenedor_fechas">
+                        <div class="grupo_fecha">
+                          <label>Fecha Inicio:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                        <div class="grupo_fecha">
+                          <label>Fecha Fin:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-      <script>
-        // Funciones de utilidad
-        const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
+                    <!-- Validación del Saldo -->
+                    <div class="seccion_fase">
+                      <h3 class="titulo_fase">Validación del Saldo</h3>
+                      <div class="contenedor_fechas">
+                        <div class="grupo_fecha">
+                          <label>Fecha Inicio:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                        <div class="grupo_fecha">
+                          <label>Fecha Fin:</label>
+                          <div class="entrada_fecha_hora">
+                            <input type="date" class="entrada_fecha">
+                            <input type="time" class="entrada_hora">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-        // Gestión de métricas
-        function actualizarMetricas() {
-          const remates = document.querySelectorAll('.property-card');
-          const totalRemates = remates.length;
-          let rematesActivos = 0;
-          let montoTotal = 0;
+                    <div class="contenedor_botones_formulario_cronograma">
+                      <button type="button"
+                        class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar</button>
+                      <button type="button"
+                        class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar
+                        Cambios</button>
+                    </div>
+                  </form>
+                </div>
+                <% }); %>
 
-          remates.forEach(remate => {
-            if (remate.querySelector('.status-active')) {
-              rematesActivos++;
-            }
-            const precioTexto = remate.querySelector('.property-price').textContent;
-            montoTotal += formatPrice(precioTexto);
-          });
-      </script>
+                  <!-- MODAL CRONOGRAMA -->
+                  <% remates.forEach(function(remate) { %>
+                    <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades"
+                      style="display: none;">
+                      <h2 class="titulo_formulario_cronograma_actividades">Nuevo Cronograma de Actividades</h2>
+                      <form method="post" action="/guardar-cronograma-actividades"
+                        id="formulario_cronograma_actividades">
+                        <div class="fila_campos_formulario_cronograma">
+                          <div class="columna_campo_formulario_cronograma">
+                            <div class="grupo_campo_formulario_cronograma">
+                              <label for="actividad_cronograma"
+                                class="etiqueta_campo_formulario_cronograma">FASE</label>
+                              <select id="actividad_cronograma" name="actividad_cronograma"
+                                class="seleccion_formulario_cronograma" required>
+                                <option value="" disabled selected>Seleccione una fase</option>
+                                <option value="publicacion_inscripcion">Publicación e Inscripción</option>
+                                <option value="validacion_inscripcion">Validación de Inscripción</option>
+                                <option value="presentacion_ofertas">Presentación de Ofertas</option>
+                                <option value="pago_saldo">Pago Saldo</option>
+                                <option value="validacion_saldo">Validación del Saldo</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="columna_campo_formulario_cronograma">
+                            <div class="grupo_campo_formulario_cronograma">
+                              <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">ID
+                                REMATE</label>
+                              <input type="text" id="identificador_remate_asociado" name="identificador_remate_asociado"
+                                class="entrada_texto_formulario_cronograma" required>
+                            </div>
+                          </div>
+                        </div>
 
+                        <div class="fila_campos_formulario_cronograma">
+                          <div class="columna_campo_formulario_cronograma">
+                            <div class="grupo_campo_formulario_cronograma">
+                              <label for="fecha_inicio_actividad" class="etiqueta_campo_formulario_cronograma">Fecha
+                                Inicio</label>
+                              <input type="date" id="fecha_inicio_actividad" name="fecha_inicio_actividad"
+                                class="entrada_fecha_formulario_cronograma" required>
+                            </div>
+                          </div>
+                          <div class="columna_campo_formulario_cronograma">
+                            <div class="grupo_campo_formulario_cronograma">
+                              <label for="fecha_finalizacion_actividad"
+                                class="etiqueta_campo_formulario_cronograma">Fecha Fin</label>
+                              <input type="date" id="fecha_finalizacion_actividad" name="fecha_finalizacion_actividad"
+                                class="entrada_fecha_formulario_cronograma" required>
+                            </div>
+                          </div>
+                        </div>
 
-      <script>
-          // Funciones de utilidad
-          const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
+                        <div class="contenedor_botones_formulario_cronograma">
+                          <button type="button"
+                            class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar
+                            Registro</button>
+                          <button type="button" class="boton_formulario_cronograma boton_editar_formulario_cronograma"
+                            (<%=remate.id %>)>Editar</button>
+                          <button type="button" id="guardarCronogramaBtn"
+                            class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar
+                            Cronograma</button>
+                        </div>
+                      </form>
+                    </div>
+                    <% }); %>
 
-          document.getElementById('totalRemates').textContent = totalRemates;
-          document.getElementById('rematesActivos').textContent = rematesActivos;
-          document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
-        }
+                      <!-- edicion cronograma -->
+                      <form method="post" action="/guardar-cronograma" id="formulario_cronograma_actividades">
 
-        // Gestión de búsqueda
-        function buscarRemate() {
-          const input = document.getElementById('buscador').value.toLowerCase();
-          const remates = document.querySelectorAll('.property-card');
+                        <% remates.forEach(function(remate) { %>
+                          <div method="post" action="/actualizar-cronograma" id="tarjetaEdicionCronograma"
+                            class="tarjeta_formulario_edicion_cronograma" style="display: none;">
+                            <h2 class="titulo_formulario_cronograma_actividades">Editar Cronograma de Actividades</h2>
+                            <form id="formulario_edicion_cronograma">
+                              <!-- Publicación e Inscripción -->
+                              <div class="seccion_fase">
+                                <h3 class="titulo_fase">Publicación e Inscripción</h3>
+                                <div class="contenedor_fechas">
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Inicio:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Fin:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-          remates.forEach(remate => {
-            const texto = remate.textContent.toLowerCase();
-            remate.style.display = texto.includes(input) ? 'block' : 'none';
-          });
+                              <!-- Validación de Inscripción -->
+                              <div class="seccion_fase">
+                                <h3 class="titulo_fase">Validación de Inscripción</h3>
+                                <div class="contenedor_fechas">
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Inicio:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Fin:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-          actualizarMetricas();
-        }
+                              <!-- Presentación de Ofertas -->
+                              <div class="seccion_fase">
+                                <h3 class="titulo_fase">Presentación de Ofertas</h3>
+                                <div class="contenedor_fechas">
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Inicio:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Fin:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-        // Gestión de eliminación
-        function eliminarRemate(id) {
-          Swal.fire({
-            title: '¿Estás seguro?',
-            text: `¿Quieres eliminar el remate con ID ${id}?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-                method: 'DELETE'
-              })
-                .then(response => response.json())
-                .then(data => {
-                  if (data.success) {
-                    document.querySelector(`.property-card[data-id="${id}"]`).remove();
-                    actualizarMetricas();
-                    Swal.fire('Eliminado', 'El remate ha sido eliminado', 'success');
-                  } else {
-                    throw new Error(data.error || 'Error al eliminar el remate');
-                  }
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                  Swal.fire('Error', error.message, 'error');
-                });
-            }
-          });
-        }
+                              <!-- Pago Saldo -->
+                              <div class="seccion_fase">
+                                <h3 class="titulo_fase">Pago Saldo</h3>
+                                <div class="contenedor_fechas">
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Inicio:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Fin:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-        // Gestión de nuevo remate
-        function abrirModalNuevoRemate() {
-          document.getElementById('modalNuevoRemate').style.display = 'block';
-        }
+                              <!-- Validación del Saldo -->
+                              <div class="seccion_fase">
+                                <h3 class="titulo_fase">Validación del Saldo</h3>
+                                <div class="contenedor_fechas">
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Inicio:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                  <div class="grupo_fecha">
+                                    <label>Fecha Fin:</label>
+                                    <div class="entrada_fecha_hora">
+                                      <input type="date" class="entrada_fecha">
+                                      <input type="time" class="entrada_hora">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-        function cerrarModalNuevoRemate() {
-          document.getElementById('modalNuevoRemate').style.display = 'none';
-          document.getElementById('formNuevoRemate').reset();
-          document.getElementById('image-preview-container').innerHTML = '';
-        }
+                              <div class="contenedor_botones_formulario_cronograma">
+                                <button type="button"
+                                  class="boton_formulario_cronograma boton_cancelar_formulario_cronograma">Cancelar</button>
+                                <button type="button"
+                                  class="boton_formulario_cronograma boton_guardar_formulario_cronograma">Guardar
+                                  Cambios</button>
+                              </div>
+                            </form>
+                          </div>
+                          <% }); %>Ñ
 
-        // Gestión de edición de remate
-        function abrirModalEditar(id) {
-          fetch(`/admin/editar-remate/${id}`)
-          // Gestión de eliminación
-          function eliminarRemate(id) {
-            Swal.fire({
-              title: '¿Estás seguro?',
-              text: `¿Quieres eliminar el remate con ID ${id}?`,
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Sí, eliminar',
-              cancelButtonText: 'Cancelar'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-                  method: 'DELETE'
-                })
-                  .then(response => response.json())
-                  .then(data => {
-                    document.getElementById('editId').value = data.id;
-                    document.getElementById('editUbicacion').value = data.ubicacion;
-                    document.getElementById('editPrecio').value = data.precios;
-                    document.getElementById('editCategoria').value = data.categoria;
-                    document.getElementById('editHabitaciones').value = data.N_habitacion;
-                    document.getElementById('editBanos').value = data.N_banos;
-                    document.getElementById('editPisos').value = data.pisos;
-                    document.getElementById('editFechaRemate').value = data.fecha_remate.split('T')[0];
-                    document.getElementById('editHoraRemate').value = data.hora_remate;
-                    document.getElementById('editEstado').value = data.estado;
-                    document.getElementById('editTamañoPropiedad').value = data.tamano_propiedad;
-                    document.getElementById('editPisina').value = data.pisina;
-                    document.getElementById('editPatio').value = data.patio;
-                    document.getElementById('editCocina').value = data.cocina;
-                    document.getElementById('editCochera').value = data.cochera;
-                    document.getElementById('editBalcon').value = data.balcon;
-                    document.getElementById('editJardin').value = data.jardin;
-                    document.getElementById('editComedor').value = data.comedor;
-                    document.getElementById('editSalaStart').value = data.sala_start;
-                    document.getElementById('editStudio').value = data.studio;
-                    document.getElementById('editLavanderia').value = data.lavanderia;
-                    document.getElementById('editDescripcion').value = data.descripcion;
+                            <script>
+                              // Funciones de utilidad
+                              const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
 
-                    document.getElementById('editModal').style.display = 'block';
-                  })
-                  .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
-                  });
-              }
+                              // Gestión de métricas
+                              function actualizarMetricas() {
+                                const remates = document.querySelectorAll('.property-card');
+                                const totalRemates = remates.length;
+                                let rematesActivos = 0;
+                                let montoTotal = 0;
 
-              function cerrarModal() {
-                document.getElementById('editModal').style.display = 'none';
-                // Gestión de nuevo remate
-                function abrirModalNuevoRemate() {
-                  document.getElementById('modalNuevoRemate').style.display = 'block';
-                }
+                                remates.forEach(remate => {
+                                  if (remate.querySelector('.status-active')) {
+                                    rematesActivos++;
+                                  }
+                                  const precioTexto = remate.querySelector('.property-price').textContent;
+                                  montoTotal += formatPrice(precioTexto);
+                                });
 
-                function cerrarModalNuevoRemate() {
-                  document.getElementById('modalNuevoRemate').style.display = 'none';
-                  document.getElementById('formNuevoRemate').reset();
-                  document.getElementById('image-preview-container').innerHTML = '';
-                }
+                                document.getElementById('totalRemates').textContent = totalRemates;
+                                document.getElementById('rematesActivos').textContent = rematesActivos;
+                                document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
+                              }
 
-                // Gestión de edición de remate
-                function abrirModalEditar(id) {
-                  fetch(`/admin/editar-remate/${id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                      document.getElementById('editId').value = data.id;
-                      document.getElementById('editUbicacion').value = data.ubicacion;
-                      document.getElementById('editPrecio').value = data.precios;
-                      document.getElementById('editCategoria').value = data.categoria;
-                      document.getElementById('editHabitaciones').value = data.N_habitacion;
-                      document.getElementById('editBanos').value = data.N_banos;
-                      document.getElementById('editPisos').value = data.pisos;
-                      document.getElementById('editFechaRemate').value = data.fecha_remate.split('T')[0];
-                      document.getElementById('editHoraRemate').value = data.hora_remate;
-                      document.getElementById('editEstado').value = data.estado;
-                      document.getElementById('editTamañoPropiedad').value = data.tamano_propiedad;
-                      document.getElementById('editPisina').value = data.pisina;
-                      document.getElementById('editPatio').value = data.patio;
-                      document.getElementById('editCocina').value = data.cocina;
-                      document.getElementById('editCochera').value = data.cochera;
-                      document.getElementById('editBalcon').value = data.balcon;
-                      document.getElementById('editJardin').value = data.jardin;
-                      document.getElementById('editComedor').value = data.comedor;
-                      document.getElementById('editSalaStart').value = data.sala_start;
-                      document.getElementById('editStudio').value = data.studio;
-                      document.getElementById('editLavanderia').value = data.lavanderia;
-                      document.getElementById('editDescripcion').value = data.descripcion;
+                              // Gestión de búsqueda
+                              function buscarRemate() {
+                                const input = document.getElementById('buscador').value.toLowerCase();
+                                const remates = document.querySelectorAll('.property-card');
 
-                      document.getElementById('editModal').style.display = 'block';
-                    })
-                    .catch(error => {
-                      console.error('Error:', error);
-                      Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
-                    });
-                }
+                                remates.forEach(remate => {
+                                  const texto = remate.textContent.toLowerCase();
+                                  remate.style.display = texto.includes(input) ? 'block' : 'none';
+                                });
 
-                function cerrarModal() {
-                  document.getElementById('editModal').style.display = 'none';
-                }
+                                actualizarMetricas();
+                              }
 
-                async function guardarCambios(event) {
-                  event.preventDefault();
+                              // Gestión de eliminación
+                              function eliminarRemate(id) {
+                                Swal.fire({
+                                  title: '¿Estás seguro?',
+                                  text: `¿Quieres eliminar el remate con ID ${id}?`,
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#3085d6',
+                                  cancelButtonColor: '#d33',
+                                  confirmButtonText: 'Sí, eliminar',
+                                  cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    fetch(`/admin/eliminar-remate?deleteId=${id}`, {
+                                      method: 'DELETE'
+                                    })
+                                      .then(response => response.json())
+                                      .then(data => {
+                                        if (data.success) {
+                                          document.querySelector(`.property-card[data-id="${id}"]`).remove();
+                                          actualizarMetricas();
+                                          Swal.fire('Eliminado', 'El remate ha sido eliminado', 'success');
+                                        } else {
+                                          throw new Error(data.error || 'Error al eliminar el remate');
+                                        }
+                                      })
+                                      .catch(error => {
+                                        console.error('Error:', error);
+                                        Swal.fire('Error', error.message, 'error');
+                                      });
+                                  }
+                                });
+                              }
 
-                  const formData = new FormData(event.target);
-                  const id = document.getElementById('editId').value;
+                              // Gestión de nuevo remate
+                              function abrirModalNuevoRemate() {
+                                document.getElementById('modalNuevoRemate').style.display = 'block';
+                              }
 
-                  try {
-                    const response = await fetch(`/admin/editar-remate/${id}`, {
-                      method: 'POST',
-                      body: formData
-                    });
+                              function cerrarModalNuevoRemate() {
+                                document.getElementById('modalNuevoRemate').style.display = 'none';
+                                document.getElementById('formNuevoRemate').reset();
+                                document.getElementById('image-preview-container').innerHTML = '';
+                              }
 
-                    const data = await response.json();
+                              // Gestión de edición de remate
+                              function abrirModalEditar(id) {
+                                fetch(`/admin/editar-remate/${id}`)
+                                  .then(response => response.json())
+                                  .then(data => {
+                                    document.getElementById('editId').value = data.id;
+                                    document.getElementById('editUbicacion').value = data.ubicacion;
+                                    document.getElementById('editPrecio').value = data.precios;
+                                    document.getElementById('editCategoria').value = data.categoria;
+                                    document.getElementById('editHabitaciones').value = data.N_habitacion;
+                                    document.getElementById('editBanos').value = data.N_banos;
+                                    document.getElementById('editPisos').value = data.pisos;
+                                    document.getElementById('editFechaRemate').value = data.fecha_remate.split('T')[0];
+                                    document.getElementById('editHoraRemate').value = data.hora_remate;
+                                    document.getElementById('editEstado').value = data.estado;
+                                    document.getElementById('editTamañoPropiedad').value = data.tamano_propiedad;
+                                    document.getElementById('editPisina').value = data.pisina;
+                                    document.getElementById('editPatio').value = data.patio;
+                                    document.getElementById('editCocina').value = data.cocina;
+                                    document.getElementById('editCochera').value = data.cochera;
+                                    document.getElementById('editBalcon').value = data.balcon;
+                                    document.getElementById('editJardin').value = data.jardin;
+                                    document.getElementById('editComedor').value = data.comedor;
+                                    document.getElementById('editSalaStart').value = data.sala_start;
+                                    document.getElementById('editStudio').value = data.studio;
+                                    document.getElementById('editLavanderia').value = data.lavanderia;
+                                    document.getElementById('editDescripcion').value = data.descripcion;
 
-                    if (data.success) {
-                      Swal.fire({
-                        title: '¡Éxito!',
-                        text: 'Remate actualizado correctamente',
-                        icon: 'success'
-                      }).then(() => {
-                        window.location.reload();
-                      });
-                    } else {
-                      throw new Error(data.message || 'Error al actualizar el remate');
-                    }
-                  } catch (error) {
-                    console.error('Error:', error);
-                    Swal.fire({
-                      title: 'Error',
-                      text: error.message,
-                      icon: 'error'
-                    });
-                  }
-                }
+                                    document.getElementById('editModal').style.display = 'block';
+                                  })
+                                  .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
+                                  });
+                              }
 
-                // Event Listeners
-                document.addEventListener('DOMContentLoaded', () => {
-                  actualizarMetricas();
+                              function cerrarModalEditar() {
+                                document.getElementById('editModal').style.display = 'none';
+                              }
 
-                  // Manejador para cerrar modales al hacer clic fuera
-                  window.onclick = function (event) {
-                    const modalNuevo = document.getElementById('modalNuevoRemate');
-                    const modalEditar = document.getElementById('editModal');
+                              async function guardarCambios(event) {
+                                event.preventDefault();
 
-                    if (event.target === modalNuevo) {
-                      cerrarModalNuevoRemate();
-                    }
+                                const formData = new FormData(event.target);
+                                const id = document.getElementById('editId').value;
 
-                    async function guardarCambios(event) {
-                      event.preventDefault();
+                                try {
+                                  const response = await fetch(`/admin/editar-remate/${id}`, {
+                                    method: 'POST',
+                                    body: formData
+                                  });
 
-                      const formData = new FormData(event.target);
-                      const id = document.getElementById('editId').value;
-                      // Manejador para la carga de imágenes
-                      document.getElementById('file-upload').addEventListener('change', function (event) {
-                        const files = event.target.files;
-                        const minFiles = 1;
-                        const maxFiles = 10;
+                                  const data = await response.json();
 
-                        try {
-                          const response = await fetch(`/admin/editar-remate/${id}`, {
-                            method: 'POST',
-                            body: formData
-                          });
+                                  if (data.success) {
+                                    Swal.fire({
+                                      title: '¡Éxito!',
+                                      text: 'Remate actualizado correctamente',
+                                      icon: 'success'
+                                    }).then(() => {
+                                      window.location.reload();
+                                    });
+                                  } else {
+                                    throw new Error(data.message || 'Error al actualizar el remate');
+                                  }
+                                } catch (error) {
+                                  console.error('Error:', error);
+                                  Swal.fire({
+                                    title: 'Error',
+                                    text: error.message,
+                                    icon: 'error'
+                                  });
+                                }
+                              }
 
-                          const data = await response.json();
+                              // Event Listeners
+                              document.addEventListener('DOMContentLoaded', () => {
+                                actualizarMetricas();
 
-                          if (data.success) {
-                            Swal.fire({
-                              title: '¡Éxito!',
-                              text: 'Remate actualizado correctamente',
-                              icon: 'success'
-                            }).then(() => {
-                              window.location.reload();
-                            });
-                          } else {
-                            throw new Error(data.message || 'Error al actualizar el remate');
-                          }
-                        } catch (error) {
-                          console.error('Error:', error);
-                          Swal.fire({
-                            title: 'Error',
-                            text: error.message,
-                            icon: 'error'
-                          });
-                        }
-                      }
+                                // Manejador para cerrar modales al hacer clic fuera
+                                window.onclick = function (event) {
+                                  const modalNuevo = document.getElementById('modalNuevoRemate');
+                                  const modalEditar = document.getElementById('editModal');
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-                        actualizarMetricas();
+                                  if (event.target === modalNuevo) {
+                                    cerrarModalNuevoRemate();
+                                  }
 
-                        // Manejador para cerrar modales al hacer clic fuera
-                        window.onclick = function (event) {
-                          const modalNuevo = document.getElementById('modalNuevoRemate');
-                          const modalEditar = document.getElementById('editModal');
+                                  if (event.target === modalEditar) {
+                                    cerrarModalEditar();
+                                  }
+                                };
 
-                          if (event.target === modalNuevo) {
-                            cerrarModalNuevoRemate();
-                          }
+                                // Manejador para la carga de imágenes
+                                document.getElementById('file-upload').addEventListener('change', function (event) {
+                                  const files = event.target.files;
+                                  const minFiles = 1;
+                                  const maxFiles = 10;
 
-                          if (event.target === modalEditar) {
-                            cerrarModal();
-                          }
-                          reader.onload = function (e) {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.className = 'preview-img';
-                            imagePreviewContainer.appendChild(img);
-                          };
+                                  if (files.length < minFiles || files.length > maxFiles) {
+                                    Swal.fire({
+                                      icon: 'error',
+                                      title: 'Error',
+                                      text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
+                                    });
+                                    event.target.value = "";
+                                    return;
+                                  }
 
-                          // Manejador para la carga de imágenes
-                          document.getElementById('file-upload').addEventListener('change', function (event) {
-                            const files = event.target.files;
-                            const minFiles = 1;
-                            const maxFiles = 10;
+                                  const imagePreviewContainer = document.getElementById('image-preview-container');
+                                  imagePreviewContainer.innerHTML = "";
 
-                            if (files.length < minFiles || files.length > maxFiles) {
-                              Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
+                                  for (let i = 0; i < files.length; i++) {
+                                    const file = files[i];
+                                    const reader = new FileReader();
+
+                                    reader.onload = function (e) {
+                                      const img = document.createElement('img');
+                                      img.src = e.target.result;
+                                      img.className = 'preview-img';
+                                      imagePreviewContainer.appendChild(img);
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                  }
+                                });
+
+                                // Obtener parámetros de URL
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const success = urlParams.get('success');
+
+                                // Mostrar la alerta si la variable de éxito está presente
+                                if (success === 'true') {
+                                  Swal.fire({
+                                    title: '¡Éxito!',
+                                    text: 'Remate creado exitosamente',
+                                    icon: 'success'
+                                  });
+                                } else if (success === 'false') {
+                                  Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un problema al crear el remate',
+                                    icon: 'error'
+                                  });
+                                }
+
+                                // Botón de cerrar sesión admin
+                                document.getElementById('logout-button').addEventListener('click', function () {
+                                  window.location.href = '/admin/logout';
+                                });
+
+                                // Botón de cancelar en el modal de edición
+                                document.querySelector('.boton_cancelar_formulario_editar').addEventListener('click', cerrarModalEditar);
                               });
-                              event.target.value = "";
-                              return;
-                            }
 
-                            const imagePreviewContainer = document.getElementById('image-preview-container');
-                            imagePreviewContainer.innerHTML = "";
+                              function abrirModalcronograma(remateId) {
+                                const tarjetaCronograma = document.getElementById('tarjetaCronograma');
+                                const identificadorRemateAsociado = document.getElementById('identificador_remate_asociado');
 
-                            for (let i = 0; i < files.length; i++) {
-                              const file = files[i];
-                              const reader = new FileReader();
+                                // Llenar el campo ID REMATE con el ID del remate
+                                identificadorRemateAsociado.value = remateId;
 
-                              reader.onload = function (e) {
-                                const img = document.createElement('img');
-                                img.src = e.target.result;
-                                img.className = 'preview-img';
-                                imagePreviewContainer.appendChild(img);
-                              };
+                                // Mostrar la tarjeta del cronograma
+                                tarjetaCronograma.style.display = 'block';
+                              }
 
-                              reader.readAsDataURL(file);
-                            }
-                          });
-                        });
+                              document.addEventListener('DOMContentLoaded', function () {
+                                const tarjetaCronograma = document.getElementById('tarjetaCronograma');
 
-                      // Obtener parámetros de URL
-                      const urlParams = new URLSearchParams(window.location.search);
-                      const success = urlParams.get('success');
+                                // Cerrar la tarjeta al hacer clic fuera de ella
+                                window.addEventListener('click', function (event) {
+                                  if (event.target === tarjetaCronograma) {
+                                    tarjetaCronograma.style.display = 'none';
+                                  }
+                                });
 
-                      // Mostrar la alerta si la variable de éxito está presente
-                      if (success === 'true') {
-                        Swal.fire({
-                          title: '¡Éxito!',
-                          text: 'Remate creado exitosamente',
-                          icon: 'success'
-                        });
-                      } else if (success === 'false') {
-                        Swal.fire({
-                          title: 'Error',
-                          text: 'Hubo un problema al crear el remate',
-                          icon: 'error'
-                        });
-                      }
+                                // Cerrar la tarjeta al hacer clic en el botón de cancelar
+                                document.querySelector('.boton_cancelar_formulario_cronograma').addEventListener('click', function () {
+                                  tarjetaCronograma.style.display = 'none';
+                                });
+                              });
 
-                      // Botón de cerrar sesión admin
-                      document.getElementById('logout-button').addEventListener('click', function () {
-                        window.location.href = '/admin/logout';
-                      });
+                              // Abrir modales
+                              document.addEventListener('DOMContentLoaded', function () {
+                                const buttons = document.querySelectorAll('.property-button');
+                                const tarjetaDetalles = document.getElementById('tarjetaDetalles');
+                                const tarjetaInmuebles = document.getElementById('tarjetaInmuebles');
+                                const tarjetaCronograma = document.getElementById('tarjetaCronograma');
 
-      </script>
+                                const overlay = document.createElement('div');
+                                overlay.className = 'modal-overlay';
+                                document.body.appendChild(overlay);
 
-      <script>
-          function abrirModalcronograma(remateId) {
-            const tarjetaCronograma = document.getElementById('tarjetaCronograma');
-            const identificadorRemateAsociado = document.getElementById('identificador_remate_asociado');
+                                let activeModal = null;
 
-            // Llenar el campo ID REMATE con el ID del remate
-            identificadorRemateAsociado.value = remateId;
+                                const modalMap = {
+                                  'Detalles': tarjetaDetalles,
+                                  'Inmuebles': tarjetaInmuebles,
+                                  'Cronograma': tarjetaCronograma
+                                };
 
-            // Mostrar la tarjeta del cronograma
-            tarjetaCronograma.style.display = 'block';
-          }
+                                function openModal(modal) {
+                                  if (activeModal) {
+                                    closeModal(activeModal);
+                                  }
+                                  modal.style.display = 'block';
+                                  overlay.style.display = 'block';
+                                  activeModal = modal;
+                                  document.body.style.overflow = 'hidden';
+                                }
 
-          document.addEventListener('DOMContentLoaded', function () {
-            const tarjetaCronograma = document.getElementById('tarjetaCronograma');
+                                function closeModal(modal) {
+                                  if (modal) {
+                                    modal.style.display = 'none';
+                                    overlay.style.display = 'none';
+                                    document.body.style.overflow = '';
+                                    activeModal = null;
+                                  }
+                                }
 
-            // Cerrar la tarjeta al hacer clic fuera de ella
-            window.addEventListener('click', function (event) {
-              if (event.target === tarjetaCronograma) {
-                tarjetaCronograma.style.display = 'none';
-              }
-            });
+                                buttons.forEach(button => {
+                                  button.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    const buttonText = this.textContent.trim();
+                                    const modal = modalMap[buttonText];
 
-            // Cerrar la tarjeta al hacer clic en el botón de cancelar
-            document.querySelector('.boton_cancelar_formulario_cronograma').addEventListener('click', function () {
-              tarjetaCronograma.style.display = 'none';
-            });
-          });
-      </script>
-      // Botón de cerrar sesión admin
-      document.getElementById('logout-button').addEventListener('click', function() {
-      window.location.href = '/admin/logout';
-      });
-      </script>
+                                    if (modal) {
+                                      openModal(modal);
+                                    }
+                                  });
+                                });
 
-      <!-- Abrir modales-->
-      <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            const buttons = document.querySelectorAll('.property-button');
-            const tarjetaDetalles = document.getElementById('tarjetaDetalles');
-            const tarjetaInmuebles = document.getElementById('tarjetaInmuebles');
-            const tarjetaCronograma = document.getElementById('tarjetaCronograma');
+                                overlay.addEventListener('click', function () {
+                                  closeModal(activeModal);
+                                });
 
-            const overlay = document.createElement('div');
-            overlay.className = 'modal-overlay';
-            document.body.appendChild(overlay);
+                                const cancelButtons = document.querySelectorAll([
+                                  '.boton_cancelar_formulario_detalles',
+                                  '.boton_cancelar_formulario_inmuebles',
+                                  '.boton_cancelar_formulario_cronograma'
+                                ].join(','));
 
-            let activeModal = null;
+                                cancelButtons.forEach(button => {
+                                  button.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    closeModal(activeModal);
+                                  });
+                                });
 
-            const modalMap = {
-              'Detalles': tarjetaDetalles,
-              'Inmuebles': tarjetaInmuebles,
-              'Cronograma': tarjetaCronograma
-            };
+                                document.addEventListener('keydown', function (e) {
+                                  if (e.key === 'Escape' && activeModal) {
+                                    closeModal(activeModal);
+                                  }
+                                });
 
-            function openModal(modal) {
-              if (activeModal) {
-                closeModal(activeModal);
-              }
-              modal.style.display = 'block';
-              overlay.style.display = 'block';
-              activeModal = modal;
-              document.body.style.overflow = 'hidden';
-            }
+                                [tarjetaDetalles, tarjetaInmuebles, tarjetaCronograma].forEach(modal => {
+                                  if (modal) {
+                                    modal.addEventListener('click', function (e) {
+                                      e.stopPropagation();
+                                    });
+                                  }
+                                });
+                              });
 
-            function closeModal(modal) {
-              if (modal) {
-                modal.style.display = 'none';
-                overlay.style.display = 'none';
-                document.body.style.overflow = '';
-                activeModal = null;
-              }
-            }
+                              function abrirModalSegimiento(id) {
+                                const modal = document.getElementById('seguimientoModal');
 
-            buttons.forEach(button => {
-              button.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const buttonText = this.textContent.trim();
-                const modal = modalMap[buttonText];
+                                if (!modal) {
+                                  console.error('El modal con id "seguimientoModal" no existe.');
+                                  return;
+                                }
 
-                if (modal) {
-                  openModal(modal);
-                }
-              });
-            });
+                                modal.style.display = 'block'; // Asegúrate de que tu modal esté visible.
 
-            overlay.addEventListener('click', function () {
-              closeModal(activeModal);
-            });
+                                if (id) {
+                                  fetch(`/getSeguimiento/${id}`)
+                                    .then(response => {
+                                      if (!response.ok) throw new Error('Error al cargar los datos.');
+                                      return response.json();
+                                    })
+                                    .then(data => {
+                                      document.getElementById('seguimientoId').value = data.id || '';
+                                      document.getElementById('editExpediente').value = data.expediente || '';
+                                      document.getElementById('editDistritoJudicial').value = data.distrito_judicial || '';
+                                      document.getElementById('editInstancia').value = data.instancia || '';
+                                      document.getElementById('editOrganoJuridico').value = data.organo_juridico || '';
+                                      document.getElementById('editEspecialidad').value = data.especialidad || '';
+                                      document.getElementById('editNroConvocatoria').value = data.nro_convocatoria || '';
+                                      document.getElementById('editFechaRegistro').value = data.fecha_registro || '';
+                                      document.getElementById('editProcesadoPor').value = data.procesado_por || '';
+                                      document.getElementById('editReanudado').value = data.reanudado || '';
+                                      document.getElementById('editFaseConvocatoria').value = data.fase_convocatoria || '';
+                                      document.getElementById('editEstadoConvocatoria').value = data.estado_convocatoria || '';
+                                      document.getElementById('editRematesId').value = data.remates_id || '';
+                                    })
+                                    .catch(error => {
+                                      console.error('Error al cargar los datos del seguimiento:', error);
+                                      alert('No se pudieron cargar los datos del seguimiento.');
+                                    });
+                                } else {
+                                  document.getElementById('seguimientoForm').reset();
+                                }
+                              }
 
-            const cancelButtons = document.querySelectorAll([
-              '.boton_cancelar_formulario_detalles',
-              '.boton_cancelar_formulario_inmuebles',
-              '.boton_cancelar_formulario_cronograma'
-            ].join(','));
+                              function guardarCambios(event) {
+                                event.preventDefault();
 
-            cancelButtons.forEach(button => {
-              button.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                closeModal(activeModal);
-              });
-            });
+                                const form = document.getElementById('seguimientoForm');
+                                if (!form) {
+                                  console.error('El formulario "seguimientoForm" no existe.');
+                                  return;
+                                }
 
-            document.addEventListener('keydown', function (e) {
-              if (e.key === 'Escape' && activeModal) {
-                closeModal(activeModal);
-              }
-            });
+                                const formData = new FormData(form);
 
-            [tarjetaDetalles, tarjetaInmuebles, tarjetaCronograma].forEach(modal => {
-              if (modal) {
-                modal.addEventListener('click', function (e) {
-                  e.stopPropagation();
-                });
-              }
-            });
-          });
-      </script>
+                                const dataToSend = {};
+                                formData.forEach((value, key) => {
+                                  dataToSend[key] = value;
+                                });
 
-      <script>
+                                fetch('/updateSeguimiento', {
+                                  method: 'POST',
+                                  body: JSON.stringify(dataToSend),
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                })
+                                  .then(response => {
+                                    if (!response.ok) throw new Error('Error al guardar los cambios.');
+                                    return response.json();
+                                  })
+                                  .then(data => {
+                                    alert('Los cambios se guardaron correctamente.');
+                                    cerrarModal();
+                                  })
+                                  .catch(error => {
+                                    console.error('Error al guardar los cambios:', error);
+                                    alert('No se pudieron guardar los cambios.');
+                                  });
+                              }
 
-          function abrirModalSegimiento(id) {
-            const modal = document.getElementById('seguimientoModal');
+                              function cerrarModal() {
+                                const modal = document.getElementById('seguimientoModal');
+                                if (!modal) {
+                                  console.error('El modal con id "seguimientoModal" no existe.');
+                                  return;
+                                }
 
-            if (!modal) {
-              console.error('El modal con id "seguimientoModal" no existe.');
-              return;
-            }
+                                modal.style.display = 'none';
+                                document.getElementById('seguimientoForm').reset();
+                              }
 
-            modal.style.display = 'block'; // Asegúrate de que tu modal esté visible.
+                              // Funcionalidad para el modal de Detalles
+                              function abrirModalDetalles(remateId) {
+                                const modal = document.getElementById('tarjetaDetalles');
+                                if (!modal) return;
 
-            if (id) {
-              fetch(`/getSeguimiento/${id}`)
-                .then(response => {
-                  if (!response.ok) throw new Error('Error al cargar los datos.');
-                  return response.json();
-                })
-                .then(data => {
-                  document.getElementById('seguimientoId').value = data.id || '';
-                  document.getElementById('editExpediente').value = data.expediente || '';
-                  document.getElementById('editDistritoJudicial').value = data.distrito_judicial || '';
-                  document.getElementById('editInstancia').value = data.instancia || '';
-                  document.getElementById('editOrganoJuridico').value = data.organo_juridico || '';
-                  document.getElementById('editEspecialidad').value = data.especialidad || '';
-                  document.getElementById('editNroConvocatoria').value = data.nro_convocatoria || '';
-                  document.getElementById('editFechaRegistro').value = data.fecha_registro || '';
-                  document.getElementById('editProcesadoPor').value = data.procesado_por || '';
-                  document.getElementById('editReanudado').value = data.reanudado || '';
-                  document.getElementById('editFaseConvocatoria').value = data.fase_convocatoria || '';
-                  document.getElementById('editEstadoConvocatoria').value = data.estado_convocatoria || '';
-                  document.getElementById('editRematesId').value = data.remates_id || '';
-                })
-                .catch(error => {
-                  console.error('Error al cargar los datos del seguimiento:', error);
-                });
-            } else {
-              document.getElementById('seguimientoForm').reset();
-            }
-          }
+                                // Centrar el modal
+                                modal.style.display = 'block';
+                                modal.style.position = 'fixed';
+                                modal.style.top = '50%';
+                                modal.style.left = '50%';
+                                modal.style.transform = 'translate(-50%, -50%)';
 
-          function guardarCambios(event) {
-            event.preventDefault();
+                                // Cargar datos si existe el ID
+                                if (remateId) {
+                                  fetch(`/admin/detalles/${remateId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                      // Llenar los campos del formulario con los datos
+                                      document.getElementById('expediente').value = data.expediente || '';
+                                      document.getElementById('distrito_judicial').value = data.distrito_judicial || '';
+                                      document.getElementById('organo_juridiccional').value = data.organo_juridiccional || '';
+                                      document.getElementById('instancia').value = data.instancia || '';
+                                      document.getElementById('juez').value = data.juez || '';
+                                      document.getElementById('especialista').value = data.especialista || '';
+                                      document.getElementById('materia').value = data.materia || '';
+                                      document.getElementById('resolucion').value = data.resolucion || '';
+                                      document.getElementById('fecha_resolucion').value = data.fecha_resolucion || '';
+                                      document.getElementById('nro_convocatoria').value = data.nro_convocatoria || '';
+                                      document.getElementById('tipo_cambio').value = data.tipo_cambio || '';
+                                      document.getElementById('tasacion').value = data.tasacion || '';
+                                      document.getElementById('precio_base').value = data.precio_base || '';
+                                      document.getElementById('incremento_ofertas').value = data.incremento_ofertas || '';
+                                      document.getElementById('arancel').value = data.arancel || '';
+                                      document.getElementById('oblaje').value = data.oblaje || '';
+                                      document.getElementById('descripcion').value = data.descripcion || '';
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                                }
+                              }
 
-            const form = document.getElementById('seguimientoForm');
-            if (!form) {
-              console.error('El formulario "seguimientoForm" no existe.');
-              return;
-            }
+                              function cerrarModalDetalles() {
+                                const modal = document.getElementById('tarjetaDetalles');
+                                if (modal) {
+                                  modal.style.display = 'none';
+                                }
+                              }
 
-            const formData = new FormData(form);
+                              // Event listeners
+                              document.addEventListener('DOMContentLoaded', () => {
+                                // Botón cancelar
+                                const btnCancelar = document.querySelector('.boton_cancelar_formulario_detalles');
+                                if (btnCancelar) {
+                                  btnCancelar.addEventListener('click', cerrarModalDetalles);
+                                }
 
-            const dataToSend = {};
-            formData.forEach((value, key) => {
-              dataToSend[key] = value;
-            });
+                                // Cerrar al hacer click fuera del modal
+                                window.addEventListener('click', (e) => {
+                                  const modal = document.getElementById('tarjetaDetalles');
+                                  if (e.target === modal) {
+                                    cerrarModalDetalles();
+                                  }
+                                });
 
-            fetch('/updateSeguimiento', {
-              method: 'POST',
-              body: JSON.stringify(dataToSend),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            })
-              .then(response => {
-                if (!response.ok) throw new Error('Error al guardar los cambios.');
-                return response.json();
-              })
-              .then(data => {
-                alert('Los cambios se guardaron correctamente.');
-                cerrarModal();
-              })
-              .catch(error => {
-                console.error('Error al guardar los cambios:', error);
-                alert('No se pudieron guardar los cambios.');
-              });
-          }
+                                // Manejar el envío del formulario
+                                const form = document.getElementById('formulario_detalles');
+                                if (form) {
+                                  form.addEventListener('submit', async (e) => {
+                                    e.preventDefault();
+                                    const formData = new FormData(form);
 
-          function cerrarModal() {
-            const modal = document.getElementById('seguimientoModal');
-            if (!modal) {
-              console.error('El modal con id "seguimientoModal" no existe.');
-              return;
-            }
+                                    try {
+                                      const response = await fetch('/admin/editar-detalles', {
+                                        method: 'POST',
+                                        body: formData
+                                      });
 
-            modal.style.display = 'none';
-            document.getElementById('seguimientoForm').reset();
-          }
-      </script>
+                                      const data = await response.json();
+                                      if (data.success) {
+                                        alert('Detalles guardados correctamente');
+                                        cerrarModalDetalles();
+                                      } else {
+                                        throw new Error(data.message || 'Error al guardar los detalles');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error:', error);
+                                      alert('Error al guardar los detalles');
+                                    }
+                                  });
+                                }
+                              });
 
-      <!-- Area modal detalles -->
-      <script>
-        // Funcionalidad para el modal de Detalles
-function abrirModalDetalles(remateId) {
-  const modal = document.getElementById('tarjetaDetalles');
-  if (!modal) return;
+                              // Funcionalidad para el modal de Inmuebles
+                              function abrirModalInmuebles(remateId) {
+                                const modal = document.getElementById('tarjetaInmuebles');
+                                if (!modal) return;
 
-  // Centrar el modal
-  modal.style.display = 'block';
-  modal.style.position = 'fixed';
-  modal.style.top = '50%';
-  modal.style.left = '50%';
-  modal.style.transform = 'translate(-50%, -50%)';
-  
-  // Cargar datos si existe el ID
-  if (remateId) {
-    fetch(`/admin/detalles/${remateId}`)
-      .then(response => response.json())
-      .then(data => {
-        // Llenar los campos del formulario con los datos
-        document.getElementById('expediente').value = data.expediente || '';
-        document.getElementById('distrito_judicial').value = data.distrito_judicial || '';
-        document.getElementById('organo_juridiccional').value = data.organo_juridiccional || '';
-        document.getElementById('instancia').value = data.instancia || '';
-        document.getElementById('juez').value = data.juez || '';
-        document.getElementById('especialista').value = data.especialista || '';
-        document.getElementById('materia').value = data.materia || '';
-        document.getElementById('resolucion').value = data.resolucion || '';
-        document.getElementById('fecha_resolucion').value = data.fecha_resolucion || '';
-        document.getElementById('nro_convocatoria').value = data.nro_convocatoria || '';
-        document.getElementById('tipo_cambio').value = data.tipo_cambio || '';
-        document.getElementById('tasacion').value = data.tasacion || '';
-        document.getElementById('precio_base').value = data.precio_base || '';
-        document.getElementById('incremento_ofertas').value = data.incremento_ofertas || '';
-        document.getElementById('arancel').value = data.arancel || '';
-        document.getElementById('oblaje').value = data.oblaje || '';
-        document.getElementById('descripcion').value = data.descripcion || '';
-      })
-      .catch(error => console.error('Error:', error));
-  }
-}
+                                // Centrar el modal
+                                modal.style.display = 'block';
+                                modal.style.position = 'fixed';
+                                modal.style.top = '50%';
+                                modal.style.left = '50%';
+                                modal.style.transform = 'translate(-50%, -50%)';
 
-function cerrarModalDetalles() {
-  const modal = document.getElementById('tarjetaDetalles');
-  if (modal) {
-    modal.style.display = 'none';
-  }
-}
+                                // Cargar datos si existe el ID
+                                if (remateId) {
+                                  fetch(`/admin/inmuebles/${remateId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                      // Llenar los campos del formulario con los datos
+                                      document.getElementById('partida_registral').value = data.partida_registral || '';
+                                      document.getElementById('tipo_inmueble').value = data.tipo_inmueble || '';
+                                      document.getElementById('direccion').value = data.direccion || '';
+                                      document.getElementById('carga_ogravamen').value = data.carga_ogravamen || '';
+                                      document.getElementById('porcentaje_rematar').value = data.porcentaje_rematar || '';
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                                }
+                              }
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  // Botón cancelar
-  const btnCancelar = document.querySelector('.boton_cancelar_formulario_detalles');
-  if (btnCancelar) {
-    btnCancelar.addEventListener('click', cerrarModalDetalles);
-  }
+                              function cerrarModalInmuebles() {
+                                const modal = document.getElementById('tarjetaInmuebles');
+                                if (modal) {
+                                  modal.style.display = 'none';
+                                }
+                              }
 
-  // Cerrar al hacer click fuera del modal
-  window.addEventListener('click', (e) => {
-    const modal = document.getElementById('tarjetaDetalles');
-    if (e.target === modal) {
-      cerrarModalDetalles();
-    }
-  });
+                              // Event listeners
+                              document.addEventListener('DOMContentLoaded', () => {
+                                // Botón cancelar
+                                const btnCancelar = document.querySelector('.boton_cancelar_formulario_inmuebles');
+                                if (btnCancelar) {
+                                  btnCancelar.addEventListener('click', cerrarModalInmuebles);
+                                }
 
-  // Manejar el envío del formulario
-  const form = document.getElementById('formulario_detalles');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      
-      try {
-        const response = await fetch('/admin/editar-detalles', {
-          method: 'POST',
-          body: formData
-        });
-        
-        const data = await response.json();
-        if (data.success) {
-          alert('Detalles guardados correctamente');
-          cerrarModalDetalles();
-        } else {
-          throw new Error(data.message || 'Error al guardar los detalles');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error al guardar los detalles');
-      }
-    });
-  }
-});
-      </script>
+                                // Cerrar al hacer click fuera del modal
+                                window.addEventListener('click', (e) => {
+                                  const modal = document.getElementById('tarjetaInmuebles');
+                                  if (e.target === modal) {
+                                    cerrarModalInmuebles();
+                                  }
+                                });
 
+                                // Manejar el envío del formulario
+                                const form = document.getElementById('formulario_inmuebles');
+                                if (form) {
+                                  form.addEventListener('submit', async (e) => {
+                                    e.preventDefault();
+                                    const formData = new FormData(form);
 
+                                    try {
+                                      const response = await fetch('/admin/editar-inmuebles', {
+                                        method: 'POST',
+                                        body: formData
+                                      });
 
-      <!--Area Modal inmuebles -->
-      <script>
-        // Funcionalidad para el modal de Inmuebles
-function abrirModalInmuebles(remateId) {
-  const modal = document.getElementById('tarjetaInmuebles');
-  if (!modal) return;
+                                      const data = await response.json();
+                                      if (data.success) {
+                                        alert('Inmuebles guardados correctamente');
+                                        cerrarModalInmuebles();
+                                      } else {
+                                        throw new Error(data.message || 'Error al guardar los inmuebles');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error:', error);
+                                      alert('Error al guardar los inmuebles');
+                                    }
+                                  });
+                                }
+                              });
+                            </script>
 
-  // Centrar el modal
-  modal.style.display = 'block';
-  modal.style.position = 'fixed';
-  modal.style.top = '50%';
-  modal.style.left = '50%';
-  modal.style.transform = 'translate(-50%, -50%)';
-  
-  // Cargar datos si existe el ID
-  if (remateId) {
-    fetch(`/admin/inmuebles/${remateId}`)
-      .then(response => response.json())
-      .then(data => {
-        // Llenar los campos del formulario con los datos
-        document.getElementById('partida_registral').value = data.partida_registral || '';
-        document.getElementById('tipo_inmueble').value = data.tipo_inmueble || '';
-        document.getElementById('direccion').value = data.direccion || '';
-        document.getElementById('carga_ogravamen').value = data.carga_ogravamen || '';
-        document.getElementById('porcentaje_rematar').value = data.porcentaje_rematar || '';
-      })
-      .catch(error => console.error('Error:', error));
-  }
-}
-
-function cerrarModalInmuebles() {
-  const modal = document.getElementById('tarjetaInmuebles');
-  if (modal) {
-    modal.style.display = 'none';
-  }
-}
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  // Botón cancelar
-  const btnCancelar = document.querySelector('.boton_cancelar_formulario_inmuebles');
-  if (btnCancelar) {
-    btnCancelar.addEventListener('click', cerrarModalInmuebles);
-  }
-
-  // Cerrar al hacer click fuera del modal
-  window.addEventListener('click', (e) => {
-    const modal = document.getElementById('tarjetaInmuebles');
-    if (e.target === modal) {
-      cerrarModalInmuebles();
-    }
-  });
-
-  // Manejar el envío del formulario
-  const form = document.getElementById('formulario_inmuebles');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      
-      try {
-        const response = await fetch('/admin/editar-inmuebles', {
-          method: 'POST',
-          body: formData
-        });
-        
-        const data = await response.json();
-        if (data.success) {
-          alert('Inmuebles guardados correctamente');
-          cerrarModalInmuebles();
-        } else {
-          throw new Error(data.message || 'Error al guardar los inmuebles');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error al guardar los inmuebles');
-      }
-    });
-  }
-});
-      </script>
 
 </body>
+
 </html>

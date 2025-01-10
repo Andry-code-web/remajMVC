@@ -38,7 +38,7 @@
   <div class="slide-track">
     <div class="slide_img">
       <a href="javascript:void(0)" data-categoria="terreno_rural">
-        <img src="/img/casa de playa.png" alt="">
+        <img src="/img/Terreno rural.png" alt="">
       </a>
     </div>
     <div class="slide_img">
@@ -73,7 +73,7 @@
     </div>
     <div class="slide_img">
       <a href="javascript:void(0)" data-categoria="oficina">
-        <img src="/img/Urbanización.png" alt="">
+        <img src="/img/oficina.png" alt="">
       </a>
     </div>
   </div>
@@ -149,7 +149,7 @@
       </div>
       <div class="contenidoInformativoSubasta">
         <div class="detallesEspecificosSubasta">
-          <div class="informacionGeneralSubasta">
+          <a href="/auctions/<%= remate.id %>" class="informacionGeneralSubasta">
             <h2>Remate N°12345 - CONVOCATORIA</h2>
             <p><strong>TIPO DE REMATE:</strong> Judicial</p>
             <p><strong>LUGAR:</strong>
@@ -159,7 +159,7 @@
             <p>10:00 AM</p>
             <p><strong>Precio Base:</strong> S/ <%= remate.precios %>
             </p>
-          </div>
+          </a>
           
           <% 
             const estados = {

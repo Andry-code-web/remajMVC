@@ -52,7 +52,8 @@ class Home {
         r.id, 
         r.ubicacion, 
         r.precios, 
-        r.categoria, 
+        r.categoria,
+        r.estado, 
         i.partida_registral,
         (SELECT imagenes_inmueble FROM img_inmuebles WHERE remates_id = r.id LIMIT 1) as imagen
       FROM 

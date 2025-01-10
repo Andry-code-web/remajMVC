@@ -855,7 +855,10 @@
 }
 
 .informacionGeneralSubasta {
-    flex: 1;
+        /* flex: 1; */
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
 }
 
 .estadoActualSubasta {

@@ -219,7 +219,8 @@ i {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  display: none; /* Inicialmente oculto */
+  display: none;
+  /* Inicialmente oculto */
 }
 
 .titulo_formulario_cronograma_actividades {
@@ -361,34 +362,124 @@ i {
 .seleccion_formulario_cronograma:focus {
   animation: pulse 1.5s infinite;
 }
-.seleccion_formulario_cronograma:focus .contenedor_botones_formulario_cronograma {
+
+/* Estilos para el formulario de edición */
+.tarjeta_formulario_edicion_cronograma {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Estilos para cada sección de fase */
+.seccion_fase {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.titulo_fase {
+  color: #2c3e50;
+  font-size: 18px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #3498db;
+}
+
+.contenedor_fechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grupo_fecha {
   display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 30px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.boton_formulario_cronograma {
-  padding: 12px 24px;
-  border: none;
+.grupo_fecha label {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.entrada_fecha_hora {
+  display: flex;
+  gap: 10px;
+}
+
+.entrada_fecha,
+.entrada_hora {
+  padding: 8px;
+  border: 1px solid #bdc3c7;
   border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-.boton_cancelar_formulario_cronograma {
-  background-color: #95a5a6;
+.entrada_fecha {
+  flex: 2;
+}
+
+.entrada_hora {
+  flex: 1;
+}
+
+.entrada_fecha:focus,
+.entrada_hora:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Estilo para el botón de editar */
+.boton_editar_formulario_cronograma {
+  background-color: #f39c12;
   color: white;
 }
 
-.boton_guardar_formulario_cronograma {
-  background-color: #2980b9;
-  color: white;
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .contenedor_fechas {
+    grid-template-columns: 1fr;
+  }
+  .entrada_fecha_hora {
+    flex-direction: column;
+  }
+  .tarjeta_formulario_edicion_cronograma {
+    width: 95%;
+    padding: 20px;
+  }
+}
+/* Scrollbar personalizado */
+.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar {
+  width: 8px;
 }
 
-.boton_formulario_cronograma:hover {
-  opacity: 0.9;
+.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* modal seguimiento */
@@ -504,7 +595,8 @@ i {
   background: #f1f1f1;
 }
 .modal::-webkit-scrollbar-thumb, .tarjeta_formulario_inmuebles::-webkit-scrollbar-thumb, .tarjeta_formulario_detalles::-webkit-scrollbar-thumb {
-  background: #3498db; /* Color azul para la barra de desplazamiento */
+  background: #3498db;
+  /* Color azul para la barra de desplazamiento */
   border-radius: 5px;
 }
 .modal::-webkit-scrollbar-thumb:hover, .tarjeta_formulario_inmuebles::-webkit-scrollbar-thumb:hover, .tarjeta_formulario_detalles::-webkit-scrollbar-thumb:hover {

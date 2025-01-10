@@ -799,187 +799,98 @@
   color: #0a0000;
 }
 
-<<<<<<< HEAD
 .barraLateralFiltros input {
-  width: 100%;
-  height: 40px;
+  width: 90%;
   padding: 0.5rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
   border-radius: 0.8rem;
-  border-radius: 4px;
 }
 
-.barraLateralFiltros input:focus{
-    outline: none;
+.barraLateralFiltros input:focus {
+  outline: none;
 }
 
 .btn_filtrar {
   width: 100px;
   height: 35px;
-  border: none;
   background: red;
-  color: #fff;
+  border: none;
   border-radius: 0.5rem;
-  font-family: "fuenteparrafos";
+  color: #fff;
   font-size: 1.1rem;
-  margin-top: 0.5rem;
+  font-family: "fuentePrincipal";
+  margin-top: 1rem;
 }
 
 .listaSubastasDisponibles {
-    flex: 1;
+  flex: 1;
 }
 
 .elementoSubastaIndividual {
-    border: 1px solid #ddd;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    display: flex;
-    gap: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: flex;
+  gap: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .imagenPropiedadSubasta {
-    width: 300px;
-    height: 300px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-weight: bold;
-    border-radius: 8px;
-    background-color: #ddd;
-}
-
-.contenidoInformativoSubasta {
-    flex: 1;
-}
-
-.detallesEspecificosSubasta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.informacionGeneralSubasta {
-    flex: 1;
-}
-
-.estadoActualSubasta {
-    background: #f0f0f0;
-    padding: 1rem;
-    text-align: center;
-    width: 200px;
-    border-radius: 8px;
-}
-
-.contenedorBotonesAccion {
-    display: flex;
-    gap: 1rem;
-}
-
-.botonAccionSubasta {
-    background: #f0f0f0;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    color: #333;
-    transition: background-color 0.3s;
-}
-
-.botonAccionSubasta:hover {
-    background-color: #e0e0e0;
-}
-
-.barraLateralFiltros {
   width: 300px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.barraLateralFiltros .input-group {
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.barraLateralFiltros label {
-  display: block;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.barraLateralFiltros label i {
-  margin-right: 8px;
-  color: #8B0000;
-  width: 16px;
-}
-
-.barraLateralFiltros input {
-  width: 100%;
-  padding: 8px 8px 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #666;
-}
-
-.barraLateralFiltros input:focus {
-  border-color: #999;
-  outline: none;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-}
-
-.barraLateralFiltros button[type=submit] {
-  width: 100%;
-  padding: 10px;
-  background-color: #8B0000;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
+  height: 300px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  color: #666;
+  font-weight: bold;
+  border-radius: 8px;
+  background-color: #ddd;
 }
 
-.barraLateralFiltros button[type=submit]:hover {
-  background-color: #660000;
+.contenidoInformativoSubasta {
+  flex: 1;
 }
 
-.barraLateralFiltros button[type=submit] i {
-  font-size: 16px;
+.detallesEspecificosSubasta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
-/* Optional: Add a title style if you want to match the "FILTROS" header */
-.barraLateralFiltros::before {
-  content: "FILTROS";
-  display: block;
-  font-size: 16px;
+.informacionGeneralSubasta {
+  flex: 1;
+}
+
+.estadoActualSubasta {
+  background: #f0f0f0;
+  padding: 1rem;
+  text-align: center;
+  width: 200px;
+  border-radius: 8px;
+}
+
+.contenedorBotonesAccion {
+  display: flex;
+  gap: 1rem;
+}
+
+.botonAccionSubasta {
+  background: #f0f0f0;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;
 }
 
-/* Hover effect for icons */
-.barraLateralFiltros label:hover i {
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
+.botonAccionSubasta:hover {
+  background-color: #e0e0e0;
 }
 
 /*# sourceMappingURL=inicio.css.map */

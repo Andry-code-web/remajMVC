@@ -1,53 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Remates</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="/img/Icono-admin-configuracion.png"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="/css/admin/admin.css" />
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css"
-    />
-    <!-- admin header -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="/css/adminhf/adminhf.css" />
-    <!-- CDN DE ICONOS REMIX -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Remates</title>
+  <link rel="icon" type="image/png" href="/img/Icono-admin-configuracion.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/admin/admin.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+  <!-- admin header -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="/css/adminhf/adminhf.css">
+  <!-- CDN DE ICONOS REMIX -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
 
 <body>
   <div class="parent">
@@ -59,12 +32,14 @@
           <div class="user-actions">
             <button>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M13.094 2.085l-1.013-.082a1.082 1.082 0 0 0-.161 0l-1.063.087C6.948 2.652 4 6.053 4 10v3.838l-.948 2.846A1 1 0 0 0 4 18h4.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5H20a1 1 0 0 0 .889-1.495L20 13.838V10c0-3.94-2.942-7.34-6.906-7.915zM12 19.5c-.841 0-1.5-.659-1.5-1.5h3c0 .841-.659 1.5-1.5 1.5zM5.388 16l.561-1.684A1.03 1.03 0 0 0 6 14v-4c0-2.959 2.211-5.509 5.08-5.923l.921-.074.868.068C15.794 4.497 18 7.046 18 10v4c0 .107.018.214.052.316l.56 1.684H5.388z" />
+                <path
+                  d="M13.094 2.085l-1.013-.082a1.082 1.082 0 0 0-.161 0l-1.063.087C6.948 2.652 4 6.053 4 10v3.838l-.948 2.846A1 1 0 0 0 4 18h4.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5H20a1 1 0 0 0 .889-1.495L20 13.838V10c0-3.94-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z" />
               </svg>
             </button>
             <button id="logout-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z" />
+                <path
+                  d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z" />
                 <path d="M11 2h2v10h-2z" />
               </svg>
             </button>
@@ -74,7 +49,9 @@
           <header class="menu-wrap">
             <figure class="user">
               <div class="user-avatar">
-                <img src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80" alt="Amanda King">
+                <img
+                  src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80"
+                  alt="Amanda King">
               </div>
               <figcaption>
                 ADMIN
@@ -112,99 +89,119 @@
                 <h1 class="dashboard-title">Gestión de Remates</h1>
                 <p class="dashboard-subtitle">Sistema de administración de propiedades</p>
               </div>
-              <button onclick="abrirModalNuevoRemate()" class="btn-add-remate">
-                <i class="bi bi-plus-circle"></i>
-                Nuevo Remate
-              </button>
+              <div>
+                <button onclick="abrirModalNuevoRemate()" class="btn-add-remate">
+                  <i class="bi bi-plus-circle"></i>
+                  Nuevo Remate
+                </button>
+                <button onclick="abrirModalDetalles()" class="btn-add-remate">
+                  <i class="bi bi-file-earmark"></i>
+                  Detalles
+                </button>
+                <button onclick="abrirModalInmuebles()" class="btn-add-remate">
+                  <i class="bi bi-house-door"></i>
+                  Inmuebles
+                </button>
+                <button onclick="abrirModalSeguimiento()" class="btn-add-remate">
+                  <i class="bi bi-clock-history"></i>
+                  Seguimiento
+                </button>
+                <button onclick="abrirModalCronograma()" class="btn-add-remate">
+                  <i class="bi bi-calendar2-week"></i>
+                  Cronograma
+                </button>
+              </div>
             </div>
           </header>
 
-            <div class="metrics-container">
-              <div class="metric-card">
-                <div class="metric-icon">
-                  <i class="bi bi-house-door"></i>
-                </div>
-                <div class="metric-info">
-                  <div class="metric-value" id="totalRemates">0</div>
-                  <div class="metric-label">Total de remates</div>
-                </div>
+          <div class="metrics-container">
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="bi bi-house-door"></i>
               </div>
-              <div class="metric-card">
-                <div class="metric-icon">
-                  <i class="bi bi-graph-up"></i>
-                </div>
-                <div class="metric-info">
-                  <div class="metric-value" id="rematesActivos">0</div>
-                  <div class="metric-label">Remates activos</div>
-                </div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-icon">
-                  <i class="bi bi-currency-dollar"></i>
-                </div>
-                <div class="metric-info">
-                  <div class="metric-value" id="montoTotal">$0</div>
-                  <div class="metric-label">Monto total</div>
-                </div>
+              <div class="metric-info">
+                <div class="metric-value" id="totalRemates">0</div>
+                <div class="metric-label">Total de remates</div>
               </div>
             </div>
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="bi bi-graph-up"></i>
+              </div>
+              <div class="metric-info">
+                <div class="metric-value" id="rematesActivos">0</div>
+                <div class="metric-label">Remates activos</div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <div class="metric-info">
+                <div class="metric-value" id="montoTotal">$0</div>
+                <div class="metric-label">Monto total</div>
+              </div>
+            </div>
+          </div>
 
           <div class="search-container">
             <i class="bi bi-search search-icon"></i>
-            <input type="text" id="buscador" class="search-input" placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
+            <input type="text" id="buscador" class="search-input"
+              placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
           </div>
 
           <div class="properties-grid" id="rematesGrid">
             <% remates.forEach(function(remate) { %>
-            <div class="property-card" data-id="<%= remate.id %>">
-              <% if (remate.imagen) { %>
-              <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-              <% } else { %>
-              <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-              <% } %>
-              <div class="property-content">
-                <span class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
-                  <%= remate.estado %>
-                </span>
-                <h3 class="property-title">
-                  <%= remate.ubicacion %>
-                </h3>
-                <div class="property-price">$<%= remate.precios %>
-                </div>
-                <div class="property-details">
-                  <div class="detail-item">
-                    <i class="bi bi-building"></i>
-                    <%= remate.categoria %>
-                  </div>
-                  <div class="detail-item">
-                    <i class="bi bi-door-closed"></i>
-                    <%= remate.N_habitacion %> hab.
-                  </div>
-                  <div class="detail-item">
-                    <i class="bi bi-droplet"></i>
-                    <%= remate.N_banos %> baños
-                  </div>
-                  <div class="detail-item">
-                    <i class="bi bi-calendar"></i>
-                    <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-                  </div>
-                </div>
-                <p class="property-description">
-                  <%= remate.descripcion %>
-                </p>
-                <div class="property-actions">
-                  <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
-                    <i class="bi bi-pencil"></i>
-                    Editar
-                  </button>
-                  <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
-                    <i class="bi bi-trash"></i>
-                    Eliminar
-                  </button>
-                </div>
+              <div class="property-card" data-id="<%= remate.id %>">
+                <% if (remate.imagen) { %>
+                  <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
+                  <% } else { %>
+                    <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
+                    <% } %>
+                      <div class="property-content">
+                        <span
+                          class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                          <%= remate.estado %>
+                        </span>
+                        <h3 class="property-title">
+                          <%= remate.ubicacion %>
+                        </h3>
+                        <div class="property-price">$<%= remate.precios %>
+                        </div>
+                        <div class="property-details">
+                          <div class="detail-item">
+                            <i class="bi bi-building"></i>
+                            <%= remate.categoria %>
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-door-closed"></i>
+                            <%= remate.N_habitacion %> hab.
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-droplet"></i>
+                            <%= remate.N_banos %> baños
+                          </div>
+                          <div class="detail-item">
+                            <i class="bi bi-calendar"></i>
+                            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+                          </div>
+                        </div>
+                        <p class="property-description">
+                          <%= remate.descripcion %>
+                        </p>
+                        <div class="property-actions">
+                          <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                            <i class="bi bi-pencil"></i>
+                            Editar
+                          </button>
+                          <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                            <i class="bi bi-trash"></i>
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
               </div>
-            </div>
-            <% }); %>
+              <% }); %>
           </div>
         </div>
 
@@ -227,7 +224,7 @@
                     <i class="bi bi-geo-alt"></i>
                     Ubicación
                   </label>
-                  <select name="ubicacion" id="ubicacion" required>
+                  <select name="ubicacion" id="ubicacion">
                     <option value="">Seleccione la ubicación</option>
                     <option value="lima">Lima</option>
                     <option value="arequipa">Arequipa</option>
@@ -322,132 +319,129 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="tamano_propiedad">
+                  <label for="tamaño_propiedad">
                     <i class="bi bi-bounding-box"></i>
                     Tamaño de la propiedad
                   </label>
-                  <input type="number" id="tamano_propiedad" name="tamano_propiedad" required>
+                  <input type="number" id="tamaño_propiedad" name="tamano_propiedad" required>
                 </div>
               </div>
 
-                <div class="amenities-grid">
-                  <div class="form-group">
-                    <label for="pisina">
-                      <i class="bi bi-water"></i>
-                      Piscina
-                    </label>
-                    <select id="pisina" name="pisina">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="patio">
-                      <i class="bi bi-tree"></i>
-                      Patio
-                    </label>
-                    <select id="patio" name="patio">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="cocina">
-                      <i class="bi bi-cup-hot"></i>
-                      Cocina
-                    </label>
-                    <select id="cocina" name="cocina">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="cochera">
-                      <i class="bi bi-car-front"></i>
-                      Cochera
-                    </label>
-                    <select id="cochera" name="cochera">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="balcon">
-                      <i class="bi bi-door-open"></i>
-                      Balcón
-                    </label>
-                    <select id="balcon" name="balcon">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="jardin">
-                      <i class="bi bi-flower1"></i>
-                      Jardín
-                    </label>
-                    <select id="jardin" name="jardin">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="comedor">
-                      <i class="bi bi-table"></i>
-                      Comedor
-                    </label>
-                    <select id="comedor" name="comedor">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="sala_start">
-                      <i class="bi bi-house-heart"></i>
-                      Sala
-                    </label>
-                    <select id="sala_start" name="sala_start">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="studio">
-                      <i class="bi bi-briefcase"></i>
-                      Estudio
-                    </label>
-                    <select id="studio" name="studio">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="lavanderia">
-                      <i class="bi bi-water"></i>
-                      Lavandería
-                    </label>
-                    <select id="lavanderia" name="lavanderia">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group full-width">
-                  <label for="descripcion">
-                    <i class="bi bi-text-paragraph"></i>
-                    Descripción
+              <div class="amenities-grid">
+                <div class="form-group">
+                  <label for="pisina">
+                    <i class="bi bi-water"></i>
+                    Piscina
                   </label>
-                  <textarea
-                    id="descripcion"
-                    name="descripcion"
-                    required
-                  ></textarea>
+                  <select id="pisina" name="pisina">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
                 </div>
+                <div class="form-group">
+                  <label for="patio">
+                    <i class="bi bi-tree"></i>
+                    Patio
+                  </label>
+                  <select id="patio" name="patio">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cocina">
+                    <i class="bi bi-cup-hot"></i>
+                    Cocina
+                  </label>
+                  <select id="cocina" name="cocina">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cochera">
+                    <i class="bi bi-car-front"></i>
+                    Cochera
+                  </label>
+                  <select id="cochera" name="cochera">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="balcon">
+                    <i class="bi bi-door-open"></i>
+                    Balcón
+                  </label>
+                  <select id="balcon" name="balcon">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="jardin">
+                    <i class="bi bi-flower1"></i>
+                    Jardín
+                  </label>
+                  <select id="jardin" name="jardin">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="comedor">
+                    <i class="bi bi-table"></i>
+                    Comedor
+                  </label>
+                  <select id="comedor" name="comedor">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="sala_start">
+                    <i class="bi bi-house-heart"></i>
+                    Sala
+                  </label>
+                  <select id="sala_start" name="sala_start">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="studio">
+                    <i class="bi bi-briefcase"></i>
+                    Estudio
+                  </label>
+                  <select id="studio" name="studio">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="lavanderia">
+                    <i class="bi bi-water"></i>
+                    Lavandería
+                  </label>
+                  <select id="lavanderia" name="lavanderia">
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="descripcion">
+                  <i class="bi bi-text-paragraph"></i>
+                  Descripción
+                </label>
+                <textarea id="descripcion" name="descripcion" required></textarea>
+              </div>
 
               <!-- Campo para ingresar la URL del anexo PDF -->
               <div class="subir_anexo">
-                <input type="text" id="anexo-url" name="anexo_url" placeholder="Ingrese la URL del anexo PDF" class="input">
+                <input type="text" id="anexo-url" name="anexo_url" placeholder="Ingrese la URL del anexo PDF"
+                  class="input">
               </div>
               <!-- Sección para subir imágenes -->
               <div class="subir_img">
@@ -460,267 +454,6 @@
                 <div id="image-preview-container"></div>
               </div>
 
-              <!-- Area seguimiento -->
-              <!-- Detalle de expediente -->
-              <h2>Seguimiento de remates</h2>
-              <h2>Detalles de expediente</h2>
-              <div class="form-grid-seguimiento">
-                <div class="form-group">
-                  <label for="n_expediente">
-                    N° Expediente
-                  </label>
-                  <input type="text" id="n_expediente" name="n_expediente" required>
-                </div>
-                <div class="form-group">
-                  <label for="distrito_judicial">
-                    Distrito Judicial
-                  </label>
-                  <input type="text" id="distrito_judicial" name="distrito_judicial" required>
-                </div>
-                <div class="form-group">
-                  <label for="especialidad">
-                    Especialidad
-                  </label>
-                  <input type="text" id="especialidad" name="especialidad" required>
-                </div>
-                <div class="form-group">
-                  <label for="instancia">
-                    Instancia
-                  </label>
-                  <input type="text" id="instancia" name="instancia" required>
-                </div>
-                <div class="form-group">
-                  <label for="organo_juriccional">
-                    Organo Jurisdiccional
-                  </label>
-                  <input type="text" id="organo_juridiccional" name="organo_juridiccional" required>
-                </div>
-                <!-- Detalle de seguimiento -->
-                <h2>Detalles de seguimiento</h2>
-                <div class="form-group">
-                  <label for="n_convocatoria">
-                    N° Convocatoria
-                  </label>
-                  <input type="text" id="n_convocatoria" name="n_convocatoria" required>
-                </div>
-                <div class="form-group">
-                  <label for="fecha_registro">
-                    Fecha de Registro
-                  </label>
-                  <input type="date" id="fecha_registro" name="fecha_registro" required>
-                </div>
-                <div class="form-group">
-                  <label for="procesado_por">
-                    Procesado por
-                  </label>
-                  <input type="text" id="procesado_por" name="procesado_por" required>
-                </div>
-                <div class="form-group">
-                  <label for="reanudado">
-                    ¿Reanudado?
-                  </label>
-                  <select id="reanudado" name="reanudado" required>
-                    <option value="SI">Sí</option>
-                    <option value="NO">No</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="fase_convocatoria">
-                    Fase Convocatoria
-                  </label>
-                  <input type="text" id="fase_convocatoria" name="fase_convocatoria" required>
-                </div>
-                <div class="form-group">
-                  <label for="estado_convocatoria">
-                    Estado Convocatoria
-                  </label>
-                  <input type="text" id="estado_convocatoria" name="estado_convocatoria" required>
-                </div>
-              </div>
-
-              <!-- Area detalles -->
-              <h2>Detalles de remates</h2>
-              <div class="form-grid-detalles">
-                <div class="form-group">
-                  <label for="expediente">
-                    Expediente
-                  </label>
-                  <input type="text" id="expediente" name="expediente" required>
-                </div>
-                <div class="form-group">
-                  <label for="distrito_judicial">
-                    Distrito Judicial
-                  </label>
-                  <input type="text" id="distrito_judicial" name="distrito_judicial" required>
-                </div>
-                <div class="form-group">
-                  <label for="organo_juridiccional">
-                    Órgano Jurisdiccional
-                  </label>
-                  <input type="text" id="organo_juridiccional" name="organo_juridiccional" required>
-                </div>
-                <div class="form-group">
-                  <label for="instancia">
-                    Instancia
-                  </label>
-                  <input type="text" id="instancia" name="instancia" required>
-                </div>
-                <div class="form-group">
-                  <label for="juez">
-                    Juez
-                  </label>
-                  <input type="text" id="juez" name="juez" required>
-                </div>
-                <div class="form-group">
-                  <label for="especialista">
-                    Especialista
-                  </label>
-                  <input type="text" id="especialista" name="especialista" required>
-                </div>
-                <div class="form-group">
-                  <label for="materia">
-                    Materia
-                  </label>
-                  <input type="text" id="materia" name="materia" required>
-                </div>
-                <div class="form-group">
-                  <label for="resolucion">
-                    Resolución
-                  </label>
-                  <textarea id="resolucion" name="resolucion" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="fecha_resolucion">
-                    Fecha Resolución
-                  </label>
-                  <input type="date" id="fecha_resolucion" name="fecha_resolucion" required>
-                </div>
-                <div class="form-group">
-                  <label for="archivo">
-                    Archivo
-                  </label>
-                  <input type="text" id="archivo" name="archivo" required>
-                </div>
-                <div class="form-group">
-                  <label for="convocatoria">
-                    Convocatoria
-                  </label>
-                  <input type="text" id="convocatoria" name="convocatoria" required>
-                </div>
-                <div class="form-group">
-                  <label for="tipo_cambio">
-                    Tipo Cambio
-                  </label>
-                  <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001" required>
-                </div>
-                <div class="form-group">
-                  <label for="tasacion">
-                    Tasación
-                  </label>
-                  <input type="number" id="tasacion" name="tasacion" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="precio_base">
-                    Precio Base
-                  </label>
-                  <input type="number" id="precio_base" name="precio_base" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="incremento_ofertas">
-                    Incremento entre ofertas
-                  </label>
-                  <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="arancel">
-                    Arancel
-                  </label>
-                  <input type="number" id="arancel" name="arancel" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="oblaje">
-                    Oblaje
-                  </label>
-                  <input type="number" id="oblaje" name="oblaje" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="descripcion">
-                    Descripción
-                  </label>
-                  <textarea id="descripcion" name="descripcion_de_details" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="n_inscritos">
-                    N° inscritos
-                  </label>
-                  <input type="number" id="n_inscritos" name="n_inscritos" min="0" required>
-                </div>
-              </div>
-
-              <!-- Area inmuebles de remates -->
-              <h2>Inmuebles de remates</h2>
-              <div class="form-grid-inmuebles">
-                <div class="form-group">
-                  <label for="partida_registral">
-                    Partida Registral
-                  </label>
-                  <input type="text" id="partida_registral" name="partida_registral" required>
-                </div>
-                <div class="form-group">
-                  <label for="tipo_inmueble">
-                    Tipo Inmueble
-                  </label>
-                  <input type="text" id="tipo_inmueble" name="tipo_inmueble" required>
-                </div>
-                <div class="form-group">
-                  <label for="direccion">
-                    Dirección
-                  </label>
-                  <input type="text" id="direccion" name="direccion" required>
-                </div>
-                <div class="form-group">
-                  <label for="carga_ogravamen">
-                    Carga Y/O gravamen
-                  </label>
-                  <input type="text" id="carga_ogravamen" name="carga_ogravamen" required>
-                </div>
-                <div class="form-group">
-                  <label for="porcentaje_rematar">
-                    Porcentaje a Rematar
-                  </label>
-                  <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01" required>
-                </div>
-                <div class="form-group">
-                  <label for="imagenes">
-                    Imagenes
-                  </label>
-                  <input type="text" id="imagenes" name="imagenes" required>
-                </div>
-              </div>
-
-              <!-- area cronograma -->
-              <h2>Cronograma de remates</h2>
-              <div class="form-grid-cronograma">
-                <div class="form-group">
-                  <label for="actividad">
-                    N° FASE
-                  </label>
-                  <input type="text" id="actividad" name="actividad" required>
-                </div>
-                <div class="form-group">
-                  <label for="fecha_actividad">
-                    Fecha inicio
-                  </label>
-                  <input type="date" id="fecha_actividad" name="fecha_actividad" required>
-                </div>
-                <div class="form-group">
-                  <label for="fecha_fin">
-                    Fecha fin
-                  </label>
-                  <input type="date" id="fecha_fin" name="fecha_fin" required>
-                </div>
-              </div>
-
               <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevoRemate()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">
@@ -729,137 +462,101 @@
                 </button>
               </div>
             </form>
-
           </div>
         </div>
 
-          <!-- Modal de edición -->
-          <div id="editModal" class="modal" style="display: none">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 class="modal-title">
-                  <i class="bi bi-house-gear"></i>
-                  Editar Remate
-                </h2>
-                <button class="close-button" onclick="cerrarModal()">
-                  <i class="bi bi-x"></i>
-                </button>
-              </div>
-              <form id="editForm" onsubmit="guardarCambios(event)">
-                <input type="hidden" id="editId" name="id" />
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label for="editUbicacion">
-                      <i class="bi bi-geo-alt"></i>
-                      Ubicación
-                    </label>
-                    <input
-                      type="text"
-                      id="editUbicacion"
-                      name="ubicacion"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editPrecio">
-                      <i class="bi bi-currency-dollar"></i>
-                      Precio Base
-                    </label>
-                    <input
-                      type="number"
-                      id="editPrecio"
-                      name="precios"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editCategoria">
-                      <i class="bi bi-building"></i>
-                      Categoría
-                    </label>
-                    <select id="editCategoria" name="categoria" required>
-                      <option value="departamento">Departamento</option>
-                      <option value="cochera">Cochera</option>
-                      <option value="terreno">Terreno</option>
-                      <option value="residencial">Residencial</option>
-                      <option value="casa">Casa</option>
-                      <option value="local">Local</option>
-                      <option value="casa_playa">Casa de Playa</option>
-                      <option value="terreno_urbano">Terreno Urbano</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="editHabitaciones">
-                      <i class="bi bi-door-closed"></i>
-                      Habitaciones
-                    </label>
-                    <input
-                      type="number"
-                      id="editHabitaciones"
-                      name="N_habitacion"
-                      min="0"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editBanos">
-                      <i class="bi bi-droplet"></i>
-                      Baños
-                    </label>
-                    <input
-                      type="number"
-                      id="editBanos"
-                      name="N_banos"
-                      min="0"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editFechaRemate">
-                      <i class="bi bi-calendar"></i>
-                      Fecha de Remate
-                    </label>
-                    <input
-                      type="date"
-                      id="editFechaRemate"
-                      name="fecha_remate"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editHoraRemate">
-                      <i class="bi bi-clock"></i>
-                      Hora de Remate
-                    </label>
-                    <input
-                      type="time"
-                      id="editHoraRemate"
-                      name="hora_remate"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="editEstado">
-                      <i class="bi bi-toggle-on"></i>
-                      Estado
-                    </label>
-                    <select id="editEstado" name="estado" required>
-                      <option value="activo">Activo</option>
-                      <option value="en_curso">En Curso</option>
-                      <option value="finalizado">Finalizado</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="editTamañoPropiedad">
-                      <i class="bi bi-bounding-box"></i>
-                      Tamaño de la propiedad
-                    </label>
-                    <input
-                      type="number"
-                      id="editTamañoPropiedad"
-                      name="tamano_propiedad"
-                      required
-                    />
-                  </div>
+        <!-- Modal de edición -->
+        <div id="editModal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                <i class="bi bi-house-gear"></i>
+                Editar Remate
+              </h2>
+              <button class="close-button" onclick="cerrarModal()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form id="editForm" onsubmit="guardarCambios(event)">
+              <input type="hidden" id="editId" name="id">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="editUbicacion">
+                    <i class="bi bi-geo-alt"></i>
+                    Ubicación
+                  </label>
+                  <input type="text" id="editUbicacion" name="ubicacion" required>
                 </div>
+                <div class="form-group">
+                  <label for="editPrecio">
+                    <i class="bi bi-currency-dollar"></i>
+                    Precio Base
+                  </label>
+                  <input type="number" id="editPrecio" name="precios" required>
+                </div>
+                <div class="form-group">
+                  <label for="editCategoria">
+                    <i class="bi bi-building"></i>
+                    Categoría
+                  </label>
+                  <select id="editCategoria" name="categoria" required>
+                    <option value="departamento">Departamento</option>
+                    <option value="cochera">Cochera</option>
+                    <option value="terreno">Terreno</option>
+                    <option value="residencial">Residencial</option>
+                    <option value="casa">Casa</option>
+                    <option value="local">Local</option>
+                    <option value="casa_playa">Casa de Playa</option>
+                    <option value="terreno_urbano">Terreno Urbano</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="editHabitaciones">
+                    <i class="bi bi-door-closed"></i>
+                    Habitaciones
+                  </label>
+                  <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="editBanos">
+                    <i class="bi bi-droplet"></i>
+                    Baños
+                  </label>
+                  <input type="number" id="editBanos" name="N_banos" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="editFechaRemate">
+                    <i class="bi bi-calendar"></i>
+                    Fecha de Remate
+                  </label>
+                  <input type="date" id="editFechaRemate" name="fecha_remate" required>
+                </div>
+                <div class="form-group">
+                  <label for="editHoraRemate">
+                    <i class="bi bi-clock"></i>
+                    Hora de Remate
+                  </label>
+                  <input type="time" id="editHoraRemate" name="hora_remate" required>
+                </div>
+                <div class="form-group">
+                  <label for="editEstado">
+                    <i class="bi bi-toggle-on"></i>
+                    Estado
+                  </label>
+                  <select id="editEstado" name="estado" required>
+                    <option value="activo">Activo</option>
+                    <option value="en_curso">En Curso</option>
+                    <option value="finalizado">Finalizado</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="editTamañoPropiedad">
+                    <i class="bi bi-bounding-box"></i>
+                    Tamaño de la propiedad
+                  </label>
+                  <input type="number" id="editTamañoPropiedad" name="tamano_propiedad" required>
+                </div>
+              </div>
 
               <div class="amenities-grid">
                 <div class="form-group">
@@ -924,7 +621,7 @@
                 </div>
                 <div class="form-group">
                   <label for="editComedor">
-                    <i class="bi bi-table"></i>
+                    <i class="bi bi-cup-straw"></i>
                     Comedor
                   </label>
                   <select id="editComedor" name="comedor">
@@ -964,121 +661,52 @@
                 </div>
               </div>
 
-                <div class="form-group">
-                  <label for="editPisos">
-                    <i class="bi bi-layers"></i>
-                    Número de Pisos
-                  </label>
-                  <input type="number" id="editPisos" name="pisos" min="1" />
-                </div>
-
-                <div class="form-group full-width">
-                  <label for="editDescripcion">
-                    <i class="bi bi-text-paragraph"></i>
-                    Descripción
-                  </label>
-                  <textarea
-                    id="editDescripcion"
-                    name="descripcion"
-                    required
-                  ></textarea>
-                </div>
-
-              <!-- Campo para ingresar la URL del anexo PDF -->
-              <div class="subir_anexo">
-                <input type="text" id="editAnexoUrl" name="anexo_url" placeholder="Ingrese la URL del anexo PDF" class="input">
-              </div>
-              <!-- Sección para subir imágenes -->
-              <div class="subir_img">
-                <label for="editFileUpload" class="custom-file-upload">
-                  <i class="fas fa-upload"></i> Agrega una foto
+              <div class="form-group">
+                <label for="editPisos">
+                  <i class="bi bi-layers"></i>
+                  Número de Pisos
                 </label>
-                <input type="file" id="editFileUpload" name="photo" accept="image/*" multiple>
-              </div>
-              <div id="editImagePreview">
-                <div id="editImagePreviewContainer"></div>
+                <input type="number" id="editPisos" name="pisos" min="1">
               </div>
 
-              <!-- Area seguimiento -->
-              <!-- Detalle de expediente -->
-               <h2>Seguimiento de remates</h2>
-              <h2>Detalles de expediente</h2>
-              <div class="form-grid-seguimiento">
-                <div class="form-group">
-                  <label for="editN_expediente">
-                    N° Expediente
-                  </label>
-                  <input type="text" id="editN_expediente" name="n_expediente" required>
-                </div>
-                <div class="form-group">
-                  <label for="editDistrito_judicial">
-                    Distrito Judicial
-                  </label>
-                  <input type="text" id="editDistrito_judicial" name="distrito_judicial" required>
-                </div>
-                <div class="form-group">
-                  <label for="editEspecialidad">
-                    Especialidad
-                  </label>
-                  <input type="text" id="editEspecialidad" name="especialidad" required>
-                </div>
-                <div class="form-group">
-                  <label for="editInstancia">
-                    Instancia
-                  </label>
-                  <input type="text" id="editInstancia" name="instancia" required>
-                </div>
-                <div class="form-group">
-                  <label for="organo_juriccional">
-                    Organo Jurisdiccional
-                  </label>
-                  <input type="text" id="editOrgano_juridiccional" name="organo_juridiccional" required>
-                </div>
-                <!-- Detalle de seguimiento -->
-                 <h2>Detalle de seguimiento</h2>
-                <div class="form-group">
-                  <label for="editConvocatoria">
-                    N° Convocatoria
-                  </label>
-                  <input type="text" id="editConvocatoria" name="convocatoria" required>
-                </div>
-                <div class="form-group">
-                  <label for="editFecha_registro">
-                    Fecha de Registro
-                  </label>
-                  <input type="date" id="editFecha_registro" name="fecha_registro" required>
-                </div>
-                <div class="form-group">
-                  <label for="editProcesado_por">
-                    Procesado por
-                  </label>
-                  <input type="text" id="editProcesado_por" name="procesado_por" required>
-                </div>
-                <div class="form-group">
-                  <label for="editReanudado">
-                    ¿Reanudado?
-                  </label>
-                  <select id="editReanudado" name="reanudado" required>
-                    <option value="SI">Sí</option>
-                    <option value="NO">No</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="editFase_convocatoria">
-                    Fase Convocatoria
-                  </label>
-                  <input type="text" id="editFase_convocatoria" name="fase_convocatoria" required>
-                </div>
-                <div class="form-group">
-                  <label for="editEstado_convocatoria">
-                    Estado Convocatoria
-                  </label>
-                  <input type="text" id="editEstado_convocatoria" name="estado_convocatoria" required>
-                </div>
+              <div class="form-group full-width">
+                <label for="editDescripcion">
+                  <i class="bi bi-text-paragraph"></i>
+                  Descripción
+                </label>
+                <textarea id="editDescripcion" name="descripcion" required></textarea>
               </div>
 
-              <!-- Area detalles -->
-              <h2>Detalles de remates</h2>
+              <!-- Area botones -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+                  <i class="bi bi-x-circle"></i>
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle"></i>
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal de Detalles -->
+        <div id="modalDetalles" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                <i class="bi bi-file-earmark"></i>
+                Detalles de Remate
+              </h2>
+              <button class="close-button" onclick="cerrarModalDetalles()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form id="formDetalles" action="/admin/editar-detalles" method="POST" enctype="multipart/form-data">
+              <input type="hidden" id="editId" name="id">
+              <!-- Aquí van los campos del formulario de detalles -->
               <div class="form-grid-detalles">
                 <div class="form-group">
                   <label for="editExpediente">
@@ -1136,15 +764,15 @@
                 </div>
                 <div class="form-group">
                   <label for="editArchivo">
-                    Archivo
+                    Archivo PDF
                   </label>
-                  <input type="text" id="editArchivo" name="archivo" required>
+                  <input type="file" id="editArchivo" name="archivo" accept="application/pdf" required>
                 </div>
                 <div class="form-group">
-                  <label for="editConvocatoria">
+                  <label for="editNro_convocatoria">
                     Convocatoria
                   </label>
-                  <input type="text" id="editConvocatoria" name="convocatoria" required>
+                  <input type="text" id="editNro_convocatoria" name="nro_convocatoria" required>
                 </div>
                 <div class="form-group">
                   <label for="editTipo_cambio">
@@ -1195,9 +823,35 @@
                   <input type="number" id="editN_inscritos" name="n_inscritos" min="0" required>
                 </div>
               </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalDetalles()">
+                  <i class="bi bi-x-circle"></i>
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle"></i>
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
 
-              <!-- Area inmuebles de remates -->
-              <h2>Inmuebles de remates</h2>
+        <!-- Modal de Inmuebles -->
+        <div id="modalInmuebles" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                <i class="bi bi-house-door"></i>
+                Inmuebles de Remate
+              </h2>
+              <button class="close-button" onclick="cerrarModalInmuebles()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form id="formInmuebles" action="/admin/editar-inmuebles" method="POST" enctype="multipart/form-data">
+              <input type="hidden" id="editId" name="id">
+              <!-- Aquí van los campos del formulario de inmuebles -->
               <div class="form-grid-inmuebles">
                 <div class="form-group">
                   <label for="editPartida_registral">
@@ -1231,38 +885,13 @@
                 </div>
                 <div class="form-group">
                   <label for="editImagenes">
-                    Imagenes
+                    Imagen
                   </label>
-                  <input type="text" id="editImagenes" name="imagenes" required>
+                  <input type="file" id="editImagenes" name="imagenes" accept="image/*" required>
                 </div>
               </div>
-
-              <!-- area cronograma -->
-              <h2>Cronograma de remates</h2>
-              <div class="form-grid-cronograma">
-                <div class="form-group">
-                  <label for="editActividad">
-                    N° FASE
-                  </label>
-                  <input type="text" id="editActividad" name="actividad" required>
-                </div>
-                <div class="form-group">
-                  <label for="editFecha_actividad">
-                    Fecha inicio
-                  </label>
-                  <input type="date" id="editFecha_actividad" name="fecha_actividad" required>
-                </div>
-                <div class="form-group">
-                  <label for="editFecha_fin">
-                    Fecha fin
-                  </label>
-                  <input type="date" id="editFecha_fin" name="fecha_fin" required>
-                </div>
-              </div>
-
-              <!-- Area botones -->
               <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalInmuebles()">
                   <i class="bi bi-x-circle"></i>
                   Cancelar
                 </button>
@@ -1274,50 +903,144 @@
             </form>
           </div>
         </div>
+
+        <!-- Modal de Seguimiento -->
+        <div id="modalSeguimiento" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                <i class="bi bi-clock-history"></i>
+                Seguimiento de Remate
+              </h2>
+              <button class="close-button" onclick="cerrarModalSeguimiento()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form id="formSeguimiento" action="/admin/editar-seguimiento" method="POST" enctype="multipart/form-data">
+              <input type="hidden" id="editId" name="id">
+              <!-- Aquí van los campos del formulario de seguimiento -->
+              <div class="form-grid-seguimiento">
+                <div class="form-group">
+                  <label for="editFecha_seguimiento">
+                    Fecha de Seguimiento
+                  </label>
+                  <input type="date" id="editFecha_seguimiento" name="fecha_seguimiento" required>
+                </div>
+                <div class="form-group">
+                  <label for="editDescripcion_seguimiento">
+                    Descripción del Seguimiento
+                  </label>
+                  <textarea id="editDescripcion_seguimiento" name="descripcion_seguimiento" required></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalSeguimiento()">
+                  <i class="bi bi-x-circle"></i>
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle"></i>
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal de Cronograma -->
+        <div id="modalCronograma" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                <i class="bi bi-calendar2-week"></i>
+                Cronograma de Actividades
+              </h2>
+              <button class="close-button" onclick="cerrarModalCronograma()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form id="formCronograma" action="/admin/editar-cronograma" method="POST" enctype="multipart/form-data">
+              <input type="hidden" id="editId" name="id">
+              <!-- Aquí van los campos del formulario de cronograma -->
+              <div class="form-grid-cronograma">
+                <div class="form-group">
+                  <label for="editActividad_cronograma">
+                    Actividad Programada
+                  </label>
+                  <input type="text" id="editActividad_cronograma" name="actividad_cronograma" required>
+                </div>
+                <div class="form-group">
+                  <label for="editIdentificador_remate_asociado">
+                    Identificador del Remate Asociado
+                  </label>
+                  <input type="text" id="editIdentificador_remate_asociado" name="identificador_remate_asociado" required>
+                </div>
+                <div class="form-group">
+                  <label for="editFecha_inicio_actividad">
+                    Fecha de Inicio de la Actividad
+                  </label>
+                  <input type="date" id="editFecha_inicio_actividad" name="fecha_inicio_actividad" required>
+                </div>
+                <div class="form-group">
+                  <label for="editFecha_finalizacion_actividad">
+                    Fecha de Finalización de la Actividad
+                  </label>
+                  <input type="date" id="editFecha_finalizacion_actividad" name="fecha_finalizacion_actividad" required>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalCronograma()">
+                  <i class="bi bi-x-circle"></i>
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle"></i>
+                  Guardar Cronograma de Actividades
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-    <script>
-      // Funciones de utilidad
-      const formatPrice = (price) =>
-        Number(String(price).replace(/[^0-9.-]+/g, "")) || 0;
+  <script>
+    // Funciones de utilidad
+    const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
 
-      // Gestión de métricas
-      function actualizarMetricas() {
-        const remates = document.querySelectorAll(".property-card");
-        const totalRemates = remates.length;
-        let rematesActivos = 0;
-        let montoTotal = 0;
+    // Gestión de métricas
+    function actualizarMetricas() {
+      const remates = document.querySelectorAll('.property-card');
+      const totalRemates = remates.length;
+      let rematesActivos = 0;
+      let montoTotal = 0;
 
-        remates.forEach((remate) => {
-          if (remate.querySelector(".status-active")) {
-            rematesActivos++;
-          }
-          const precioTexto =
-            remate.querySelector(".property-price").textContent;
-          montoTotal += formatPrice(precioTexto);
-        });
+      remates.forEach(remate => {
+        if (remate.querySelector('.status-active')) {
+          rematesActivos++;
+        }
+        const precioTexto = remate.querySelector('.property-price').textContent;
+        montoTotal += formatPrice(precioTexto);
+      });
 
-        document.getElementById("totalRemates").textContent = totalRemates;
-        document.getElementById("rematesActivos").textContent = rematesActivos;
-        document.getElementById(
-          "montoTotal"
-        ).textContent = `$${montoTotal.toLocaleString()}`;
-      }
+      document.getElementById('totalRemates').textContent = totalRemates;
+      document.getElementById('rematesActivos').textContent = rematesActivos;
+      document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
+    }
 
-      // Gestión de búsqueda
-      function buscarRemate() {
-        const input = document.getElementById("buscador").value.toLowerCase();
-        const remates = document.querySelectorAll(".property-card");
+    // Gestión de búsqueda
+    function buscarRemate() {
+      const input = document.getElementById('buscador').value.toLowerCase();
+      const remates = document.querySelectorAll('.property-card');
 
-        remates.forEach((remate) => {
-          const texto = remate.textContent.toLowerCase();
-          remate.style.display = texto.includes(input) ? "block" : "none";
-        });
+      remates.forEach(remate => {
+        const texto = remate.textContent.toLowerCase();
+        remate.style.display = texto.includes(input) ? 'block' : 'none';
+      });
 
-        actualizarMetricas();
-      }
+      actualizarMetricas();
+    }
 
     // Gestión de eliminación
     function eliminarRemate(id) {
@@ -1333,8 +1056,8 @@
       }).then((result) => {
         if (result.isConfirmed) {
           fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-              method: 'DELETE'
-            })
+            method: 'DELETE'
+          })
             .then(response => response.json())
             .then(data => {
               if (data.success) {
@@ -1353,16 +1076,16 @@
       });
     }
 
-      // Gestión de nuevo remate
-      function abrirModalNuevoRemate() {
-        document.getElementById("modalNuevoRemate").style.display = "block";
-      }
+    // Gestión de nuevo remate
+    function abrirModalNuevoRemate() {
+      document.getElementById('modalNuevoRemate').style.display = 'block';
+    }
 
-      function cerrarModalNuevoRemate() {
-        document.getElementById("modalNuevoRemate").style.display = "none";
-        document.getElementById("formNuevoRemate").reset();
-        document.getElementById("image-preview-container").innerHTML = "";
-      }
+    function cerrarModalNuevoRemate() {
+      document.getElementById('modalNuevoRemate').style.display = 'none';
+      document.getElementById('formNuevoRemate').reset();
+      document.getElementById('image-preview-container').innerHTML = '';
+    }
 
     // Gestión de edición de remate
     function abrirModalEditar(id) {
@@ -1392,178 +1115,183 @@
           document.getElementById('editLavanderia').value = data.lavanderia;
           document.getElementById('editDescripcion').value = data.descripcion;
 
-          // Seguimiento de remates
-          document.getElementById('editN_expediente').value = data.expediente;
-          document.getElementById('editDistrito_judicial').value = data.distrito_judicial;
-          document.getElementById('editEspecialidad').value = data.especialidad;
-          document.getElementById('editInstancia').value = data.instancia;
-          document.getElementById('editOrgano_juridiccional').value = data.organo_juridiccional;
-          document.getElementById('editConvocatoria').value = data.nro_convocatoria;
-          document.getElementById('editFecha_registro').value = data.fecha_registro ? new Date(data.fecha_registro).toISOString().split('T')[0] : '';
-          document.getElementById('editProcesado_por').value = data.procesado_por;
-          document.getElementById('editReanudado').value = data.reanudado;
-          document.getElementById('editFase_convocatoria').value = data.fase_convocatoria;
-          document.getElementById('editEstado_convocatoria').value = data.estado_convocatoria;
+          document.getElementById('editModal').style.display = 'block';
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire('Error', 'Error al cargar los datos del remate', 'error');
+        });
+    }
 
-          // Detalles de remates
-          document.getElementById('editExpediente').value = data.expediente;
-          document.getElementById('editDistrito_judicial').value = data.distrito_judicial;
-          document.getElementById('editOrgano_juridiccional').value = data.organo_juridiccional;
-          document.getElementById('editInstancia').value = data.instancia;
-          document.getElementById('editJuez').value = data.juez;
-          document.getElementById('editEspecialista').value = data.especialista;
-          document.getElementById('editMateria').value = data.materia;
-          document.getElementById('editResolucion').value = data.resolucion;
-          document.getElementById('editFecha_resolucion').value = data.fecha_resolucion;
-          document.getElementById('editArchivo').value = data.archivo;
-          document.getElementById('editConvocatoria').value = data.nro_convocatoria;
-          document.getElementById('editTipo_cambio').value = data.tipo_cambio;
-          document.getElementById('editTasacion').value = data.tasacion;
-          document.getElementById('editPrecio_base').value = data.precio_base;
-          document.getElementById('editIncremento_ofertas').value = data.incremento_ofertas;
-          document.getElementById('editArancel').value = data.arancel;
-          document.getElementById('editOblaje').value = data.oblaje;
-          document.getElementById('editDescripcion').value = data.descripcion;
-          document.getElementById('editN_inscritos').value = data.n_inscritos;
+    function cerrarModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
 
-          // Inmuebles de remates
-          document.getElementById('editPartida_registral').value = data.partida_registral;
-          document.getElementById('editTipo_inmueble').value = data.tipo_inmueble;
-          document.getElementById('editDireccion').value = data.direccion;
-          document.getElementById('editCarga_ogravamen').value = data.carga_ogravamen;
-          document.getElementById('editPorcentaje_rematar').value = data.porcentaje_rematar;
-          document.getElementById('editImagenes').value = data.imagenes;
+    async function guardarCambios(event) {
+      event.preventDefault();
 
-          // Cronograma de remates
-          document.getElementById('editActividad').value = data.actividad;
-          document.getElementById('editFecha_actividad').value = data.fecha_actividad;
-          document.getElementById('editFecha_fin').value = data.fecha_fin;
+      const formData = new FormData(event.target);
+      const id = document.getElementById('editId').value;
 
-            document.getElementById("editModal").style.display = "block";
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            Swal.fire("Error", "Error al cargar los datos del remate", "error");
-          });
-      }
+      try {
+        const response = await fetch(`/admin/editar-remate/${id}`, {
+          method: 'POST',
+          body: formData
+        });
 
-      function cerrarModal() {
-        document.getElementById("editModal").style.display = "none";
-      }
+        const data = await response.json();
 
-      async function guardarCambios(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const id = document.getElementById("editId").value;
-
-        try {
-          const response = await fetch(`/admin/editar-remate/${id}`, {
-            method: "POST",
-            body: formData,
-          });
-
-          const data = await response.json();
-
-          if (data.success) {
-            Swal.fire({
-              title: "¡Éxito!",
-              text: "Remate actualizado correctamente",
-              icon: "success",
-            }).then(() => {
-              window.location.reload();
-            });
-          } else {
-            throw new Error(data.message || "Error al actualizar el remate");
-          }
-        } catch (error) {
-          console.error("Error:", error);
+        if (data.success) {
           Swal.fire({
-            title: "Error",
-            text: error.message,
-            icon: "error",
+            title: '¡Éxito!',
+            text: 'Remate actualizado correctamente',
+            icon: 'success'
+          }).then(() => {
+            window.location.reload();
           });
+        } else {
+          throw new Error(data.message || 'Error al actualizar el remate');
         }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error'
+        });
       }
+    }
 
-      // Event Listeners
-      document.addEventListener("DOMContentLoaded", () => {
-        actualizarMetricas();
+    // Gestión de detalles de remate
+    function abrirModalDetalles() {
+      document.getElementById('modalDetalles').style.display = 'block';
+    }
 
-      // Manejador para cerrar modales solo cuando se presione el botón de salida
-      window.onclick = function(event) {
+    function cerrarModalDetalles() {
+      document.getElementById('modalDetalles').style.display = 'none';
+    }
+
+    // Gestión de inmuebles de remate
+    function abrirModalInmuebles() {
+      document.getElementById('modalInmuebles').style.display = 'block';
+    }
+
+    function cerrarModalInmuebles() {
+      document.getElementById('modalInmuebles').style.display = 'none';
+    }
+
+    // Gestión de seguimiento de remate
+    function abrirModalSeguimiento() {
+      document.getElementById('modalSeguimiento').style.display = 'block';
+    }
+
+    function cerrarModalSeguimiento() {
+      document.getElementById('modalSeguimiento').style.display = 'none';
+    }
+
+    // Gestión de cronograma de remate
+    function abrirModalCronograma() {
+      document.getElementById('modalCronograma').style.display = 'block';
+    }
+
+    function cerrarModalCronograma() {
+      document.getElementById('modalCronograma').style.display = 'none';
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarMetricas();
+
+      // Manejador para cerrar modales al hacer clic fuera
+      window.onclick = function (event) {
         const modalNuevo = document.getElementById('modalNuevoRemate');
         const modalEditar = document.getElementById('editModal');
+        const modalDetalles = document.getElementById('modalDetalles');
+        const modalInmuebles = document.getElementById('modalInmuebles');
+        const modalSeguimiento = document.getElementById('modalSeguimiento');
+        const modalCronograma = document.getElementById('modalCronograma');
 
-        // Verifica si el clic fue fuera del modal y si no se ha hecho clic en el botón de cierre
-        if (event.target === modalNuevo && event.target === botonCerrarModalNuevo) {
+        if (event.target === modalNuevo) {
           cerrarModalNuevoRemate();
         }
 
-        if (event.target === modalEditar && event.target === botonCerrarModalEditar) {
+        if (event.target === modalEditar) {
           cerrarModal();
+        }
+
+        if (event.target === modalDetalles) {
+          cerrarModalDetalles();
+        }
+
+        if (event.target === modalInmuebles) {
+          cerrarModalInmuebles();
+        }
+
+        if (event.target === modalSeguimiento) {
+          cerrarModalSeguimiento();
+        }
+
+        if (event.target === modalCronograma) {
+          cerrarModalCronograma();
         }
       };
 
-
       // Manejador para la carga de imágenes
-      document.getElementById('file-upload').addEventListener('change', function(event) {
+      document.getElementById('file-upload').addEventListener('change', function (event) {
         const files = event.target.files;
         const minFiles = 1;
         const maxFiles = 10;
 
-            if (files.length < minFiles || files.length > maxFiles) {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
-              });
-              event.target.value = "";
-              return;
-            }
+        if (files.length < minFiles || files.length > maxFiles) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
+          });
+          event.target.value = "";
+          return;
+        }
 
-            const imagePreviewContainer = document.getElementById(
-              "image-preview-container"
-            );
-            imagePreviewContainer.innerHTML = "";
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        imagePreviewContainer.innerHTML = "";
 
-            for (let i = 0; i < files.length; i++) {
-              const file = files[i];
-              const reader = new FileReader();
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
 
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             const img = document.createElement('img');
             img.src = e.target.result;
             img.className = 'preview-img';
             imagePreviewContainer.appendChild(img);
           };
 
-              reader.readAsDataURL(file);
-            }
-          });
+          reader.readAsDataURL(file);
+        }
       });
+    });
 
-      // Obtener parámetros de URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const success = urlParams.get("success");
+    // Obtener parámetros de URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
 
-      // Mostrar la alerta si la variable de éxito está presente
-      if (success === "true") {
-        Swal.fire({
-          title: "¡Éxito!",
-          text: "Remate creado exitosamente",
-          icon: "success",
-        });
-      } else if (success === "false") {
-        Swal.fire({
-          title: "Error",
-          text: "Hubo un problema al crear el remate",
-          icon: "error",
-        });
-      }
+    // Mostrar la alerta si la variable de éxito está presente
+    if (success === 'true') {
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'Remate creado exitosamente',
+        icon: 'success'
+      });
+    } else if (success === 'false') {
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al crear el remate',
+        icon: 'error'
+      });
+    }
 
     // Botón de cerrar sesión admin
-    document.getElementById('logout-button').addEventListener('click', function() {
+    document.getElementById('logout-button').addEventListener('click', function () {
       window.location.href = '/admin/logout';
     });
   </script>

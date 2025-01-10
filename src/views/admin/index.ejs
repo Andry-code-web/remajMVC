@@ -207,7 +207,7 @@
 
         <!-- añadir nuevo remate -->
         <div id="modalNuevoRemate" class="modal">
-          <div class="modal-content">
+         <!--  <div class="modal-content"> -->
             <div class="modal-header">
               <h2 class="modal-title">
                 <i class="bi bi-house-add"></i>
@@ -462,11 +462,11 @@
                 </button>
               </div>
             </form>
-          </div>
+          <!-- </div> -->
         </div>
 
         <div id="seguimientoModal" class="modal seguimiento-modal">
-          <div class="modal-content seguimiento-modal-content">
+        <!--   <div class="modal-content seguimiento-modal-content"> -->
             <div class="modal-header seguimiento-modal-header">
               <h2 class="modal-title seguimiento-modal-title">
                 <i class="bi bi-house-gear"></i> Seguimiento
@@ -547,12 +547,13 @@
               </div>
 
               <div class="modal-footer seguimiento-modal-footer">
-                <button type="submit" class="save-button seguimiento-save-button">Guardar</button>
                 <button type="button" class="cancel-button seguimiento-cancel-button"
-                  onclick="cerrarModal()">Cancelar</button>
+                onclick="cerrarModal()">Cancelar Registro</button>
+                <button type="submit" class="save-button seguimiento-save-button">Guardar Seguimiento</button>
+               
               </div>
             </form>
-          </div>
+          <!-- </div> -->
         </div>
 
 
@@ -1759,7 +1760,6 @@
                                     })
                                     .catch(error => {
                                       console.error('Error al cargar los datos del seguimiento:', error);
-                                      alert('No se pudieron cargar los datos del seguimiento.');
                                     });
                                 } else {
                                   document.getElementById('seguimientoForm').reset();

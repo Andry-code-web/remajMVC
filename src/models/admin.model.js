@@ -79,51 +79,6 @@ const getImagenesInmuebles = async () => {
 
 // Crear un nuevo remate
 const createRemate = async (datosRemate) => {
-<<<<<<< HEAD
-  const query = `INSERT INTO remates (
-    ubicacion,
-    precios,
-    descripcion,
-    categoria,
-    N_banos,
-    N_habitacion,
-    pisina,
-    patio,
-    cocina,
-    cochera,
-    balcon,
-    jardin,
-    pisos,
-    comedor,
-    sala_start,
-    studio,
-    lavanderia,
-    fecha_activacion,
-    fecha_remate,
-    hora_remate,
-    usuario_admin_id,
-    ganador,
-    like_count,
-    monto_venta,
-    estado,
-    tamano_propiedad
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-  const [result] = await db.query(query, datosRemate);
-  return result.insertId;
-};
-
-// Agregar imágenes
-const agregarImagenes = async (imagenes) => {
-  const query = `
-    INSERT INTO img_inmuebles (imagenes_inmueble, remates_id)
-    VALUES ?
-  `;
-  await db.query(query, [imagenes]);
-};
-
-// Agregar URL del anexo
-=======
     const query = `INSERT INTO remates
 (ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
  balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad, usuario_admin_id)
@@ -141,7 +96,6 @@ const agregarImagenes = async (imagenes) => {
     await db.query(query, [imagenes]);
 };
 
->>>>>>> d542e40835ffbac776e7e496bfd7a6b052f5533e
 const agregarAnexoUrl = async (anexoUrl, remateId) => {
   const query = `
     INSERT INTO anexos (papeles_inmuebles, remates_id)
@@ -349,21 +303,6 @@ const updateSeguimiento = async (seguimientoId, datosSeguimiento) => {
 
 
 module.exports = {
-<<<<<<< HEAD
-  getAllRemates,
-  getImagenesInmuebles,
-  createRemate,
-  agregarImagenes,
-  agregarAnexoUrl,
-  deleteRemate,
-  getUsuarioAdmin,
-  getRemateById,
-  updateRemate,
-  createDetalles,
-  updateDetalles,
-  createInmuebles,
-  updateInmuebles
-=======
     getAllRemates,
     getImagenesInmuebles,
     createRemate,
@@ -377,5 +316,4 @@ module.exports = {
     getSeguimientoById,
     updateSeguimiento
 
->>>>>>> d542e40835ffbac776e7e496bfd7a6b052f5533e
 };

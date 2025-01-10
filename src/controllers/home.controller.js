@@ -4,41 +4,18 @@ const db = require('../config/database');
 exports.getAllRemates = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10; // Elementos por página
+    const limit = 6;
     const offset = (page - 1) * limit;
 
-    // Obtener total de registros para calcular páginas
-    const [[{ total }]] = await db.query(`
-      SELECT COUNT(DISTINCT r.id) as total 
-      FROM remates r
-    `);
-
+    const [[{ total }]] = await db.query('SELECT COUNT(DISTINCT r.id) as total FROM remates r');
     const totalPages = Math.ceil(total / limit);
 
-    // Obtener remates paginados
     const rematesData = await Home.getAll({ limit, offset });
 
-    // Agrupamos las imágenes por remate
-    const remates = rematesData.reduce((acc, row) => {
-      if (!acc[row.id]) {
-        acc[row.id] = {
-          ...row,
-          imagen: row.imagenes_inmueble || null,
-          anexos: []
-        };
-      }
-      return acc;
-    }, {});
-
-    // Obtener anexos para cada remate
-    for (const remateId in remates) {
-      const anexos = await Home.getAnexos(remateId);
-      remates[remateId].anexos = anexos;
-    }
-
-    // Verificar que tengamos exactamente 'limit' resultados o menos en la última página
-    const rematesList = Object.values(remates);
-    console.log(`Número de remates en la página ${page}: ${rematesList.length}`);
+    const rematesList = rematesData.map(remate => ({
+      ...remate,
+      imagen: remate.imagenes_inmueble ? Buffer.from(remate.imagenes_inmueble).toString('base64') : null
+    }));
 
     const pagination = {
       currentPage: page,
@@ -76,6 +53,7 @@ exports.getAllRemates = async (req, res) => {
 };
 
 
+
 exports.getRemateDetails = async (req, res) => {
   const { id } = req.params;
   try {
@@ -101,10 +79,9 @@ exports.getAnexos = async (req, res) => {
 exports.getFiltrarRemate = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 6;
     const offset = (page - 1) * limit;
 
-    // Obtener los parámetros de filtro
     const filtro = {
       id: req.body.id,
       ubicacion: req.body.ubicacion,
@@ -115,34 +92,86 @@ exports.getFiltrarRemate = async (req, res) => {
       offset
     };
 
-    // Obtener resultados y total
     const { remates, total } = await Home.getFiltro(filtro);
     
-    // Si no hay resultados, mostrar mensaje
     if (remates.length === 0) {
-      return res.render('layouts/main', {
-        content: 'home/index',
-        remates: [],
+      return renderErrorPage(res, {
         error: 'No se encontraron resultados para tu búsqueda.',
-        pagination: {
-          currentPage: 1,
-          totalPages: 1,
-          hasNextPage: false,
-          hasPrevPage: false,
-          nextPage: 1,
-          prevPage: 1,
-          total: 0
-        }
+        total: 0
       });
     }
 
-    // Calcular paginación
     const totalPages = Math.ceil(total / limit);
+    const paginationData = {
+      currentPage: page,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      nextPage: page + 1,
+      prevPage: page - 1,
+      total
+    };
 
-    // Renderizar con resultados
+    
+    
+    const rematesConImagenes = remates.map(remate => ({
+      ...remate,
+      imagen: remate.imagen ? Buffer.from(remate.imagen).toString('base64') : null
+    }));
+
     res.render('layouts/main', {
       content: 'home/index',
-      remates,
+      remates: rematesConImagenes,
+      pagination: paginationData
+    });
+    
+  } catch (error) {
+    console.error("Error al obtener remates filtrados:", error);
+    renderErrorPage(res, {
+      error: 'Ocurrió un error al filtrar los remates.',
+      total: 0
+    });
+  }
+};
+
+function renderErrorPage(res, { error, total }) {
+  res.render('layouts/main', {
+    content: 'home/index',
+    remates: [],
+    error,
+    pagination: {
+      currentPage: 1,
+      totalPages: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+      nextPage: 1,
+      prevPage: 1,
+      total
+    }
+  });
+}
+
+
+exports.getFiltrarRemateG = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 6;
+    const offset = (page - 1) * limit;
+ 
+    const categoria = req.query.categoria || null;
+    const filtro = { categoria, limit, offset };
+ 
+    const { remates, total } = await Home.getFiltro(filtro);
+    const totalPages = Math.ceil(total / limit);
+ 
+    const rematesConImagenes = remates.map(remate => ({
+      ...remate,
+      imagen: remate.imagen ? Buffer.from(remate.imagen).toString('base64') : null
+    }));
+ 
+    res.render('layouts/main', {
+      content: 'home/index', 
+      remates: rematesConImagenes,
       pagination: {
         currentPage: page,
         totalPages,
@@ -151,8 +180,10 @@ exports.getFiltrarRemate = async (req, res) => {
         nextPage: page + 1,
         prevPage: page - 1,
         total
-      }
+      },
+      error: remates.length === 0 ? 'No se encontraron resultados para tu búsqueda.' : null
     });
+ 
   } catch (error) {
     console.error("Error al obtener remates filtrados:", error);
     res.render('layouts/main', {
@@ -170,4 +201,4 @@ exports.getFiltrarRemate = async (req, res) => {
       }
     });
   }
-};
+ };

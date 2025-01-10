@@ -79,6 +79,7 @@ const getImagenesInmuebles = async () => {
 
 // Crear un nuevo remate
 const createRemate = async (datosRemate) => {
+<<<<<<< HEAD
   const query = `INSERT INTO remates (
     ubicacion,
     precios,
@@ -122,6 +123,25 @@ const agregarImagenes = async (imagenes) => {
 };
 
 // Agregar URL del anexo
+=======
+    const query = `INSERT INTO remates
+(ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+ balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad, usuario_admin_id)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    const [result] = await db.query(query, datosRemate);
+    return result.insertId;
+};
+
+const agregarImagenes = async (imagenes) => {
+    const query = `
+        INSERT INTO img_inmuebles (imagenes_inmueble, remates_id)
+        VALUES ?
+    `;
+    await db.query(query, [imagenes]);
+};
+
+>>>>>>> d542e40835ffbac776e7e496bfd7a6b052f5533e
 const agregarAnexoUrl = async (anexoUrl, remateId) => {
   const query = `
     INSERT INTO anexos (papeles_inmuebles, remates_id)
@@ -281,7 +301,55 @@ const updateInmuebles = async (remateId, datosInmuebles) => {
   await db.query(query, [...datosInmuebles, remateId]);
 };
 
+const createSeguimiento = async (datosSeguimiento) => {
+    const query = `
+        INSERT INTO seguimiento
+        (expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria, 
+        fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    try {
+        const [result] = await db.query(query, datosSeguimiento);
+        return result.insertId;
+    } catch (error) {
+        throw new Error('Error al crear el seguimiento: ' + error.message);
+    }
+};
+
+// Función para obtener un seguimiento por ID
+const getSeguimientoById = async (seguimientoId) => {
+    const query = `
+        SELECT * FROM seguimiento WHERE id = ?
+    `;
+    try {
+        const [result] = await db.query(query, [seguimientoId]);
+        return result[0]; // Si el seguimiento existe, devolverá el primer elemento.
+    } catch (error) {
+        throw new Error('Error al obtener el seguimiento: ' + error.message);
+    }
+};
+
+// Función para actualizar un seguimiento
+const updateSeguimiento = async (seguimientoId, datosSeguimiento) => {
+    const query = `
+        UPDATE seguimiento
+        SET expediente = ?, distrito_judicial = ?, instancia = ?, organo_juridico = ?, especialidad = ?, 
+        nro_convocatoria = ?, fecha_registro = ?, procesado_por = ?, reanudado = ?, fase_convocatoria = ?, 
+        estado_convocatoria = ?, remates_id = ?
+        WHERE id = ?
+    `;
+    try {
+        const [result] = await db.query(query, [...datosSeguimiento, seguimientoId]);
+        return result.affectedRows > 0;
+    } catch (error) {
+        throw new Error('Error al actualizar el seguimiento: ' + error.message);
+    }
+};
+
+
+
 module.exports = {
+<<<<<<< HEAD
   getAllRemates,
   getImagenesInmuebles,
   createRemate,
@@ -295,4 +363,19 @@ module.exports = {
   updateDetalles,
   createInmuebles,
   updateInmuebles
+=======
+    getAllRemates,
+    getImagenesInmuebles,
+    createRemate,
+    agregarImagenes,
+    agregarAnexoUrl,
+    deleteRemate,
+    getUsuarioAdmin,
+    getRemateById,
+    updateRemate,
+    createSeguimiento,
+    getSeguimientoById,
+    updateSeguimiento
+
+>>>>>>> d542e40835ffbac776e7e496bfd7a6b052f5533e
 };

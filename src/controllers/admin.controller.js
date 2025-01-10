@@ -9,11 +9,7 @@ const {
   getUsuarioAdmin,
   getRemateById,
   updateRemate,
-  createDetalles,
-  updateDetalles,
-  createInmuebles,
-  updateInmuebles
-} = require('../models/admin.model');
+} = require("../models/admin.model");
 
 // Vista administrador
 exports.getloginadmin = async (req, res) => {
@@ -104,14 +100,109 @@ exports.crearRemate = async (req, res) => {
 
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, new Date(fecha_remate), hora_remate, estado, tamano_propiedad,
-      req.session.userId // Aquí agregamos usuario_admin_id
+      ubicacion,
+      precios,
+      descripcion,
+      categoria,
+      N_banos,
+      N_habitacion,
+      pisina,
+      patio,
+      cocina,
+      cochera,
+      balcon,
+      jardin,
+      pisos,
+      comedor,
+      sala_start,
+      studio,
+      lavanderia,
+      fecha_remate,
+      hora_remate,
+      estado,
+      tamano_propiedad,
+      IDadministrador,
+    ]);
+    console.log(remateId);
+
+    // Crear seguimiento
+    await createSeguimiento([
+      expediente,
+      distrito_judicial,
+      especialidad,
+      instancia,
+      organo_juridiccional,
+      nro_convocatoria,
+      fecha_registro,
+      procesado_por,
+      reanudado,
+      fase_convocatoria,
+      estado_convocatoria,
+      remateId,
     ]);
 
-    // Procesar imágenes
-    if (req.files && req.files["photo"]) {
-      const imagenes = req.files["photo"].map(file => [file.buffer, remateId]);
+    await createDetalles([
+      expediente,
+      distrito_judicial,
+      organo_juridiccional,
+      instancia,
+      juez,
+      especialista,
+      materia,
+      resolucion,
+      archivo,
+      nro_convocatoria,
+      tasacion,
+      precio_base,
+      incremento_ofertas,
+      arancel,
+      oblaje,
+      n_inscritos,
+      remateId
+    ])
+    // Crear inmuebles
+    await createInmuebles([
+      partida_registral,
+      tipo_inmueble,
+      direccion,
+      carga_ogravamen,
+      porcentaje_rematar,
+      remateId,
+    ]);
+
+    // Crear cronograma
+    await createCronograma([actividad, fecha_actividad, fecha_fin, remateId]);
+
+    // Crear detalles
+    await createDetalles([
+      expediente_detalle,
+      distrito_vocal,
+      organo_juridiccional_detalle,
+      instancia_detalle,
+      juez,
+      especialista,
+      materia,
+      resolucion,
+      fch_resolucion,
+      archivo,
+      nro_convocatoria_detalle,
+      tipo_cambio,
+      tasacion,
+      precio_base,
+      incremento_ofertas,
+      arancel,
+      objeto,
+      descripcion_detalle,
+      n_inscritos,
+      remateId,
+    ]);
+
+    // Procesar imágenes y anexo URL
+    if (req.files["photo"]) {
+      const imagenes = req.files["photo"].map((file) => [
+        file.buffer,
+        remateId,
+      ]);
       await agregarImagenes(imagenes);
     }
 
@@ -155,90 +246,6 @@ exports.updateRemate = async (req, res) => {
   } catch (error) {
     console.error("Error al actualizar el remate:", error);
     res.status(500).json({ message: "Hubo un problema al actualizar el remate", error: error.message });
-  }
-};
-
-// Crear detalles de un remate
-exports.crearDetalles = async (req, res) => {
-  try {
-    const remateId = req.params.id;
-    const {
-      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion,
-      fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas,
-      arancel, oblaje, descripcion, n_inscritos
-    } = req.body;
-
-    await createDetalles([
-      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion,
-      fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas,
-      arancel, oblaje, descripcion, n_inscritos, remateId
-    ]);
-
-    res.json({ success: true, message: 'Detalles creados correctamente' });
-  } catch (error) {
-    console.error("Error al crear los detalles:", error);
-    res.status(500).json({ message: "Hubo un problema al crear los detalles" });
-  }
-};
-
-// Actualizar detalles de un remate
-exports.updateDetalles = async (req, res) => {
-  try {
-    const remateId = req.params.id;
-    const {
-      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion,
-      fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas,
-      arancel, oblaje, descripcion, n_inscritos
-    } = req.body;
-
-    await updateDetalles(remateId, [
-      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista, materia, resolucion,
-      fecha_resolucion, archivo, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas,
-      arancel, oblaje, descripcion, n_inscritos
-    ]);
-
-    res.json({ success: true, message: 'Detalles actualizados correctamente' });
-  } catch (error) {
-    console.error("Error al actualizar los detalles:", error);
-    res.status(500).json({ message: "Hubo un problema al actualizar los detalles" });
-  }
-};
-
-// Crear inmuebles de un remate
-exports.crearInmuebles = async (req, res) => {
-  try {
-    const remateId = req.params.id;
-    const {
-      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, imagenes
-    } = req.body;
-
-    await createInmuebles([
-      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remateId
-    ]);
-
-    res.json({ success: true, message: 'Inmuebles creados correctamente' });
-  } catch (error) {
-    console.error("Error al crear los inmuebles:", error);
-    res.status(500).json({ message: "Hubo un problema al crear los inmuebles" });
-  }
-};
-
-// Actualizar inmuebles de un remate
-exports.updateInmuebles = async (req, res) => {
-  try {
-    const remateId = req.params.id;
-    const {
-      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, imagenes
-    } = req.body;
-
-    await updateInmuebles(remateId, [
-      partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, imagenes
-    ]);
-
-    res.json({ success: true, message: 'Inmuebles actualizados correctamente' });
-  } catch (error) {
-    console.error("Error al actualizar los inmuebles:", error);
-    res.status(500).json({ message: "Hubo un problema al actualizar los inmuebles" });
   }
 };
 

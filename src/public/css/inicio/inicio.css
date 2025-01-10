@@ -51,6 +51,14 @@
   color: #fff;
 }
 
+.nav-link {
+  color: #780103 !important;
+}
+
+.nav-underline .nav-link:hover {
+  border-bottom-color: #780103 !important;
+}
+
 /* CATEGORIAS */
 @-webkit-keyframes scroll {
   0% {
@@ -148,7 +156,8 @@
 /* Cambiar el color de la imagen al hacer hover */
 .slider_contenedor .slide-track a:hover img {
   filter: brightness(0) saturate(100%) invert(34%) sepia(93%) saturate(659%) hue-rotate(-50deg) brightness(94%) contrast(90%);
-  transition: filter 0.3s ease; /* Transición suave */
+  transition: filter 0.3s ease;
+  /* Transición suave */
 }
 
 .slide_img a:hover {
@@ -768,7 +777,7 @@
 .barraLateralFiltros {
   width: 20%;
   height: 540px;
-  background: #fff;
+  background: #FBF8F3;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -805,7 +814,7 @@
 .btn_filtrar {
   width: 100px;
   height: 35px;
-  background: red;
+  background: #780103;
   border: none;
   border-radius: 0.5rem;
   color: #fff;
@@ -820,11 +829,11 @@
 
 .elementoSubastaIndividual {
   border: 1px solid #ddd;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   display: flex;
   gap: 2rem;
-  background: white;
+  background: #FBF8F3;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -854,14 +863,54 @@
 }
 
 .informacionGeneralSubasta {
-  /* flex: 1; */
   text-decoration: none;
   color: black;
   cursor: pointer;
+  font-family: "fuentePrincipal";
+}
+
+.informacionGeneralSubasta h2 {
+  font-size: 1.1rem;
+  color: #a30003;
+}
+
+.tipo_remate {
+  font-size: 0.8rem;
+}
+
+.lugar {
+  font-size: 0.9rem;
+}
+
+.hora_remate,
+.fecha_remate {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.hora_remate {
+  margin-bottom: 0.5rem;
+}
+
+.informacionGeneralSubasta h3 {
+  font-size: 1rem;
+}
+
+.descripcion_remate {
+  font-family: "fuenteparrafos" !important;
+  width: 80%;
+  font-size: 0.9rem;
+  font-weight: 200;
+  display: -webkit-box; /* Habilita el modo flexible para recortar */
+  -webkit-line-clamp: 2; /* Número de líneas visibles */
+  -webkit-box-orient: vertical; /* Orientación vertical */
+  overflow: hidden; /* Oculta el contenido extra */
+  text-overflow: ellipsis; /* Añade puntos suspensivos */
+  margin-top: 1rem;
 }
 
 .estadoActualSubasta {
-  background: #f0f0f0;
+  background: #780103;
   padding: 1rem;
   text-align: center;
   width: 250px;
@@ -870,7 +919,10 @@
 
 .contenedorBotonesAccion {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  font-family: "fuenteparrafos";
 }
 
 .botonAccionSubasta {
@@ -886,6 +938,17 @@
 
 .botonAccionSubasta:hover {
   background-color: #e0e0e0;
+}
+
+.precio_remate p:first-child {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.precio_remate p:nth-child(2) {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
 }
 
 /*# sourceMappingURL=inicio.css.map */

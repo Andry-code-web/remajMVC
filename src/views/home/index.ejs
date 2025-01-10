@@ -183,21 +183,32 @@
         <div class="detallesEspecificosSubasta">
           <a href="/auctions/<%= remate.id %>" class="informacionGeneralSubasta">
             <h2>Remate N°12345 - CONVOCATORIA</h2>
-            <p><strong>TIPO DE REMATE:</strong> Judicial</p>
-            <p><strong>LUGAR:</strong>
+            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
+            <p class="lugar"><strong>LUGAR:</strong>
               <%= remate.ubicacion %> Perú
             </p>
-            <h3>OFERTAS</h3>
-            <p>10:00 AM</p>
-            <p><strong>Precio Base:</strong> S/ <%= remate.precios %>
+            <h3>Presentación de Ofertas</h3>
+            <p class="hora_remate">
+              <i class="ri-calendar-line"></i>
+              <%= new Date(remate.fecha_remate).toLocaleDateString('es-PE', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric' 
+            }) %>
+
             </p>
+            <p class="hora_remate">
+              <i class="ri-time-line"></i></i>
+              <%= remate.hora_remate %>
+            </p>
+            <p class="descripcion_remate"><%= remate.descripcion %></p>
           </a>
-          
+
           <% 
             const estados = {
               finalizado: {
-                clase: 'bg-danger',
-                texto: 'Publicacion e Inscripcion'
+                clase: '',
+                texto: 'Remate Adjudicado'
               },
               activo: {
                 clase: 'bg-secondary',
@@ -213,22 +224,30 @@
           %>
 
           <% if (estadoActual) { %>
-           <div class="estadoActualSubasta <%= estadoActual.clase %> text-light">
-              <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
-              <p><%= estadoActual.texto %></p>
-           </div>
+          <div class="estadoActualSubasta <%= estadoActual.clase %> text-light">
+            <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
+            <p><%= estadoActual.texto %></p>
+          </div>
           <% } %>
 
 
 
         </div>
         <div class="contenedorBotonesAccion">
-          <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
-          <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
-          <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
-            Aviso
-          </a>
+          <div class="precio_remate">
+            <p>Precio base:</p>
+            <p>
+              S/ <%= remate.precios %>
+            </p>
+          </div>
 
+          <div class="btn_acciones">
+            <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
+            <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
+            <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+              Aviso
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -619,13 +638,12 @@
 
 <script>
   document.querySelectorAll('.slide_img a').forEach(item => {
-  item.addEventListener('click', function(e) {
-    e.preventDefault(); // Evita el comportamiento por defecto del enlace
-    const categoria = item.getAttribute('data-categoria');
-    window.location.href = `/filtrarG?categoria=${categoria}`; // Redirige a la ruta con el filtro
+    item.addEventListener('click', function(e) {
+      e.preventDefault(); // Evita el comportamiento por defecto del enlace
+      const categoria = item.getAttribute('data-categoria');
+      window.location.href = `/filtrarG?categoria=${categoria}`; // Redirige a la ruta con el filtro
+    });
   });
-});
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

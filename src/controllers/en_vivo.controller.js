@@ -4,23 +4,36 @@ const path = require("path");
 
 exports.getEnVivo = async (req, res) => {
     try {
+        // Obtener datos de remates y anexos
         const enVivoData = await EnVivo.getAll();
         const imgInmuebles = await EnVivo.getImagenesInmuebles();
+        const anexosData = await EnVivo.getAnexosAll(); // Traemos todos los anexos
 
         console.log("Datos de remates:", enVivoData);
         console.log("Imágenes de inmuebles:", imgInmuebles);
+        console.log("Datos de anexos:", anexosData);
 
-        const dataConImagenes = enVivoData.map((auction) => {
+        // Combinar datos con imágenes y anexos
+        const dataConImagenesYAnexos = enVivoData.map((auction) => {
             const imagenBase64 = imgInmuebles.find((img) => img.remates_id === auction.id)?.imagenes_inmueble || "";
-            return { ...auction, imagen: imagenBase64 };
+            const anexo = anexosData.find((anexo) => anexo.remates_id === auction.id)?.papeles_inmuebles || ""; // Enlace al PDF o aviso
+
+            return {
+                ...auction,
+                imagen: imagenBase64,
+                anexo, // Incluimos el enlace del anexo
+            };
         });
 
-        res.render("en_vivo/en_vivo", { enVivoData: dataConImagenes });
+        res.render("en_vivo/en_vivo", { enVivoData: dataConImagenesYAnexos });
     } catch (error) {
-        console.error('Error en getEnVivo:', error);
+        console.error("Error en getEnVivo:", error);
         res.render("error", { message: "Error al obtener datos de subastas en vivo" });
     }
 };
+
+
+
 
 
 exports.getSeguimiento = async (req, res) => {
@@ -110,21 +123,21 @@ exports.getCronograma = async (req, res) => {
     }
 };
 
-exports.getPdf = async (req, res) => {
+exports.getAviso = async (req, res) => {
+    const { id } = req.params;
+
     try {
-        const auctionId = req.params.id;
-        const aviso = await EnVivo.getPdf(auctionId);
+        const [anexo] = await EnVivo.getAnexos(id);
 
-        if (!aviso || !aviso.aviso_pdf) {
-            return res.render("error", { message: "PDF no encontrado" });
+        if (anexo && anexo.papeles_inmuebles) {
+            return res.redirect(anexo.papeles_inmuebles);
+        } else {
+            return res.status(404).send('No se encontró el enlace del aviso para este remate.');
         }
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=aviso-${auctionId}.pdf`);
-        res.send(aviso.aviso_pdf);
     } catch (error) {
-        console.error('Error en getPdf:', error);
-        res.render("error", { message: "Error al descargar el PDF" });
+        console.error('Error al obtener el aviso:', error);
+        res.status(500).send('Hubo un error al obtener el enlace del aviso.');
     }
 };
+
 

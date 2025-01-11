@@ -1,23 +1,26 @@
-<link
-  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-  rel="stylesheet"
-/>
+
+
+<!-- ICONOS -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+
+<!-- ESTILOS HEADER Y FOOTER -->
 <link rel="stylesheet" href="/css/globales/globales.css" />
+
+<!-- ESTILOS CRONOGRAMA -->
 <link rel="stylesheet" href="/css/tags/tags.css" />
 
+<!-- HEADER -->
 <%- include('../partials/navbar.ejs') %>
+
+<!-- CANVAS -->
 <canvas id="background-canvas"></canvas>
 
 <main class="main-wrapper">
   <div class="cronograma-container">
     <div class="navigation-tabs">
       <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
-      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link"
-        >Inmuebles</a
-      >
-      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link active"
-        >Cronograma</a
-      >
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link active">Cronograma</a>
     </div>
 
     <div class="cronograma-table">
@@ -49,10 +52,14 @@
     <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>
 </main>
+
 <!-- COMPONENTE FOOTER -->
 <%- include('../partials/footer') %>
+
+<!-- SCRIPT CANVAS -->
 <script src="/js/componentes/uvcanvas_envivo.js"></script>
 
+<!-- SCRIPT HEADER SCROLL -->
 <script>
   let lastScrollTop = 0;
   const header = document.getElementById("header");

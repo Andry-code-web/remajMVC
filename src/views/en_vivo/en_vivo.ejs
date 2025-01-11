@@ -1,3 +1,4 @@
+
 <!-- en_vivo.ejs -->
 <!DOCTYPE html>
 <html lang="es">
@@ -6,16 +7,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Remates en Vivo</title>
+  <!-- ESTILOS EN_VIVO -->
   <link rel="stylesheet" href="/css/en_vivo/en_vivo.css" />
+ 
+  <!-- ICONOS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+ 
+  <!-- ESTILOS HEADER Y FOOTER  -->
   <link rel="stylesheet" href="/css/globales/globales.css" />
 </head>
 
 <body>
+
+  <!-- HEADER -->
   <%- include('../partials/navbar.ejs') %>
 
+  <!-- CANVAS -->
   <canvas id="background-canvas"></canvas>
+
   <!-- en_vivo.ejs -->
   <section class="property-container">
     <div class="auction-grid">
@@ -31,17 +41,24 @@
         </div>
 
         <div class="auction-content">
-          <h5 class="auction-title">
-            <i class="fas fa-map-marker-alt"></i> <%= auction.ubicacion %>
-          </h5>
+          <div class="auction-details">
+            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
+            <p class="lugar"><strong>LUGAR:</strong> <%= auction.ubicacion %> Perú</p>
+          </div>
 
           <div class="auction-info">
-            <p>
-              <i class="fas fa-calendar"></i> Presentación de ofertas:
-              <%= auction.fecha_presentacion %>
+            <h3>Presentación de Ofertas</h3>
+            <p class="hora_remate">
+              <i class="ri-calendar-line"></i>
+              <%= new Date(auction.fecha_remate).toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              }) %>
             </p>
-            <p>
-              <i class="fas fa-clock"></i> <%= auction.hora_presentacion %>
+            <p class="hora_remate">
+              <i class="ri-time-line"></i>
+              <%= auction.hora_remate %>
             </p>
           </div>
 
@@ -62,9 +79,11 @@
             <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
               <i class="fas fa-info-circle"></i> Detalles
             </a>
-            <a href="/en_vivo/pdf/<%= auction.id %>" class="action-btn aviso">
-              <i class="fas fa-building"></i> Aviso
-            </a>
+            <a href="<%= auction.anexo || '#' %>" 
+              class="action-btn aviso <%= auction.anexo ? '' : 'disabled' %>" 
+              target="_blank">
+               <i class="fas fa-building"></i> Aviso
+           </a>        
           </div>
         </div>
       </div>
@@ -76,9 +95,14 @@
       <% } %>
     </div>
   </section>
-
+  
+  <!-- SCRIPT EN_VIVO -->
   <script src="/js/script_en_vivo.js"></script>
+
+  <!-- SCRIPT CANVAS -->
   <script src="/js/componentes/uvcanvas_envivo.js"></script>
+  
+  <!-- SCRIPT HEADER SCROLL -->
   <script>
     let lastScrollTop = 0; // Última posición de scroll
     const header = document.getElementById("header"); // Selección del encabezado
@@ -98,6 +122,27 @@
       }
 
       lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Previene valores negativos
+    });
+  </script>
+
+
+  <script>
+    const avisoButtons = document.querySelectorAll('.aviso-button');
+
+    avisoButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const avisoUrl = this.getAttribute('data-aviso-url');
+        if (avisoUrl && avisoUrl !== '#') {
+          window.open(avisoUrl, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay enlace disponible para este aviso.',
+          });
+        }
+      });
     });
   </script>
 </body>

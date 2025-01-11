@@ -339,12 +339,43 @@
   }
 }
 
+.auction-details {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(44, 62, 80, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+
+  .tipo_remate, .lugar {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: $text-secondary;
+
+    strong {
+      color: $text-primary;
+      font-weight: 600;
+    }
+  }
+}
+
+.auction-info {
+  h3 {
+    font-size: 1rem;
+    color: $text-primary;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+}
 /* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
-  }
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+}
   to {
     opacity: 1;
     transform: translateY(0);

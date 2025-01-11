@@ -4,6 +4,17 @@
         <img src="/img/logo_header.jpeg" alt="">
       </a>
   </div>
+
+  <!-- boton en vivo -->
+  <a class="boton-vivo" href="/en_vivo">
+    <span class="eye">
+      <span class="iris">
+        <span class="pupil"></span>
+      </span>
+    </span>
+    <span class="text">EN VIVO</span>
+  </a>
+
   <nav class="nav">
       <a href="/">INICIO</a>
       <a href="/remates/index">REMATES</a>
@@ -24,4 +35,41 @@
   </div>
   
 </header>
+
+<!-- script boton en vivo -->
+ <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.boton-vivo');
+    
+    buttons.forEach(button => {
+      const eye = button.querySelector('.eye');
+      const iris = eye.querySelector('.iris');
+      
+      document.addEventListener('mousemove', (e) => {
+        const eyeRect = eye.getBoundingClientRect();
+        const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+        const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+        
+        // Calcular el ángulo y la distancia
+        const deltaX = e.clientX - eyeCenterX;
+        const deltaY = e.clientY - eyeCenterY;
+        const angle = Math.atan2(deltaY, deltaX);
+        
+        // Aumentar el rango de movimiento
+        const maxDistance = eyeRect.width / 3;
+        const distance = Math.min(
+          Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 10,
+          maxDistance
+        );
+        
+        // Calcular la nueva posición
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+        
+        // Aplicar la transformación con una transición más suave
+        iris.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+      });
+    });
+  });
+ </script>
   

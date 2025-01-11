@@ -31,6 +31,101 @@
   width: 100%;
 }
 
+/* boton en vivo */
+.boton-vivo {
+  --fs: 1.25em;
+  --col1: #fff5f5;
+  --col2: rgba(205, 92, 92, 0.5);
+  --col3: #b44;
+  --col4: #933;
+  --pd: 0.5em 0.65em;
+
+  display: inline-grid;
+  grid-template-columns: min-content 1fr;
+  align-items: center;
+  padding: var(--pd);
+  font-size: var(--fs);
+  color: var(--col1);
+  background: linear-gradient(to bottom, var(--col3), var(--col4));
+  border-radius: 6px;
+  text-decoration: none;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    inset -1px 1px 1px rgba(255, 255, 255, 0.2),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s ease-out;
+  transform-origin: center;
+
+  &:hover {
+    color: var(--col1);
+    background: linear-gradient(to bottom, #c55, var(--col3));
+    box-shadow: 
+      inset -1px 1px 1px rgba(255, 255, 255, 0.3),
+      inset 1px 1px 1px rgba(255, 255, 255, 0.3),
+      0 4px 8px rgba(180, 68, 68, 0.2);
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .eye {
+    position: relative;
+    width: 1.2em;
+    height: 1.2em;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    overflow: hidden;
+    box-shadow: 0 0 0 2px rgba(120, 40, 40, 0.6), inset 0 0 10px rgba(0,0,0,0.1);
+    
+    .iris {
+      position: absolute;
+      width: 0.8em;
+      height: 0.8em;
+      background: radial-gradient(circle, #6b8e23 0%, #556b2f 70%, #2f4f4f 100%);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.05s ease;
+
+      .pupil {
+        position: absolute;
+        width: 0.4em;
+        height: 0.4em;
+        background-color: #000000;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 35%;
+      height: 35%;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      top: 15%;
+      left: 15%;
+      pointer-events: none;
+    }
+  }
+
+  .text {
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 0 0.2em;
+  }
+}
+/* fin boton */
+
+
 .nav {
   display: flex;
   gap: 2rem;

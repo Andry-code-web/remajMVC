@@ -1,3 +1,5 @@
+
+
 @use 'variables' as *;
 
 * {
@@ -152,7 +154,11 @@
 }
 .seccion2 {
     background-color: $bg-light;
-    color: $bg-dark; 
+    color: $bg-dark;
+    
+    .subtitle {
+        color: $bg-dark !important; // Force the color override
+    }
 }
 .seccion3 {
     background-color: $bg-dark;
@@ -452,7 +458,7 @@ input[type="number"]::-webkit-outer-spin-button {
         clip-path: inset(0 30% 0 0);
         filter: blur(3px);
         transform: scale(0.95) skewX(5deg);
-    }
+}
 
     100% {
         opacity: 1;

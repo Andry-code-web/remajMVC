@@ -130,13 +130,52 @@
         <label for="valorBasePropiedad">Precio Base</label>
         <input type="text" id="valorBasePropiedad" name="precio">
       </div>
-      <div>
+      <div class="contenedor-campo-formulario-ubicacion">
         <label for="ubicacionGeograficaPropiedad">Ubicación</label>
-        <input type="text" id="ubicacionGeograficaPropiedad" name="ubicacion">
+        <select name="ubicacion" id="ubicacionGeograficaPropiedad" class="selector-desplegable-ubicacion">
+          <option value="">Selecciona una ubicación</option>
+          <option value="Amazonas">Amazonas</option>
+          <option value="Ancash">Áncash</option>
+          <option value="Apurimac">Apurímac</option>
+          <option value="Arequipa">Arequipa</option>
+          <option value="Ayacucho">Ayacucho</option>
+          <option value="Cajamarca">Cajamarca</option>
+          <option value="Callao">Callao</option>
+          <option value="Cusco">Cusco</option>
+          <option value="Huancavelica">Huancavelica</option>
+          <option value="Huanuco">Huánuco</option>
+          <option value="Ica">Ica</option>
+          <option value="Junin">Junín</option>
+          <option value="La Libertad">La Libertad</option>
+          <option value="Lambayeque">Lambayeque</option>
+          <option value="Lima">Lima</option>
+          <option value="Loreto">Loreto</option>
+          <option value="Madre de Dios">Madre de Dios</option>
+          <option value="Moquegua">Moquegua</option>
+          <option value="Pasco">Pasco</option>
+          <option value="Piura">Piura</option>
+          <option value="Puno">Puno</option>
+          <option value="San Martin">San Martín</option>
+          <option value="Tacna">Tacna</option>
+          <option value="Tumbes">Tumbes</option>
+          <option value="Ucayali">Ucayali</option>
+      </select>
+      
+
       </div>
-      <div>
+      <div class="contenedor-campo-formulario-categoria">
         <label for="categoria">Categoría</label>
-        <input type="text" id="categoria" name="categoria">
+        <select name="categoria" id="categoria" class="selector-desplegable-categoria">
+          <option value="">Selecciona una categoria</option>
+          <option value="departamento">Departamento</option>
+          <option value="cochera">Cochera</option>
+          <option value="terreno">Terreno</option>
+          <option value="residencial">Residencial</option>
+          <option value="casa">Casa</option>
+          <option value="local">Local</option>
+          <option value="casa_playa">Casa de Playa</option>
+          <option value="terreno_urbano">Terreno Urbano</option>
+      </select>
       </div>
       <button type="submit" class="btn_filtrar">Buscar</button>
     </form>
@@ -242,12 +281,13 @@
           </div>
 
           <div class="btn_acciones">
-            <a href="#" class="botonAccionSubasta seguimiento-button">Seguimiento</a>
-            <a href="#" class="botonAccionSubasta detalle-button">Detalle</a>
+            <a href="#" class="botonAccionSubasta seguimiento-button" data-remate-id="<%= remate.id %>">Seguimiento</a>
+            <a href="#" class="botonAccionSubasta detalle-button" data-remate-id="<%= remate.id %>">Detalle</a>
             <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
               Aviso
             </a>
           </div>
+          
         </div>
       </div>
     </div>
@@ -462,17 +502,7 @@
         </div>
       </div>
     </div>
-    <div class="paginacion-expediente">
-      Total: 1 registros.
-      <button class="boton-paginacion">⟨⟨</button>
-      <button class="boton-paginacion">⟨</button>
-      <button class="boton-paginacion">1</button>
-      <button class="boton-paginacion">⟩</button>
-      <button class="boton-paginacion">⟩⟩</button>
-      <select class="selector-paginas">
-        <option>1</option>
-      </select>
-    </div>
+
     <button class="return-button-l6789" onclick="hideSeguimientoCard()">← Regresar</button>
   </div>
 </section>
@@ -531,17 +561,17 @@
 
     const avisoButtons = document.querySelectorAll('.aviso-button');
 
-    avisoButtons.forEach(button => {
-      button.addEventListener('click', function(event) {
-        event.preventDefault();
-        const avisoUrl = this.getAttribute('data-aviso-url');
-        if (avisoUrl && avisoUrl !== '#') {
-          window.open(avisoUrl, '_blank');
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'No hay enlace disponible para este aviso.',
+avisoButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+    const avisoUrl = this.getAttribute('data-aviso-url');
+    if (avisoUrl && avisoUrl !== '#') {
+      window.open(avisoUrl, '_blank');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No hay enlace disponible para este aviso.',
           });
         }
       });
@@ -622,18 +652,19 @@
   });
 
   function switchTab(tabId) {
-    // Remove active classes
-    document.querySelectorAll('.tab-button-z4521').forEach(tab => {
-      tab.classList.remove('active-tab-w8901');
-    });
-    document.querySelectorAll('.content-panel-j3267').forEach(panel => {
-      panel.classList.remove('active-panel-k5432');
-    });
+  // Remove active classes from all tabs and panels
+  document.querySelectorAll('.tab-button-z4521').forEach(tab => {
+    tab.classList.remove('active-tab-w8901');
+  });
+  document.querySelectorAll('.content-panel-j3267').forEach(panel => {
+    panel.classList.remove('active-panel-k5432');
+  });
 
-    // Add active class to selected tab and panel
-    document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active-tab-w8901');
-    document.getElementById(tabId).classList.add('active-panel-k5432');
-  }
+  // Add active class to the selected tab and panel
+  document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active-tab-w8901');
+  document.getElementById(tabId).classList.add('active-panel-k5432');
+}
+
 </script>
 
 <script>
@@ -644,6 +675,27 @@
       window.location.href = `/filtrarG?categoria=${categoria}`; // Redirige a la ruta con el filtro
     });
   });
+</script>
+
+<!-- nuevo script funcion click afuera  -->
+<script>
+  // Función para cerrar al hacer clic fuera
+document.addEventListener('click', function(event) {
+  const tarjeta = document.querySelector('.tarjeta_seguimiento_seguimiento');
+  const contenedor = document.querySelector('.contenedor-expediente');
+  
+  if (tarjeta && contenedor) {
+    // Verifica si el clic fue fuera del contenedor
+    if (!contenedor.contains(event.target)) {
+      hideSeguimientoCard(); // Asumiendo que esta función ya existe
+    }
+  }
+});
+
+// Prevenir que los clics dentro del contenedor cierren la tarjeta
+document.querySelector('.contenedor-expediente')?.addEventListener('click', function(event) {
+  event.stopPropagation();
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

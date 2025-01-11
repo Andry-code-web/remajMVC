@@ -148,10 +148,10 @@
                     <% } else { %>
                       <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
                       <% } %>
-                        <span
+                      <!--   <span
                           class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
                           <%= remate.estado %>
-                        </span>
+                        </span> -->
                 </div>
                 <div class="property-buttons">
                   <button class="property-button" onclick="abrirModalSegimiento(<%= remate.id %>)">Seguimiento</button>
@@ -313,7 +313,7 @@
                   Estado
                 </label>
                 <select id="estado" name="estado" required>
-                  <option value="activo">Activo</option>
+                 <!--  <option value="activo">Activo</option> -->
                   <option value="en_curso">En Curso</option>
                   <option value="finalizado">Finalizado</option>
                 </select>
@@ -633,7 +633,7 @@
                   Estado
                 </label>
                 <select id="editEstado" name="estado" required>
-                  <option value="activo">Activo</option>
+             <!--      <option value="activo">Activo</option> -->
                   <option value="en_curso">En Curso</option>
                   <option value="finalizado">Finalizado</option>
                 </select>

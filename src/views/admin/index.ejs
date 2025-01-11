@@ -465,7 +465,7 @@
           <!-- </div> -->
         </div>
 
-        
+<!-- modal seguimiento -->
         <div id="seguimientoModal" class="modal seguimiento-modal">
           <!--   <div class="modal-content seguimiento-modal-content"> -->
           <div class="modal-header seguimiento-modal-header">
@@ -1200,20 +1200,32 @@
 
               // Gestión de nuevo remate
               function abrirModalNuevoRemate() {
+                // Mostrar el modal
                 document.getElementById('modalNuevoRemate').style.display = 'block';
+
+                // Deshabilitar el scroll del cuerpo
+                document.body.classList.add('body-no-scroll');
               }
 
               function cerrarModalNuevoRemate() {
+                // Ocultar el modal
                 document.getElementById('modalNuevoRemate').style.display = 'none';
+
+                // Limpiar el formulario y el contenedor de previsualización de imágenes
                 document.getElementById('formNuevoRemate').reset();
                 document.getElementById('image-preview-container').innerHTML = '';
-              }
 
-              // Gestión de edición de remate
+                // Reactivar el scroll del cuerpo
+                document.body.classList.remove('body-no-scroll');
+              }
+              
+
+              // Gestión de edición de remate no funciona cerra fuera modal
               function abrirModalEditar(id) {
                 fetch(`/admin/editar-remate/${id}`)
                   .then(response => response.json())
                   .then(data => {
+                    // Asignar valores a los campos del formulario
                     document.getElementById('editId').value = data.id;
                     document.getElementById('editUbicacion').value = data.ubicacion;
                     document.getElementById('editPrecio').value = data.precios;
@@ -1237,7 +1249,11 @@
                     document.getElementById('editLavanderia').value = data.lavanderia;
                     document.getElementById('editDescripcion').value = data.descripcion;
 
+                    // Mostrar el modal
                     document.getElementById('editModal').style.display = 'block';
+
+                    // Deshabilitar el scroll del cuerpo
+                    document.body.classList.add('body-no-scroll');
                   })
                   .catch(error => {
                     console.error('Error:', error);
@@ -1246,7 +1262,11 @@
               }
 
               function cerrarModalEditar() {
+                // Ocultar el modal
                 document.getElementById('editModal').style.display = 'none';
+
+                // Reactivar el scroll del cuerpo
+                document.body.classList.remove('body-no-scroll');
               }
 
               async function guardarCambios(event) {
@@ -1258,7 +1278,7 @@
                 try {
                   const response = await fetch(`/admin/editar-remate/${id}`, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
                   });
 
                   const data = await response.json();
@@ -1267,7 +1287,7 @@
                     Swal.fire({
                       title: '¡Éxito!',
                       text: 'Remate actualizado correctamente',
-                      icon: 'success'
+                      icon: 'success',
                     }).then(() => {
                       window.location.reload();
                     });
@@ -1279,12 +1299,12 @@
                   Swal.fire({
                     title: 'Error',
                     text: error.message,
-                    icon: 'error'
+                    icon: 'error',
                   });
                 }
               }
 
-              // Event Listeners
+              // Event Listeners falta cerrar fuera
               document.addEventListener('DOMContentLoaded', () => {
                 actualizarMetricas();
 
@@ -1475,15 +1495,22 @@
                 });
               });
 
+              /* seguimiento */
               function abrirModalSegimiento(id) {
                 const modal = document.getElementById('seguimientoModal');
-
                 if (!modal) {
                   console.error('El modal con id "seguimientoModal" no existe.');
                   return;
                 }
 
-                modal.style.display = 'block'; // Asegúrate de que tu modal esté visible.
+                // Mostrar el modal
+                modal.style.display = 'block';
+
+                // Bloquear el scroll del body
+                document.body.classList.add('body-no-scroll');
+
+                // Agregar evento para cerrar el modal al hacer clic fuera
+                window.addEventListener('click', cerrarModalAlHacerClickFuera);
 
                 if (id) {
                   fetch(`/getSeguimiento/${id}`)
@@ -1558,8 +1585,26 @@
                   return;
                 }
 
+                // Ocultar el modal
                 modal.style.display = 'none';
+
+                // Habilitar el scroll del body
+                document.body.classList.remove('body-no-scroll');
+
+                // Quitar evento de clic fuera
+                window.removeEventListener('click', cerrarModalAlHacerClickFuera);
+
                 document.getElementById('seguimientoForm').reset();
+              }
+
+              function cerrarModalAlHacerClickFuera(event) {
+                const modal = document.getElementById('seguimientoModal');
+                if (!modal) return;
+
+                // Verificar si el clic ocurrió fuera del contenido del modal
+                if (!modal.contains(event.target) && event.target !== modal) {
+                  cerrarModal();
+                }
               }
 
               // Funcionalidad para el modal de Detalles
@@ -1573,6 +1618,9 @@
                 modal.style.top = '50%';
                 modal.style.left = '50%';
                 modal.style.transform = 'translate(-50%, -50%)';
+
+                // Agregar evento para cerrar el modal al hacer clic fuera
+                window.addEventListener('click', cerrarModalDetallesAlHacerClickFuera);
 
                 // Cargar datos si existe el ID
                 if (remateId) {
@@ -1607,8 +1655,20 @@
                 if (modal) {
                   modal.style.display = 'none';
                 }
+
+                // Quitar el evento de clic fuera
+                window.removeEventListener('click', cerrarModalDetallesAlHacerClickFuera);
               }
 
+              function cerrarModalDetallesAlHacerClickFuera(event) {
+                const modal = document.getElementById('tarjetaDetalles');
+                if (!modal) return;
+
+                // Verificar si el clic ocurrió fuera del contenido del modal
+                if (!modal.contains(event.target) && event.target !== modal) {
+                  cerrarModalDetalles();
+                }
+              }
               // Event listeners
               document.addEventListener('DOMContentLoaded', () => {
                 // Botón cancelar
@@ -1665,6 +1725,9 @@
                 modal.style.left = '50%';
                 modal.style.transform = 'translate(-50%, -50%)';
 
+                // Agregar evento para cerrar el modal al hacer clic fuera
+                window.addEventListener('click', cerrarModalInmueblesAlHacerClickFuera);
+
                 // Cargar datos si existe el ID
                 if (remateId) {
                   fetch(`/admin/inmuebles/${remateId}`)
@@ -1686,8 +1749,20 @@
                 if (modal) {
                   modal.style.display = 'none';
                 }
+
+                // Quitar el evento de clic fuera
+                window.removeEventListener('click', cerrarModalInmueblesAlHacerClickFuera);
               }
 
+              function cerrarModalInmueblesAlHacerClickFuera(event) {
+                const modal = document.getElementById('tarjetaInmuebles');
+                if (!modal) return;
+
+                // Verificar si el clic ocurrió fuera del contenido del modal
+                if (!modal.contains(event.target) && event.target !== modal) {
+                  cerrarModalInmuebles();
+                }
+              }
               // Event listeners
               document.addEventListener('DOMContentLoaded', () => {
                 // Botón cancelar

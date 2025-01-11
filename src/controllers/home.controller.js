@@ -12,9 +12,16 @@ exports.getAllRemates = async (req, res) => {
 
     const rematesData = await Home.getAll({ limit, offset });
 
+    // Obtener anexos para cada remate
+    for (const remate of rematesData) {
+      const anexos = await Home.getAnexos(remate.id);
+      remate.anexos = anexos;
+    }
+
     const rematesList = rematesData.map(remate => ({
       ...remate,
-      imagen: remate.imagenes_inmueble ? Buffer.from(remate.imagenes_inmueble).toString('base64') : null
+      imagen: remate.imagenes_inmueble ? Buffer.from(remate.imagenes_inmueble).toString('base64') : null,
+      anexos: remate.anexos // Asegúrate de pasar los anexos
     }));
 
     const pagination = {
@@ -52,8 +59,6 @@ exports.getAllRemates = async (req, res) => {
   }
 };
 
-
-
 exports.getRemateDetails = async (req, res) => {
   const { id } = req.params;
   try {
@@ -75,7 +80,6 @@ exports.getAnexos = async (req, res) => {
   }
 };
 
-
 exports.getFiltrarRemate = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -93,7 +97,7 @@ exports.getFiltrarRemate = async (req, res) => {
     };
 
     const { remates, total } = await Home.getFiltro(filtro);
-    
+
     if (remates.length === 0) {
       return renderErrorPage(res, {
         error: 'No se encontraron resultados para tu búsqueda.',
@@ -112,8 +116,6 @@ exports.getFiltrarRemate = async (req, res) => {
       total
     };
 
-    
-    
     const rematesConImagenes = remates.map(remate => ({
       ...remate,
       imagen: remate.imagen ? Buffer.from(remate.imagen).toString('base64') : null
@@ -124,7 +126,7 @@ exports.getFiltrarRemate = async (req, res) => {
       remates: rematesConImagenes,
       pagination: paginationData
     });
-    
+
   } catch (error) {
     console.error("Error al obtener remates filtrados:", error);
     renderErrorPage(res, {
@@ -151,26 +153,25 @@ function renderErrorPage(res, { error, total }) {
   });
 }
 
-
 exports.getFiltrarRemateG = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
     const offset = (page - 1) * limit;
- 
+
     const categoria = req.query.categoria || null;
     const filtro = { categoria, limit, offset };
- 
+
     const { remates, total } = await Home.getFiltro(filtro);
     const totalPages = Math.ceil(total / limit);
- 
+
     const rematesConImagenes = remates.map(remate => ({
       ...remate,
       imagen: remate.imagen ? Buffer.from(remate.imagen).toString('base64') : null
     }));
- 
+
     res.render('layouts/main', {
-      content: 'home/index', 
+      content: 'home/index',
       remates: rematesConImagenes,
       pagination: {
         currentPage: page,
@@ -183,7 +184,7 @@ exports.getFiltrarRemateG = async (req, res) => {
       },
       error: remates.length === 0 ? 'No se encontraron resultados para tu búsqueda.' : null
     });
- 
+
   } catch (error) {
     console.error("Error al obtener remates filtrados:", error);
     res.render('layouts/main', {
@@ -201,4 +202,4 @@ exports.getFiltrarRemateG = async (req, res) => {
       }
     });
   }
- };
+};

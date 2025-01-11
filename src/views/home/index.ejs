@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-
 <section class="banner" id="banner">
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -32,7 +31,6 @@
     </button>
   </div>
 </section>
-
 
 <div class="slider_contenedor">
   <div class="slide-track">
@@ -111,8 +109,6 @@
   </div>
 </div>
 
-
-
 <div class="contenidoPrincipalPagina">
   <aside class="barraLateralFiltros">
     <h4>FILTROS</h4>
@@ -160,8 +156,6 @@
           <option value="Tumbes">Tumbes</option>
           <option value="Ucayali">Ucayali</option>
       </select>
-      
-
       </div>
       <div class="contenedor-campo-formulario-categoria">
         <label for="categoria">Categoría</label>
@@ -179,10 +173,8 @@
       </div>
       <button type="submit" class="btn_filtrar">Buscar</button>
     </form>
-
   </aside>
   <main class="listaSubastasDisponibles">
-
     <nav aria-label="Navegación de remates">
       <ul class="pagination justify-content-end">
         <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
@@ -190,13 +182,11 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-
         <% for(let i = 1; i <= pagination.totalPages; i++) { %>
         <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
           <a class="page-link" href="?page=<%= i %>"><%= i %></a>
         </li>
         <% } %>
-
         <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
           <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
             <span aria-hidden="true">&raquo;</span>
@@ -204,8 +194,7 @@
         </li>
       </ul>
     </nav>
-
-    <% remates.forEach(remate=> { %>
+    <% remates.forEach(remate => { %>
     <div class="carta elementoSubastaIndividual">
       <div class="imagenPropiedadSubasta">
         <div class="contenedor_image">
@@ -229,12 +218,11 @@
             <h3>Presentación de Ofertas</h3>
             <p class="hora_remate">
               <i class="ri-calendar-line"></i>
-              <%= new Date(remate.fecha_remate).toLocaleDateString('es-PE', { 
-                day: '2-digit', 
-                month: '2-digit', 
-                year: 'numeric' 
-            }) %>
-
+              <%= new Date(remate.fecha_remate).toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              }) %>
             </p>
             <p class="hora_remate">
               <i class="ri-time-line"></i></i>
@@ -242,8 +230,7 @@
             </p>
             <p class="descripcion_remate"><%= remate.descripcion %></p>
           </a>
-
-          <% 
+          <%
             const estados = {
               finalizado: {
                 clase: '',
@@ -258,19 +245,14 @@
                 texto: 'Publicacion e Inscripcion'
               }
             }
-
             const estadoActual = estados[remate.estado];
           %>
-
           <% if (estadoActual) { %>
           <div class="estadoActualSubasta <%= estadoActual.clase %> text-light">
             <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
             <p><%= estadoActual.texto %></p>
           </div>
           <% } %>
-
-
-
         </div>
         <div class="contenedorBotonesAccion">
           <div class="precio_remate">
@@ -279,20 +261,17 @@
               S/ <%= remate.precios %>
             </p>
           </div>
-
           <div class="btn_acciones">
             <a href="#" class="botonAccionSubasta seguimiento-button" data-remate-id="<%= remate.id %>">Seguimiento</a>
             <a href="#" class="botonAccionSubasta detalle-button" data-remate-id="<%= remate.id %>">Detalle</a>
-            <a href="#" class="botonAccionSubasta aviso-button" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+            <a href="#" class="botonAccionSubasta aviso-button" target="_blank" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
               Aviso
             </a>
           </div>
-          
         </div>
       </div>
     </div>
     <% }) %>
-
     <nav aria-label="Navegación de remates">
       <ul class="pagination justify-content-end">
         <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
@@ -300,13 +279,11 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-
         <% for(let i = 1; i <= pagination.totalPages; i++) { %>
         <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
           <a class="page-link" href="?page=<%= i %>"><%= i %></a>
         </li>
         <% } %>
-
         <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
           <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
             <span aria-hidden="true">&raquo;</span>
@@ -324,8 +301,6 @@
       <button class="tab-button-z4521" onclick="switchTab('inmuebles')">Inmuebles</button>
       <button class="tab-button-z4521" onclick="switchTab('cronograma')">Cronograma</button>
     </div>
-
-    <!-- Actualización solo de la sección de remate dentro del content-panel-j3267 -->
     <div id="remate" class="content-panel-j3267 active-panel-k5432">
       <div class="detail-row-n4567">
         <span class="detail-label-p7890">Expediente:</span>
@@ -406,7 +381,6 @@
         <span class="detail-value-q2345" id="numero_inscritos"></span>
       </div>
     </div>
-
     <div id="inmuebles" class="content-panel-j3267">
       <table class="data-table-m9012">
         <thead>
@@ -422,7 +396,6 @@
         </tbody>
       </table>
     </div>
-
     <div id="cronograma" class="content-panel-j3267">
       <table class="data-table-m9012">
         <thead>
@@ -437,7 +410,6 @@
         </tbody>
       </table>
     </div>
-
     <button class="return-button-l6789" onclick="hideDetailCard()">← Regresar</button>
   </div>
 </section>
@@ -502,7 +474,6 @@
         </div>
       </div>
     </div>
-
     <button class="return-button-l6789" onclick="hideSeguimientoCard()">← Regresar</button>
   </div>
 </section>
@@ -561,17 +532,17 @@
 
     const avisoButtons = document.querySelectorAll('.aviso-button');
 
-avisoButtons.forEach(button => {
-  button.addEventListener('click', function(event) {
-    event.preventDefault();
-    const avisoUrl = this.getAttribute('data-aviso-url');
-    if (avisoUrl && avisoUrl !== '#') {
-      window.open(avisoUrl, '_blank');
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'No hay enlace disponible para este aviso.',
+    avisoButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const avisoUrl = this.getAttribute('data-aviso-url');
+        if (avisoUrl && avisoUrl !== '#') {
+          window.open(avisoUrl, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay enlace disponible para este aviso.',
           });
         }
       });
@@ -585,7 +556,7 @@ avisoButtons.forEach(button => {
       // Llenar la sección de remate
       document.getElementById('expediente').textContent = detalles.expediente || 'N/A';
       document.getElementById('distrito_judicial').textContent = detalles.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_juridiccional || 'N/A';
+      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_jurisdiccional || 'N/A';
       document.getElementById('instancia').textContent = detalles.instancia || 'N/A';
       document.getElementById('juez').textContent = detalles.juez || 'N/A';
       document.getElementById('especialista').textContent = detalles.especialista || 'N/A';
@@ -640,7 +611,7 @@ avisoButtons.forEach(button => {
       document.getElementById('expediente_seguimiento').textContent = seguimiento.expediente || 'N/A';
       document.getElementById('instancia_seguimiento').textContent = seguimiento.instancia || 'N/A';
       document.getElementById('distrito_judicial_seguimiento').textContent = seguimiento.distrito_judicial || 'N/A';
-      document.getElementById('organo_jurisdiccional_seguimiento').textContent = seguimiento.organo_juridiccional || 'N/A';
+      document.getElementById('organo_jurisdiccional_seguimiento').textContent = seguimiento.organo_jurisdiccional || 'N/A';
       document.getElementById('especialidad_seguimiento').textContent = seguimiento.especialidad || 'N/A';
       document.getElementById('convocatoria_seguimiento').textContent = seguimiento.nro_convocatoria || 'N/A';
       document.getElementById('fase_convocatoria_seguimiento').textContent = seguimiento.fase_convocatoria || 'N/A';
@@ -652,19 +623,18 @@ avisoButtons.forEach(button => {
   });
 
   function switchTab(tabId) {
-  // Remove active classes from all tabs and panels
-  document.querySelectorAll('.tab-button-z4521').forEach(tab => {
-    tab.classList.remove('active-tab-w8901');
-  });
-  document.querySelectorAll('.content-panel-j3267').forEach(panel => {
-    panel.classList.remove('active-panel-k5432');
-  });
+    // Remove active classes from all tabs and panels
+    document.querySelectorAll('.tab-button-z4521').forEach(tab => {
+      tab.classList.remove('active-tab-w8901');
+    });
+    document.querySelectorAll('.content-panel-j3267').forEach(panel => {
+      panel.classList.remove('active-panel-k5432');
+    });
 
-  // Add active class to the selected tab and panel
-  document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active-tab-w8901');
-  document.getElementById(tabId).classList.add('active-panel-k5432');
-}
-
+    // Add active class to the selected tab and panel
+    document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active-tab-w8901');
+    document.getElementById(tabId).classList.add('active-panel-k5432');
+  }
 </script>
 
 <script>
@@ -683,7 +653,7 @@ avisoButtons.forEach(button => {
 document.addEventListener('click', function(event) {
   const tarjeta = document.querySelector('.tarjeta_seguimiento_seguimiento');
   const contenedor = document.querySelector('.contenedor-expediente');
-  
+
   if (tarjeta && contenedor) {
     // Verifica si el clic fue fuera del contenedor
     if (!contenedor.contains(event.target)) {

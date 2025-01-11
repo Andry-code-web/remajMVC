@@ -12,8 +12,8 @@
   font-family: "fuenteParrafos";
   src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
 }
+/* General Styles */
 .banner {
-  /*   position: relative; */
   width: 100%;
   height: 400px;
   display: flex;
@@ -147,17 +147,14 @@
   object-fit: contain;
 }
 
-/* Detener la animación al hacer hover */
 .slider_contenedor .slide-track:hover {
   animation-play-state: paused;
   -webkit-animation-play-state: paused;
 }
 
-/* Cambiar el color de la imagen al hacer hover */
 .slider_contenedor .slide-track a:hover img {
   filter: brightness(0) saturate(100%) invert(34%) sepia(93%) saturate(659%) hue-rotate(-50deg) brightness(94%) contrast(90%);
   transition: filter 0.3s ease;
-  /* Transición suave */
 }
 
 .slide_img a:hover {
@@ -196,387 +193,190 @@
   grid-template-columns: repeat(1, 1fr);
 }
 
-/* .carta {
-    display: grid;
-    grid-template-columns: 30% 50% 20%;
-    grid-template-rows: 80% 20%;
-    grid-column-gap: 6px;
-    grid-row-gap: 0px;
-    padding: .5rem;
-
-    width: 90%;
-    height: 300px;
-    overflow: hidden;
-    background: #fffcfc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    animation: caerDesdeArriba 1s ease 0.2s forwards;
-}
-
-.contenedor_image {
-    grid-area: 1 / 1 / 2 / 2;
-    width: 100%;
-    height: auto;
-}
-
-.contenedor_image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.contenedor_info {
-    grid-area: 1 / 2 / 2 / 3;
-}
-
-.contenedor_estado {
-    grid-area: 1 / 3 / 2 / 4;
-}
-
-.contenedor_precio_link {
-    grid-area: 2 / 1 / 3 / 4;
-} */
-/* 
-@keyframes caerDesdeArriba {
-    from {
-        transform: translateY(-100vh);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.carta:hover {
-    transform: scale(1.2);
-}
-
-.imagen-contenedor {
-    position: relative;
-    width: 30%;
-    height: auto;
-}
-
-.imagen-propiedad {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.botones-contenedor {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-
-
-.renta-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ff0000;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.renta-button:hover {
-    transform: scale(1.05);
-    color: red;
-    background-color: #eee;
-}
-
-.contenido {
-    padding: 24px;
-}
-
-.label {
-    font-family: "fuentePrincipal";
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-
-.nombre_proyecto {
-    font-family: "fuenteSecundaria";
-    color: #001529;
-    font-size: 24px;
-    margin-bottom: 16px;
-}
-
-.direccion {
-    font-family: "fuenteparrafos";
-    color: #001529;
-    font-size: 16px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid #eee;
-}
-
-.detalles {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #eee;
-}
-
-.detalles-item {
-    text-align: left;
-}
-
-.detalles-valor {
-    color: #001529;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.precio {
-    font-family: "fuenteparrafos";
-    color: #000329;
-    font-size: 24px;
-    font-weight: 600;
-}
-
-
 .contenedor-expediente {
-    font-family: Arial, sans-serif;
-    max-width: 1000px;
-    margin: 20px auto;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  max-width: 1000px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .encabezado-expediente {
-    background-color: #dc0a0a;
-    color: white;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 14px;
+  background-color: #dc0a0a;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .contenido-expediente {
-    padding: 15px;
+  padding: 15px;
 }
 
 .cuadricula-informacion {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .elemento-informacion {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 10px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+  align-items: center;
 }
 
 .etiqueta-expediente {
-    font-weight: bold;
-    color: #666;
-    font-size: 13px;
+  font-weight: bold;
+  color: #666;
+  font-size: 13px;
 }
 
 .valor-expediente {
-    color: #333;
-    font-size: 13px;
+  color: #333;
+  font-size: 13px;
 }
 
 .paginacion-expediente {
-    background-color: #f5f5f5;
-    padding: 10px;
-    text-align: center;
-    border-top: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #ddd;
 }
 
 .boton-paginacion {
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    cursor: pointer;
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
 }
 
 .boton-paginacion:hover {
-    background-color: #eee;
+  background-color: #eee;
 }
 
 .selector-paginas {
-    padding: 4px;
-    margin-left: 10px;
+  padding: 4px;
+  margin-left: 10px;
 }
 
-
-
 .nublado {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 .judicial-card-container-x9875 {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    min-height: 600px;
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
 }
 
 .judicial-header-tabs-y7632 {
-    display: flex;
-    border-bottom: 2px solid #cc0000;
-    background: #fff;
+  display: flex;
+  border-bottom: 2px solid #cc0000;
+  background: #fff;
 }
 
 .tab-button-z4521 {
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #666;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
 }
 
 .tab-button-z4521.active-tab-w8901 {
-    color: #cc0000;
-    border-bottom: 3px solid #cc0000;
-    margin-bottom: -2px;
+  color: #cc0000;
+  border-bottom: 3px solid #cc0000;
+  margin-bottom: -2px;
 }
 
 .content-panel-j3267 {
-    display: none;
-    padding: 20px;
-    animation: fadeIn 0.5s ease;
-    flex: 1;
+  display: none;
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+  flex: 1;
 }
 
 .content-panel-j3267.active-panel-k5432 {
-    display: block;
+  display: block;
 }
 
 .data-table-m9012 {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .data-table-m9012 th {
-    background: #4a6da7;
-    color: white;
-    padding: 8px;
-    text-align: left;
+  background: #4a6da7;
+  color: white;
+  padding: 8px;
+  text-align: left;
 }
 
 .data-table-m9012 td {
-    padding: 8px;
-    border: 1px solid #ddd;
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 
 .return-button-l6789 {
-    display: block;
-    margin: 20px auto;
-    padding: 8px 16px;
-    background: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
+  display: block;
+  margin: 20px auto;
+  padding: 8px 16px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .detail-row-n4567 {
-    display: flex;
-    margin-bottom: 8px;
+  display: flex;
+  margin-bottom: 8px;
 }
 
 .detail-label-p7890 {
-    width: 200px;
-    font-weight: bold;
-    color: #333;
+  width: 200px;
+  font-weight: bold;
+  color: #333;
 }
 
 .detail-value-q2345 {
-    flex: 1;
-    color: #666;
+  flex: 1;
+  color: #666;
 }
 
 .price-highlight-r5678 {
-    color: #cc0000;
-    font-weight: bold;
+  color: #cc0000;
+  font-weight: bold;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-} */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .seguimiento-button,
 .detalle-button,
 .aviso-button {
   display: inline-block;
   padding: 8px 16px;
-  font-size: 14px;
-  text-decoration: none;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  background: linear-gradient(to bottom, #666666 0%, #444444 100%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.3);
-  transition: all 0.2s ease;
-}
-
-.seguimiento-button {
-  background: linear-gradient(to bottom, #8b4513 0%, #703a15 100%);
-}
-
-.detalle-button {
-  background: linear-gradient(to bottom, #666666 0%, #444444 100%);
-}
-
-.aviso-button {
-  background: linear-gradient(to bottom, #8b4513 0%, #703a15 100%);
-}
-
-.seguimiento-button:hover,
-.detalle-button:hover,
-.aviso-button:hover {
-  background: linear-gradient(to bottom, #777777 0%, #555555 100%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-}
-
-.seguimiento-button:active,
-.detalle-button:active,
-.aviso-button:active {
-  background: linear-gradient(to bottom, #444444 0%, #666666 100%);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-  transform: translateY(1px);
-}
-
-.seguimiento-button,
-.detalle-button,
-.aviso-button {
-  display: inline-block;
-  padding: 8px 16px;
-  margin: 0 8px;
   font-size: 14px;
   text-decoration: none;
   color: white;
@@ -621,9 +421,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   z-index: 1000;
 }
 
@@ -848,6 +647,7 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1rem;
+  gap: 2rem;
 }
 
 .informacionGeneralSubasta {
@@ -890,15 +690,10 @@
   font-size: 0.9rem;
   font-weight: 200;
   display: -webkit-box;
-  /* Habilita el modo flexible para recortar */
   -webkit-line-clamp: 2;
-  /* Número de líneas visibles */
   -webkit-box-orient: vertical;
-  /* Orientación vertical */
   overflow: hidden;
-  /* Oculta el contenido extra */
   text-overflow: ellipsis;
-  /* Añade puntos suspensivos */
   margin-top: 1rem;
 }
 
@@ -954,7 +749,6 @@
   max-width: 1000px;
 }
 
-/* Overlay background */
 .tarjeta_seguimiento_seguimiento::before {
   content: "";
   position: fixed;
@@ -1067,7 +861,6 @@
   display: block;
 }
 
-/* Contenedor principal y overlay */
 .tarjeta_seguimiento_detalle {
   position: fixed;
   top: 50%;
@@ -1076,6 +869,7 @@
   z-index: 1000;
   width: 100%;
   max-width: 1200px;
+  background-color: transparent;
 }
 
 .tarjeta_seguimiento_detalle::before {
@@ -1088,7 +882,6 @@
   z-index: -1;
 }
 
-/* Contenedor de la tarjeta */
 .judicial-card-container-x9875 {
   background-color: #ffffff;
   border: 1px solid #ddd;
@@ -1096,7 +889,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Pestañas de navegación */
 .judicial-header-tabs-y7632 {
   display: flex;
   border-bottom: 1px solid #ddd;
@@ -1119,7 +911,6 @@
   border-bottom: 2px solid #cc0000;
 }
 
-/* Paneles de contenido */
 .content-panel-j3267 {
   display: none;
   padding: 20px;
@@ -1130,7 +921,6 @@
   display: block;
 }
 
-/* Filas de detalles */
 .detail-row-n4567 {
   display: flex;
   padding: 8px 0;
@@ -1150,7 +940,6 @@
   font-size: 14px;
 }
 
-/* Tablas */
 .data-table-m9012 {
   width: 100%;
   border-collapse: collapse;
@@ -1177,7 +966,6 @@
   background-color: #f9f9f9;
 }
 
-/* Enlaces de documentos */
 .document-link-s9012 {
   color: #cc0000;
   text-decoration: none;
@@ -1187,7 +975,6 @@
   text-decoration: underline;
 }
 
-/* Botón de regreso */
 .return-button-l6789 {
   margin: 15px;
   padding: 8px 16px;
@@ -1206,7 +993,6 @@
   background-color: #e8e8e8;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .detail-row-n4567 {
     flex-direction: column;
@@ -1219,13 +1005,11 @@
     padding: 8px 16px;
   }
 }
-/* Estilos para los contenedores de los campos del formulario */
 .contenedor-campo-formulario-ubicacion,
 .contenedor-campo-formulario-categoria {
   margin-bottom: 20px;
 }
 
-/* Estilos para las etiquetas de los campos */
 .contenedor-campo-formulario-ubicacion label,
 .contenedor-campo-formulario-categoria label {
   display: block;
@@ -1235,7 +1019,6 @@
   font-weight: bold;
 }
 
-/* Estilos comunes para los selectores desplegables */
 .selector-desplegable-ubicacion,
 .selector-desplegable-categoria {
   width: 90%;
@@ -1254,13 +1037,11 @@
   background-size: 18px;
 }
 
-/* Estilos para el estado hover de los selectores */
 .selector-desplegable-ubicacion:hover,
 .selector-desplegable-categoria:hover {
   border-color: #999999;
 }
 
-/* Estilos para el estado focus de los selectores */
 .selector-desplegable-ubicacion:focus,
 .selector-desplegable-categoria:focus {
   outline: none;
@@ -1268,10 +1049,105 @@
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para las opciones deshabilitadas */
 .selector-desplegable-ubicacion option[value=""],
 .selector-desplegable-categoria option[value=""] {
   color: #999999;
+}
+
+.detallesEspecificosSubasta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 2rem;
+}
+
+.informacionGeneralSubasta {
+  flex: 1;
+  min-width: 0;
+}
+
+.estadoActualSubasta {
+  background: #780103;
+  padding: 1rem;
+  text-align: center;
+  width: 250px;
+  min-width: 250px;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.descripcion_remate {
+  font-family: "fuenteparrafos" !important;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 200;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1rem;
+  max-width: calc(100% - 270px);
+}
+
+/* Contenedor del panel de remate */
+#remate.content-panel-j3267 {
+  display: none;
+  padding: 20px;
+  background: #fff;
+}
+
+#remate.content-panel-j3267.active-panel-k5432 {
+  display: block;
+  /* Cambiado de grid a block */
+}
+
+/* Contenedor para las dos columnas */
+#remate .remate-columns {
+  display: flex;
+  gap: 40px;
+  /* Espacio entre columnas */
+}
+
+/* Columnas izquierda y derecha */
+#remate .column-left,
+#remate .column-right {
+  flex: 1;
+  min-width: 0;
+  /* Permite que el contenido se ajuste */
+}
+
+/* Filas de detalles */
+.detail-row-n4567 {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+}
+
+/* Etiquetas más oscuras y negrita */
+.detail-label-p7890 {
+  width: 180px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+  /* Evita que la etiqueta se encoja */
+}
+
+.detail-value-q2345 {
+  flex: 1;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #remate .remate-columns {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 /*# sourceMappingURL=inicio.css.map */

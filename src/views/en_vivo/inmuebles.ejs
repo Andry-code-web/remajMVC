@@ -44,9 +44,10 @@
             <td class="direccion-cell"><%= inmueble.direccion %></td>
             <td class="gravamen-cell"><%= inmueble.carga_ogravamen %></td>
             <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %></td>
-            <td  class="imagen-cell">
+            <td class="imagen-cell">
               <% if (inmueble.img_inmueble) { %>
-              <img src="data:image/jpeg;base64,<%= inmueble.img_inmueble %>" alt="Imagen Inmueble" style="width: 100px; height: auto; cursor: pointer;" onclick="showImageModal('data:image/jpeg;base64,<%= inmueble.img_inmueble %>')">
+                <a href="#" onclick="showImageModal('<%= inmueble.img_inmueble %>')">Ver Imagen</a>
+
               <% } else { %>
               <span>No disponible</span>
               <% } %>
@@ -63,14 +64,19 @@
       <% } %>
     </div>
 
-    <!-- Modal para mostrar la imagen -->
-<div id="imageModal" class="image-modal" onclick="closeImageModal()" style="display: none;">
-  <span class="close" onclick="closeImageModal()">&times;</span>
-  <img id="modalImage" src="" alt="Imagen Inmueble">
-</div>
     <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>
 </main>
+
+
+modal 
+<!-- Modal para la imagen -->
+<div id="inmuebleImageModal" class="inmueble-image-modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeImageModal()">&times;</span>
+    <img id="modalImage" src="" alt="Imagen Inmueble" style="max-width: 100%; max-height: 500px;" />
+  </div>
+</div>
 
 <!-- COMPONENTE FOOTER -->
 <%- include('../partials/footer') %>
@@ -106,14 +112,29 @@
 <!-- SCRIPT MODAL IMAGENES -->
 <script>
   function showImageModal(imageSrc) {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    modalImg.src = imageSrc;
-    modal.style.display = 'flex';
-  }
+    // Verificar si imageSrc no está vacío
+    if (!imageSrc) {
+      console.error("La fuente de la imagen está vacía");
+      return;
+    }
+    console.log("Se ejecuta showImageModal con src: ", imageSrc);
+    const modal = document.getElementById("inmuebleImageModal");
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = imageSrc; // Asignar la fuente de la imagen
+    modal.style.display = "flex"; // Mostrar el modal
+}
 
-  function closeImageModal() {
-    const modal = document.getElementById('imageModal');
-    modal.style.display = 'none';
-  }
+function closeImageModal() {
+    const modal = document.getElementById("inmuebleImageModal");
+    modal.style.display = "none"; // Ocultar el modal
+}
+
+// Cerrar el modal si el usuario hace clic fuera del contenido
+window.onclick = function (event) {
+    const modal = document.getElementById("inmuebleImageModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+};
+
 </script>

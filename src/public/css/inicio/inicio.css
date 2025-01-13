@@ -67,6 +67,12 @@
   border-bottom-color: #780103 !important;
 }
 
+/* bases remate */
+.bases_remate h2 {
+  font-family: "fuentePrincipal";
+  font-size: 1.5rem;
+}
+
 /* CATEGORIAS */
 @-webkit-keyframes scroll {
   0% {
@@ -156,8 +162,8 @@
 }
 
 .slider_contenedor .slide-track:hover {
-  animation-play-state: paused;
   -webkit-animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 .slider_contenedor .slide-track a:hover img {
@@ -380,6 +386,13 @@
     opacity: 1;
   }
 }
+/* icono combo */
+.icono-precio {
+  margin-left: 20px;
+  font-size: 18px;
+  color: #780103;
+}
+
 .seguimiento-button,
 .detalle-button,
 .aviso-button {
@@ -722,18 +735,20 @@
 }
 
 .botonAccionSubasta {
-  background: #f0f0f0;
+  font-family: "fuentePrincipal";
+  background: #780103;
   border: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
-  color: #333;
+  color: white;
   transition: background-color 0.3s;
 }
 
 .botonAccionSubasta:hover {
-  background-color: #e0e0e0;
+  color: black;
+  background: white;
 }
 
 .precio_remate p:first-child {

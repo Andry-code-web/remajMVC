@@ -53,8 +53,8 @@
   --fs: 1.25em;
   --col1: #fff5f5;
   --col2: rgba(205, 92, 92, 0.5);
-  --col3: #b44;
-  --col4: #933;
+  --col3:#780103;
+  --col4: #780103;
   --pd: 0.5em 0.65em;
   display: inline-grid;
   grid-template-columns: min-content 1fr;
@@ -265,9 +265,28 @@ footer {
   font-size: 0.9rem;
 }
 
+.contndor_redes_sociales {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  height: 50px;
+  margin-top: 1rem;
+}
+
+.contndor_redes_sociales {
+  width: 100%;
+  height: 100%;
+}
+
 .img_redes {
-  width: 80%;
-  filter: invert(1) sepia(1) saturate(100%);
+  width: 100%;
+}
+
+.paises {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 /*# sourceMappingURL=globales.css.map */

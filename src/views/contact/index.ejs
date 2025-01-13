@@ -1,101 +1,391 @@
+<!-- BOOTSTRAP -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 <!-- BANER CONTACTO -->
 <div id="banner" class="banner">
-    <div class="contenedor_titulo">
-      <h1 class="titulo">
-        <span>
-          Contacto
-        </span>
-      </h1>
+  <div class="contenedor_titulo">
+    <h1 class="titulo">
+      <span>
+        Contacto
+      </span>
+    </h1>
+  </div>
+  <div class="contenedor_mensaje">
+    <div class="mensaje">
+      ¿Quieres saber más sobre nuestras subastas o los inmuebles disponibles? ¡Estamos aquí para ayudarte y
+      resolver cualquier duda!
     </div>
-    <div class="contenedor_mensaje">
-      <div class="mensaje">
-        ¿Quieres saber más sobre nuestras subastas o los inmuebles disponibles? ¡Estamos aquí para ayudarte y
-        resolver cualquier duda!
+
+  </div>
+  <div class="contenedor_boton">
+    <a href="">
+      <i class="ri-mail-line"></i>
+      <span>
+        Envíanos un correo electrónico
+      </span>
+    </a>
+  </div>
+</div>
+
+<!--SLIDER INMUEBLES -->
+<!--  <div id="cartas" class="sliders_casa">
+  <div class="titulo_slider">
+    <h2 class="sub_titulo">Preguntas Frecuentes<h2></h2>
+  </div> -->
+
+<!-- PREGUNTAS FRECUENTES -->
+<div id="preguntas-frecuentes" class="sliders_casa">
+  <h2 class="sub_titulo">Preguntas Frecuentes</h2>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <ul class="nav nav-tabs" id="preguntasTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="remates-tab" data-bs-toggle="tab" data-bs-target="#remates" type="button" role="tab" aria-controls="remates" aria-selected="false">Remates</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pagos-tab" data-bs-toggle="tab" data-bs-target="#pagos" type="button" role="tab" aria-controls="pagos" aria-selected="false">Pagos</button>
+          </li>
+        </ul>
+        <div class="tab-content mt-4" id="preguntasTabsContent">
+          <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <div class="accordion" id="accordionGeneral">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                    ¿Qué significa un Remate Extrajudicial online?
+                  </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Un remate extrajudicial online, es un remate virtual que se realiza dentro de la plataforma web de REMAJUD, donde los usuarios se conectan virtualmente, y participan haciendo ofertas para poder adjudicarse un bien. Estos remates son:
+                    <ul>
+                      <li>Remate online individual, son remates por lote de forma individual y se programan en una fecha y hora determinada. Generalmente su duración es medio día y se puede realizar pre-oferta antes de participar.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                    ¿Tiene algún costo inscribirme en la plataforma de REMAJUD para poder participar en algunos remates?
+                  </button>
+                </h2>
+                <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    No. La inscripción en la plataforma REMAJUD es totalmente GRATIS.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                    ¿Qué es el código de usuario?
+                  </button>
+                </h2>
+                <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Es el usuario un código que te asigna REMAJUD para identificarte como usuario de la plataforma. Este usuario es muy importante para que puedas identificarte para los remates virtuales en REMAJUD.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                    ¿Cómo recupero mi contraseña?
+                  </button>
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Ingresa al siguiente enlace: "¿Olvidaste tu contraseña?"
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                    ¿Para qué sirve el seudónimo en el proceso de REMATES VIRTUALES?
+                  </button>
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Para mantener la confidencialidad y seguridad de los participantes durante el proceso de remate. Será también el nombre con el que los demás participantes verán a tu usuario durante el proceso de Remate en Vivo.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6">
+                    ¿Cómo puedo cambiar de seudónimo o actualizar mis datos personales?
+                  </button>
+                </h2>
+                <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Escríbenos a soporte@remajud.com o al ……………………….. solicitando la actualización que necesites.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7">
+                    ¿Puedo ver físicamente el bien que se está rematando?
+                  </button>
+                </h2>
+                <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#accordionGeneral">
+                  <div class="accordion-body">
+                    Sí, los bienes se pueden ver en el lugar y horario establecidos por el vendedor. Las visitas también se podrán coordinar previamente con el equipo REMAJUD enviando un mensaje al WhatsApp ……………………….
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="remates" role="tabpanel" aria-labelledby="remates-tab">
+            <div class="accordion" id="accordionRemates">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR1">
+                    ¿Qué es el precio base?
+                  </button>
+                </h2>
+                <div id="collapseR1" class="accordion-collapse collapse" data-bs-parent="#accordionRemates">
+                  <div class="accordion-body">
+                    Es el precio con el que se da inicio el Remate Virtual.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR2">
+                    ¿Qué es el "Precio de Reserva" en los Remates?
+                  </button>
+                </h2>
+                <div id="collapseR2" class="accordion-collapse collapse" data-bs-parent="#accordionRemates">
+                  <div class="accordion-body">
+                    El precio de reserva, es lo está dispuesto a vender el propietario del bien. Este importe aplica solo para los Remates y es confidencial. No se dará a conocer a los participantes, solo hasta el momento de la puja del remate, donde aparecerá una alerta con un mensaje que dirá "Precio Reserva Superado".
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR3">
+                    ¿Cómo envío o incremento mi oferta en los Remates Virtuales?
+                  </button>
+                </h2>
+                <div id="collapseR3" class="accordion-collapse collapse" data-bs-parent="#accordionRemates">
+                  <div class="accordion-body">
+                    Puedes enviar tu oferta desde que se publica el remate, en la etapa de pre-oferta. Puedes incrementarla ilimitadamente hasta el cierre de la oferta del remate.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR4">
+                    ¿Cuándo se cierra un remate virtual?
+                  </button>
+                </h2>
+                <div id="collapseR4" class="accordion-collapse collapse" data-bs-parent="#accordionRemates">
+                  <div class="accordion-body">
+                    Cuando los participantes dan su última oferta al cierre del tiempo estipulado.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR5">
+                    ¿A quién se le llama mejor postor?
+                  </button>
+                </h2>
+                <div id="collapseR5" class="accordion-collapse collapse" data-bs-parent="#accordionRemates">
+                  <div class="accordion-body">
+                    Al usuario que haya realizado la mejor oferta. En ese caso, el remate pasará a consulta con el vendedor, quien podrá realizar una contrapropuesta para definir si se vende el bien o no.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
+            <div class="accordion" id="accordionPagos">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP1">
+                    ¿Cómo realizo el pago de la garantía?
+                  </button>
+                </h2>
+                <div id="collapseP1" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    Comunícate por aquí………………. Y en minutos será validado para participar en el remate extrajudicial o puede hacerlo directo a la Cuenta del banco de la empresa o escríbenos en soporte@remajud.com
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP2">
+                    ¿Por qué se paga la garantía?
+                  </button>
+                </h2>
+                <div id="collapseP2" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    La garantía se paga para poder hacer valida tu oferta y asegurar tu participación en el proceso de remate.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP3">
+                    ¿Cuál es el importe mínimo de la garantía?
+                  </button>
+                </h2>
+                <div id="collapseP3" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    El monto de la garantía es de 1000 Dólares, en caso de no ganar el remate se le reembolsa, si resulta ganador, la garantía ingresa como aporte al pago que corresponde del remate ganador.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP4">
+                    ¿Cómo recupero mi garantía si ya no deseo participar en más Remates?
+                  </button>
+                </h2>
+                <div id="collapseP4" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    Si resulta NO GANADOR, dentro de los 3 días hábiles se le hará e reembolso de la garantía a la misma cuenta bancaria la cual transfirió y en la misma moneda.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP5">
+                    ¿Qué es la comisión y cuánto es el porcentaje?
+                  </button>
+                </h2>
+                <div id="collapseP5" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    La comisión es el monto que deberá pagar el usuario a REMAJUD cuando se haga efectiva la adjudicación del REMATE. El porcentaje de la comisión se podrá visualizar en cada REMATE.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP6">
+                    ¿Quién debe pagar la comisión y cuándo?
+                  </button>
+                </h2>
+                <div id="collapseP6" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    La comisión la pagará el usuario comprador cuando se adjudique el remate. Si eres el ganador del remate, nos contactaremos contigo vía telefónica y correo electrónico para indicarte los pasos a seguir.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP7">
+                    ¿La comisión está incluida en el importe del REMATE?
+                  </button>
+                </h2>
+                <div id="collapseP7" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    No está incluida. La comisión se calcula sobre el valor final al cual se adjudica cada Remate.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP8">
+                    Si gano el remate, ¿qué pasa con mi garantía?
+                  </button>
+                </h2>
+                <div id="collapseP8" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    Si ganaste el remate, tu garantía quedará retenida hasta realizar los pagos al vendedor del bien, así como la comisión a REMAJUD. Una vez realizada ambas operaciones tu garantía quedará liberada para que puedas participar de nuestros próximos remates.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseP9">
+                    Si quedo como primer postor del remate y no compro ¿qué pasa con mi garantía?
+                  </button>
+                </h2>
+                <div id="collapseP9" class="accordion-collapse collapse" data-bs-parent="#accordionPagos">
+                  <div class="accordion-body">
+                    El mayor precio ofertado en el remate, será evaluado por el propietario del bien, quedando a criterio y voluntad del vendedor si se concreta la venta. Cuando el mejor postor del remate, haya realizado la mejor oferta por encima del "Precio de reserva" y el usuario no realice la compra del bien, REMAJUD retendrá la garantía depositada por el usuario como penalidad por falta de seriedad en su oferta.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+<!-- CONTACTOS -->
+<div id="contactos" class="contacto">
+  <h2 class="titulo_contactos">
+    Remajud
+  </h2>
+
+  <div class="subtitulo_contacto">
+    <p>Subastas</p>
+  </div>
+
+  <ul class="contactos">
+    <li class="items_contactos">
+      <h3 class="sub_titulo_contactos">Oficina central</h3>
+      <div class="info_contacto">
+        <a href="" class="ubicacion">
+          <i class="ri-map-pin-2-fill"></i>
+          Av. Ejercito 906 <br> Piso Cayma Arequipa
+        </a>
+        <a href="" class="telefono">
+          <i class="ri-phone-fill"></i>
+          999999999
+        </a>
+        <a href="" class="correo">
+          <i class="ri-mail-line"></i>
+          soporte@subastasur.com
+        </a>
       </div>
 
-    </div>
-    <div class="contenedor_boton">
-      <a href="">
-        <i class="ri-mail-line"></i>
+      <a href="/mapa" class="btn_direcion">
+        <i class="ri-direction-fill"></i>
         <span>
-          Envíanos un correo electrónico
+          Obtener dirección
         </span>
       </a>
-    </div>
-  </div>
+    </li>
+  </ul>
+</div>
 
-  <!-- SLIDER INMUEBLES -->
-  <div id="cartas" class="sliders_casa">
-    <div class="titulo_slider">
-      <h2 class="sub_titulo">Remajud subastas</h2>
-    </div>
+<!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <div class="contenedor_galeria">
-      <div class="div_img ">
-        <span class="img">
-          <img src="/img/WhatsApp Image 2024-11-15 at 9.39.04 AM.jpeg" alt="">
-        </span>
-        <h4 class="descripcion">
-          <i class="ri-map-pin-2-fill"></i>
-          Arequipa Peru
-        </h4>
-      </div>
-      <div class="div_img ">
-        <span class="img">
-          <img src="/img/WhatsApp Image 2024-11-15 at 9.39.04 AM.jpeg" alt="">
-        </span>
-        <h4 class="descripcion">
-          <i class="ri-map-pin-2-fill"></i>
-          Arequipa Peru
-        </h4>
-      </div>
-      <div class="div_img ">
-        <span class="img">
-          <img src="/img/WhatsApp Image 2024-11-15 at 9.39.04 AM.jpeg" alt="">
-        </span>
-        <h4 class="descripcion">
-          <i class="ri-map-pin-2-fill"></i>
-          Arequipa Peru
-        </h4>
-      </div>
-    </div>
-  </div>
+<!-- modal acordion preguntas  -->
 
-  <!-- CONTACTOS -->
-  <div id="contactos" class="contacto">
-    <h2 class="titulo_contactos">
-      Remajud
-    </h2>
-
-    <div class="subtitulo_contacto">
-      <p>Subastas</p>
-    </div>
-
-    <ul class="contactos">
-      <li class="items_contactos">
-        <h3 class="sub_titulo_contactos">Oficina central</h3>
-        <div class="info_contacto">
-          <a href="" class="ubicacion">
-            <i class="ri-map-pin-2-fill"></i>
-            Av. Ejercito 906 <br> Piso Cayma Arequipa
-          </a>
-          <a href="" class="telefono">
-            <i class="ri-phone-fill"></i>
-            999999999
-          </a>
-          <a href="" class="correo">
-            <i class="ri-mail-line"></i>
-            soporte@subastasur.com
-          </a>
-        </div>
-
-        <a href="/mapa" class="btn_direcion">
-          <i class="ri-direction-fill"></i>
-          <span>
-            Obtener dirección
-          </span>
-        </a>
-      </li>
-    </ul>
-  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var accordionButtons = document.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var target = this.getAttribute('data-bs-target');
+        var parentAccordion = this.closest('.accordion');
+        var otherCollapses = parentAccordion.querySelectorAll('.accordion-collapse');
+        otherCollapses.forEach(function(collapse) {
+          if (collapse.id !== target.replace('#', '') && collapse.classList.contains('show')) {
+            collapse.classList.remove('show');
+            var otherButton = parentAccordion.querySelector('[data-bs-target="#' + collapse.id + '"]');
+            otherButton.classList.add('collapsed');
+            otherButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+  });
+</script>

@@ -34,10 +34,23 @@ class EnVivo {
 
 
     static async getInmuebles(remates_id) {
-        const query = " SELECT * FROM remajud.inmuebles WHERE remates_id = ?";
+        const query = `
+            SELECT 
+                i.*, 
+                TO_BASE64(img.imagenes_inmueble) AS img_inmueble
+            FROM 
+                remajud.inmuebles AS i
+            LEFT JOIN 
+                img_inmuebles AS img
+            ON 
+                i.img_inmuebles_id = img.id
+            WHERE 
+                i.remates_id = ?
+        `;
         const [rows] = await db.execute(query, [remates_id]);
         return rows;
     }
+    
 
     static async getImagenInmuebleById(img_inmuebles_id) {
         const query = `

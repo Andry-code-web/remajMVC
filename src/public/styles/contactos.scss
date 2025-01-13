@@ -38,7 +38,7 @@
 }
 
 .titulo {
-    font-size: 7em;
+    font-size: 3.2vw;
     font-family: $fuenteSecundaria;
     font-weight: 200;
 }
@@ -50,6 +50,7 @@
     margin: 0 auto 2.2222222222vw;
     font-family: $fuenteSecundaria;
     font-weight: 100;
+    margin-top: 3rem;
 }
 
 .contenedor_boton {
@@ -157,7 +158,7 @@
 /*  */
 
 .contacto {
-    margin-top: 8rem;
+    margin-top: -22rem;
     margin-bottom: 10rem;
     width: 100%;
     height: auto;
@@ -167,10 +168,11 @@
     align-items: center;
 }
 
+
 .titulo_contactos {
     font-family: $fuenteSecundaria;
     font-weight: 100;
-    font-size: 6.2vw;
+    font-size: 3.2vw;
     /* margin-bottom: 1.66vw; */
 }
 
@@ -249,16 +251,17 @@
 
 
 #preguntas-frecuentes {
-    margin-top: 2rem;  /* Reducido de 4rem a 2rem */
+    margin-top: 4rem; 
+    display: block;
   }
   
   #preguntas-frecuentes .sub_titulo {
-    margin-bottom: 0.5rem;  /* Reducido de 1rem a 0.5rem */
-    font-size: 6.2vw;
+    margin-bottom: 0.5rem;  
+    font-size: 3.2vw;
   }
   
   #preguntas-frecuentes .container {
-    margin-top: 0.5rem;  /* Reducido de 1rem a 0.5rem */
+    margin-top: 0.5rem;  
   }
   
   

@@ -57,6 +57,8 @@ app.use('/contacto', require('./routes/contacto.routes'));
 app.use('/remates', require('./routes/remates.routes'));
 app.use('/errores', require('./routes/errores.routes'));
 app.use('/en_vivo', require('./routes/en_vivo.routes'));
+app.use('/comprar', require('./routes/comprar.routes'));
+app.use('/vender', require('./routes/vender.routes'));
 
 app.get('/unauthorized', (req, res) => {  
   res.render('unauthorized/unauthorized');

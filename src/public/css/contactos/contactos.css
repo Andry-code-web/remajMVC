@@ -25,6 +25,23 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(107, 77, 230, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
 .contenedor_contacto {
   width: 100%;
   min-width: 100vh;
@@ -94,12 +111,13 @@
 /* */
 .sliders_casa {
   width: 100%;
-  height: 100vh;
+  height: 111vh;
   margin-top: 12rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 18px;
 }
 
 .sub_titulo {
@@ -107,7 +125,7 @@
   font-size: 6.2vw;
   font-family: "fuenteSecundaria";
   font-weight: 100;
-  margin-bottom: 3vw;
+  margin-bottom: 30vw;
 }
 
 .contenedor_galeria {
@@ -238,6 +256,19 @@
 
 .btn_direcion:hover {
   transform: translateY(2px);
+}
+
+#preguntas-frecuentes {
+  margin-top: 2rem; /* Reducido de 4rem a 2rem */
+}
+
+#preguntas-frecuentes .sub_titulo {
+  margin-bottom: 0.5rem; /* Reducido de 1rem a 0.5rem */
+  font-size: 6.2vw;
+}
+
+#preguntas-frecuentes .container {
+  margin-top: 0.5rem; /* Reducido de 1rem a 0.5rem */
 }
 
 #preguntas-frecuentes .nav-tabs {

@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.contenedor_principal_pagina_comercial {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.espacio_cabecera_personalizada {
+    height: 80px;
+    background: #f5f5f5;
+}
+
+.seccion_principal_destacada_comercial {
+    background: linear-gradient(45deg, rgba(124, 1, 7, 0.308), rgba(226, 43, 58, 0.336)), url('/img/banner2.jpeg');
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    padding: 60px 20px;
+    color: white;
+    text-align: center;
+}
+
+.contenedor_texto_principal_destacado {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.titulo_principal_destacado_comercial {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.subtitulo_destacado_comercial_naranja {
+    color: #a10707;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.descripcion_principal_comercial {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.boton_contacto_principal_destacado {
+    background: #8b0404;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.seccion_estadisticas_empresariales {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.titulo_estadisticas_empresariales {
+    font-size: 2em;
+    margin-bottom: 40px;
+}
+
+.contenedor_numeros_estadisticas_flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+}
+
+.item_estadistica_empresarial {
+    margin: 20px;
+    min-width: 200px;
+}
+
+.numero_estadistica_destacado {
+    font-size: 2.5em;
+    color: rgba(165, 4, 4, 0.884);
+    color: linear-gradient(90deg, rgba(253, 29, 86, 1) 6%, rgba(253, 29, 150, 1) 34%, rgba(188, 69, 252, 1) 69%);
+    font-weight: bold;
+}
+
+.seccion_ventajas_comerciales_wrapper {
+    background: #bb0808e7;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.contenedor_ventajas_comerciales_flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.item_ventaja_comercial_individual {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+}
+
+.icono_ventaja_comercial_circular {
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seccion_formulario_contacto_empresarial {
+    padding: 80px 20px;
+    background: #f9f9f9;
+}
+
+.formulario_contacto_empresarial_container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.campo_formulario_personalizado_empresarial {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.boton_enviar_formulario_morado {
+    width: 100%;
+    padding: 15px;
+    background: #e90202;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.espacio_pie_pagina_personalizado {
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.contenedor_beneficios_principales_area {
+    background: #eb0505ec;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.titulo_beneficios_destacados {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+}
+
+.distribucion_beneficios_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.elemento_beneficio_individual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.circulo_icono_beneficio {
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.circulo_icono_beneficio svg {
+    color: #b40808d8;
+}
+
+.titulo_beneficio_individual {
+    font-size: 1.5em;
+    margin: 15px 0;
+}
+
+.descripcion_beneficio_detallada {
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+}

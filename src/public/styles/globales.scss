@@ -8,8 +8,8 @@
   align-items: center;
   padding: 1rem 2rem;
   background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
   padding: 15px 20px;
   position: fixed;
   top: 0;
@@ -17,6 +17,8 @@
   right: 0;
   z-index: 1000;
   transition: transform 0.3s ease-in-out;
+
+  font-family: 'Segoe UI' !important;
 }
 
 .logo-container {
@@ -27,7 +29,7 @@
   width: 100%;
 }
 
-.logo img{
+.logo img {
   width: 100%;
 }
 
@@ -36,7 +38,7 @@
   --fs: 1.25em;
   --col1: #fff5f5;
   --col2: rgba(205, 92, 92, 0.5);
-  --col3:#780103;
+  --col3: #780103;
   --col4: #780103;
   --pd: 0.5em 0.65em;
 
@@ -50,7 +52,7 @@
   border-radius: 6px;
   text-decoration: none;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
-  box-shadow: 
+  box-shadow:
     inset -1px 1px 1px rgba(255, 255, 255, 0.2),
     inset 1px 1px 1px rgba(255, 255, 255, 0.2),
     0 2px 4px rgba(0, 0, 0, 0.1);
@@ -61,7 +63,7 @@
   &:hover {
     color: var(--col1);
     background: linear-gradient(to bottom, #c55, var(--col3));
-    box-shadow: 
+    box-shadow:
       inset -1px 1px 1px rgba(255, 255, 255, 0.3),
       inset 1px 1px 1px rgba(255, 255, 255, 0.3),
       0 4px 8px rgba(180, 68, 68, 0.2);
@@ -76,8 +78,8 @@
     border-radius: 50%;
     margin-right: 0.5em;
     overflow: hidden;
-    box-shadow: 0 0 0 2px rgba(120, 40, 40, 0.6), inset 0 0 10px rgba(0,0,0,0.1);
-    
+    box-shadow: 0 0 0 2px rgba(120, 40, 40, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.1);
+
     .iris {
       position: absolute;
       width: 0.8em;
@@ -98,7 +100,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
       }
     }
 
@@ -107,7 +109,7 @@
       position: absolute;
       width: 35%;
       height: 35%;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
       top: 15%;
       left: 15%;
@@ -123,8 +125,8 @@
     padding: 0 0.2em;
   }
 }
-/* fin boton */
 
+/* fin boton */
 
 .nav {
   display: flex;
@@ -156,6 +158,7 @@ footer {
   background: #000000;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  font-family: 'Segoe UI' !important;
 }
 
 .contenedor_superior {
@@ -232,7 +235,7 @@ footer {
   align-items: center;
 }
 
-.terminos_f a{
+.terminos_f a {
   font-size: .9rem;
 }
 
@@ -254,18 +257,18 @@ footer {
   align-items: center;
 }
 
-.copy_paises .paises img{
-  width: 15%;
+.copy_paises .paises img {
+  width: 13%;
 }
 
-.descricion_footer{
+.descricion_footer {
   margin: 0;
   text-align: justify;
   color: #fff !important;
   font-size: .9rem;
 }
 
-.contndor_redes_sociales{
+.contndor_redes_sociales {
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -274,17 +277,17 @@ footer {
   margin-top: 1rem;
 }
 
-.contndor_redes_sociales{
+.contndor_redes_sociales {
   width: 100%;
   height: 100%;
 }
 
-.img_redes{
+.img_redes {
   width: 100%;
 }
 
 
-.paises{
+.paises {
   display: flex;
   flex-direction: row;
   gap: 1rem;

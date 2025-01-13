@@ -1,25 +1,24 @@
-h2 {
+.terminoscondiciones h2 {
   color: red;
   margin-top: 1rem;
   font-size: 1rem;
 }
 
-h1 {
+.terminoscondiciones h1 {
   color: red;
   margin-top: 1rem;
   margin-left: 1rem;
 }
 
-h3 {
+.terminoscondiciones h3 {
   color: red;
   margin-top: 1rem;
   margin-left: 1rem;
 }
 
-p {
+.terminoscondiciones p {
   width: 80%;
   margin-left: 4rem;
-  font-family: var(--font--parrafo);
   font-size: 0.9rem;
   letter-spacing: -0.05rem;
   text-align: justify;

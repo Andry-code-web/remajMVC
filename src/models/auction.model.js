@@ -35,7 +35,13 @@ class Auction {
     return remate;
   }
   
-  
+  static async anexos(id) {
+    const [anexosRow] = await db.execute(
+      `SELECT * FROM anexos WHERE remates_id = ?;`, [id]
+    );
+    return anexosRow;
+
+  }
 
   static async updateStatus(id, estado) {
     await db.execute(

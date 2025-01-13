@@ -734,6 +734,10 @@
   font-family: "fuenteparrafos";
 }
 
+.anexos {
+  margin-top: 1rem;
+}
+
 .botonAccionSubasta {
   font-family: "fuentePrincipal";
   background: #780103;
@@ -753,7 +757,7 @@
 
 .precio_remate p:first-child {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .precio_remate p:nth-child(2) {

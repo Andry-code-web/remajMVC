@@ -15,25 +15,46 @@ exports.getAllAuctions = async (req, res) => {
   }
 };
 
+/* exports.getAnexosByid = async (req, res) => {
+  const { id } = req.params;
+  console.log('ID recibido en el controlador:', id); // Depuración
+
+  try {
+    const anexos = await Auction.anexos(id);
+    console.log('Datos obtenidos:', anexos); // Depuración
+    res.json(anexos);
+  } catch (error) {
+    console.error('Error al obtener anexos:', error); // Depuración
+    res.status(500).json({ error: error.message });
+  }
+}; */
+
 
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auctionId = req.params.id;
+
+    // Obtén la subasta por su ID
     const auction = await Auction.getById(auctionId);
 
+    // Si no existe la subasta, renderiza un error
     if (!auction) {
       return res.status(404).render('error', {
         message: 'Subasta no encontrada'
       });
     }
 
+    // Obtén los anexos asociados a la subasta
+    const anexos = await Auction.anexos(auctionId);
+
     const auctionState = auction.estado || 'activo';
 
-    // Renderizamos la vista con la subasta y el estado, el usuario estará en res.locals
+    // Renderiza la vista con la subasta, los anexos y el estado
     res.render('layouts/main', {
       auction,
+      anexos, // Pasamos los anexos a la vista
       auctionState,
-      content: 'auctions/details'  // Vista de detalle específica para esta subasta
+      content: 'auctions/details' // Vista específica de los detalles
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
@@ -42,6 +63,7 @@ exports.getAuctionDetails = async (req, res) => {
     });
   }
 };
+
 
 exports.joinAuction = async (req, res) => {
   try {

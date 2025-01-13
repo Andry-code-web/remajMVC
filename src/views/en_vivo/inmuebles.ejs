@@ -1,9 +1,18 @@
+<!-- ICONOS -->
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+<!-- ESTILOS HEADER Y FOOTER -->
 <link rel="stylesheet" href="/css/globales/globales.css" />
+
+<!-- ESTILOS TAGS -->
 <link rel="stylesheet" href="/css/tags/tags.css" />
 
+<!-- HEADER -->
 <%- include('../partials/navbar.ejs') %>
+
+<!-- CANVAS -->
 <canvas id="background-canvas"></canvas>
+
 <main class="main-wrapper">
   <div class="inmuebles-container">
     <div class="navigation-tabs">
@@ -65,8 +74,11 @@
 
 <!-- COMPONENTE FOOTER -->
 <%- include('../partials/footer') %>
+
+<!-- SCRIPT CANVAS -->
 <script src="/js/componentes/uvcanvas_envivo.js"></script>
 
+<!-- SCRIPT HEADER SCROLL -->
 <script>
   let lastScrollTop = 0;
   const header = document.getElementById("header");
@@ -91,6 +103,7 @@
   });
 </script>
 
+<!-- SCRIPT MODAL IMAGENES -->
 <script>
   function showImageModal(imageSrc) {
     const modal = document.getElementById('imageModal');

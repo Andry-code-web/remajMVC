@@ -8,8 +8,7 @@ router.get("/seguimiento/:id", enVivoController.getSeguimiento);
 router.get("/detalles/:id", enVivoController.getDetalles);
 router.get("/inmuebles/:id", enVivoController.getInmuebles);
 router.get("/cronograma/:id", enVivoController.getCronograma);
-router.get('/pdf/:id', enVivoController.getPdf);
-
+router.get('/aviso/:id', enVivoController.getAviso);
 
 
 module.exports = router;

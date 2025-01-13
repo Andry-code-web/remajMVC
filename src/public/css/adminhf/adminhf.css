@@ -569,6 +569,11 @@ i {
   opacity: 0.9;
 }
 
+/* Clase para bloquear el scroll del body */
+.body-no-scroll {
+  overflow: hidden;
+}
+
 /* Estilos comunes para modales */
 .modal, .tarjeta_formulario_inmuebles, .tarjeta_formulario_detalles {
   display: none;

@@ -8,6 +8,5 @@ router.get('/anexos/:id', homeController.getAnexos);
 router.post('/filtrar', homeController.getFiltrarRemate);
 router.get('/filtrarG', homeController.getFiltrarRemateG);
 
-
-
 module.exports = router;
+    

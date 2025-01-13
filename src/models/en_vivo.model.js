@@ -63,11 +63,12 @@ class EnVivo {
 
 
 
-    static async getPdf(remates_id) {
-        const query = `
-        SELECT aviso_pdf FROM remates WHERE id = ?`; 
-        const [rows] = await db.execute(query, [remates_id]);
-        return rows[0];
+    static async getAnexosAll() {
+        const [rows] = await db.execute(`
+            SELECT id, papeles_inmuebles, remates_id FROM anexos
+        `);
+        return rows;
     }
+      
 }
 module.exports = EnVivo;

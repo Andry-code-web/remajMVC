@@ -1,3 +1,4 @@
+
 import NetworkAnimation from "./network.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -38,35 +39,47 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Actualizar colores según la sección
-    const updateColors = (index) => {
-        const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
+const updateColors = (index) => {
+    const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
+    
+    if (index === 1) { // Sección de Ubicación
+        // Cambiar a negro fosforescente para la barra de progreso
+        progressElements.forEach(element => {
+            element.style.backgroundColor = colors.black;
+            element.style.boxShadow = `0 0 5px ${colors.black}, 0 0 10px ${colors.black}, 0 0 15px ${colors.black}`;
+        });
+        // Color normal para el título
+        fixedTitles.style.color = colors.black;
+        fixedTitles.style.textShadow = 'none';
         
-        if (index === 1) { // Sección de Ubicación
-            // Cambiar a negro fosforescente para la barra de progreso
-            progressElements.forEach(element => {
-                element.style.backgroundColor = colors.black;
-                element.style.boxShadow = `0 0 5px ${colors.black}, 0 0 10px ${colors.black}, 0 0 15px ${colors.black}`;
-            });
-            // Color normal para el título
-            fixedTitles.style.color = colors.black;
-            fixedTitles.style.textShadow = 'none';
-        } else { // Sección de Registro y Usuario
-            // Cambiar a blanco fosforescente para la barra de progreso
-            progressElements.forEach(element => {
-                element.style.backgroundColor = colors.white;
-                element.style.boxShadow = `0 0 5px ${colors.white}, 0 0 10px ${colors.white}, 0 0 15px ${colors.white}`;
-            });
-            // Color normal para el título
-            fixedTitles.style.color = colors.white;
-            fixedTitles.style.textShadow = 'none';
+        // Cambiar el color del subtítulo a negro
+        const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
+        if (subtitleUbicacion) {
+            subtitleUbicacion.style.color = colors.black;
         }
-    };
+    } else { // Sección de Registro y Usuario
+        // Cambiar a blanco fosforescente para la barra de progreso
+        progressElements.forEach(element => {
+            element.style.backgroundColor = colors.white;
+            element.style.boxShadow = `0 0 5px ${colors.white}, 0 0 10px ${colors.white}, 0 0 15px ${colors.white}`;
+        });
+        // Color normal para el título
+        fixedTitles.style.color = colors.white;
+        fixedTitles.style.textShadow = 'none';
+        
+        // Restablecer el color del subtítulo a blanco
+        const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
+        if (subtitleUbicacion) {
+            subtitleUbicacion.style.color = colors.white;
+        }
+    }
+};
 
     // Cambiar fondo según la sección activa
     const changeBackgroundColor = (index) => {
         secciones.forEach((seccion, i) => {
             if (i === index) {
-                seccion.style.backgroundColor = ""; // Deja que el fondo sea gestionado por CSS.
+                seccion.style.backgroundColor = ""; 
             }
         });
     };

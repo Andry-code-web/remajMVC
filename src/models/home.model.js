@@ -48,19 +48,22 @@ class Home {
   static async getFiltro(filtro) {
     // Consulta base para obtener resultados
     let query = `
-      SELECT 
-        r.id, 
-        r.ubicacion, 
-        r.precios, 
+      SELECT
+        r.id,
+        r.ubicacion,
+        r.precios,
         r.categoria,
-        r.estado, 
+        r.estado,
+        r.fecha_remate,
+        r.hora_remate,
+        r.descripcion,
         i.partida_registral,
         (SELECT imagenes_inmueble FROM img_inmuebles WHERE remates_id = r.id LIMIT 1) as imagen
-      FROM 
+      FROM
         remates r
-      LEFT JOIN 
-        inmuebles i 
-      ON 
+      LEFT JOIN
+        inmuebles i
+      ON
         r.id = i.remates_id
       WHERE 1=1`;
 
@@ -68,7 +71,7 @@ class Home {
     let countQuery = `
       SELECT COUNT(DISTINCT r.id) as total
       FROM remates r
-      LEFT JOIN inmuebles i 
+      LEFT JOIN inmuebles i
       ON r.id = i.remates_id
       LEFT JOIN img_inmuebles img
       ON r.id = img.remates_id
@@ -76,7 +79,6 @@ class Home {
 
     const valores = [];
     const countValores = [];
-
 
     // Agregar condiciones de filtro
     if (filtro.id) {
@@ -114,7 +116,6 @@ class Home {
       countValores.push(`%${filtro.categoria}%`);
     }
 
-
     // Agregar agrupación por ID de remate para manejar múltiples imágenes
     query += ' GROUP BY r.id';
 
@@ -131,9 +132,6 @@ class Home {
       throw error;
     }
   }
-
-
-
 }
 
 module.exports = Home;

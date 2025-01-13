@@ -1,4 +1,12 @@
 @charset "UTF-8";
+/* Azul corporativo principal */
+/* Azul oscuro para hover */
+/* Rojo corporativo para acentos */
+/* Gris oscuro para texto principal */
+/* Gris medio para texto secundario */
+/* Fondo principal */
+/* Fondo secundario */
+/* Color de bordes */
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -324,11 +332,39 @@
     min-width: 85px;
   }
 }
+.auction-details {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(44, 62, 80, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+.auction-details .tipo_remate, .auction-details .lugar {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+.auction-details .tipo_remate strong, .auction-details .lugar strong {
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+.auction-info h3 {
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
   }
   to {
     opacity: 1;

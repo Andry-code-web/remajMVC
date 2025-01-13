@@ -1,3 +1,5 @@
+
+
 $fuentePrincipal: 'fuentePrincipal';
 $fuenteSecundaria: 'fuenteSecundaria';
 $fuenteParrafos: 'fuenteparrafos';
@@ -22,10 +24,47 @@ $bg-dark: #0A0A0A;  // Casi negro
 $glass-bg: rgba(18, 18, 18, 0.7);  // Efecto cristal oscuro
 $input-border: rgba(229, 208, 177, 0.2);  // Color de borde sutil
 
+
 // Variables para efectos
 $shadow-color: rgba(0, 0, 0, 0.1);
 $glass-effect: rgba(255, 255, 255, 0.1);
 $card-transition: all 0.3s ease;
+
+// Colors
+$primary-cream: #F5E6D3;
+$secondary-cream: #E2D1BC;
+$gold: #B38B59;
+$light-gold: #D4B483;
+$dark-gold: #8B6B43;
+$bg-cream: #FAF7F2;
+$card-bg: rgba(255, 255, 255, 0.9);
+
+
+// Variables locales
+$bg-color: #1A1A1A;
+$card-bg: rgba(26, 26, 26, 0.95);
+$text-color: #E5D0B1;
+$accent-gold: #B38B59;
+$hover-gold: #D4B483;
+
+// Fuentes
+$fuentePrincipal: 'fuentePrincipal';
+$fuenteSecundaria: 'fuenteSecundaria';
+$fuenteParrafos: 'fuenteparrafos';
+
+// Sombras
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+// Transiciones
+$transition-base: all 0.3s ease;
+$transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Bordes
+$border-radius-sm: 0.375rem;
+$border-radius: 0.5rem;
+$border-radius-lg: 0.75rem;
 
 // Variables para tarjetas de subastas
 $card-bg: rgba(255, 255, 255, 0.95);
@@ -37,6 +76,19 @@ $gradient-start: rgba(44, 62, 80, 0.1);
 $gradient-end: rgba(44, 62, 80, 0.05);
 $glow-color: rgba(44, 62, 80, 0.3);
 $white-glow: rgba(255, 255, 255, 0.6);
+
+// Nuevas variables de colores 
+$primary-color: #2B4B81;  /* Azul corporativo principal */
+$secondary-color: #1A365D; /* Azul oscuro para hover */
+$accent-color-new: #C41E3A;   /* Rojo corporativo para acentos */
+$text-primary-new: #2D3748;   /* Gris oscuro para texto principal */
+$text-secondary-new: #4A5568; /* Gris medio para texto secundario */
+$bg-primary: #FFFFFF;     /* Fondo principal */
+$bg-secondary: #F7FAFC;   /* Fondo secundario */
+$border-color: #E2E8F0;   /* Color de bordes */
+$shadow-color: rgba(0, 0, 0, 0.1);
+$border-radius: 8px;
+$transition: all 0.3s ease;
 
 @font-face {
     font-family: 'fuentePrincipal';

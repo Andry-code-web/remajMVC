@@ -1,30 +1,10 @@
-/* Variables globales actualizadas con colores corporativos */
-:root {
-    --primary-color: #2B4B81;  /* Azul corporativo principal */
-    --secondary-color: #1A365D; /* Azul oscuro para hover */
-    --accent-color: #C41E3A;   /* Rojo corporativo para acentos */
-    --text-primary: #2D3748;   /* Gris oscuro para texto principal */
-    --text-secondary: #4A5568; /* Gris medio para texto secundario */
-    --bg-primary: #FFFFFF;     /* Fondo principal */
-    --bg-secondary: #F7FAFC;   /* Fondo secundario */
-    --border-color: #E2E8F0;   /* Color de bordes */
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --border-radius: 8px;
-    --transition: all 0.3s ease;
-}
+@use 'variables' as *;
 
-/* Reset y estilos generales */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    line-height: 1.5;
-    font-family: 'Arial', sans-serif;
-    background: transparent;
-    color: var(--text-primary);
 }
 
 /* Estilo del scrollbar */
@@ -46,7 +26,6 @@ body {
     background: black;
 }
 
-
 #background-canvas {
     position: fixed;
     top: 0;
@@ -60,13 +39,15 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-top: 60px; /* Ajusta esto según la altura de tu navbar */
+    padding-top: 60px; 
 }
+
 /* Contenedores principales */
 .seguimiento-container,
 .detalles-container,
 .inmuebles-container,
 .cronograma-container {
+    font-family: $fuentePrincipal;
     flex: 1;
     max-width: 1200px;
     width: 100%;
@@ -82,26 +63,26 @@ body {
     gap: 1rem;
     margin-bottom: 3rem;
     padding: 0.5rem;
-    background: var(--bg-primary);
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px var(--shadow-color);
+    background: $bg-primary;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px $shadow-color;
 }
 
 .tab-link {
     padding: 0.8rem 1.5rem;
-    color: var(--text-primary);
+    color: $text-primary-new;
     text-decoration: none;
     font-weight: 500;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
+    border-radius: $border-radius;
+    transition: $transition;
 
     &:hover {
-        background: var(--bg-secondary);
-        color: var(--primary-color);
+        background: $bg-secondary;
+        color: $primary-color;
     }
 
     &.active {
-        background: var(--primary-color);
+        background: $primary-color;
         color: white;
     }
 }
@@ -109,10 +90,10 @@ body {
 /* Estilos base para tablas */
 .table-base {
     width: 100%;
-    background: var(--bg-primary);
-    border-radius: var(--border-radius);
+    background: $bg-primary;
+    border-radius: $border-radius;
     overflow: hidden;
-    box-shadow: 0 4px 6px var(--shadow-color);
+    box-shadow: 0 4px 6px $shadow-color;
     margin-bottom: 2rem;
 
     table {
@@ -122,7 +103,7 @@ body {
     }
 
     thead {
-        background: var(--primary-color);
+        background: $primary-color;
 
         th {
             padding: 1rem;
@@ -130,14 +111,14 @@ body {
             font-weight: 600;
             text-align: left;
             font-size: 0.9rem;
-            border-bottom: 3px solid var(--accent-color);
+            border-bottom: 3px solid $accent-color-new;
         }
     }
 
     tbody {
         tr {
             &:nth-child(even) {
-                background: var(--bg-secondary);
+                background: $bg-secondary;
             }
 
             &:hover {
@@ -146,8 +127,8 @@ body {
 
             td {
                 padding: 1rem;
-                color: var(--text-secondary);
-                border-bottom: 1px solid var(--border-color);
+                color: $text-secondary-new;
+                border-bottom: 1px solid $border-color;
             }
         }
     }
@@ -165,7 +146,7 @@ body {
 .detalles-table {
     .label {
         font-weight: 600;
-        color: var(--primary-color);
+        color: $primary-color;
         background: rgba(43, 75, 129, 0.05);
     }
 }
@@ -174,10 +155,10 @@ body {
 .no-data {
     text-align: center;
     padding: 2rem;
-    color: var(--text-secondary);
-    background: var(--bg-secondary);
-    border: 1px dashed var(--border-color);
-    border-radius: var(--border-radius);
+    color: $text-secondary-new;
+    background: $bg-secondary;
+    border: 1px dashed $border-color;
+    border-radius: $border-radius;
     margin: 2rem 0;
     font-style: italic;
 }
@@ -188,11 +169,11 @@ body {
     width: fit-content;
     margin: 2rem auto;
     padding: 0.8rem 1.5rem;
-    background: var(--primary-color);
+    background: $primary-color;
     color: white;
     text-decoration: none;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
+    border-radius: $border-radius;
+    transition: $transition;
     border: none;
     position: relative;
     overflow: hidden;
@@ -214,7 +195,7 @@ body {
     }
 
     &:hover {
-        background: var(--secondary-color);
+        background: $secondary-color;
         transform: translateY(-2px);
 
         &::before {
@@ -230,10 +211,10 @@ body {
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
+}
 
-  /* Estilo del modal */
-  .image-modal {
+/* Estilo del modal */
+.image-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -244,16 +225,16 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+}
 
-  .image-modal img {
+.image-modal img {
     max-width: 90%;
     max-height: 90%;
     box-shadow: 0 0 10px #fff;
     border: 2px solid #fff;
-  }
+}
 
-  .image-modal .close {
+.image-modal .close {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -261,7 +242,8 @@ body {
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
-  }
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
     .table-base {

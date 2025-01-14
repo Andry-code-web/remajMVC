@@ -215,5 +215,5 @@ module.exports = {
   getUsuarioAdmin,
   getRemateById,
   updateRemate,
-  createCronograma
+  createCronograma,
 };

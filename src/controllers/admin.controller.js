@@ -241,18 +241,3 @@ exports.getSeguimientoById = async (req, res) => {
   }
 };
 
-// Actualizar seguimiento
-exports.updateSeguimiento = async (req, res) => {
-  const { id } = req.body;
-  try {
-    const actualizado = await Seguimiento.updateSeguimiento(id, req.body);
-    if (actualizado) {
-      res.json({ message: 'Seguimiento actualizado correctamente' });
-    } else {
-      res.status(404).json({ message: 'Seguimiento no encontrado' });
-    }
-  } catch (error) {
-    console.error('Error al actualizar el seguimiento:', error);
-    res.status(500).json({ message: 'Error al actualizar el seguimiento' });
-  }
-};

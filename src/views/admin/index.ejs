@@ -117,7 +117,7 @@
               </div>
               <div class="metric-info">
                 <div class="metric-value" id="rematesActivos">0</div>
-                <div class="metric-label">Remates activos</div>
+                <div class="metric-label">Remates en Curso</div>
               </div>
             </div>
             <div class="metric-card">
@@ -150,10 +150,10 @@
                     <% } else { %>
                       <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
                       <% } %>
-                        <!--   <span
-                          class="property-status <%= remate.estado === 'activo' ? 'status-active' : 'status-inactive' %>">
+                        <span
+                          class="property-status <%= remate.estado === 'en_curso' ? 'status-active' : 'status-inactive' %>">
                           <%= remate.estado %>
-                        </span> -->
+                        </span>
                 </div>
                 <div class="property-buttons">
                   <button class="property-button" onclick="abrirModalSegimiento(<%= remate.id %>)">Seguimiento</button>
@@ -1308,21 +1308,7 @@
                 document.querySelector('.boton_cancelar_formulario_editar').addEventListener('click', cerrarModalEditar);
               });
 
-              document.addEventListener('DOMContentLoaded', function () {
-                const tarjetaCronograma = document.getElementById('tarjetaCronograma');
-
-                // Cerrar la tarjeta al hacer clic fuera de ella
-                window.addEventListener('click', function (event) {
-                  if (event.target === tarjetaCronograma) {
-                    tarjetaCronograma.style.display = 'none';
-                  }
-                });
-
-                // Cerrar la tarjeta al hacer clic en el botón de cancelar
-                document.querySelector('.boton_cancelar_formulario_cronograma').addEventListener('click', function () {
-                  tarjetaCronograma.style.display = 'none';
-                });
-              });
+          
 
               // Abrir modales
               document.addEventListener('DOMContentLoaded', function () {
@@ -1397,7 +1383,7 @@
                   }
                 });
 
-                [tarjetaDetalles, tarjetaInmuebles, tarjetaCronograma].forEach(modal => {
+                [tarjetaDetalles, tarjetaInmuebles].forEach(modal => {
                   if (modal) {
                     modal.addEventListener('click', function (e) {
                       e.stopPropagation();
@@ -1406,117 +1392,6 @@
                 });
               });
 
-              /* seguimiento */
-              function abrirModalSegimiento(id) {
-                const modal = document.getElementById('seguimientoModal');
-                if (!modal) {
-                  console.error('El modal con id "seguimientoModal" no existe.');
-                  return;
-                }
-
-                // Mostrar el modal
-                modal.style.display = 'block';
-
-                // Bloquear el scroll del body
-                document.body.classList.add('body-no-scroll');
-
-                // Agregar evento para cerrar el modal al hacer clic fuera
-                window.addEventListener('click', cerrarModalAlHacerClickFuera);
-
-                if (id) {
-                  fetch(`/getSeguimiento/${id}`)
-                    .then(response => {
-                      if (!response.ok) throw new Error('Error al cargar los datos.');
-                      return response.json();
-                    })
-                    .then(data => {
-                      document.getElementById('seguimientoId').value = data.id || '';
-                      document.getElementById('editExpediente').value = data.expediente || '';
-                      document.getElementById('editDistritoJudicial').value = data.distrito_judicial || '';
-                      document.getElementById('editInstancia').value = data.instancia || '';
-                      document.getElementById('editOrganoJuridico').value = data.organo_juridico || '';
-                      document.getElementById('editEspecialidad').value = data.especialidad || '';
-                      document.getElementById('editNroConvocatoria').value = data.nro_convocatoria || '';
-                      document.getElementById('editFechaRegistro').value = data.fecha_registro || '';
-                      document.getElementById('editProcesadoPor').value = data.procesado_por || '';
-                      document.getElementById('editReanudado').value = data.reanudado || '';
-                      document.getElementById('editFaseConvocatoria').value = data.fase_convocatoria || '';
-                      document.getElementById('editEstadoConvocatoria').value = data.estado_convocatoria || '';
-                      document.getElementById('editRematesId').value = data.remates_id || '';
-                    })
-                    .catch(error => {
-                      console.error('Error al cargar los datos del seguimiento:', error);
-                    });
-                } else {
-                  document.getElementById('seguimientoForm').reset();
-                }
-              }
-
-              function guardarCambios(event) {
-                event.preventDefault();
-
-                const form = document.getElementById('seguimientoForm');
-                if (!form) {
-                  console.error('El formulario "seguimientoForm" no existe.');
-                  return;
-                }
-
-                const formData = new FormData(form);
-
-                const dataToSend = {};
-                formData.forEach((value, key) => {
-                  dataToSend[key] = value;
-                });
-
-                fetch('/updateSeguimiento', {
-                  method: 'POST',
-                  body: JSON.stringify(dataToSend),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                })
-                  .then(response => {
-                    if (!response.ok) throw new Error('Error al guardar los cambios.');
-                    return response.json();
-                  })
-                  .then(data => {
-                    alert('Los cambios se guardaron correctamente.');
-                    cerrarModal();
-                  })
-                  .catch(error => {
-                    console.error('Error al guardar los cambios:', error);
-                    alert('No se pudieron guardar los cambios.');
-                  });
-              }
-
-              function cerrarModal() {
-                const modal = document.getElementById('seguimientoModal');
-                if (!modal) {
-                  console.error('El modal con id "seguimientoModal" no existe.');
-                  return;
-                }
-
-                // Ocultar el modal
-                modal.style.display = 'none';
-
-                // Habilitar el scroll del body
-                document.body.classList.remove('body-no-scroll');
-
-                // Quitar evento de clic fuera
-                window.removeEventListener('click', cerrarModalAlHacerClickFuera);
-
-                document.getElementById('seguimientoForm').reset();
-              }
-
-              function cerrarModalAlHacerClickFuera(event) {
-                const modal = document.getElementById('seguimientoModal');
-                if (!modal) return;
-
-                // Verificar si el clic ocurrió fuera del contenido del modal
-                if (!modal.contains(event.target) && event.target !== modal) {
-                  cerrarModal();
-                }
-              }
 
               // Funcionalidad para el modal de Detalles
               function abrirModalDetalles(remateId) {

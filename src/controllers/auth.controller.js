@@ -16,10 +16,14 @@ exports.register_vista = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-    const { nombre_apellidos, correo, usuario, contrasena } = req.body;
+    const { nombre_apellidos, correo, usuario, contrasena, terminos_condiciones } = req.body;
 
     if (!nombre_apellidos || !correo || !usuario || !contrasena) {
       return res.status(400).json({ message: "Todos los campos son requeridos." });
+    }
+
+    if (!terminos_condiciones) {
+      return res.status(400).json({ message: "Debe aceptar los términos y condiciones." });
     }
 
     const existingUser = await User.findByUsername(usuario);
@@ -33,15 +37,16 @@ exports.register = async (req, res) => {
     req.session.user = {
       id: userId,
       nombre: nombre_apellidos,
-      usuario
+      usuario,
     };
 
-    res.status(201).redirect('/');
+    res.status(201).json({ message: "Registro exitoso" });
   } catch (error) {
     console.error("Error en el registro:", error);
     res.status(500).json({ message: "Error en el registro", error: error.message });
   }
 };
+
 
 
 exports.login_vista = async (req, res) => {

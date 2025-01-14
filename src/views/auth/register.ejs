@@ -1,202 +1,255 @@
-  <!-- Títulos principales fijos -->
-  <div class="fixed-titles">
-    <h1>BIENVENIDO</h1>
-    <h1>REMAJUD</h1>
+<!-- Títulos principales fijos -->
+<div class="fixed-titles">
+  <h1>BIENVENIDO</h1>
+  <h1>REMAJUD</h1>
+</div>
+<div class="progress-indicator">
+  <div class="progress-active-line"></div>
+  <div class="progress-active-dot"></div>
+  <div class="progress-dots">
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
   </div>
-  <div class="progress-indicator">
-    <div class="progress-active-line"></div>
-    <div class="progress-active-dot"></div>
-    <div class="progress-dots">
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
-      <div class="progress-dot"></div>
+</div>
+
+<div class="container_formulario">
+
+  <!-- Primera seccion -->
+  <div class="seccion seccion1 active" id="seccion1">
+    <div class="texto_grande">
+      <h2 class="subtitle">REGISTRO</h2>
     </div>
-  </div>
-
-  <div class="container_formulario">
-
-    <!-- Primera seccion -->
-    <div class="seccion seccion1 active" id="seccion1" >
-      <div class="texto_grande">
-        <h2 class="subtitle">REGISTRO</h2>
+    <div class="form-section1">
+      <div class="form-header">
+        <h3>Registro de Usuario</h3>
+        <p>Por favor, ingrese sus datos.</p>
       </div>
-      <div class="form-section1">
-        <div class="form-header">
-          <h3>Registro de Usuario</h3>
-          <p>Por favor, ingrese sus datos.</p>
+      <form>
+        <!-- Fila de Nombres y Apellidos -->
+        <div class="row">
+          <input type="text" class="form-input" placeholder="NOMBRES Y APELLIDOS" name="nombre_apellidos" required>
         </div>
-        <form>
-          <!-- Fila de Nombres y Apellidos -->
-          <div class="row">
-            <input type="text" class="form-input" placeholder="NOMBRES Y APELLIDOS" name="nombre_apellidos" required>
-          </div>
 
-          <!-- Fila de Email -->
-          <div class="row">
-            <input type="email" class="form-input" placeholder="EMAIL" name="EMAIL" required>
-          </div>
-
-          <!-- Fila de Confirmar Email -->
-          <div class="row">
-            <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
-          </div>
- 
-          <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
-        </form>
-      </div>
-    </div>
-
-    <canvas id="particleCanvas"></canvas>
-
-    <!-- Segunda seccion -->
-    <div class="seccion seccion2" id="seccion2">
-      <div class="texto_grande">
-        <h2 class="subtitle">UBICACIÓN</h2>
-      </div>
-      <div class="form-section">
-        <div class="form-header">
-          <h3>Detalles de Ubicación</h3>
-          <p>Ingrese su dirección.</p>
+        <!-- Fila de Email -->
+        <div class="row">
+          <input type="email" class="form-input" placeholder="EMAIL" name="EMAIL" required>
         </div>
-        <form class="row3">
-          <div class="col3">
-            <input type="text" class="form-input" placeholder="DEPARTAMENTO" name="departamento" required>
-            <input type="text" class="form-input" placeholder="PROVINCIA" name="provincia" required>
-            <input type="text" class="form-input" placeholder="DISTRITO" name="distrito" required>
-            <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
-          </div>
-          <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-          <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
-        </form>
-      </div>
-    </div>
 
-    <!-- Tercera seccion -->
-    <div class="seccion seccion3" id="seccion3">
-      <div class="texto_grande">
-        <h2 class="subtitle">USUARIO</h2>
-      </div>
-      <div class="form-section">
-        <div class="form-header">
-          <h3>Información de Usuario</h3>
-          <p>Últimos detalles de su cuenta.</p>
+        <!-- Fila de Confirmar Email -->
+        <div class="row">
+          <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
         </div>
-        <form>
-          <input type="text" class="form-input" placeholder="USUARIO" name="usuario" required>
-          <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
-          <div class="checkbox-wrapper">
-            <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones" class="custom-checkbox">
-            <label for="terminos_condiciones" class="checkbox-label">
-                Acepto los <a href="#" class="terms-link">términos y condiciones</a>
-            </label>
+
+        <!-- Fila de estado civil -->
+        <div class="row">
+          <select name="estado_civil" id="estado_civil">
+            <option value="soltero">Soltero</option>
+            <option value="casado">Casado</option>
+            <option value="divorciado">Divorciado</option>
+            <option value="viudo">Viudo</option>
+          </select>
         </div>
-          <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-          <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
-        </form>
-      </div>
+
+        <!-- Fila de fecha nacimiento -->
+        <div class="row">
+          <input type="date" class="form-input" placeholder="FECHA DE NACIMIENTO" name="fecha_nacimiento" required>
+        </div>
+
+        <!-- Fila de sexo -->
+        <div class="row">
+          <select name="sexo" id="">
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <!-- Fila de estado dni -->
+        <div class="row">
+          <input type="number" class="form-input" placeholder="DNI" name="dni" required>
+        </div>
+
+        <!-- Fila de celular -->
+        <div class="row">
+          <input type="tel" class="form-input" placeholder="CELULAR" name="celular" required>
+        </div>
+
+
+        <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
+      </form>
     </div>
   </div>
-  </section> 
 
-  <!-- diseño registro -->
-  <link rel="stylesheet" href="/css/registro/registro.css">
+  <canvas id="particleCanvas"></canvas>
 
-  <!-- script y particulas de registro -->
-  <script type="module" src="/js/componentes/script_formulario.js"></script>
-  <script type="module" src="/js/componentes/network.js"></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const header = document.getElementById('header');
-      const sections = document.querySelectorAll('.seccion');
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5, // Cambiar cuando el 50% de la sección sea visible
+  <!-- Segunda seccion -->
+  <div class="seccion seccion2" id="seccion2">
+    <div class="texto_grande">
+      <h2 class="subtitle">UBICACIÓN</h2>
+    </div>
+    <div class="form-section">
+      <div class="form-header">
+        <h3>Detalles de Ubicación</h3>
+        <p>Ingrese su dirección.</p>
+      </div>
+      <form class="row3">
+        <div class="col3">
+          <input type="text" class="form-input" placeholder="DEPARTAMENTO" name="departamento" required>
+          <input type="text" class="form-input" placeholder="PROVINCIA" name="provincia" required>
+          <input type="text" class="form-input" placeholder="DISTRITO" name="distrito" required>
+          <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
+        </div>
+        <button type="button" class="submit-btn anterior"> ANTERIOR</button>
+        <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tercera seccion -->
+  <div class="seccion seccion3" id="seccion3">
+    <div class="texto_grande">
+      <h2 class="subtitle">USUARIO</h2>
+    </div>
+    <div class="form-section">
+      <div class="form-header">
+        <h3>Información de Usuario</h3>
+        <p>Últimos detalles de su cuenta.</p>
+      </div>
+      <form>
+        <input type="text" class="form-input" placeholder="USUARIO" name="usuario" required>
+        <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones" class="custom-checkbox">
+          <label for="terminos_condiciones" class="checkbox-label">
+            Acepto los <a href="#" class="terms-link">términos y condiciones</a>
+          </label>
+        </div>
+        <button type="button" class="submit-btn anterior"> ANTERIOR</button>
+        <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- diseño registro -->
+<link rel="stylesheet" href="/css/registro/registro.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- script y particulas de registro -->
+<script type="module" src="/js/componentes/script_formulario.js"></script>
+<script type="module" src="/js/componentes/network.js"></script>
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
+    const sections = document.querySelectorAll('.seccion');
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5, // Cambiar cuando el 50% de la sección sea visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+
+          // Cambiar el color del header basado en la sección visible
+          switch (sectionId) {
+            case 'seccion1':
+              header.style.color = '#ffffff'; // Blanco
+              break;
+            case 'seccion2':
+              header.style.color = '#000000'; // Negro
+              break;
+            case 'seccion3':
+              header.style.color = '#ffffff'; // Blanco
+              break;
+            default:
+              header.style.color = 'black';
+          }
+        }
+      });
+    }, options);
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script> -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".finalizar").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const datos = {
+        nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value.trim(),
+        correo: document.querySelector("[name='EMAIL']").value.trim(),
+        confirmar_correo: document.querySelector("[name='confirmar_email']").value.trim(),
+        estado_civil: document.querySelector("[name='estado_civil']").value,
+        fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
+        sexo: document.querySelector("[name='sexo']").value,
+        dni: document.querySelector("[name='dni']").value.trim(),
+        celular: document.querySelector("[name='celular']").value.trim(),
+        departamento: document.querySelector("[name='departamento']").value.trim(),
+        provincia: document.querySelector("[name='provincia']").value.trim(),
+        distrito: document.querySelector("[name='distrito']").value.trim(),
+        direccion: document.querySelector("[name='direccion']").value.trim(),
+        usuario: document.querySelector("[name='usuario']").value.trim(),
+        contrasena: document.querySelector("[name='contrasena']").value,
+        terminos_condiciones: document.querySelector("[name='terminos_condiciones']").checked,
       };
-  
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.id;
-  
-            // Cambiar el color del header basado en la sección visible
-            switch (sectionId) {
-              case 'seccion1':
-                header.style.color = '#ffffff'; // Blanco
-                break;
-              case 'seccion2':
-                header.style.color = '#000000'; // Negro
-                break;
-              case 'seccion3':
-                header.style.color = '#ffffff'; // Blanco
-                break;
-              default:
-                header.style.color = 'black';
-            }
-          }
+
+      // Validar campos obligatorios
+      const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== "confirmar_correo");
+      if (camposVacios.length > 0) {
+        const mensaje = `Por favor, complete todos los campos: ${camposVacios.map(([key]) => key).join(", ")}`;
+        return Swal.fire({
+          title: "Faltan campos obligatorios",
+          text: mensaje,
+          icon: "warning",
         });
-      }, options);
-  
-      sections.forEach((section) => {
-        observer.observe(section);
-      });
-    });
-  </script>
-  
+      }
 
-  <!-- script de datos formulario -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelector(".finalizar").addEventListener("click", async (e) => {
-        e.preventDefault();
+      try {
+        const response = await fetch("/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datos),
+        });
 
-        const datos = {
-          nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value.trim(),
-          correo: document.querySelector("[name='EMAIL']").value.trim(),
-          confirmar_correo: document.querySelector("[name='confirmar_email']").value.trim(),
-          estado_civil: document.querySelector("[name='estado_civil']").value,
-          fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
-          sexo: document.querySelector("[name='sexo']").value,
-          dni: document.querySelector("[name='dni']").value.trim(),
-          celular: document.querySelector("[name='celular']").value.trim(),
-          departamento: document.querySelector("[name='departamento']").value.trim(),
-          provincia: document.querySelector("[name='provincia']").value.trim(),
-          distrito: document.querySelector("[name='distrito']").value.trim(),
-          direccion: document.querySelector("[name='direccion']").value.trim(),
-          usuario: document.querySelector("[name='usuario']").value.trim(),
-          contrasena: document.querySelector("[name='contrasena']").value,
-          condiciones: document.querySelector("[name='terminos_condiciones']").checked,
-        };
-        
-        // Validar campos obligatorios
-        const camposVacios = Object.entries(datos).filter(([key, value]) => !value && key !== 'condiciones');
-        if (camposVacios.length > 0) {
-          alert(`Por favor, complete todos los campos: ${camposVacios.map(([key]) => key).join(', ')}`);
-          return;
-        }
+        const result = await response.json();
 
-        try {
-          const response = await fetch("/auth/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(datos),
-          });
-
-          const result = await response.json();
-          if (response.ok) {
-            alert("Registro exitoso. Bienvenido a REMAJUD!");
+        if (response.ok) {
+          Swal.fire({
+            title: "¡Registro exitoso!",
+            text: "¡Bienvenido a REMAJUD!",
+            icon: "success",
+            confirmButtonText: "Iniciar sesión",
+          }).then(() => {
             window.location.href = "/auth/login";
-          } else {
-            alert("Error en el registro: " + result.message);
-          }
-        } catch (error) {
-          console.error("Error al enviar el formulario:", error);
-          alert("Hubo un problema al registrar los datos.");
+          });
+        } else {
+          Swal.fire({
+            title: "Error en el registro",
+            text: result.message,
+            icon: "error",
+          });
         }
-      });
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        Swal.fire({
+          title: "Error interno",
+          text: "Hubo un problema al procesar tu registro. Intenta nuevamente.",
+          icon: "error",
+        });
+      }
     });
-    
-  </script>
+  });
+</script>

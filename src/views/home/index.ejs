@@ -210,7 +210,8 @@
       <div class="contenidoInformativoSubasta">
         <div class="detallesEspecificosSubasta">
           <a href="/auctions/<%= remate.id %>" class="informacionGeneralSubasta">
-            <h2>Remate N°12345 - CONVOCATORIA</h2>
+
+            <h2>Remate N° <%= String(remate.id).padStart(4, '0') %></h2>
             <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
             <p class="lugar"><strong>LUGAR:</strong>
               <%= remate.ubicacion %> Perú
@@ -235,10 +236,6 @@
               finalizado: {
                 clase: '',
                 texto: 'Remate Adjudicado'
-              },
-              activo: {
-                clase: 'bg-secondary',
-                texto: 'Publicacion e Inscripcion'
               },
               en_curso: {
                 clase: 'bg-success',

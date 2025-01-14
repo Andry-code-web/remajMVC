@@ -69,12 +69,8 @@ class EnVivo {
 
 
     static async getCronograma(remateId) {
-        const query = `
-            SELECT nombre, fecha_inicio, fecha_fin 
-            FROM remajud.cronograma 
-            WHERE remate_id = ?
-            ORDER BY fecha_inicio;
-        `;
+        const query = `SELECT * FROM remajud.cronograma WHERE remates_id = ?`;
+
         const [rows] = await db.execute(query, [remateId]);
         return rows;
     }

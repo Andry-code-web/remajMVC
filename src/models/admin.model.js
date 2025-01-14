@@ -79,21 +79,21 @@ const getImagenesInmuebles = async () => {
 
 // Crear un nuevo remate
 const createRemate = async (datosRemate) => {
-    const query = `INSERT INTO remates
+  const query = `INSERT INTO remates
 (ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
  balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad, usuario_admin_id)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    const [result] = await db.query(query, datosRemate);
-    return result.insertId;
+  const [result] = await db.query(query, datosRemate);
+  return result.insertId;
 };
 
 const agregarImagenes = async (imagenes) => {
-    const query = `
-        INSERT INTO img_inmuebles (imagenes_inmueble, remates_id)
-        VALUES ?
-    `;
-    await db.query(query, [imagenes]);
+  const query = `
+    INSERT INTO img_inmuebles (imagenes_inmueble, remates_id)
+    VALUES ?
+  `;
+  await db.query(query, [imagenes]);
 };
 
 const agregarAnexoUrl = async (anexoUrl, remateId) => {
@@ -109,8 +109,8 @@ const deleteRemate = async (remateId) => {
   const queryMensajes = 'DELETE FROM mensajes WHERE remates_id = ?';
   const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
   const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
-  const queryDetalles = 'DELETE FROM detalles WHERE remates_id = ?';
-  const queryInmuebles = 'DELETE FROM inmuebles WHERE remates_id = ?';
+  /* const queryDetalles = 'DELETE FROM detalles WHERE remate_id = ?'; */
+  /* const queryInmuebles = 'DELETE FROM inmuebles WHERE remate_id = ?'; */
   const queryCronograma = 'DELETE FROM cronograma WHERE remates_id = ?';
   const queryRemate = 'DELETE FROM remates WHERE id = ?';
 
@@ -118,8 +118,8 @@ const deleteRemate = async (remateId) => {
     await db.query(queryMensajes, [remateId]);
     await db.query(queryAnexos, [remateId]);
     await db.query(queryImagenes, [remateId]);
-    await db.query(queryDetalles, [remateId]);
-    await db.query(queryInmuebles, [remateId]);
+    /* await db.query(queryDetalles, [remateId]);
+    await db.query(queryInmuebles, [remateId]); */
     await db.query(queryCronograma, [remateId]);
     const [result] = await db.query(queryRemate, [remateId]);
     return result.affectedRows > 0;
@@ -189,133 +189,31 @@ const updateRemate = async (remateId, datosRemate) => {
   return result.affectedRows > 0;
 };
 
-// Crear detalles de un remate
-const createDetalles = async (datosDetalles) => {
+
+
+// Función para crear una entrada en la tabla cronograma
+const createCronograma = async (remate_id, nombre, fecha_inicio, fecha_fin) => {
   const query = `
-    INSERT INTO detalles (
-      expediente,
-      distrito_judicial,
-      organo_juridiccional,
-      instancia,
-      juez,
-      especialista,
-      materia,
-      resolucion,
-      fecha_resolucion,
-      archivo,
-      nro_convocatoria,
-      tipo_cambio,
-      tasacion,
-      precio_base,
-      incremento_ofertas,
-      arancel,
-      oblaje,
-      descripcion,
-      n_inscritos,
-      remates_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO cronograma (remates_id, nombre, fecha_inicio, fecha_fin)
+    VALUES (?, ?, ?, ?)
   `;
-  await db.query(query, datosDetalles);
+  try {
+    await db.query(query, [remate_id, nombre, fecha_inicio, fecha_fin]);
+  } catch (error) {
+    throw new Error('Error al guardar el cronograma: ' + error.message);
+  }
 };
-
-// Actualizar detalles de un remate
-const updateDetalles = async (remateId, datosDetalles) => {
-  const query = `
-    UPDATE detalles
-    SET expediente = ?, distrito_judicial = ?, organo_juridiccional = ?, instancia = ?, juez = ?, especialista = ?,
-        materia = ?, resolucion = ?, fecha_resolucion = ?, archivo = ?, nro_convocatoria = ?, tipo_cambio = ?,
-        tasacion = ?, precio_base = ?, incremento_ofertas = ?, arancel = ?, oblaje = ?, descripcion = ?, n_inscritos = ?
-    WHERE remates_id = ?
-  `;
-  await db.query(query, [...datosDetalles, remateId]);
-};
-
-// Crear inmuebles de un remate
-const createInmuebles = async (datosInmuebles) => {
-  const query = `
-    INSERT INTO inmuebles (
-      partida_registral,
-      tipo_inmueble,
-      direccion,
-      carga_ogravamen,
-      porcentaje_rematar,
-      remates_id
-    ) VALUES (?, ?, ?, ?, ?, ?)
-  `;
-  await db.query(query, datosInmuebles);
-};
-
-// Actualizar inmuebles de un remate
-const updateInmuebles = async (remateId, datosInmuebles) => {
-  const query = `
-    UPDATE inmuebles
-    SET partida_registral = ?, tipo_inmueble = ?, direccion = ?, carga_ogravamen = ?, porcentaje_rematar = ?, imagenes = ?
-    WHERE remates_id = ?
-  `;
-  await db.query(query, [...datosInmuebles, remateId]);
-};
-
-const createSeguimiento = async (datosSeguimiento) => {
-    const query = `
-        INSERT INTO seguimiento
-        (expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria, 
-        fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    try {
-        const [result] = await db.query(query, datosSeguimiento);
-        return result.insertId;
-    } catch (error) {
-        throw new Error('Error al crear el seguimiento: ' + error.message);
-    }
-};
-
-// Función para obtener un seguimiento por ID
-const getSeguimientoById = async (seguimientoId) => {
-    const query = `
-        SELECT * FROM seguimiento WHERE id = ?
-    `;
-    try {
-        const [result] = await db.query(query, [seguimientoId]);
-        return result[0]; // Si el seguimiento existe, devolverá el primer elemento.
-    } catch (error) {
-        throw new Error('Error al obtener el seguimiento: ' + error.message);
-    }
-};
-
-// Función para actualizar un seguimiento
-const updateSeguimiento = async (seguimientoId, datosSeguimiento) => {
-    const query = `
-        UPDATE seguimiento
-        SET expediente = ?, distrito_judicial = ?, instancia = ?, organo_juridico = ?, especialidad = ?, 
-        nro_convocatoria = ?, fecha_registro = ?, procesado_por = ?, reanudado = ?, fase_convocatoria = ?, 
-        estado_convocatoria = ?, remates_id = ?
-        WHERE id = ?
-    `;
-    try {
-        const [result] = await db.query(query, [...datosSeguimiento, seguimientoId]);
-        return result.affectedRows > 0;
-    } catch (error) {
-        throw new Error('Error al actualizar el seguimiento: ' + error.message);
-    }
-};
-
 
 
 module.exports = {
-    getAllRemates,
-    getImagenesInmuebles,
-    createRemate,
-    agregarImagenes,
-    agregarAnexoUrl,
-    deleteRemate,
-    getUsuarioAdmin,
-    getRemateById,
-    updateRemate,
-    createSeguimiento,
-    getSeguimientoById,
-    updateSeguimiento,
-    
-  createCronograma // Nueva función agregada
-
+  getAllRemates,
+  getImagenesInmuebles,
+  createRemate,
+  agregarImagenes,
+  agregarAnexoUrl,
+  deleteRemate,
+  getUsuarioAdmin,
+  getRemateById,
+  updateRemate,
+  createCronograma
 };

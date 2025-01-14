@@ -186,7 +186,9 @@ exports.getRemateForEdit = async (req, res) => {
 // Controlador para guardar el cronograma de actividades
 exports.guardarCronograma = async (req, res) => {
   try {
-    const { remate_id, nombre, fecha_inicio, fecha_fin } = req.body;
+    const { remates_id, nombre, fecha_inicio, fecha_fin } = req.body;
+    console.log("datos cronograma:",req.body);
+    
 
     // Verifica que req.session.userId esté definido
     if (!req.session.userId) {
@@ -194,7 +196,7 @@ exports.guardarCronograma = async (req, res) => {
     }
 
     // Guardar el cronograma en la base de datos
-    await createCronograma(remate_id, nombre, fecha_inicio, fecha_fin);
+    await createCronograma(remates_id, nombre, fecha_inicio, fecha_fin);
 
     res.status(200).json({ message: "Cronograma guardado exitosamente" });
   } catch (error) {

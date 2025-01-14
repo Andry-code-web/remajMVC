@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressLine = document.querySelector(".progress-active-line");
     const progressDot = document.querySelector(".progress-active-dot");
     const progressDots = document.querySelectorAll(".progress-dot");
-
+    
     let currentIndex = 0;
 
     // Colores definidos
@@ -142,6 +142,37 @@ const updateColors = (index) => {
         return isValid;
     };
 
+    // numero telefonico 
+    const isPhoneValid = (phone) => {
+        const phoneValue = phone.value.trim();
+        const phoneRegex = /^\d{9}$/;
+        if (!phoneRegex.test(phoneValue)) {
+            const errorMessage = document.createElement("p");
+            errorMessage.classList.add("error-message");
+            errorMessage.textContent = "Debes ingresar un número de teléfono válido.";
+            phone.insertAdjacentElement("afterend", errorMessage);
+            return false;
+            }
+            return true;
+            };
+    
+        
+        // dni 
+        const isDniValid = (dni) => {
+            const dniValue = dni.value.trim();
+            const dniRegex = /^\d{8}$/;
+            if (!dniRegex.test(dniValue)) {
+                const errorMessage = document.createElement("p");
+                errorMessage.classList.add("error-message");
+                errorMessage.textContent = "Debes ingresar un DNI válido.";
+                dni.insertAdjacentElement("afterend", errorMessage);
+                return false;
+            }
+            return true;
+            };
+        
+
+        
     // Eventos de navegación
     botonesSiguiente.forEach((boton) => {
         boton.addEventListener("click", () => {
@@ -162,7 +193,8 @@ const updateColors = (index) => {
         });
     });
 
-    // Inicializar
+
+    
     secciones[currentIndex].classList.add("active");
     updateColors(currentIndex);
     updateProgress(currentIndex);

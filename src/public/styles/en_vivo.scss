@@ -76,11 +76,11 @@
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.15),
     0 10px 10px -5px rgba(0, 0, 0, 0.08),
-    0 0 0 1px $card-border,
-    0 0 15px $glow-color;
+    0 0 0 1px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(44, 62, 80, 0.3);
   perspective: 1000px;
   min-width: 320px;
-  border: 1px solid $card-border;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .auction-card::before {
@@ -92,8 +92,8 @@
   height: 50%;
   background: linear-gradient(
     to bottom,
-    $gradient-start,
-    $gradient-end
+    rgba(44, 62, 80, 0.1),
+    rgba(44, 62, 80, 0.05)
   );
   border-radius: 20px 20px 0 0;
   z-index: 0;
@@ -105,9 +105,9 @@
   box-shadow: 
     0 40px 45px -5px rgba(0, 0, 0, 0.2),
     0 30px 30px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 2px $glow-color,
-    0 0 30px $glow-color,
-    0 0 40px $white-glow;
+    0 0 0 2px rgba(44, 62, 80, 0.3),
+    0 0 30px rgba(44, 62, 80, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.6);
 }
 
 /* Encabezado de la tarjeta */
@@ -120,7 +120,7 @@
 .auction-number {
   font-size: 1.1rem;
   font-weight: 600;
-  color: $text-primary;
+  color: #1a1a2e;
   background: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -158,7 +158,7 @@
 /* Título de la subasta */
 .auction-title {
   font-size: 1.2rem;
-  color: $text-primary;
+  color: #1a1a2e;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -166,13 +166,13 @@
 }
 
 .auction-title i {
-  color: $accent-color;
+  color: #2c3e50;
 }
 
 /* Información de la subasta */
 .auction-info {
   margin: 1rem 0;
-  color: $text-secondary;
+  color: #2d3748;
 }
 
 .auction-info p {
@@ -185,14 +185,14 @@
 }
 
 .auction-info i {
-  color: $accent-color;
+  color: #2c3e50;
 }
 
 .auction-info {
   h3 {
     font-family: $fuenteSecundaria;
     font-size: 1rem;
-    color: $text-primary;
+    color: #1a1a2e;
     margin-bottom: 0.5rem;
     font-weight: 600;
   }
@@ -208,14 +208,14 @@
 
 .description-section h6 {
   font-family: $fuenteSecundaria;
-  color: $text-primary;
+  color: #1a1a2e;
   font-size: 1rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .description-text {
-  color: $text-secondary;
+  color: #2d3748;
   font-size: 0.9rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -238,13 +238,13 @@
 }
 
 .price-label {
-  color: $text-secondary;
+  color: #2d3748;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .price-value {
-  color: $accent-color;
+  color: #2c3e50;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -274,13 +274,13 @@
   text-decoration: none;
   transition: all 0.3s ease;
   background: rgba(44, 62, 80, 0.1);
-  color: $text-primary;
+  color: #1a1a2e;
   border: 1px solid rgba(44, 62, 80, 0.2);
 }
 
 .action-btn:hover {
-  background: $accent-color;
-  color: $text-primary;
+  background: #2c3e50;
+  color: #1a1a2e;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
 }
@@ -309,9 +309,9 @@
   grid-column: 1 / -1;
   text-align: center;
   padding: 2rem;
-  background: $card-bg;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  color: $text-secondary;
+  color: #2d3748;
 }
 
 
@@ -326,10 +326,10 @@
   .tipo_remate, .lugar {
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    color: $text-secondary;
+    color: #2d3748;
 
     strong {
-      color: $text-primary;
+      color: #1a1a2e;
       font-weight: 600;
     }
   }

@@ -1,5 +1,3 @@
-@use 'variables' as *;
-
 
 * {
     margin: 0;
@@ -63,26 +61,27 @@
     gap: 1rem;
     margin-bottom: 3rem;
     padding: 0.5rem;
-    background: $bg-primary;
-    border-radius: $border-radius;
-    box-shadow: 0 2px 4px $shadow-color;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tab-link {
     padding: 0.8rem 1.5rem;
-    color: $text-primary-new;
+    color: #2D3748;
     text-decoration: none;
     font-weight: 500;
-    border-radius: $border-radius;
-    transition: $transition;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 
+    
     &:hover {
-        background: $bg-secondary;
-        color: $primary-color;
+        background: #F7FAFC;
+        color: #2B4B81;
     }
 
     &.active {
-        background: $primary-color;
+        background: #2B4B81;
         color: white;
     }
 }
@@ -90,10 +89,10 @@
 /* Estilos base para tablas */
 .table-base {
     width: 100%;
-    background: $bg-primary;
-    border-radius: $border-radius;
+    background: #FFFFFF;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px $shadow-color;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 
     table {
@@ -103,7 +102,7 @@
     }
 
     thead {
-        background: $primary-color;
+        background: #2B4B81;
 
         th {
             padding: 1rem;
@@ -111,14 +110,14 @@
             font-weight: 600;
             text-align: left;
             font-size: 0.9rem;
-            border-bottom: 3px solid $accent-color-new;
+            border-bottom: 3px solid #C41E3A;
         }
     }
 
     tbody {
         tr {
             &:nth-child(even) {
-                background: $bg-secondary;
+                background: #F7FAFC;
             }
 
             &:hover {
@@ -127,8 +126,8 @@
 
             td {
                 padding: 1rem;
-                color: $text-secondary-new;
-                border-bottom: 1px solid $border-color;
+                color: #4A5568;
+                border-bottom: 1px solid #E2E8F0;
             }
         }
     }
@@ -146,7 +145,7 @@
 .detalles-table {
     .label {
         font-weight: 600;
-        color: $primary-color;
+        color: #2B4B81;
         background: rgba(43, 75, 129, 0.05);
     }
 }
@@ -155,10 +154,10 @@
 .no-data {
     text-align: center;
     padding: 2rem;
-    color: $text-secondary-new;
-    background: $bg-secondary;
-    border: 1px dashed $border-color;
-    border-radius: $border-radius;
+    color: #4A5568;
+    background: #F7FAFC;
+    border: 1px dashed #E2E8F0;
+    border-radius: 8px;
     margin: 2rem 0;
     font-style: italic;
 }
@@ -169,11 +168,11 @@
     width: fit-content;
     margin: 2rem auto;
     padding: 0.8rem 1.5rem;
-    background: $primary-color;
+    background: #2B4B81;
     color: white;
     text-decoration: none;
-    border-radius: $border-radius;
-    transition: $transition;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     border: none;
     position: relative;
     overflow: hidden;
@@ -195,7 +194,7 @@
     }
 
     &:hover {
-        background: $secondary-color;
+        background: #1A365D;
         transform: translateY(-2px);
 
         &::before {

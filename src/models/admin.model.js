@@ -314,6 +314,8 @@ module.exports = {
     updateRemate,
     createSeguimiento,
     getSeguimientoById,
-    updateSeguimiento
+    updateSeguimiento,
+    
+  createCronograma // Nueva función agregada
 
 };

@@ -8,7 +8,8 @@ const {
   deleteRemate,
   getUsuarioAdmin,
   getRemateById,
-  updateRemate
+  updateRemate,
+  createCronograma // Nueva función agregada
 } = require('../models/admin.model');
 
 // Vista administrador
@@ -154,7 +155,6 @@ exports.updateRemate = async (req, res) => {
   }
 };
 
-
 // Eliminar un remate
 exports.deleteRemate = async (req, res) => {
   try {
@@ -183,6 +183,27 @@ exports.getRemateForEdit = async (req, res) => {
   }
 };
 
+// Controlador para guardar el cronograma de actividades
+exports.guardarCronograma = async (req, res) => {
+  try {
+    const { remate_id, nombre, fecha_inicio, fecha_fin } = req.body;
+
+    // Verifica que req.session.userId esté definido
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Usuario no autenticado" });
+    }
+
+    // Guardar el cronograma en la base de datos
+    await createCronograma(remate_id, nombre, fecha_inicio, fecha_fin);
+
+    res.status(200).json({ message: "Cronograma guardado exitosamente" });
+  } catch (error) {
+    console.error("Error al guardar el cronograma:", error);
+    res.status(500).json({ message: "Hubo un problema al guardar el cronograma" });
+  }
+};
+
+// Crear seguimiento
 exports.createSeguimiento = async (req, res) => {
   const {
     expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,

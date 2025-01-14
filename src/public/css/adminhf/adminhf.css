@@ -205,281 +205,203 @@ i {
   /* Color plomo más oscuro al pasar el ratón */
 }
 
-/* Estilos generales del formulario */
+/* Estilos del modal y formulario */
 .tarjeta_formulario_cronograma_actividades {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: white;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  display: none;
-  /* Inicialmente oculto */
+  width: 90%;
+  max-width: 500px;
 }
 
-.titulo_formulario_cronograma_actividades {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
-  font-size: 24px;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 10px;
-}
-
-.grupo_campo_formulario_cronograma {
-  margin-bottom: 25px;
-}
-
-.fila_campos_formulario_cronograma {
+.formulario_sistema_remates_personalizado {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.columna_campo_formulario_cronograma {
-  flex: 1;
+.titulo_formulario_sistema_remates {
+  color: #2C3E50;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #E5E8E8;
+  padding-bottom: 1rem;
 }
 
-.etiqueta_campo_formulario_cronograma {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #34495e;
+.campo_formulario_sistema_remates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.entrada_texto_formulario_cronograma,
-.entrada_fecha_formulario_cronograma,
-.area_texto_formulario_cronograma {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #bdc3c7;
-  border-radius: 6px;
-  font-size: 14px;
+.etiqueta_campo_sistema_remates {
+  color: #2C3E50;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.entrada_campo_sistema_remates {
+  padding: 0.75rem;
+  border: 1px solid #E5E8E8;
+  border-radius: 4px;
+  font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
-.entrada_texto_formulario_cronograma:focus,
-.entrada_fecha_formulario_cronograma:focus,
-.area_texto_formulario_cronograma:focus {
-  border-color: #3498db;
+.entrada_campo_sistema_remates:focus {
   outline: none;
+  border-color: #3498DB;
 }
 
-.contenedor_botones_formulario_cronograma {
+.contenedor_botones_sistema_remates {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
-  margin-top: 30px;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #E5E8E8;
 }
 
-.boton_formulario_cronograma {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.boton_cancelar_formulario_cronograma {
-  background-color: #95a5a6;
-  color: white;
-}
-
-.boton_guardar_formulario_cronograma {
-  background-color: #2980b9;
-  color: white;
-}
-
-.boton_formulario_cronograma:hover {
-  opacity: 0.9;
-}
-
-/* Estilos actualizados para el select dropdown */
-.seleccion_formulario_cronograma {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #bdc3c7;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-.seleccion_formulario_cronograma:focus {
-  border-color: #3498db;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-.seleccion_formulario_cronograma:hover {
-  border-color: #3498db;
-}
-
-.seleccion_formulario_cronograma option {
-  padding: 12px;
-  background-color: #fff;
-  color: #333;
-}
-
-.seleccion_formulario_cronograma option:hover,
-.seleccion_formulario_cronograma option:focus {
-  background-color: #f0f0f0;
-}
-
-.seleccion_formulario_cronograma option[disabled] {
-  color: #999;
-}
-
-.seleccion_formulario_cronograma::-ms-expand {
-  display: none;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(52, 152, 219, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
-  }
-}
-.seleccion_formulario_cronograma:focus {
-  animation: pulse 1.5s infinite;
-}
-
-/* Estilos para el formulario de edición */
-.tarjeta_formulario_edicion_cronograma {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+/* Overlay del modal */
+.overlay_sistema_remates {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  max-height: 90vh;
-  overflow-y: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
-/* Estilos para cada sección de fase */
-.seccion_fase {
-  margin-bottom: 30px;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
-}
-
-.titulo_fase {
-  color: #2c3e50;
-  font-size: 18px;
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #3498db;
-}
-
-.contenedor_fechas {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.grupo_fecha {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.grupo_fecha label {
-  font-weight: 600;
-  color: #34495e;
-}
-
-.entrada_fecha_hora {
-  display: flex;
-  gap: 10px;
-}
-
-.entrada_fecha,
-.entrada_hora {
+/* Estilos del botón (manteniendo los estilos de UI verse) */
+.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
   padding: 8px;
-  border: 1px solid #bdc3c7;
-  border-radius: 6px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: bold;
   font-size: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
 }
 
-.entrada_fecha {
-  flex: 2;
+.button::before,
+.button::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all 0.15s ease;
 }
 
-.entrada_hora {
-  flex: 1;
+.button::before {
+  top: 0;
+  border-bottom-width: 0;
 }
 
-.entrada_fecha:focus,
-.entrada_hora:focus {
-  border-color: #3498db;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+.button::after {
+  bottom: 0;
+  border-top-width: 0;
 }
 
-/* Estilo para el botón de editar */
-.boton_editar_formulario_cronograma {
-  background-color: #f39c12;
-  color: white;
+.button:active::before,
+.button:active::after {
+  right: 3px;
+  left: 3px;
 }
 
-/* Ajustes responsive */
-@media (max-width: 768px) {
-  .contenedor_fechas {
-    grid-template-columns: 1fr;
-  }
-  .entrada_fecha_hora {
-    flex-direction: column;
-  }
-  .tarjeta_formulario_edicion_cronograma {
-    width: 95%;
-    padding: 20px;
-  }
-}
-/* Scrollbar personalizado */
-.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar {
-  width: 8px;
+.button:active::before {
+  top: 3px;
 }
 
-.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+.button:active::after {
+  bottom: 3px;
 }
 
-.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+.button_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #0f1923;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
 }
 
-.tarjeta_formulario_edicion_cronograma::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.button_lg::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.button_lg::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all 0.2s ease;
+}
+
+.button_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #3498DB;
+  transform: skew(-15deg);
+  transition: all 0.2s ease;
+}
+
+.button_text {
+  position: relative;
+}
+
+.button:hover {
+  color: #0f1923;
+}
+
+.button:hover .button_sl {
+  width: calc(100% + 15px);
+}
+
+.button:hover .button_lg::after {
+  background-color: #fff;
+}
+
+/* Estilos específicos para los botones */
+.boton_guardar_sistema_remates .button_sl {
+  background-color: #3498DB;
+}
+
+.boton_cancelar_sistema_remates .button_sl {
+  background-color: #95A5A6;
 }
 
 /* modal seguimiento */

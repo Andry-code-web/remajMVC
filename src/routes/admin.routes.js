@@ -34,11 +34,12 @@ router.get('/subasta', isAuthenticated, (req, res) => {
   res.render("subasta");
 });
 
-
 // Rutas para el manejo de seguimientos
 router.post('/createSeguimiento', adminController.createSeguimiento);
 router.get('/getSeguimiento/:id', adminController.getSeguimientoById);
 router.post('/updateSeguimiento', adminController.updateSeguimiento);
 
+// Ruta para guardar el cronograma de actividades (protegida)
+router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCronograma);
 
 module.exports = router;

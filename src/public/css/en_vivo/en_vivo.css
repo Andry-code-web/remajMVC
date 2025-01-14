@@ -85,7 +85,7 @@
 /* Tarjeta de subasta */
 .auction-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(255, 255, 255);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -180,6 +180,7 @@
 }
 
 .auction-info p {
+  font-family: "fuenteSecundaria";
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -189,6 +190,14 @@
 
 .auction-info i {
   color: #2c3e50;
+}
+
+.auction-info h3 {
+  font-family: "fuenteSecundaria";
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 /* Sección de descripción */
@@ -201,6 +210,7 @@
 }
 
 .description-section h6 {
+  font-family: "fuenteSecundaria";
   color: #1a1a2e;
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -248,6 +258,7 @@
 }
 
 .action-btn {
+  font-family: "fuenteSecundaria";
   flex: 0 1 auto;
   min-width: 95px;
   max-width: 110px;
@@ -268,7 +279,7 @@
 
 .action-btn:hover {
   background: #2c3e50;
-  color: white;
+  color: #1a1a2e;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
 }
@@ -280,7 +291,7 @@
 
 /* Estilos específicos para cada botón */
 .action-btn.seguimiento {
-  font-size: 12px;
+  font-size: 10px;
   background: rgba(44, 62, 80, 0.1);
 }
 
@@ -300,6 +311,43 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   color: #2d3748;
+}
+
+.auction-details {
+  font-family: "fuenteSecundaria";
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(44, 62, 80, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+.auction-details .tipo_remate, .auction-details .lugar {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+.auction-details .tipo_remate strong, .auction-details .lugar strong {
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.auction-card {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 /* Media Queries */
@@ -331,48 +379,6 @@
     font-size: 0.8rem;
     min-width: 85px;
   }
-}
-.auction-details {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background: rgba(44, 62, 80, 0.05);
-  border-radius: 12px;
-  border: 1px solid rgba(44, 62, 80, 0.1);
-}
-.auction-details .tipo_remate, .auction-details .lugar {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: #2d3748;
-}
-.auction-details .tipo_remate strong, .auction-details .lugar strong {
-  color: #1a1a2e;
-  font-weight: 600;
-}
-
-.auction-info h3 {
-  font-size: 1rem;
-  color: #1a1a2e;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-    -webkit-transform: translateY(20px);
-    -moz-transform: translateY(20px);
-    -ms-transform: translateY(20px);
-    -o-transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.auction-card {
-  animation: fadeIn 0.5s ease-out forwards;
 }
 
 /*# sourceMappingURL=en_vivo.css.map */

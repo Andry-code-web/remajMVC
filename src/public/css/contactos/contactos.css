@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Azul corporativo principal */
 /* Azul oscuro para hover */
 /* Rojo corporativo para acentos */
@@ -44,9 +45,10 @@
 
 .contenedor_contacto {
   width: 100%;
-  min-width: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   background-color: #fffcfc;
+  position: relative;
 }
 
 .banner {
@@ -64,17 +66,15 @@
   max-width: 51vw;
   font-size: 1.9em;
   padding: 0 5.5555555556vw;
-  margin: 0 auto 2.2222222222vw;
+  margin: 3rem auto 2.2222222222vw;
   font-family: "fuenteSecundaria";
   font-weight: 100;
-  margin-top: 3rem;
 }
 
 .contenedor_boton {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* margin-top: 8vw; */
 }
 
 .contenedor_boton a {
@@ -109,82 +109,41 @@
   align-items: center;
 }
 
-/* */
+/* Sección de Preguntas Frecuentes */
 .sliders_casa {
   width: 100%;
-  height: 111vh;
-  margin-top: 12rem;
+  min-height: auto;
+  margin-top: 3rem;
+  padding: 2rem 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 18px;
+  /*     position: relative;*/
 }
 
 .sub_titulo {
   text-align: center;
-  font-size: 6.2vw;
+  font-size: 3.2vw;
   font-family: "fuenteSecundaria";
   font-weight: 100;
-  margin-bottom: 30vw;
+  margin-bottom: 2rem;
 }
 
-.contenedor_galeria {
-  width: 90%;
-  min-height: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem;
-}
-
-.div_img {
-  width: 33.33%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
-.div_img .img {
-  width: 100%;
-  height: 90%;
-}
-
-.div_img .img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.div_img .descripcion {
-  margin-top: 1rem;
-  font-family: "fuenteSecundaria";
-  font-size: 1vw;
-  text-align: start;
-  letter-spacing: 0.2rem;
-  margin-left: 1rem;
-}
-
-/*  */
+/* Sección de Contacto */
 .contacto {
-  margin-top: -22rem;
-  margin-bottom: 10rem;
   width: 100%;
-  height: auto;
+  padding: 4rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #fffcfc;
 }
 
 .titulo_contactos {
   font-family: "fuenteSecundaria";
   font-weight: 100;
   font-size: 3.2vw;
-  /* margin-bottom: 1.66vw; */
 }
 
 .subtitulo_contacto {
@@ -259,47 +218,100 @@
   transform: translateY(2px);
 }
 
+/* Estilos de Bootstrap personalizados para Preguntas Frecuentes */
 #preguntas-frecuentes {
-  margin-top: 4rem;
-  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-#preguntas-frecuentes .sub_titulo {
-  margin-bottom: 0.5rem;
-  font-size: 3.2vw;
-}
-
-#preguntas-frecuentes .container {
-  margin-top: 0.5rem;
-}
-
+/* Estilos para las pestañas con efecto de subrayado */
 #preguntas-frecuentes .nav-tabs {
-  border-bottom: none;
+  border: none;
+  display: flex;
   justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 #preguntas-frecuentes .nav-tabs .nav-link {
-  color: var(--color-terciario);
+  position: relative;
   border: none;
-  font-size: 1.2em;
-  padding: 0.5em 1em;
-  margin: 0 0.5em;
+  background: none;
+  color: #0a0000;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+}
+#preguntas-frecuentes .nav-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #0a0000;
+  transition: width 0.3s ease;
+}
+#preguntas-frecuentes .nav-tabs .nav-link:hover::after, #preguntas-frecuentes .nav-tabs .nav-link.active::after {
+  width: 100%;
+}
+
+#preguntas-frecuentes .nav-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: var(--color-terciario);
   transition: all 0.3s ease;
+}
+
+#preguntas-frecuentes .nav-tabs .nav-link:hover::after,
+#preguntas-frecuentes .nav-tabs .nav-link.active::after {
+  width: 100%;
+  left: 0;
 }
 
 #preguntas-frecuentes .nav-tabs .nav-link.active,
 #preguntas-frecuentes .nav-tabs .nav-link:hover {
   color: var(--color-terciario);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 2.5em;
+  background-color: transparent;
+  border: none;
+}
+
+/* Estilos para el acordeón y las flechas */
+#preguntas-frecuentes .accordion-item {
+  border: none;
+  border-bottom: 1px solid rgba(10, 0, 0, 0.1);
+  background: none;
+  margin-bottom: 0.5rem;
 }
 
 #preguntas-frecuentes .accordion-button {
-  font-family: var(--fuente-secundaria);
-  color: var(--color-terciario);
-  background-color: transparent;
-  box-shadow: none;
-  font-weight: bold;
+  position: relative;
+  background: none;
+  border: none;
+  color: #0a0000;
+  padding: 1rem;
+  width: 100%;
+  text-align: left;
+  font-family: "fuenteSecundaria";
+}
+#preguntas-frecuentes .accordion-button::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #0a0000;
+  border-bottom: 2px solid #0a0000;
+  transform: translateY(-50%) rotate(45deg);
+  transition: transform 0.3s ease;
+}
+#preguntas-frecuentes .accordion-button[aria-expanded=true]::after {
+  transform: translateY(-50%) rotate(-135deg);
 }
 
 #preguntas-frecuentes .accordion-button:not(.collapsed) {
@@ -307,13 +319,50 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-#preguntas-frecuentes .accordion-body {
-  font-family: var(--fuente-parrafos);
-  color: var(--color-terciario);
+#preguntas-frecuentes .accordion-button::after {
+  content: "";
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  transition: transform 0.2s ease-in-out;
 }
 
-#preguntas-frecuentes .accordion-button::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+#preguntas-frecuentes .accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg);
 }
+
+#preguntas-frecuentes .accordion-body {
+  padding: 1rem;
+  color: #0a0000;
+  font-family: "fuenteSecundaria";
+}
+
+/* Mejoras visuales adicionales */
+#preguntas-frecuentes .accordion-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+#preguntas-frecuentes .accordion-button:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Estilos responsivos */
+/* @media (max-width: 768px) {
+    .sub_titulo {
+        font-size: 2.5rem;
+    }
+
+    #preguntas-frecuentes .nav-tabs .nav-link {
+        font-size: 1em;
+        padding: 0.4em 0.8em;
+    }
+
+    #preguntas-frecuentes .accordion-button {
+        font-size: 0.9em;
+    }
+} */
 
 /*# sourceMappingURL=contactos.css.map */

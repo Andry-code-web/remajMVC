@@ -20,11 +20,11 @@
     <div class="navigation-tabs">
       <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
       <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
-      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link active">Cronograma</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link active">Cronograma</a>    
     </div>
 
     <div class="cronograma-table">
-      <% if (cronograma && cronograma.length > 0) { %> 
+      <% if (cronograma && cronograma.length > 0) { %>
       <table>
         <thead>
           <tr>
@@ -34,20 +34,20 @@
           </tr>
         </thead>
         <tbody>
-          
-          <% cronograma.forEach(cronogramas => { %>
+          <% cronograma.forEach(fase => { %>
           <tr>
-            <td><%= cronogramas.actividad %></td>
-            <td><%= cronogramas.fecha_inicio %></td>
-            <td><%= cronogramas.fecha_fin %></td>
+            <td><%= fase.nombre %></td>
+            <td><%= new Date(fase.fecha_inicio).toLocaleString() %></td>
+            <td><%= new Date(fase.fecha_fin).toLocaleString() %></td>
           </tr>
-          <% }); %> 
+          <% }); %>
         </tbody>
       </table>
       <% } else { %>
-        <p class="no-data">No hay cronogramas disponibles.</p>
-        <% } %>
+      <p class="no-data">No hay cronogramas disponibles.</p>
+      <% } %>
     </div>
+    
 
     <a href="/en_vivo" class="back-button">Volver a Remates</a>
   </div>

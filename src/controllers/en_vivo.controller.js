@@ -108,14 +108,13 @@ exports.getInmuebles = async (req, res) => {
 
 exports.getCronograma = async (req, res) => {
     try {
-        const auctionId = req.params.id;
+        const auctionId = req.params.id; 
         const cronograma = await EnVivo.getCronograma(auctionId);
         console.log('datos cronograma: ', cronograma);
-        
 
         res.render("en_vivo/cronograma", {
             cronograma: cronograma || [],
-            auctionId
+            auctionId // Pasamos auctionId a la vista
         });
     } catch (error) {
         console.error('Error en getCronograma:', error);
@@ -124,6 +123,8 @@ exports.getCronograma = async (req, res) => {
         });
     }
 };
+
+
 
 exports.getAviso = async (req, res) => {
     const { id } = req.params;

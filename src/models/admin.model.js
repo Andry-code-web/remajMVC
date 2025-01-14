@@ -192,13 +192,13 @@ const updateRemate = async (remateId, datosRemate) => {
 
 
 // Función para crear una entrada en la tabla cronograma
-const createCronograma = async (remate_id, nombre, fecha_inicio, fecha_fin) => {
+const createCronograma = async (remates_id, nombre, fecha_inicio, fecha_fin) => {
   const query = `
     INSERT INTO cronograma (remates_id, nombre, fecha_inicio, fecha_fin)
     VALUES (?, ?, ?, ?)
   `;
   try {
-    await db.query(query, [remate_id, nombre, fecha_inicio, fecha_fin]);
+    await db.query(query, [remates_id, nombre, fecha_inicio, fecha_fin]);
   } catch (error) {
     throw new Error('Error al guardar el cronograma: ' + error.message);
   }

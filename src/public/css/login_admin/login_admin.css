@@ -1,12 +1,4 @@
 @charset "UTF-8";
-/* Azul corporativo principal */
-/* Azul oscuro para hover */
-/* Rojo corporativo para acentos */
-/* Gris oscuro para texto principal */
-/* Gris medio para texto secundario */
-/* Fondo principal */
-/* Fondo secundario */
-/* Color de bordes */
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");

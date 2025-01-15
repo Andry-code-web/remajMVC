@@ -149,7 +149,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, durationInSeconds = 0.005 * 60 * 60) {
+  async function startAuctionTimer(remates_id, durationInSeconds = 6 * 60 * 60) {
     // Cancelar temporizador existente si existe
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);

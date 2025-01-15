@@ -270,7 +270,7 @@ i {
 }
 
 /* Overlay del modal */
-.overlay_sistema_remates {
+/* .overlay_sistema_remates {
   position: fixed;
   top: 0;
   left: 0;
@@ -278,8 +278,7 @@ i {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-}
-
+} */
 /* Estilos del botón (manteniendo los estilos de UI verse) */
 .button {
   -moz-appearance: none;

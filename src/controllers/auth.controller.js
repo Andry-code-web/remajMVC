@@ -33,20 +33,13 @@ exports.register = async (req, res) => {
 
     const userId = await User.create(req.body);
 
-    // Almacena los datos del usuario en la sesión
-    req.session.user = {
-      id: userId,
-      nombre: nombre_apellidos,
-      usuario,
-    };
-
+    // No guardamos el usuario en la sesión aquí
     res.status(201).json({ message: "Registro exitoso" });
   } catch (error) {
     console.error("Error en el registro:", error);
     res.status(500).json({ message: "Error en el registro", error: error.message });
   }
 };
-
 
 
 exports.login_vista = async (req, res) => {

@@ -4,180 +4,148 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
+    cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
 }
 
-/*Contenedor general del login*/
 
-.login_general {
-    font-family: 'fuentePrincipal', sans-serif;
-    min-height: 100vh;
-    background-color: #000000;
-    color: #E5D0B1;
-    position: relative;
-}
+/* login general */
 
-.contenido_login {
+.contenedor {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;   
+    align-items: center;
+    justify-content: center;
+}
+
+.imagen-contenedor {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* .imagen-fondo {
+    height: 100%;
+} */
+
+
+.slideInLeft {
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+.fondo {
+    width: 100%;
+    height: 100%;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
-/* Particulas */
-#particleCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
+.contenedor_form {
+    animation: slideInleft 0.5s ease forwards;
+}
+
+.contenedor_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    font-family: $fuenteParrafos;
+}
+.contenedor_form form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor_form form input {
     width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.login-box {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    padding: 40px;
-    background: rgba(18, 18, 18, 0.7);
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    z-index: 2;
-    border: 1px solid rgba(229, 208, 177, 0.1);
-    
-    @media (max-width: 480px) {
-        padding: 30px;
-    }
-}
-
-.login-box h1 {
-    color: #E5D0B1;
-    text-align: center;
-    font-size: 2em;
-    font-weight: 500;
-    margin-bottom: 40px;
-    letter-spacing: 1px;
-}
-
-.user-box {
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.user-box input {
-    width: 100%;
-    padding: 10px 0;
-    font-size: 16px;
-    color: #E5D0B1;
+    height: 45px;
+    border-radius: 10px;
     border: none;
-    border-bottom: 1px solid rgba(229, 208, 177, 0.2);
-    outline: none;
-    background: transparent;
-    transition: border-color 0.3s ease;
-    
-    &:focus {
-        border-bottom-color: #E5D0B1;
-    }
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+.contenedor_form form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
 }
 
-.user-box label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px 0;
-    font-size: 16px;
-    color: rgba(229, 208, 177, 0.7);
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-.user-box input:focus ~ label,
-.user-box input:valid ~ label {
-    top: -20px;
-    left: 0;
-    color: #E5D0B1;
-    font-size: 12px;
-}
-
-/*boton inicio sesion*/
-
-.submit-btn {
-    font-family: $fuentePrincipal;
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    border: 1px solid rgba(229, 208, 177, 0.2);
-    color: #E5D0B1;
-    font-size: 16px;
-    letter-spacing: 2px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
+.contenedor_contraseña {
     position: relative;
-    overflow: hidden;
-    
-    &::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #E5D0B1, transparent, #E5D0B1);
-        z-index: -1;
-        filter: blur(5px);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    &:hover {
-        background: rgba(229, 208, 177, 0.1);
-        border-color: #E5D0B1;
-        
-        &::before {
-            opacity: 0.5;
-        }
-    }
+    display: flex;
+    flex-direction: column;
 }
 
-/*link registro*/
+#contraseña {
+    width: 100%;
+    padding-right: 2.5rem;
+    margin-bottom: 0;
+}
 
-.register-link {
-    margin-top: 20px;
+.olvide {
+    font-size: .9rem;
+    font-family: $fuenteParrafos;
+    color: #780103;
+    text-decoration: none;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.contenedor_form form button {
+    width: 100%;
+    height: 40px;
+    background-color: #780103;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-family: $fuenteParrafos;
+    margin-top: 1rem;
+}
+
+.contenedor_form form .registrar {
+    width: 100%;
+    height: 40px;
+    background-color: #780103;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-family: $fuenteParrafos;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.contactos {
+    width: 50%;
     text-align: center;
-    font-size: 14px;
-    color: rgba(229, 208, 177, 0.7);
-    
-    a {
-        color: #E5D0B1;
-        text-decoration: none;
-        margin-left: 5px;
-        position: relative;
-        transition: all 0.3s ease;
-        
-        &::before {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: #E5D0B1;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-        
-        &:hover {
-            text-shadow: 0 0 5px rgba(229, 208, 177, 0.5);
-            
-            &::before {
-                transform: scaleX(1);
-                transform-origin: left;
-            }
-        }
-    }
+    margin-top: 1rem;
+    font-family: $fuenteParrafos;
 }
+
+.botonSoporte {
+    width: 50%;
+    height: 40px;
+    background-color: #780103;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-family: $fuenteParrafos;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+
+

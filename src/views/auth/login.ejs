@@ -1,54 +1,67 @@
-<section class="login_general" id="login_general">
-<div class="contenido_login" id="contenedor_login">
-  <canvas id="particleCanvas"></canvas>
-  <div class="login-box">
-    <h1>Iniciar Sesión</h1>
-    <form method="post" action="/auth/login" id="loginForm">
-      <div class="user-box">
-        <input type="text" id="usuario" name="usuario" required>
-        <label for="usuario">Nombre de usuario</label>
-      </div>
-      <div class="user-box">
-        <input type="password" id="contrasena" name="contrasena" required>
-        <label for="contrasena">Contraseña</label>
-      </div>
-      <button type="submit" class="submit-btn">
-        Iniciar sesión
-      </button>
-    </form>
-    <p class="register-link">¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
-  </div>
-</div>
-</section>
+ 
+ <link rel="stylesheet" href="sweetalert2.min.css">
 
-  <!-- script particulas login -->
-<script type="module" src="/js/componentes/network_login.js"></script>
+ <!-- contenedor general -->
+ <div class="contenedor">
+  <!-- Contenedor principal -->
+  <div class="imagen-contenedor slideInleft">
+<!-- Imagen de fondo -->
+    <img class="imagen_fondo" src="/img/vinito.png" width="100%" height="100%"> 
+  </div>
+
+  <div class="fondo">
+    <!-- Sección de fondo -->
+    <div class="contenedor_form">
+      
+      <h2>Inicio de sesión</h2> 
+      <form action="/login" class="slideInLeft" method="POST" id="loginForm">
+
+        <!-- Formulario de inicio de sesión -->
+        <label for="usuario">Usuario</label> 
+        <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu Usuario" required> 
+
+        <!-- Campo de entrada para el usuario -->
+        <div class="contenedor_contraseña">
+
+          <!-- Contenedor para el campo de contraseña -->
+          <label for="contraseña">Contraseña</label>
+          <div class="input-container">
+
+            <!-- Contenedor para el input de contraseña-->
+            <input type="password" name="contra" id="contraseña" placeholder="Ingresa tu Contraseña" required> 
+            <a href="" class="olvide">Olvide mi contraseña</a>
+          </div>
+        </div>
+
+
+         <!-- Botón para enviar el formulario -->
+        <button type="submit">Iniciar sesión</button> 
+        <!-- Enlace para registrarse -->
+        <a class="registrar" href="/auth/register">Regístrate</a> 
+
+      </form>
+      <!-- contactos -->
+      <p class="contactos">Si tienes problemas al iniciar sesion, contáctanos aqui:</p>
+      <button class="botonSoporte" id="boton_soporte" onclick="botonSoporte()">Soporte Remajud</button>
+    </div>
+    </div>
+    </div>
+    
+    <script>
+      function botonSoporte() {
+        Swal.fire({
+          title: "Soporte al cliente",
+          text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
+          icon: "info",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK"
+        }
+          )}
+          
+    </script>
+
+
 <link rel="stylesheet" href="/css/login/login.css">
 
-<script type="module">
-  import {
-    NetworkAnimationL
-  } from '../../js/componentes/network_login.js';
-  const canvas = document.getElementById("particleCanvas");
-  const networkAnimationL = new NetworkAnimationL(canvas);
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.getElementById('header');
-    const loginSection = document.getElementById('login_general');
-
-    // Verificar si el login está visible
-    if (loginSection) {
-      header.style.color = '#ffffff'; // Cambiar al color deseado (Blanco)
-    } else {
-      header.style.color = 'black'; // Color por defecto si no es el login
-    }
-  });
-</script>
-
-
-
-
-
-
+<!-- sweet alert  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -204,8 +204,22 @@ const createCronograma = async (remates_id, nombre, fecha_inicio, fecha_fin) => 
   }
 };
 
+// Función para obtener el cronograma de la base de datos
+const getCronograma = async (remates_id) => {
+  const query = `
+    SELECT nombre FROM cronograma WHERE remates_id = ? ORDER BY fecha_inicio ASC
+  `;
+  try {
+    const [rows] = await db.query(query, [remates_id]);
+    return rows.map(row => row.nombre);
+  } catch (error) {
+    throw new Error('Error al obtener el cronograma: ' + error.message);
+  }
+};
+
 
 module.exports = {
+  getCronograma,
   getAllRemates,
   getImagenesInmuebles,
   createRemate,

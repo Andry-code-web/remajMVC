@@ -37,4 +37,7 @@ router.get('/subasta', isAuthenticated, (req, res) => {
 // Ruta para guardar el cronograma de actividades (protegida)
 router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCronograma);
 
+// Ruta para obtener el estado actual del cronograma (protegida)
+router.get('/obtener-cronograma', isAuthenticated, adminController.obtenerCronograma);
+
 module.exports = router;

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {
+  getCronograma,
   getAllRemates,
   getImagenesInmuebles,
   createRemate,
@@ -182,13 +183,11 @@ exports.getRemateForEdit = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los datos del remate' });
   }
 };
-
 // Controlador para guardar el cronograma de actividades
 exports.guardarCronograma = async (req, res) => {
   try {
     const { remates_id, nombre, fecha_inicio, fecha_fin } = req.body;
-    console.log("datos cronograma:",req.body);
-    
+    console.log("datos cronograma:", req.body);
 
     // Verifica que req.session.userId esté definido
     if (!req.session.userId) {
@@ -198,12 +197,29 @@ exports.guardarCronograma = async (req, res) => {
     // Guardar el cronograma en la base de datos
     await createCronograma(remates_id, nombre, fecha_inicio, fecha_fin);
 
-    res.status(200).json({ message: "Cronograma guardado exitosamente" });
+    // Actualizar el progreso del botón
+    res.status(200).json({ message: "Cronograma guardado exitosamente", fase: nombre });
   } catch (error) {
     console.error("Error al guardar el cronograma:", error);
     res.status(500).json({ message: "Hubo un problema al guardar el cronograma" });
   }
 };
+
+// Controlador para obtener el estado actual del cronograma
+exports.obtenerCronograma = async (req, res) => {
+  try {
+    const { remates_id } = req.query;
+
+    // Obtener el cronograma de la base de datos
+    const cronograma = await getCronograma(remates_id);
+
+    res.status(200).json(cronograma);
+  } catch (error) {
+    console.error("Error al obtener el cronograma:", error);
+    res.status(500).json({ message: "Hubo un problema al obtener el cronograma" });
+  }
+};
+
 
 // Crear seguimiento
 exports.createSeguimiento = async (req, res) => {

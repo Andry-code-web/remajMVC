@@ -1,17 +1,34 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*Contenedor general registro */
+// Variables
+$primary-color: #2f279e;
+$background-color: #000000;
+$text-color: #ffffff;
+$error-color: #dc3545;
+$transition-time: 0.3s;
+$border-radius: 24px;
 
+// Mixins
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin transition-ease {
+    transition: all $transition-time ease;
+}
+
+/*Contenedor general registro */
 .formulario_general {
     line-height: 1.5;
     font-weight: 400;
-    color: #2f279e;
-    background-color: #000000;
+    color: $primary-color;
+    background-color: $background-color;
     text-rendering: optimizeLegibility;
     min-height: 100vh;
     overflow: hidden;
@@ -36,25 +53,22 @@
     transform: translateY(-50%);
     z-index: 2;
     padding-left: 8rem;
-    transition: color 0.5s ease;
-}
+    @include transition-ease;
 
-.fixed-titles h1 {
-    font-size: 7rem;
-    font-weight: 700;
-    margin-bottom: .5rem;
-    text-align: left;
-    line-height: 1.1;
-    transition: color 0.5s ease;
-    margin-left: 3rem;
+    h1 {
+        font-size: 7rem;
+        font-weight: 700;
+        margin-bottom: .5rem;
+        text-align: left;
+        line-height: 1.1;
+        @include transition-ease;
+        margin-left: 3rem;
+    }
 }
-
 
 .container_formulario {
-    display: flex;
+    @include flex-center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     position: relative;
     height: 100vh;
     overflow: hidden;
@@ -64,6 +78,7 @@
     padding: 2rem;
 }
 
+// Indicador de progreso
 .progress-indicator {
     position: fixed;
     left: 4rem;
@@ -76,7 +91,11 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    @include transition-ease;
+    background-color: $text-color;
+    box-shadow: 0 0 5px $text-color,
+                0 0 10px $text-color,
+                0 0 15px $primary-color;
 }
 
 .progress-dots {
@@ -95,7 +114,11 @@
     height: 6px;
     border-radius: 50%;
     position: relative;
-    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    @include transition-ease;
+    background-color: $text-color;
+    box-shadow: 0 0 5px $text-color,
+                0 0 10px $text-color,
+                0 0 15px $primary-color;
 }
 
 .progress-active-line {
@@ -105,7 +128,11 @@
     transform: translateX(-50%);
     top: 0;
     height: 0%;
-    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease, box-shadow 0.5s ease;
+    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: $text-color;
+    box-shadow: 0 0 5px $text-color,
+                0 0 10px $text-color,
+                0 0 15px $primary-color;
 }
 
 .progress-active-dot {
@@ -116,9 +143,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     top: 0%;
-    transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease, box-shadow 0.5s ease;
+    transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: $text-color;
+    box-shadow: 0 0 5px $text-color,
+                0 0 10px $text-color,
+                0 0 15px $primary-color;
 }
 
+// Secciones
 .seccion {
     width: 100%;
     height: 100vh;
@@ -133,29 +165,37 @@
     opacity: 0;
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: transparent;
-}
 
-.seccion.active {
-    top: 0;
-    opacity: 1;
-}
+    &.active {
+        top: 0;
+        opacity: 1;
+    }
 
-.seccion1 {
-    background-color: #000000;
-    color: #2f279e;
-}
-.seccion2 {
-    background-color: #2f279e;
-    color: #000000;
-    
-    .subtitle {
-        color: #000000 !important; 
+    &.seccion1 {
+        background-color: $background-color;
+        color: $primary-color;
+    }
+
+    &.seccion2 {
+        background-color: $primary-color;
+        color: $background-color;
+        
+        .subtitle {
+            color: $background-color;
+        }
+
+        .submit-btn:hover {
+            color: $primary-color;
+            background: $background-color;
+        }
+    }
+
+    &.seccion3 {
+        background-color: $background-color;
+        color: $primary-color;
     }
 }
-.seccion3 {
-    background-color: #000000;
-    color: #2f279e;
-}
+
 .texto_grande {
     width: 40%;
     padding-left: 8rem;
@@ -173,78 +213,70 @@
     transform-origin: left;
 }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.row2 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.col {
-    flex: 1;
-    min-width: 30%;
-    display: flex;
-    flex-direction: column;
+// Formularios
+.form-section1, .form-section {
+    width: 60%;
+    max-width: 35rem;
+    padding: 2rem;
 }
 
 .form-section1 {
-    width: 60%;
-    max-width: 35rem;
-    padding: 2rem;
-    margin: 0;
     margin-left: 19rem;
-    flex-direction: column;
 }
 
 .form-section {
-    width: 60%;
-    max-width: 35rem;
-    padding: 2rem;
     margin-left: 12rem;
 }
 
 .form-header {
     margin-bottom: 1rem;
+
+    h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 0.875rem;
+        opacity: 0.8;
+    }
 }
 
-.form-header h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.form-header p {
-    font-size: 0.875rem;
-    opacity: 0.8;
-}
-
+// Inputs
 .form-input {
     background: transparent;
-    border: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     border-bottom: 1px solid currentColor;
     color: inherit;
-    padding: 12px 0;
+    padding: 10px;
     margin: 20px 0;
     width: 100%;
-    font-size: 1rem;
+    font-size: 16px;
     font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
-    -moz-appearance: textfield;
-    appearance: textfield;
+    @include transition-ease;
+
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid currentColor;
+    }
+
+    // Remover flechas de inputs numéricos
+    &[type="number"] {
+        -moz-appearance: textfield;
+        -webkit-appearance: none;
+        appearance: none;
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
 }
 
-.form-input:focus {
-    outline: none;
-    border-bottom: 2px solid currentColor;
-}
-
+// Select personalizado
 select.form-input {
     background: transparent;
     border: none;
@@ -255,93 +287,72 @@ select.form-input {
     width: 100%;
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
+    @include transition-ease;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid currentColor;
+    }
+
+    option {
+        background-color: $background-color;
+        color: $primary-color;
+        padding: 10px;
+    }
 }
 
-select.form-input::-ms-expand {
-    display: none;
-}
-
-select.form-input:focus {
-    outline: none;
-    border-bottom: 2px solid currentColor;
-}
-
-select.form-input option {
-    background-color: #000000;
-    color: #2f279e;
-    padding: 10px;
-}
-
-
-input[type="number"] {
-    -moz-appearance: textfield;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
+// Botones
 .submit-btn {
     background: transparent;
     border: 2px solid currentColor;
     color: inherit;
     padding: 12px 32px;
-    border-radius: 24px;
+    border-radius: $border-radius;
     cursor: pointer;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    @include transition-ease;
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: currentColor;
+        @include transition-ease;
+        z-index: -1;
+    }
+
+    &:hover {
+        &::before {
+            left: 0;
+        }
+        color: $background-color;
+        background: $primary-color;
+    }
 }
 
-.submit-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: currentColor;
-    transition: all 0.3s ease;
-    z-index: -1;
-}
-
-.submit-btn:hover::before {
-    left: 0;
-}
-
-.submit-btn:hover {
-    color: #000000;
-    background: #2f279e;
-}
-
-.seccion2 .submit-btn:hover {
-    color: #2f279e;
-    background: #000000;
-}
-
-.seccion2 {
-    background-color: #2f279e;
-    color: #000000;
-}
-
+// Mensajes de error
 .error-message {
-    color: #ff4444;
+    color: $error-color;
     font-size: 0.875rem;
     margin-top: -1rem;
     margin-bottom: 1rem;
 }
 
+// Checkbox personalizado
 .checkbox-wrapper {
     margin: 20px 0;
     display: flex;
@@ -365,71 +376,63 @@ input[type="number"]::-webkit-outer-spin-button {
     user-select: none;
     display: flex;
     align-items: center;
+    color: #888;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid $primary-color;
+        border-radius: 4px;
+        @include transition-ease;
+    }
 }
 
-.checkbox-label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid #2f279e;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+.custom-checkbox:checked + .checkbox-label {
+    &:before {
+        background-color: #2563eb;
+        border-color: #2563eb;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 9px;
+        top: 45%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 5px;
+        height: 11px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+    }
 }
 
-.custom-checkbox:checked+.checkbox-label:before {
-    background-color: #2563eb;
-    border-color: #2563eb;
-}
-
-.custom-checkbox:checked+.checkbox-label:after {
-    content: '';
-    position: absolute;
-    left: 9px;
-    top: 45%;
-    transform: translateY(-50%) rotate(45deg);
-    width: 5px;
-    height: 11px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-}
-
+// Enlaces de términos y condiciones
 .terms-link {
-    font-size: 17px;
+    color: $text-color;
+    text-decoration: none;
+    position: relative;
     margin-left: 0.4rem;
-    color: white;
-    text-decoration: none;
-    text-shadow:
-        0 0 5px #c2c2c2, 
-        0 0 10px #fff0, 
-        0 0 15px #2f279eb2, 
-        0 0 20px #2f279e38;    
-    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    @include transition-ease;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+        border-bottom-color: $text-color;
+        text-shadow: 0 0 1px rgba($text-color, 0.5);
+    }
+
+    &:active {
+        color: darken($text-color, 10%);
+        border-bottom-color: darken($text-color, 10%);
+    }
 }
 
-.terms-link:hover {
-    color: white;
-    text-shadow:
-        0 0 7px #dfdfdf, 
-        0 0 12px #8f8c8c29, 
-        0 0 17px #ffffff52, 
-        0 0 22px #51515136,
-        0 0 25px #fff;
-    text-decoration: none;
-}
-
-.terms-link:active {
-    text-shadow:
-        0 0 10px #2f279e,
-        0 0 15px #2f279e,
-        0 0 20px #2f279e,
-        0 0 25px #2f279e,
-        0 0 30px #2f279e;
-}
-
+// Animación de glitch
 @keyframes glitchAnimation {
     0% {
         opacity: 0;
@@ -448,7 +451,7 @@ input[type="number"]::-webkit-outer-spin-button {
         clip-path: inset(0 30% 0 0);
         filter: blur(3px);
         transform: scale(0.95) skewX(5deg);
-}
+    }
 
     100% {
         opacity: 1;

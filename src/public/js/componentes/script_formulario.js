@@ -1,4 +1,3 @@
-
 import NetworkAnimation from "./network.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Colores definidos
     const colors = {
         white: '#ffffff',
-        black: '#000000'
+        black: '#000000',
+        gray: '#888888'
     };
 
     // Actualizar progreso visual
@@ -39,41 +39,35 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Actualizar colores según la sección
-const updateColors = (index) => {
-    const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
-    
-    if (index === 1) { // Sección de Ubicación
-        // Cambiar a negro fosforescente para la barra de progreso
-        progressElements.forEach(element => {
-            element.style.backgroundColor = colors.black;
-            element.style.boxShadow = `0 0 5px ${colors.black}, 0 0 10px ${colors.black}, 0 0 15px ${colors.black}`;
-        });
-        // Color normal para el título
-        fixedTitles.style.color = colors.black;
-        fixedTitles.style.textShadow = 'none';
+    const updateColors = (index) => {
+        const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
         
-        // Cambiar el color del subtítulo a negro
-        const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
-        if (subtitleUbicacion) {
-            subtitleUbicacion.style.color = colors.black;
+        if (index === 1) {
+            progressElements.forEach(element => {
+                element.style.backgroundColor = colors.black;
+                element.style.boxShadow = 'none';
+            });
+            fixedTitles.style.color = colors.black;
+            fixedTitles.style.textShadow = 'none';
+            
+            const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
+            if (subtitleUbicacion) {
+                subtitleUbicacion.style.color = colors.black;
+            }
+        } else {
+            progressElements.forEach(element => {
+                element.style.backgroundColor = colors.white;
+                element.style.boxShadow = 'none';
+            });
+            fixedTitles.style.color = colors.white;
+            fixedTitles.style.textShadow = 'none';
+            
+            const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
+            if (subtitleUbicacion) {
+                subtitleUbicacion.style.color = colors.white;
+            }
         }
-    } else { // Sección de Registro y Usuario
-        // Cambiar a blanco fosforescente para la barra de progreso
-        progressElements.forEach(element => {
-            element.style.backgroundColor = colors.white;
-            element.style.boxShadow = `0 0 5px ${colors.white}, 0 0 10px ${colors.white}, 0 0 15px ${colors.white}`;
-        });
-        // Color normal para el título
-        fixedTitles.style.color = colors.white;
-        fixedTitles.style.textShadow = 'none';
-        
-        // Restablecer el color del subtítulo a blanco
-        const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
-        if (subtitleUbicacion) {
-            subtitleUbicacion.style.color = colors.white;
-        }
-    }
-};
+    };
 
     // Cambiar fondo según la sección activa
     const changeBackgroundColor = (index) => {
@@ -83,7 +77,6 @@ const updateColors = (index) => {
             }
         });
     };
-    
 
     // Transiciones entre secciones
     const animateTransition = (index) => {
@@ -107,72 +100,99 @@ const updateColors = (index) => {
         }
     };
 
-    // Validación de formularios
+    // Validaciones de formulario
+    const validaciones = {
+        celular: (value) => {
+            const phoneRegex = /^9\d{8}$/;
+            return phoneRegex.test(value) ? "" : "El número debe comenzar con 9 y tener 9 dígitos en total";
+        },
+        dni: (value) => {
+            const dniRegex = /^\d{8}$/;
+            return dniRegex.test(value) ? "" : "El DNI debe tener exactamente 8 dígitos";
+        },
+        EMAIL: (value) => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(value) ? "" : "Ingrese un correo electrónico válido";
+        },
+        confirmar_email: (value, form) => {
+            const email = form.querySelector('[name="EMAIL"]').value;
+            return value === email ? "" : "Los correos electrónicos no coinciden";
+        },
+        contrasena: (value) => {
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return passwordRegex.test(value) ? "" : 
+                "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres especiales";
+        }
+    };
+
+    // Agregar validación en tiempo real para la contraseña
+    const passwordInput = document.querySelector('input[name="contrasena"]');
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            // Remover mensajes de error anteriores
+            const prevError = this.nextElementSibling;
+            if (prevError && prevError.classList.contains('error-message')) {
+                prevError.remove();
+            }
+
+            // Validar la contraseña
+            const errorMessage = validaciones.contrasena(this.value);
+            if (errorMessage) {
+                const errorElement = document.createElement("p");
+                errorElement.classList.add("error-message");
+                errorElement.textContent = errorMessage;
+                this.insertAdjacentElement("afterend", errorElement);
+                this.classList.add("error");
+            } else {
+                this.classList.remove("error");
+            }
+        });
+    }
+
+    // Función de validación del formulario
     const isFormValid = (form) => {
         const inputs = form.querySelectorAll("input[required], select[required]");
         let isValid = true;
 
+        // Limpiar mensajes de error anteriores
         form.querySelectorAll(".error-message").forEach((msg) => msg.remove());
 
         inputs.forEach((input) => {
+            let errorMessage = "";
+
             if (input.value.trim() === "") {
-                isValid = false;
-                const errorMessage = document.createElement("p");
-                errorMessage.classList.add("error-message");
-                errorMessage.textContent = "Este campo es obligatorio.";
-                input.insertAdjacentElement("afterend", errorMessage);
+                errorMessage = "Este campo es obligatorio.";
+            } 
+            else if (validaciones[input.name]) {
+                errorMessage = validaciones[input.name](input.value, form);
             }
 
-            if (input.name === "fecha_nacimiento") {
+            if (input.name === "fecha_nacimiento" && input.value) {
                 const fechaNacimiento = new Date(input.value);
                 const hoy = new Date();
                 const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
                 const mes = hoy.getMonth() - fechaNacimiento.getMonth();
 
                 if (edad < 18 || (edad === 18 && mes < 0) || (edad === 18 && mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-                    isValid = false;
-                    const errorMessage = document.createElement("p");
-                    errorMessage.classList.add("error-message");
-                    errorMessage.textContent = "Debes ser mayor de 18 años.";
-                    input.insertAdjacentElement("afterend", errorMessage);
+                    errorMessage = "Debes ser mayor de 18 años.";
                 }
+            }
+
+            if (errorMessage) {
+                isValid = false;
+                const errorElement = document.createElement("p");
+                errorElement.classList.add("error-message");
+                errorElement.textContent = errorMessage;
+                input.insertAdjacentElement("afterend", errorElement);
+                input.classList.add("error");
+            } else {
+                input.classList.remove("error");
             }
         });
 
         return isValid;
     };
 
-    // numero telefonico 
-    const isPhoneValid = (phone) => {
-        const phoneValue = phone.value.trim();
-        const phoneRegex = /^\d{9}$/;
-        if (!phoneRegex.test(phoneValue)) {
-            const errorMessage = document.createElement("p");
-            errorMessage.classList.add("error-message");
-            errorMessage.textContent = "Debes ingresar un número de teléfono válido.";
-            phone.insertAdjacentElement("afterend", errorMessage);
-            return false;
-            }
-            return true;
-            };
-    
-        
-        // dni 
-        const isDniValid = (dni) => {
-            const dniValue = dni.value.trim();
-            const dniRegex = /^\d{8}$/;
-            if (!dniRegex.test(dniValue)) {
-                const errorMessage = document.createElement("p");
-                errorMessage.classList.add("error-message");
-                errorMessage.textContent = "Debes ingresar un DNI válido.";
-                dni.insertAdjacentElement("afterend", errorMessage);
-                return false;
-            }
-            return true;
-            };
-        
-
-        
     // Eventos de navegación
     botonesSiguiente.forEach((boton) => {
         boton.addEventListener("click", () => {
@@ -193,8 +213,70 @@ const updateColors = (index) => {
         });
     });
 
+    // Evento de finalización del registro
+    document.querySelector(".finalizar").addEventListener("click", async (e) => {
+        e.preventDefault();
+        
+        const form = e.target.closest('form');
+        if (!isFormValid(form)) {
+            return;
+        }
 
-    
+        const datos = {
+            nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value.trim(),
+            correo: document.querySelector("[name='EMAIL']").value.trim(),
+            confirmar_correo: document.querySelector("[name='confirmar_email']").value.trim(),
+            estado_civil: document.querySelector("[name='estado_civil']").value,
+            fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
+            sexo: document.querySelector("[name='sexo']").value,
+            dni: document.querySelector("[name='dni']").value.trim(),
+            celular: document.querySelector("[name='celular']").value.trim(),
+            departamento: document.querySelector("[name='departamento']").value.trim(),
+            provincia: document.querySelector("[name='provincia']").value.trim(),
+            distrito: document.querySelector("[name='distrito']").value.trim(),
+            direccion: document.querySelector("[name='direccion']").value.trim(),
+            usuario: document.querySelector("[name='usuario']").value.trim(),
+            contrasena: document.querySelector("[name='contrasena']").value,
+            terminos_condiciones: document.querySelector("[name='terminos_condiciones']").checked,
+        };
+
+        try {
+            const response = await fetch("/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                await Swal.fire({
+                    title: "¡Registro exitoso!",
+                    text: "¡Bienvenido a REMAJUD!",
+                    icon: "success",
+                    confirmButtonText: "Iniciar sesión"
+                });
+                window.location.href = "/auth/login";
+            } else {
+                Swal.fire({
+                    title: "Error en el registro",
+                    text: result.message,
+                    icon: "error",
+                });
+            }
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+            Swal.fire({
+                title: "Error interno",
+                text: "Hubo un problema al procesar tu registro. Intenta nuevamente.",
+                icon: "error",
+            });
+        }
+    });
+
+    // Inicialización
     secciones[currentIndex].classList.add("active");
     updateColors(currentIndex);
     updateProgress(currentIndex);

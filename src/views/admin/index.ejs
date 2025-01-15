@@ -24,7 +24,6 @@
   <!-- script cronograma -->
   <script src="/js/scriptsadmin/modalcronograma.js"></script>
 
-
 </head>
 
 <body>
@@ -139,9 +138,9 @@
 
           <div class="properties-grid" id="rematesGrid">
             <% remates.forEach(function(remate) { %>
-              <div class="property-card" data-id="<%= remate.id %>">
+              <div class="property-card" data-id="">
                 <div class="auction-number-container">
-                  <span class="auction-number">Remate N° <%= remate.id %></span>
+                  <span class="auction-number">Remate N° </span>
                 </div>
 
                 <div class="property-image-container">
@@ -198,11 +197,11 @@
                     <%= remate.descripcion %>
                   </p>
                   <div class="property-actions">
-                    <button class="action-button" onclick="abrirModalEditar(<%= remate.id %>)">
+                    <button class="action-button" onclick="abrirModalEditar()">
                       <i class="bi bi-pencil"></i>
                       Editar
                     </button>
-                    <button class="action-button" onclick="eliminarRemate(<%= remate.id %>, '<%= remate.ubicacion %>')">
+                    <button class="action-button" onclick="eliminarRemate(, '<%= remate.ubicacion %>')">
                       <i class="bi bi-trash"></i>
                       Eliminar
                     </button>
@@ -211,8 +210,6 @@
               </div>
               <% }); %>
           </div>
-
-
 
         </div>
 
@@ -565,7 +562,6 @@
           <!-- </div> -->
         </div>
 
-
         <!-- Modal de edición -->
         <div id="editModal" class="modal">
           <div class="modal-header">
@@ -791,226 +787,283 @@
           </form>
         </div>
 
+
+
+
         <!-- Modal de Detalles -->
-        <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
-          <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
-          <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
-                  <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles"
-                    required>
+        <% remates.forEach(function(remate) { %>
+          <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
+            <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
+            <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
+
+              <!-- Expediente -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
+                    <input type="text" id="expediente" name="expediente"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- Distrito Judicial -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito
+                      Judicial</label>
+                    <input type="text" id="distrito_judicial" name="distrito_judicial"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito
-                    Judicial</label>
-                  <input type="text" id="distrito_judicial" name="distrito_judicial"
-                    class="entrada_texto_formulario_detalles" required>
+
+               <!-- Organo juridisccional -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano
+                      Jurisdiccional</label>
+                    <input type="text" id="organo_juridiccional" name="organo_juridiccional"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- instancia -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
+                    <input type="text" id="instancia" name="instancia"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano
-                    Jurisdiccional</label>
-                  <input type="text" id="organo_juridiccional" name="organo_juridiccional"
-                    class="entrada_texto_formulario_detalles" required>
+
+              <!-- juez -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
+                    <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles"
+                      required>
+                  </div>
+                </div>
+
+                <!-- especialista -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
+                    <input type="text" id="especialista" name="especialista"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
-                  <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
+
+              <!-- materia -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
+                    <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles"
+                      required>
+                  </div>
+                </div>
+                
+                <!-- resolucion -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
+                    <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles"
+                      required></textarea>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
-                  <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required>
+
+              <!-- fecha resolucion -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha
+                      Resolución</label>
+                    <input type="date" id="fecha_resolucion" name="fecha_resolucion"
+                      class="entrada_fecha_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- anexo -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
+                    <input type="file" id="archivo" name="archivo" accept="application/pdf"
+                      class="entrada_archivo_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
-                  <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles"
-                    required>
+
+              <!-- convocatoria -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
+                    <input type="text" id="nro_convocatoria" name="nro_convocatoria"
+                      class="entrada_texto_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- tipo cambio -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
+                    <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
-                  <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
+
+              <!-- tasacion -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
+                    <input type="number" id="tasacion" name="tasacion" step="0.01"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- precio base -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
+                    <input type="number" id="precio_base" name="precio_base" step="0.01"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
-                  <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles"
-                    required></textarea>
+
+              <!-- Incremento entre ofertas -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento
+                      entre ofertas</label>
+                    <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- Arancel -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
+                    <input type="number" id="arancel" name="arancel" step="0.01"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha Resolución</label>
-                  <input type="date" id="fecha_resolucion" name="fecha_resolucion"
-                    class="entrada_fecha_formulario_detalles" required>
+
+              <!-- Oblaje -->
+              <div class="fila_campos_formulario_detalles">
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
+                    <input type="number" id="oblaje" name="oblaje" step="0.01"
+                      class="entrada_numero_formulario_detalles" required>
+                  </div>
+                </div>
+
+                <!-- Descripcion -->
+                <div class="columna_campo_formulario_detalles">
+                  <div class="grupo_campo_formulario_detalles">
+                    <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles"
+                      required></textarea>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
-                  <input type="file" id="archivo" name="archivo" accept="application/pdf"
-                    class="entrada_archivo_formulario_detalles" required>
-                </div>
+              <div class="contenedor_botones_formulario_detalles">
+                <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles"
+                  onclick="cerrarModalDetalles()">Cancelar Registro</button>
+                <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
+                  Detalles</button>
               </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
-                  <input type="text" id="nro_convocatoria" name="nro_convocatoria"
-                    class="entrada_texto_formulario_detalles" required>
-                </div>
-              </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
-                  <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001"
-                    class="entrada_numero_formulario_detalles" required>
-                </div>
-              </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
-                  <input type="number" id="tasacion" name="tasacion" step="0.01"
-                    class="entrada_numero_formulario_detalles" required>
-                </div>
-              </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
-                  <input type="number" id="precio_base" name="precio_base" step="0.01"
-                    class="entrada_numero_formulario_detalles" required>
-                </div>
-              </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento entre
-                    ofertas</label>
-                  <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01"
-                    class="entrada_numero_formulario_detalles" required>
-                </div>
-              </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
-                  <input type="number" id="arancel" name="arancel" step="0.01"
-                    class="entrada_numero_formulario_detalles" required>
-                </div>
-              </div>
-            </div>
-            <div class="fila_campos_formulario_detalles">
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
-                  <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles"
-                    required>
-                </div>
-              </div>
-              <div class="columna_campo_formulario_detalles">
-                <div class="grupo_campo_formulario_detalles">
-                  <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
-                  <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles"
-                    required></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="contenedor_botones_formulario_detalles">
-              <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles">Cancelar
-                Registro</button>
-              <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
-                Detalles</button>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+          <% }); %>
+
+
+          
 
         <!-- Modal de Inmuebles -->
-        <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none; position: absolute;">
-          <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
-          <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
-            <div class="fila_campos_formulario_inmuebles">
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida
-                    Registral</label>
-                  <input type="text" id="partida_registral" name="partida_registral"
-                    class="entrada_texto_formulario_inmuebles" required>
+        <% remates.forEach(function(remate) { %>
+          <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles"
+            style="display: none; position: absolute;">
+            <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
+            <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
+
+              <!-- Partida Registral -->
+              <div class="fila_campos_formulario_inmuebles">
+                <div class="columna_campo_formulario_inmuebles">
+                  <div class="grupo_campo_formulario_inmuebles">
+                    <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida
+                      Registral</label>
+                    <input type="text" id="partida_registral" name="partida_registral"
+                      class="entrada_texto_formulario_inmuebles" required>
+                  </div>
+                </div>
+
+                <!-- Tipo Inmueble -->
+                <div class="columna_campo_formulario_inmuebles">
+                  <div class="grupo_campo_formulario_inmuebles">
+                    <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo
+                      Inmueble</label>
+                    <input type="text" id="tipo_inmueble" name="tipo_inmueble"
+                      class="entrada_texto_formulario_inmuebles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo Inmueble</label>
-                  <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles"
-                    required>
+
+              <!-- Direccion -->
+              <div class="fila_campos_formulario_inmuebles">
+                <div class="columna_campo_formulario_inmuebles">
+                  <div class="grupo_campo_formulario_inmuebles">
+                    <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
+                    <input type="text" id="direccion" name="direccion"
+                      class="entrada_texto_formulario_inmuebles" required>
+                  </div>
+                </div>
+
+                <!-- Carfa y/o gravamen -->
+                <div class="columna_campo_formulario_inmuebles">
+                  <div class="grupo_campo_formulario_inmuebles">
+                    <label for="carga_ogravamen " class="etiqueta_campo_formulario_inmuebles">Carga Y/O
+                      gravamen</label>
+                    <input type="text" id="carga_ogravamen" name="carga_ogravamen"
+                      class="entrada_texto_formulario_inmuebles" required>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="fila_campos_formulario_inmuebles">
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
-                  <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles"
-                    required>
+
+              <!-- Porcentaje a rematar -->
+              <div class="fila_campos_formulario_inmuebles">
+                <div class="columna_campo_formulario_inmuebles">
+                  <div class="grupo_campo_formulario_inmuebles">
+                    <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje
+                      a Rematar</label>
+                    <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01"
+                      class="entrada_numero_formulario_inmuebles" required>
+                  </div>
                 </div>
               </div>
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="carga_ogravamen" class="etiqueta_campo_formulario_inmuebles">Carga Y/O
-                    gravamen</label>
-                  <input type="text" id="carga_ogravamen" name="carga_ogravamen"
-                    class="entrada_texto_formulario_inmuebles" required>
-                </div>
+
+              <!-- botones -->
+              <div class="contenedor_botones_formulario_inmuebles">
+                <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles"
+                  onclick="cerrarModalInmuebles()">Cancelar Registro</button>
+                <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar
+                  Inmuebles</button>
               </div>
-            </div>
-            <div class="fila_campos_formulario_inmuebles">
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje a
-                    Rematar</label>
-                  <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01"
-                    class="entrada_numero_formulario_inmuebles" required>
-                </div>
-              </div>
-              <div class="columna_campo_formulario_inmuebles">
-                <div class="grupo_campo_formulario_inmuebles">
-                  <label for="imagenes" class="etiqueta_campo_formulario_inmuebles">Imagen</label>
-                  <input type="file" id="imagenes" name="imagenes" accept="image/*"
-                    class="entrada_archivo_formulario_inmuebles" required>
-                </div>
-              </div>
-            </div>
-            <div class="contenedor_botones_formulario_inmuebles">
-              <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles">Cancelar
-                Registro</button>
-              <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar
-                Inmuebles</button>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+          <% }); %>
 
         <!-- MODAL CRONOGRAMA -->
         <% remates.forEach(function(remate) { %>
@@ -1152,7 +1205,6 @@
                 // Reactivar el scroll del cuerpo
                 document.body.classList.remove('body-no-scroll');
               }
-
 
               // Gestión de edición de remate no funciona cerra fuera modal
               function abrirModalEditar(id) {
@@ -1402,10 +1454,9 @@
                 });
               });
 
-
               // Funcionalidad para el modal de Detalles
               function abrirModalDetalles(remateId) {
-                const modal = document.getElementById('tarjetaDetalles');
+                const modal = document.getElementById(`tarjetaDetalles${remateId}`);
                 if (!modal) return;
 
                 // Centrar el modal
@@ -1424,30 +1475,30 @@
                     .then(response => response.json())
                     .then(data => {
                       // Llenar los campos del formulario con los datos
-                      document.getElementById('expediente').value = data.expediente || '';
-                      document.getElementById('distrito_judicial').value = data.distrito_judicial || '';
-                      document.getElementById('organo_juridiccional').value = data.organo_juridiccional || '';
-                      document.getElementById('instancia').value = data.instancia || '';
-                      document.getElementById('juez').value = data.juez || '';
-                      document.getElementById('especialista').value = data.especialista || '';
-                      document.getElementById('materia').value = data.materia || '';
-                      document.getElementById('resolucion').value = data.resolucion || '';
-                      document.getElementById('fecha_resolucion').value = data.fecha_resolucion || '';
-                      document.getElementById('nro_convocatoria').value = data.nro_convocatoria || '';
-                      document.getElementById('tipo_cambio').value = data.tipo_cambio || '';
-                      document.getElementById('tasacion').value = data.tasacion || '';
-                      document.getElementById('precio_base').value = data.precio_base || '';
-                      document.getElementById('incremento_ofertas').value = data.incremento_ofertas || '';
-                      document.getElementById('arancel').value = data.arancel || '';
-                      document.getElementById('oblaje').value = data.oblaje || '';
-                      document.getElementById('descripcion').value = data.descripcion || '';
+                      document.getElementById(`expediente${remateId}`).value = data.expediente || '';
+                      document.getElementById(`distrito_judicial${remateId}`).value = data.distrito_judicial || '';
+                      document.getElementById(`organo_juridiccional${remateId}`).value = data.organo_juridiccional || '';
+                      document.getElementById(`instancia${remateId}`).value = data.instancia || '';
+                      document.getElementById(`juez${remateId}`).value = data.juez || '';
+                      document.getElementById(`especialista${remateId}`).value = data.especialista || '';
+                      document.getElementById(`materia${remateId}`).value = data.materia || '';
+                      document.getElementById(`resolucion${remateId}`).value = data.resolucion || '';
+                      document.getElementById(`fecha_resolucion${remateId}`).value = data.fecha_resolucion || '';
+                      document.getElementById(`nro_convocatoria${remateId}`).value = data.nro_convocatoria || '';
+                      document.getElementById(`tipo_cambio${remateId}`).value = data.tipo_cambio || '';
+                      document.getElementById(`tasacion${remateId}`).value = data.tasacion || '';
+                      document.getElementById(`precio_base${remateId}`).value = data.precio_base || '';
+                      document.getElementById(`incremento_ofertas${remateId}`).value = data.incremento_ofertas || '';
+                      document.getElementById(`arancel${remateId}`).value = data.arancel || '';
+                      document.getElementById(`oblaje${remateId}`).value = data.oblaje || '';
+                      document.getElementById(`descripcion${remateId}`).value = data.descripcion || '';
                     })
                     .catch(error => console.error('Error:', error));
                 }
               }
 
               function cerrarModalDetalles() {
-                const modal = document.getElementById('tarjetaDetalles');
+                const modal = document.getElementById(`tarjetaDetalles${remateId}`);
                 if (modal) {
                   modal.style.display = 'none';
                 }
@@ -1457,7 +1508,7 @@
               }
 
               function cerrarModalDetallesAlHacerClickFuera(event) {
-                const modal = document.getElementById('tarjetaDetalles');
+                const modal = document.getElementById(`tarjetaDetalles${remateId}`);
                 if (!modal) return;
 
                 // Verificar si el clic ocurrió fuera del contenido del modal
@@ -1475,14 +1526,14 @@
 
                 // Cerrar al hacer click fuera del modal
                 window.addEventListener('click', (e) => {
-                  const modal = document.getElementById('tarjetaDetalles');
+                  const modal = document.getElementById(`tarjetaDetalles${remateId}`);
                   if (e.target === modal) {
                     cerrarModalDetalles();
                   }
                 });
 
                 // Manejar el envío del formulario
-                const form = document.getElementById('formulario_detalles');
+                const form = document.getElementById(`formulario_detalles${remateId}`);
                 if (form) {
                   form.addEventListener('submit', async (e) => {
                     e.preventDefault();
@@ -1511,7 +1562,7 @@
 
               // Funcionalidad para el modal de Inmuebles
               function abrirModalInmuebles(remateId) {
-                const modal = document.getElementById('tarjetaInmuebles');
+                const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
                 if (!modal) return;
 
                 // Centrar el modal
@@ -1530,18 +1581,18 @@
                     .then(response => response.json())
                     .then(data => {
                       // Llenar los campos del formulario con los datos
-                      document.getElementById('partida_registral').value = data.partida_registral || '';
-                      document.getElementById('tipo_inmueble').value = data.tipo_inmueble || '';
-                      document.getElementById('direccion').value = data.direccion || '';
-                      document.getElementById('carga_ogravamen').value = data.carga_ogravamen || '';
-                      document.getElementById('porcentaje_rematar').value = data.porcentaje_rematar || '';
+                      document.getElementById(`partida_registral${remateId}`).value = data.partida_registral || '';
+                      document.getElementById(`tipo_inmueble${remateId}`).value = data.tipo_inmueble || '';
+                      document.getElementById(`direccion${remateId}`).value = data.direccion || '';
+                      document.getElementById(`carga_ogravamen${remateId}`).value = data.carga_ogravamen || '';
+                      document.getElementById(`porcentaje_rematar${remateId}`).value = data.porcentaje_rematar || '';
                     })
                     .catch(error => console.error('Error:', error));
                 }
               }
 
               function cerrarModalInmuebles() {
-                const modal = document.getElementById('tarjetaInmuebles');
+                const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
                 if (modal) {
                   modal.style.display = 'none';
                 }
@@ -1551,7 +1602,7 @@
               }
 
               function cerrarModalInmueblesAlHacerClickFuera(event) {
-                const modal = document.getElementById('tarjetaInmuebles');
+                const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
                 if (!modal) return;
 
                 // Verificar si el clic ocurrió fuera del contenido del modal
@@ -1569,14 +1620,14 @@
 
                 // Cerrar al hacer click fuera del modal
                 window.addEventListener('click', (e) => {
-                  const modal = document.getElementById('tarjetaInmuebles');
+                  const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
                   if (e.target === modal) {
                     cerrarModalInmuebles();
                   }
                 });
 
                 // Manejar el envío del formulario
-                const form = document.getElementById('formulario_inmuebles');
+                const form = document.getElementById(`formulario_inmuebles${remateId}`);
                 if (form) {
                   form.addEventListener('submit', async (e) => {
                     e.preventDefault();
@@ -1605,6 +1656,7 @@
             </script>
 
             <!-- sweat alert cronograma  -->
+
             <script>
               document.addEventListener('DOMContentLoaded', function () {
                 const form = document.getElementById('formularioCronograma');

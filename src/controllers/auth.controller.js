@@ -31,9 +31,9 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "El nombre de usuario ya está en uso." });
     }
 
+    
     const userId = await User.create(req.body);
 
-    // No guardamos el usuario en la sesión aquí
     res.status(201).json({ message: "Registro exitoso" });
   } catch (error) {
     console.error("Error en el registro:", error);

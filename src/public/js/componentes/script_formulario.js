@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Elementos comunes
+
     const secciones = document.querySelectorAll(".seccion");
     const botonesSiguiente = document.querySelectorAll(".siguiente");
     const botonesAnterior = document.querySelectorAll(".anterior");
     const steps = document.querySelectorAll(".step");
     const progressLine = document.querySelector(".progress-line");
     let currentIndex = 0;
+
+   
 
     // Actualizar progreso visual
     const updateProgress = (index) => {
@@ -152,6 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
+
     // Evento de finalización del registro
     document.querySelector(".finalizar").addEventListener("click", async (e) => {
         e.preventDefault();
@@ -214,6 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+
+    //
 
     // Inicialización
     secciones[currentIndex].classList.add("active");

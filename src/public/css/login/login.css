@@ -28,7 +28,7 @@
 
 .imagen-contenedor {
   height: 100%;
-  width: 45%; /* Ajustado para que tome más espacio */
+  width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,12 +41,12 @@
 }
 
 .fondo {
-  width: 55%; /* Ajustado para complementar el lado izquierdo */
+  width: 55%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FFF3E0;
+  background-color: white;
 }
 
 .contenedor_form {
@@ -117,7 +117,6 @@
   text-decoration: underline;
 }
 
-/* Estilos mejorados para botones */
 .contenedor_form form button,
 .contenedor_form form .registrar,
 .botonSoporte {

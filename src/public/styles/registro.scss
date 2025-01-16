@@ -368,7 +368,37 @@
 }
 
 
+/* alias  */
 
+.input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  /* Alias Container Estilizado */
+  #alias-container {
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+  }
+  
+  #alias-creado {
+    font-size: 1.2rem;
+  }
+  
+  #copiar-alias i {
+    font-size: 1.2rem;
+    color: #007bff;
+  }
+  
+  #copiar-alias:hover i {
+    color: #0056b3;
+  }
+  
 
 /* Responsive */
 @media (max-width: 992px) {

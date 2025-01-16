@@ -1,130 +1,168 @@
-<!-- Títulos principales fijos -->
-<div class="fixed-titles">
-  <h1>BIENVENIDO</h1>
-  <h1>REMAJUD</h1>
-</div>
-<div class="progress-indicator">
-  <div class="progress-active-line"></div>
-  <div class="progress-active-dot"></div>
-  <div class="progress-dots">
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-    <div class="progress-dot"></div>
-  </div>
-</div>
-<div class="container_formulario">
-  <div class="seccion seccion1 active">
-    <div class="texto_grande">
-      <h2 class="subtitle">REGISTRO</h2>
+<div class="contenedor-general">
+  <div class="form-wrapper">
+    <!-- Lado izquierdo - Imagen -->
+    <div class="left-side">
+        <div class="overlay"></div>
+        <img src="/img/administracion.png" alt="Fondo Legal">
     </div>
-    <div class="form-section1">
-      <div class="form-header">
-        <h3>Registro de Usuario</h3>
-        <p>Por favor, ingrese sus datos.</p>
+
+    <!-- Lado derecho - Formulario -->
+    <div class="right-side">
+      <!-- Progress Dots - Moved back inside but with better spacing -->
+      <div class="contenedor-progreso">
+          <div class="progress-bar">
+              <div class="progress-line"></div>
+              <div class="progress-steps">
+                  <div class="step active" data-step="1">
+                      <div class="step-circle">1</div>
+                      <div class="step-label">Registro</div>
+                  </div>
+                  <div class="step" data-step="2">
+                      <div class="step-circle">2</div>
+                      <div class="step-label">Ubicación</div>
+                  </div>
+                  <div class="step" data-step="3">
+                      <div class="step-circle">3</div>
+                      <div class="step-label">Usuario</div>
+                  </div>
+              </div>
+          </div>
       </div>
-      <form>
-        <!-- Fila de Nombres y Apellidos -->
-        <div class="row">
-          <input type="text" class="form-input" placeholder="NOMBRES Y APELLIDOS" name="nombre_apellidos" required>
-        </div>
 
-        <!-- Fila de Email -->
-        <div class="row">
-          <input type="email" class="form-input" placeholder="EMAIL" name="EMAIL" required>
-        </div>
+      <!-- Formularios -->
+      <div class="form-container">
+          <!-- Sección 1: Registro -->
+          <div class="seccion seccion1 active">
+              <h2 class="form-title">Registro Personal</h2>
+              <form class="registration-form">
+                  <div class="form-row two-columns">
+                      <div class="form-group">
+                          <input type="text" name="nombre_apellidos" required>
+                          <label>Nombres y Apellidos</label>
+                      </div>
 
-        <!-- Fila de Confirmar Email -->
-        <div class="row">
-          <input type="text" class="form-input" placeholder="CONFIRMAR EMAIL" name="confirmar_email" required>
-        </div>
+                      <div class="form-group">
+                          <input type="number" name="dni" required>
+                          <label>DNI</label>
+                      </div>
+                  </div>
 
-        <!-- Fila de Estado Civil, Fecha de Nacimiento y Sexo -->
-        <div class="row">
-          <div class="col">
-            <select class="form-input" name="estado_civil" required>
-              <option value="" disabled selected>ESTADO CIVIL</option>
-              <option value="soltero">Soltero(a)</option>
-              <option value="casado">Casado(a)</option>
-              <option value="divorciado">Divorciado(a)</option>
-              <option value="viudo">Viudo(a)</option>
-            </select>
+                  <div class="form-row two-columns">
+                      <div class="form-group">
+                          <input type="email" name="EMAIL" required>
+                          <label>Email</label>
+                      </div>
+
+                      <div class="form-group">
+                          <input type="email" name="confirmar_email" required>
+                          <label>Confirmar Email</label>
+                      </div>
+                  </div>
+
+                  <div class="form-row three-columns">
+                      <div class="form-group">
+                          <input type="date" name="fecha_nacimiento" required>
+                          <label>Fecha de Nacimiento</label>
+                      </div>
+
+                      <div class="form-group">
+                          <select name="sexo" required>
+                              <option value="" disabled selected></option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Femenino">Femenino</option>
+                          </select>
+                          <label>Sexo</label>
+                      </div>
+
+                      <div class="form-group">
+                          <select name="estado_civil" required>
+                              <option value="" disabled selected></option>
+                              <option value="soltero">Soltero(a)</option>
+                              <option value="casado">Casado(a)</option>
+                              <option value="divorciado">Divorciado(a)</option>
+                              <option value="viudo">Viudo(a)</option>
+                          </select>
+                          <label>Estado Civil</label>
+                      </div>
+                  </div>
+
+                  <div class="form-row">
+                      <div class="form-group">
+                          <input type="number" name="celular" required>
+                          <label>Celular</label>
+                      </div>
+                  </div>
+
+                  <button type="button" class="btn siguiente">Siguiente</button>
+              </form>
           </div>
-          <div class="col">
-            <input type="date" class="form-input" placeholder="FECHA NACIMIENTO" name="fecha_nacimiento" required>
+
+          <!-- Sección 2: Ubicación -->
+          <div class="seccion seccion2">
+              <h2 class="form-title">Ubicación</h2>
+              <form class="registration-form">
+                  <div class="form-row two-columns">
+                      <div class="form-group">
+                          <input type="text" name="departamento" required>
+                          <label>Departamento</label>
+                      </div>
+
+                      <div class="form-group">
+                          <input type="text" name="provincia" required>
+                          <label>Provincia</label>
+                      </div>
+                  </div>
+
+                  <div class="form-row two-columns">
+                      <div class="form-group">
+                          <input type="text" name="distrito" required>
+                          <label>Distrito</label>
+                      </div>
+
+                      <div class="form-group">
+                          <input type="text" name="direccion" required>
+                          <label>Dirección</label>
+                      </div>
+                  </div>
+
+                  <div class="button-group">
+                      <button type="button" class="btn anterior">Anterior</button>
+                      <button type="button" class="btn siguiente">Siguiente</button>
+                  </div>
+              </form>
           </div>
-          <div class="col">
-            <select class="form-input" name="sexo" required>
-              <option value="" disabled selected>SEXO</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-            </select>
+
+          <!-- Sección 3: Usuario -->
+          <div class="seccion seccion3">
+              <h2 class="form-title">Crear Usuario</h2>
+              <form class="registration-form">
+                  <div class="form-group single-column">
+                      <input type="text" name="usuario" required>
+                      <label>Usuario</label>
+                  </div>
+
+                  <div class="form-group single-column">
+                      <input type="password" name="contrasena" required>
+                      <label>Contraseña</label>
+                  </div>
+
+                  <div class="form-group checkbox-group">
+                      <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones">
+                      <label for="terminos_condiciones">
+                          Acepto los <a href="/terminos/terminos-condiciones">términos y condiciones</a>
+                      </label>
+                  </div>
+
+                  <div class="button-group">
+                      <button type="button" class="btn anterior">Anterior</button>
+                      <button type="submit" class="btn finalizar">Finalizar</button>
+                  </div>
+              </form>
           </div>
-        </div>
-
-        <!-- Fila de DNI y Celular -->
-        <div class="row">
-          <div class="col">
-            <input type="number" class="form-input" placeholder="DNI" name="dni" required>
-          </div>
-          <div class="col">
-            <input type="number" class="form-input" placeholder="CELULAR" name="celular" required>
-          </div>
-        </div>
-
-        <button type="button" class="submit-btn siguiente">SIGUIENTE</button>
-      </form>
-    </div>
-  </div>
-
-
-
-  <canvas id="particleCanvas"></canvas>
-  <div class="seccion seccion2">
-    <div class="texto_grande">
-      <h2 class="subtitle">UBICACIÓN</h2>
-    </div>
-    <div class="form-section">
-      <div class="form-header">
-        <h3>Detalles de Ubicación</h3>
-        <p>Ingrese su dirección.</p>
       </div>
-      <form class="row3">
-        <div class="col3">
-          <input type="text" class="form-input" placeholder="DEPARTAMENTO" name="departamento" required>
-          <input type="text" class="form-input" placeholder="PROVINCIA" name="provincia" required>
-          <input type="text" class="form-input" placeholder="DISTRITO" name="distrito" required>
-          <input type="text" class="form-input" placeholder="Dirección(AV, BRU, LTE, MZ, ETC)" name="direccion" required>
-        </div>
-        <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-        <button type="button" class="submit-btn siguiente">SIGUIENTE →</button>
-      </form>
-    </div>
-  </div>
-  <div class="seccion seccion3">
-    <div class="texto_grande">
-      <h2 class="subtitle">USUARIO</h2>
-    </div>
-    <div class="form-section">
-      <div class="form-header">
-        <h3>Información de Usuario</h3>
-        <p>Últimos detalles de su cuenta.</p>
-      </div>
-      <form>
-        <input type="text" class="form-input" placeholder="USUARIO" name="usuario" required>
-        <input type="password" class="form-input" placeholder="CONTRASEÑA" name="contrasena" required>
-        <div class="checkbox-wrapper">
-          <input type="checkbox" name="terminos_condiciones" id="terminos_condiciones" class="custom-checkbox">
-          <label for="terminos_condiciones" class="checkbox-label">
-            Acepto los <a href="/terminos/terminos-condiciones" class="terms-link">términos y condiciones</a>
-          </label>
-        </div>
-        <button type="button" class="submit-btn anterior"> ANTERIOR</button>
-        <button type="submit" class="submit-btn finalizar">FINALIZAR</button>
-      </form>
     </div>
   </div>
 </div>
-
 
 <!-- DISEÑO REGISTRO -->
 <link rel="stylesheet" href="/css/registro/registro.css">
@@ -133,50 +171,6 @@
 
 <!-- SCRIPT REGISTRO -->
 <script type="module" src="/js/componentes/script_formulario.js"></script>
-
-<!-- PARTICULAS -->
-<script type="module" src="/js/componentes/network.js"></script>
-
-<!-- SCROLL HEADER -->
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.getElementById('header');
-    const sections = document.querySelectorAll('.seccion');
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5, // Cambiar cuando el 50% de la sección sea visible
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-
-          // Cambiar el color del header basado en la sección visible
-          switch (sectionId) {
-            case 'seccion1':
-              header.style.color = '#ffffff'; // Blanco
-              break;
-            case 'seccion2':
-              header.style.color = '#000000'; // Negro
-              break;
-            case 'seccion3':
-              header.style.color = '#ffffff'; // Blanco
-              break;
-            default:
-              header.style.color = 'black';
-          }
-        }
-      });
-    }, options);
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-  });
-</script> -->
-
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

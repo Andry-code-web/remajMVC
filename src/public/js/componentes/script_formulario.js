@@ -1,103 +1,45 @@
-import NetworkAnimation from "./network.js";
-
 document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("particleCanvas");
-    const networkAnimation = new NetworkAnimation(canvas);
-
     // Elementos comunes
     const secciones = document.querySelectorAll(".seccion");
     const botonesSiguiente = document.querySelectorAll(".siguiente");
     const botonesAnterior = document.querySelectorAll(".anterior");
-    const body = document.body;
-    const fixedTitles = document.querySelector(".fixed-titles");
-    const progressIndicator = document.querySelector(".progress-indicator");
-    const progressLine = document.querySelector(".progress-active-line");
-    const progressDot = document.querySelector(".progress-active-dot");
-    const progressDots = document.querySelectorAll(".progress-dot");
-    
+    const steps = document.querySelectorAll(".step");
+    const progressLine = document.querySelector(".progress-line");
     let currentIndex = 0;
-
-    // Colores definidos
-    const colors = {
-        white: '#ffffff',
-        black: '#000000',
-        gray: '#888888'
-    };
 
     // Actualizar progreso visual
     const updateProgress = (index) => {
-        const totalSections = secciones.length;
-        const progress = (index / (totalSections - 1)) * 100;
+        const progress = (index / (secciones.length - 1)) * 100;
+        progressLine.style.width = `${progress}%`;
 
-        progressLine.style.height = `${progress}%`;
-        progressDot.style.top = `${progress}%`;
-
-        progressDots.forEach((dot, i) => {
-            const dotProgress = (i / (totalSections - 1)) * 100;
-            dot.classList.toggle("active", dotProgress <= progress);
+        steps.forEach((step, i) => {
+            if (i <= index) {
+                step.classList.add("active");
+            } else {
+                step.classList.remove("active");
+            }
         });
     };
 
-    // Actualizar colores según la sección
-    const updateColors = (index) => {
-        const progressElements = [progressIndicator, progressLine, progressDot, ...progressDots];
+    // Función para manejar la transición entre secciones
+    const animateTransition = async (newIndex) => {
+        // Añadir animación de desintegración
+        secciones[currentIndex].classList.add("dissolve");
         
-        if (index === 1) {
-            progressElements.forEach(element => {
-                element.style.backgroundColor = colors.black;
-                element.style.boxShadow = 'none';
-            });
-            fixedTitles.style.color = colors.black;
-            fixedTitles.style.textShadow = 'none';
-            
-            const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
-            if (subtitleUbicacion) {
-                subtitleUbicacion.style.color = colors.black;
-            }
-        } else {
-            progressElements.forEach(element => {
-                element.style.backgroundColor = colors.white;
-                element.style.boxShadow = 'none';
-            });
-            fixedTitles.style.color = colors.white;
-            fixedTitles.style.textShadow = 'none';
-            
-            const subtitleUbicacion = document.querySelector('.seccion2 .subtitle');
-            if (subtitleUbicacion) {
-                subtitleUbicacion.style.color = colors.white;
-            }
-        }
-    };
-
-    // Cambiar fondo según la sección activa
-    const changeBackgroundColor = (index) => {
-        secciones.forEach((seccion, i) => {
-            if (i === index) {
-                seccion.style.backgroundColor = ""; 
-            }
-        });
-    };
-
-    // Transiciones entre secciones
-    const animateTransition = (index) => {
-        secciones[currentIndex].classList.remove("active");
-        currentIndex = index;
-
-        if (currentIndex < secciones.length) {
-            const nextSection = secciones[currentIndex];
-            nextSection.classList.add("active");
-
-            updateColors(currentIndex);
-            updateProgress(currentIndex);
-            changeBackgroundColor(currentIndex);
-
-            const subtitle = nextSection.querySelector(".subtitle");
-            if (subtitle) {
-                subtitle.style.animation = "none";
-                subtitle.offsetHeight;
-                subtitle.style.animation = "glitchAnimation 0.5s ease-out forwards";
-            }
-        }
+        // Esperar a que termine la animación de desintegración
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Ocultar sección actual
+        secciones[currentIndex].classList.remove("active", "dissolve");
+        
+        // Actualizar índice
+        currentIndex = newIndex;
+        
+        // Mostrar nueva sección con animación de integración
+        secciones[currentIndex].classList.add("active");
+        
+        // Actualizar progreso
+        updateProgress(currentIndex);
     };
 
     // Validaciones de formulario
@@ -125,17 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Agregar validación en tiempo real para la contraseña
+    // Validación en tiempo real para la contraseña
     const passwordInput = document.querySelector('input[name="contrasena"]');
     if (passwordInput) {
         passwordInput.addEventListener('input', function() {
-            // Remover mensajes de error anteriores
             const prevError = this.nextElementSibling;
             if (prevError && prevError.classList.contains('error-message')) {
                 prevError.remove();
             }
 
-            // Validar la contraseña
             const errorMessage = validaciones.contrasena(this.value);
             if (errorMessage) {
                 const errorElement = document.createElement("p");
@@ -154,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const inputs = form.querySelectorAll("input[required], select[required]");
         let isValid = true;
 
-        // Limpiar mensajes de error anteriores
         form.querySelectorAll(".error-message").forEach((msg) => msg.remove());
 
         inputs.forEach((input) => {
@@ -278,7 +217,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Inicialización
     secciones[currentIndex].classList.add("active");
-    updateColors(currentIndex);
     updateProgress(currentIndex);
-    changeBackgroundColor(currentIndex);
 });

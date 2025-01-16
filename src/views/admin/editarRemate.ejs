@@ -1,0 +1,223 @@
+<div id="editModal" class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <i class="bi bi-house-gear"></i>
+        Editar Remate
+      </h2>
+      <button class="close-button" onclick="cerrarModalEditar()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <form id="editForm" onsubmit="guardarCambios(event)">
+      <input type="hidden" id="editId" name="id">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="editUbicacion">
+            <i class="bi bi-geo-alt"></i>
+            Ubicación
+          </label>
+          <input type="text" id="editUbicacion" name="ubicacion" required>
+        </div>
+        <div class="form-group">
+          <label for="editPrecio">
+            <i class="bi bi-currency-dollar"></i>
+            Precio Base
+          </label>
+          <input type="number" id="editPrecio" name="precios" required>
+        </div>
+        <div class="form-group">
+          <label for="editCategoria">
+            <i class="bi bi-building"></i>
+            Categoría
+          </label>
+          <select id="editCategoria" name="categoria" required>
+            <option value="departamento">Departamento</option>
+            <option value="cochera">Cochera</option>
+            <option value="terreno">Terreno</option>
+            <option value="residencial">Residencial</option>
+            <option value="casa">Casa</option>
+            <option value="local">Local</option>
+            <option value="casa_playa">Casa de Playa</option>
+            <option value="terreno_urbano">Terreno Urbano</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editHabitaciones">
+            <i class="bi bi-door-closed"></i>
+            Habitaciones
+          </label>
+          <input type="number" id="editHabitaciones" name="N_habitacion" min="0">
+        </div>
+        <div class="form-group">
+          <label for="editBanos">
+            <i class="bi bi-droplet"></i>
+            Baños
+          </label>
+          <input type="number" id="editBanos" name="N_banos" min="0">
+        </div>
+        <div class="form-group">
+          <label for="editFechaRemate">
+            <i class="bi bi-calendar"></i>
+            Fecha de Remate
+          </label>
+          <input type="date" id="editFechaRemate" name="fecha_remate" required>
+        </div>
+        <div class="form-group">
+          <label for="editHoraRemate">
+            <i class="bi bi-clock"></i>
+            Hora de Remate
+          </label>
+          <input type="time" id="editHoraRemate" name="hora_remate" required>
+        </div>
+        <div class="form-group">
+          <label for="editEstado">
+            <i class="bi bi-toggle-on"></i>
+            Estado
+          </label>
+          <select id="editEstado" name="estado" required>
+            <!--      <option value="activo">Activo</option> -->
+            <option value="en_curso">En Curso</option>
+            <option value="finalizado">Finalizado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editTamañoPropiedad">
+            <i class="bi bi-bounding-box"></i>
+            Tamaño de la propiedad
+          </label>
+          <input type="number" id="editTamañoPropiedad" name="tamano_propiedad" required>
+        </div>
+      </div>
+  
+      <div class="amenities-grid">
+        <div class="form-group">
+          <label for="editPisina">
+            <i class="bi bi-water"></i>
+            Piscina
+          </label>
+          <select id="editPisina" name="pisina">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editPatio">
+            <i class="bi bi-tree"></i>
+            Patio
+          </label>
+          <select id="editPatio" name="patio">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editCocina">
+            <i class="bi bi-cup-hot"></i>
+            Cocina
+          </label>
+          <select id="editCocina" name="cocina">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editCochera">
+            <i class="bi bi-car-front"></i>
+            Cochera
+          </label>
+          <select id="editCochera" name="cochera">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editBalcon">
+            <i class="bi bi-door-open"></i>
+            Balcón
+          </label>
+          <select id="editBalcon" name="balcon">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editJardin">
+            <i class="bi bi-flower1"></i>
+            Jardín
+          </label>
+          <select id="editJardin" name="jardin">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editComedor">
+            <i class="bi bi-cup-straw"></i>
+            Comedor
+          </label>
+          <select id="editComedor" name="comedor">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editSalaStart">
+            <i class="bi bi-house-heart"></i>
+            Sala Star
+          </label>
+          <select id="editSalaStart" name="sala_start">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editStudio">
+            <i class="bi bi-book"></i>
+            Estudio
+          </label>
+          <select id="editStudio" name="studio">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editLavanderia">
+            <i class="bi bi-water"></i>
+            Lavandería
+          </label>
+          <select id="editLavanderia" name="lavanderia">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="editPisos">
+          <i class="bi bi-layers"></i>
+          Número de Pisos
+        </label>
+        <input type="number" id="editPisos" name="pisos" min="1">
+      </div>
+  
+      <div class="form-group full-width">
+        <label for="editDescripcion">
+          <i class="bi bi-text-paragraph"></i>
+          Descripción
+        </label>
+        <textarea id="editDescripcion" name="descripcion" required></textarea>
+      </div>
+  
+      <!-- Area botones -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">
+          <i class="bi bi-x-circle"></i>
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-circle"></i>
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>

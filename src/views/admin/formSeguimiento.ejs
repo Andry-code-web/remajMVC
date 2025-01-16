@@ -1,0 +1,87 @@
+<div id="seguimientoModal" class="modal seguimiento-modal">
+    <!--   <div class="modal-content seguimiento-modal-content"> -->
+    <div class="modal-header seguimiento-modal-header">
+      <h2 class="modal-title seguimiento-modal-title">
+        <i class="bi bi-house-gear"></i> Seguimiento
+      </h2>
+      <button class="close-button seguimiento-close-button" onclick="cerrarModal()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <form id="seguimientoForm" class="seguimiento-form" onsubmit="guardarCambios(event)">
+      <input type="hidden" id="seguimientoId" name="id">
+
+      <!-- Expediente -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editExpediente" class="seguimiento-label"> Expediente
+        </label>
+        <input type="text" id="editExpediente" name="expediente" class="seguimiento-input" required>
+      </div>
+
+      <!-- Distrito Judicial -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editDistritoJudicial" class="seguimiento-label">Distrito Judicial</label>
+        <input type="text" id="editDistritoJudicial" name="distrito_judicial" class="seguimiento-input" required>
+      </div>
+
+      <!-- Instancia -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editInstancia" class="seguimiento-label">Instancia</label>
+        <input type="text" id="editInstancia" name="instancia" class="seguimiento-input" required>
+      </div>
+
+      <!-- Órgano Jurídico -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editOrganoJuridico" class="seguimiento-label">Órgano Jurídico</label>
+        <input type="text" id="editOrganoJuridico" name="organo_juridico" class="seguimiento-input" required>
+      </div>
+
+      <!-- Especialidad -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editEspecialidad" class="seguimiento-label">Especialidad</label>
+        <input type="text" id="editEspecialidad" name="especialidad" class="seguimiento-input" required>
+      </div>
+
+      <!-- Nro Convocatoria -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editNroConvocatoria" class="seguimiento-label">Nro Convocatoria</label>
+        <input type="number" id="editNroConvocatoria" name="nro_convocatoria" class="seguimiento-input" required>
+      </div>
+
+      <!-- Fecha Registro -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editFechaRegistro" class="seguimiento-label">Fecha Registro</label>
+        <input type="date" id="editFechaRegistro" name="fecha_registro" class="seguimiento-input" required>
+      </div>
+
+      <!-- Procesado Por -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editProcesadoPor" class="seguimiento-label">Procesado Por</label>
+        <input type="text" id="editProcesadoPor" name="procesado_por" class="seguimiento-input" required>
+      </div>
+
+      <!-- Reanudado -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editReanudado" class="seguimiento-label">Reanudado</label>
+        <select id="editReanudado" name="reanudado" class="seguimiento-select">
+          <option value="">Seleccionar...</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <!-- Fase Convocatoria -->
+      <div class="form-group seguimiento-form-group">
+        <label for="editFaseConvocatoria" class="seguimiento-label">Fase Convocatoria</label>
+        <input type="text" id="editFaseConvocatoria" name="fase_convocatoria" class="seguimiento-input" required>
+      </div>
+
+      <div class="modal-footer seguimiento-modal-footer">
+        <button type="button" class="cancel-button seguimiento-cancel-button" onclick="cerrarModal()">Cancelar
+          Registro</button>
+        <button type="submit" class="save-button seguimiento-save-button">Guardar Seguimiento</button>
+
+      </div>
+    </form>
+    <!-- </div> -->
+  </div>

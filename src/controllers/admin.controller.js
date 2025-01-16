@@ -80,7 +80,10 @@ exports.getAlladmin = async (req, res) => {
         imagen: imagen ? imagen.imagenes_inmueble : null
       };
     });
-    res.render('admin/index', { remates: rematesConImagenes });
+    res.render('layouts/admin', { 
+      remates: rematesConImagenes,
+      contet: 'admin/index',
+     });
   } catch (error) {
     console.error('Error fetching remates:', error);
     res.status(500).send('Error al cargar los datos');

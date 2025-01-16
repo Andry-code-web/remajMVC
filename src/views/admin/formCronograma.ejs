@@ -1,0 +1,53 @@
+<!-- script cronograma -->
+<script src="/js/scriptsadmin/modalcronograma.js"></script>
+
+<% remates.forEach(function(remate) { %>
+  <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades" style="display: none;">
+    <form id="formularioCronograma" method="POST" action="/admin/guardar-cronograma"
+      class="formulario_sistema_remates_personalizado">
+      <h2 class="titulo_formulario_sistema_remates">Cronograma de Actividades</h2>
+      <div class="campo_formulario_sistema_remates">
+        <label for="remate_id" class="etiqueta_campo_sistema_remates">ID del Remate:</label>
+        <input type="number" id="remate_id" name="remates_id" class="entrada_campo_sistema_remates" required />
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="nombre" class="etiqueta_campo_sistema_remates">Fase:</label>
+        <select id="nombre" name="nombre" class="entrada_campo_sistema_remates" required>
+          <option value="#">Escoge la fase</option>
+          <option value="Publicación e Inscripción">Publicación e Inscripción</option>
+          <option value="Validación de Inscripción">Validación de Inscripción</option>
+          <option value="Presentación de Ofertas">Presentación de Ofertas</option>
+          <option value="Pago Saldo">Pago Saldo</option>
+          <option value="Validación del Saldo">Validación del Saldo</option>
+        </select>
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="fecha_inicio" class="etiqueta_campo_sistema_remates">Fecha Inicio:</label>
+        <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" class="entrada_campo_sistema_remates"
+          required />
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="fecha_fin" class="etiqueta_campo_sistema_remates">Fecha Fin:</label>
+        <input type="datetime-local" id="fecha_fin" name="fecha_fin" class="entrada_campo_sistema_remates"
+          required />
+      </div>
+      <div class="contenedor_botones_sistema_remates">
+        <button type="button" class="button boton_cancelar_sistema_remates" onclick="cerrarModalCronograma()">
+          <span class="button_lg">
+            <span class="button_sl"></span>
+            <span class="button_text">Cancelar</span>
+          </span>
+        </button>
+        <button type="submit" class="button boton_guardar_sistema_remates">
+          <span class="button_lg">
+            <span class="button_sl"></span>
+            <span class="button_text">Guardar</span>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <% }); %>
+
+
+  

@@ -102,9 +102,6 @@ io.on('connection', (socket) => {
         return;
       }
 
-
-
-      
       // Obtener la hora local del cliente
       const fechaHoraCliente = new Date();
       const formatFecha = fechaHoraCliente.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -112,7 +109,7 @@ io.on('connection', (socket) => {
       console.log(`Fecha y hora del cliente: ${fechaHoraCliente.toString()}`);
       console.log(`Fecha del cliente: ${formatFecha}`);
       console.log(`Hora del cliente: ${formatHora}`);
-      
+      const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates');      
 
       // Si necesitas enviar esta información al servidor:
       /* fetch('/ruta/del/servidor', {
@@ -129,12 +126,12 @@ io.on('connection', (socket) => {
 
       // Enviar la hora de inicio al cliente
       console.log('esta es la fecha y la hora:', rows[0].fecha_remate, rows[0].hora_remate);
-      socket.emit('auction-start-time', { startTime: fechaHoraInicio });
+      socket.emit('auction-start-time', { startTime: fechaHoraCliente });
 
       // Verificar si ya existe un temporizador para este remate
       if (!auctionTimers[remates_id]) {
         const now = new Date();
-        const timeDiffInSeconds = Math.floor((fechaHoraInicio - now) / 1000);
+        const timeDiffInSeconds = Math.floor((fechaHoraCliente - now) / 1000);
 
         if (timeDiffInSeconds > 0) {
           // Programar el inicio del cronómetro cuando llegue la hora
@@ -146,7 +143,7 @@ io.on('connection', (socket) => {
 
         // Registrar temporizador con tiempo restante
         auctionTimers[remates_id] = {
-          startTime: fechaHoraInicio,
+          startTime: fechaHoraCliente,
           remainingTime: timeDiffInSeconds > 0 ? timeDiffInSeconds : 0,
           chatEnabled: false, // Inicialmente el chat está habilitado
         };

@@ -186,3 +186,52 @@ body {
 .botonsalir:hover::before {
     width: 100%;
 }
+
+
+/* ... (estilos CSS anteriores sin cambios) ... */
+
+.botones-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.boton-enviar-comprobante {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.boton-enviar-comprobante::before {
+    margin-left: auto;
+}
+
+.boton-enviar-comprobante::after,
+.boton-enviar-comprobante::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #4CAF50;
+    display: block;
+    transition: 0.5s;
+}
+
+.boton-enviar-comprobante:hover::after,
+.boton-enviar-comprobante:hover::before {
+    width: 100%;
+}
+
+.boton-enviar-comprobante:hover {
+    color: #4CAF50;
+}
+
+/* Ajuste para el botón de retroceder */
+.botonsalir {
+    margin-bottom: 0;
+}

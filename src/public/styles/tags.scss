@@ -1,0 +1,305 @@
+@use 'variables' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo del scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(37, 32, 32, 0.685);
+}
+
+::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: black;
+}
+
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.main-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px; 
+}
+
+/* Contenedores principales */
+.seguimiento-container,
+.detalles-container,
+.inmuebles-container,
+.cronograma-container {
+    font-family: $fuentePrincipal;
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Navegación de pestañas */
+.navigation-tabs {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 0.5rem;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-link {
+    padding: 0.8rem 1.5rem;
+    color: #2D3748;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    
+    &:hover {
+        background: #F7FAFC;
+        color: #2B4B81;
+    }
+
+    &.active {
+        background: #2B4B81;
+        color: white;
+    }
+}
+
+/* Estilos base para tablas */
+.table-base {
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead {
+        background: #2B4B81;
+
+        th {
+            padding: 1rem;
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            font-size: 0.9rem;
+            border-bottom: 3px solid #C41E3A;
+        }
+    }
+
+    tbody {
+        tr {
+            &:nth-child(even) {
+                background: #F7FAFC;
+            }
+
+            &:hover {
+                background: rgba(43, 75, 129, 0.05);
+            }
+
+            td {
+                padding: 1rem;
+                color: #4A5568;
+                border-bottom: 1px solid #E2E8F0;
+            }
+        }
+    }
+}
+
+/* Tablas específicas */
+.seguimiento-table,
+.detalles-table,
+.inmuebles-table,
+.cronograma-table {
+    @extend .table-base;
+}
+
+/* Estilos específicos para detalles */
+.detalles-table {
+    .label {
+        font-weight: 600;
+        color: #2B4B81;
+        background: rgba(43, 75, 129, 0.05);
+    }
+}
+
+/* Mensaje sin datos */
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: #4A5568;
+    background: #F7FAFC;
+    border: 1px dashed #E2E8F0;
+    border-radius: 8px;
+    margin: 2rem 0;
+    font-style: italic;
+}
+
+/* Botón de regreso */
+.back-button {
+    display: block;
+    width: fit-content;
+    margin: 2rem auto;
+    padding: 0.8rem 1.5rem;
+    background: #2B4B81;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    &:hover {
+        background: #1A365D;
+        transform: translateY(-2px);
+
+        &::before {
+            left: 100%;
+        }
+    }
+}
+
+/* Diseño para la columna de imágenes */
+.imagen-cell img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilo del modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.image-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 0 10px #fff;
+    border: 2px solid #fff;
+}
+
+.image-modal .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* Estilo del modal */
+.inmueble-image-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .table-base {
+        overflow-x: auto;
+        
+        table {
+            min-width: 800px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .navigation-tabs {
+        flex-direction: column;
+    }
+
+    .seguimiento-container,
+    .detalles-container,
+    .inmuebles-container,
+    .cronograma-container {
+        padding: 1rem;
+        margin-top: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .table-base {
+        th, td {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+    }
+}

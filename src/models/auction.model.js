@@ -11,10 +11,36 @@ class Auction {
 
   static async getById(id) {
     const [rows] = await db.execute(
-      'SELECT * FROM remates WHERE id = ?',
+      `
+      SELECT r.*, ii.imagenes_inmueble
+      FROM remates r
+      LEFT JOIN img_inmuebles ii ON r.id = ii.remates_id
+      WHERE r.id = ?
+      `,
       [id]
     );
-    return rows[0];
+  
+    if (rows.length === 0) return null;
+  
+    const remate = {
+      ...rows[0],
+      imagenes: rows
+        .filter(row => row.imagenes_inmueble) // Excluir nulos
+        .map(row => {
+          const base64Image = row.imagenes_inmueble.toString('base64');
+          return base64Image;
+        })
+    };
+  
+    return remate;
+  }
+  
+  static async anexos(id) {
+    const [anexosRow] = await db.execute(
+      `SELECT * FROM anexos WHERE remates_id = ?;`, [id]
+    );
+    return anexosRow;
+
   }
 
   static async updateStatus(id, estado) {

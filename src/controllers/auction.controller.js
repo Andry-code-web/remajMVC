@@ -6,7 +6,7 @@ const db = require('../config/database'); // Asegúrate de tener acceso a la bas
 exports.getAllAuctions = async (req, res) => {
   try {
     const auctions = await Auction.getAll();
-    res.render('layouts/main', { 
+    res.render('layouts/main', {
       content: 'auctions/mapa',
       auctions
     });
@@ -15,26 +15,46 @@ exports.getAllAuctions = async (req, res) => {
   }
 };
 
+/* exports.getAnexosByid = async (req, res) => {
+  const { id } = req.params;
+  console.log('ID recibido en el controlador:', id); // Depuración
+
+  try {
+    const anexos = await Auction.anexos(id);
+    console.log('Datos obtenidos:', anexos); // Depuración
+    res.json(anexos);
+  } catch (error) {
+    console.error('Error al obtener anexos:', error); // Depuración
+    res.status(500).json({ error: error.message });
+  }
+}; */
+
 
 exports.getAuctionDetails = async (req, res) => {
   try {
     const auctionId = req.params.id;
+
+    // Obtén la subasta por su ID
     const auction = await Auction.getById(auctionId);
 
+    // Si no existe la subasta, renderiza un error
     if (!auction) {
       return res.status(404).render('error', {
         message: 'Subasta no encontrada'
       });
     }
 
-    // Asignar el estado de la subasta para pasarlo a la vista
+    // Obtén los anexos asociados a la subasta
+    const anexos = await Auction.anexos(auctionId);
+
     const auctionState = auction.estado || 'activo';
 
+    // Renderiza la vista con la subasta, los anexos y el estado
     res.render('layouts/main', {
       auction,
-      auctionState,  // Aquí pasamos el estado de la subasta
-      content: 'auctions/details',
-      user: req.user // Asegúrate de pasar el usuario a la vista
+      anexos, // Pasamos los anexos a la vista
+      auctionState,
+      content: 'auctions/details' // Vista específica de los detalles
     });
   } catch (error) {
     console.error('Error al obtener detalles de la subasta:', error);
@@ -43,6 +63,7 @@ exports.getAuctionDetails = async (req, res) => {
     });
   }
 };
+
 
 exports.joinAuction = async (req, res) => {
   try {
@@ -117,7 +138,6 @@ exports.submitMessage = async (req, res) => {
       return res.status(400).json({ message: 'El chat está cerrado' });
     }
 
-    // Aquí podrías guardar el mensaje en la base de datos si lo deseas
     res.json({ message: 'Mensaje enviado' });
   } catch (error) {
     console.error('Error al enviar mensaje:', error);
@@ -128,29 +148,33 @@ exports.submitMessage = async (req, res) => {
 exports.checkOpportunities = async (req, res) => {
   try {
     const userId = req.user?.id;
+    const auctionId = req.body.auctionId; // El auctionId es pasado en el body
 
     if (!userId) {
       return res.status(401).json({ message: 'Usuario no autorizado' });
     }
 
-    const [rows] = await db.execute(
-      'SELECT oportunidades FROM usuarios WHERE id = ?',
+    const [userRows] = await db.execute(
+      'SELECT usuario_validado FROM usuarios WHERE id = ?',
       [userId]
     );
 
-    if (rows.length === 0) {
+    if (userRows.length === 0) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const user = rows[0];
-    if (user.oportunidades <= 0) {
-      return res.status(400).json({ message: 'No tienes oportunidades' });
+    const user = userRows[0];
+
+    // Verificar si el usuario está validado para el remate
+    if (user.usuario_validado !== auctionId) {
+      return res.status(403).json({ message: 'No estás validado para este remate' });
     }
 
+    // Si el usuario está validado, continuar sin problemas
     res.json({ success: true });
   } catch (error) {
-    console.error('Error al verificar oportunidades:', error);
-    res.status(500).json({ message: 'Error al verificar oportunidades' });
+    console.error('Error al verificar validación:', error);
+    res.status(500).json({ message: 'Error al verificar validación' });
   }
 };
 

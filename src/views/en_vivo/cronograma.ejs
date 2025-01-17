@@ -1,0 +1,85 @@
+
+
+<!-- ICONOS -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+
+<!-- ESTILOS HEADER Y FOOTER -->
+<link rel="stylesheet" href="/css/globales/globales.css" />
+
+<!-- ESTILOS CRONOGRAMA -->
+<link rel="stylesheet" href="/css/tags/tags.css" />
+
+<!-- HEADER -->
+<%- include('../partials/navbar.ejs') %>
+
+<!-- CANVAS -->
+<canvas id="background-canvas"></canvas>
+
+<main class="main-wrapper">
+  <div class="cronograma-container">
+    <div class="navigation-tabs">
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link active">Cronograma</a>    
+    </div>
+
+    <div class="cronograma-table">
+      <% if (cronograma && cronograma.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>FASE</th>
+            <th>FECHA INICIO</th>
+            <th>FECHA FIN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cronograma.forEach(fase => { %>
+          <tr>
+            <td><%= fase.nombre %></td>
+            <td><%= new Date(fase.fecha_inicio).toLocaleString() %></td>
+            <td><%= new Date(fase.fecha_fin).toLocaleString() %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <p class="no-data">No hay cronogramas disponibles.</p>
+      <% } %>
+    </div>
+    
+
+    <a href="/en_vivo" class="back-button">Volver a Remates</a>
+  </div>
+</main>
+
+<!-- COMPONENTE FOOTER -->
+<%- include('../partials/footer') %>
+
+<!-- SCRIPT CANVAS -->
+<script src="/js/componentes/uvcanvas_envivo.js"></script>
+
+<!-- SCRIPT HEADER SCROLL -->
+<script>
+  let lastScrollTop = 0;
+  const header = document.getElementById("header");
+  const cronogramaTable = document.querySelector(".cronograma-table");
+
+  window.addEventListener("scroll", () => {
+    const currentScrollTop =
+      window.scrollY || document.documentElement.scrollTop;
+
+    if (
+      currentScrollTop > lastScrollTop &&
+      currentScrollTop > cronogramaTable.offsetTop
+    ) {
+      header.style.transform = "translateY(-100%)";
+      header.style.opacity = "0";
+    } else {
+      header.style.transform = "translateY(0)";
+      header.style.opacity = "1";
+    }
+
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+  });
+</script>

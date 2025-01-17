@@ -7,6 +7,7 @@ const isAuthenticated = (req, res, next) => {
       return res.redirect('/admin/login');
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);  // Verifica si 'id' está presente
     req.user = decoded;
     next();
   } catch (error) {
@@ -14,6 +15,7 @@ const isAuthenticated = (req, res, next) => {
     return res.redirect('/admin/login');
   }
 };
+
 
 const setUserLocals = (req, res, next) => {
   try {

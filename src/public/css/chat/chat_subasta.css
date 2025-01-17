@@ -705,4 +705,296 @@
   display: block;
 }
 
+/* remates.css */
+/* Estilos generales */
+/* body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+ */
+/* Estilos para la tarjeta de subasta activa */
+.active-auction-card {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+/* Estilos para el encabezado de la subasta */
+.auction-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.auction-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auction-category,
+.auction-location {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.auction-location {
+  text-align: right;
+}
+
+.auction-divider {
+  width: 1px;
+  height: 30px;
+  background-color: #e5e7eb;
+  margin: 0 16px;
+}
+
+/* Estilos para las pestañas */
+.active-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.active-tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.active-tab.active {
+  color: #2196F3;
+  border-bottom: 2px solid #2196F3;
+}
+
+/* Estilos para el contenido del panel */
+.active-panel-content {
+  padding: 16px;
+}
+
+.active-user-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.active-user,
+.active-offers {
+  display: flex;
+  gap: 8px;
+}
+
+.active-label {
+  color: #666;
+  font-size: 14px;
+}
+
+.active-value {
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.active-best-offer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #e3f2fd;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.active-crown-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.active-crown {
+  font-size: 18px;
+}
+
+.active-amount {
+  font-weight: 600;
+  color: #333;
+}
+
+.active-join-button {
+  width: 100%;
+  padding: 12px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.active-join-button:hover {
+  background: #1976D2;
+}
+
+/* Estilos para la tabla de clasificación */
+.active-classification-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.active-classification-table th,
+.active-classification-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.active-classification-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #666;
+}
+
+.active-classification-table .position {
+  width: 40px;
+  text-align: center;
+}
+
+.active-classification-table .amount {
+  text-align: right;
+}
+
+.active-content-section {
+  display: none;
+}
+
+.active-content-section.active {
+  display: block;
+}
+
+/* Estilos para el chat */
+.chat {
+  margin-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+}
+
+#timer-container {
+  width: 100%;
+  height: 5px;
+  background-color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+#timer-bar {
+  height: 100%;
+  width: 100%;
+  background-color: #4CAF50;
+  transition: width 1s linear;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 10px;
+}
+
+#messages li {
+  padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+.message-form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+}
+
+.input-field {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+}
+
+.send-btn {
+  padding: 10px 20px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.send-btn:hover {
+  background-color: #1976D2;
+}
+
+/* Estilos para el modal de método de pago */
+.payment-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .active-auction-card {
+    max-width: 100%;
+    margin: 10px;
+  }
+  .active-tab {
+    font-size: 12px;
+  }
+  .active-best-offer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .active-amount {
+    margin-top: 8px;
+  }
+}
+
 /*# sourceMappingURL=chat_subasta.css.map */

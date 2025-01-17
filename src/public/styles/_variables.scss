@@ -1,11 +1,15 @@
+
+
 $fuentePrincipal: 'fuentePrincipal';
 $fuenteSecundaria: 'fuenteSecundaria';
 $fuenteParrafos: 'fuenteparrafos';
+
 $colorprimario:#d00000;
 $colorsecundario:#fffcfc;
 $colorterciario:#0a0000;
 $complemento1:#e25427;
 $complemento2:#00665e;
+
 
 @font-face {
     font-family: 'fuentePrincipal';
@@ -22,3 +26,5 @@ $complemento2:#00665e;
     font-family: 'fuenteParrafos';
     src: url('/fonts/GHEA Zartonk W05 ExtraBold.ttf') format('truetype');
 }
+
+

@@ -4,11 +4,18 @@ const router = express.Router();
 const auctionController = require('../controllers/auction.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 
+const app = express();
+
+// Configura setUserLocals globalmente
+app.use(authMiddleware.setUserLocals);
+
+/* router.get('/:id', auctionController.getAuctionDetails); 
+ descativar es ta opcion y comentar la de abajo (solo es la verificacion de inicio de sesion )*/
 router.get('/:id', authMiddleware.isAuthenticated, auctionController.getAuctionDetails);
 router.post('/:id/join', authMiddleware.isAuthenticated, auctionController.joinAuction);
 router.post('/:id/bid', authMiddleware.isAuthenticated, auctionController.submitBid);
 router.post('/:id/message', authMiddleware.isAuthenticated, auctionController.submitMessage);
 router.post('/check-opportunities', authMiddleware.isAuthenticated, auctionController.checkOpportunities);
-router.get('/:id/top-bids', authMiddleware.isAuthenticated, auctionController.getTopBids);
+router.get('/:id/top-bids', auctionController.getTopBids);
 
 module.exports = router;

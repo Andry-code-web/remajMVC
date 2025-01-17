@@ -1,14 +1,16 @@
 const jwt = require('jsonwebtoken');
 const {
+  getCronograma,
   getAllRemates,
   getImagenesInmuebles,
   createRemate,
   agregarImagenes,
-  agregarAnexos,
+  agregarAnexoUrl,
   deleteRemate,
   getUsuarioAdmin,
   getRemateById,
-  updateRemate
+  updateRemate,
+  createCronograma // Nueva función agregada
 } = require('../models/admin.model');
 
 // Vista administrador
@@ -29,9 +31,13 @@ exports.loginAdmin = async (req, res) => {
 
     if (usuario) {
       // Generar token JWT
-      const token = jwt.sign({ id: usuario.id, correo: usuario.correo }, process.env.JWT_SECRET, {
-        expiresIn: '1h'
-      });
+      const token = jwt.sign(
+        { id: usuario.id, correo: usuario.correo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '1h'
+        }
+      );
 
       // Almacenar el token en una cookie
       res.cookie('auth_token', token, {
@@ -39,6 +45,9 @@ exports.loginAdmin = async (req, res) => {
         secure: process.env.NODE_ENV === 'production',
         maxAge: 3600000 // 1 hora
       });
+
+      // Establecer el ID del usuario en la sesión
+      req.session.userId = usuario.id;
 
       res.redirect('/admin/index');
     } else {
@@ -71,7 +80,10 @@ exports.getAlladmin = async (req, res) => {
         imagen: imagen ? imagen.imagenes_inmueble : null
       };
     });
-    res.render('admin/index', { remates: rematesConImagenes });
+    res.render('layouts/admin', { 
+      remates: rematesConImagenes,
+      contet: 'admin/index',
+     });
   } catch (error) {
     console.error('Error fetching remates:', error);
     res.status(500).send('Error al cargar los datos');
@@ -81,29 +93,32 @@ exports.getAlladmin = async (req, res) => {
 // Crear un nuevo remate
 exports.crearRemate = async (req, res) => {
   try {
-    // Extraer datos del formulario
     const {
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad, anexo_url
     } = req.body;
 
-    console.log(req.body.tamaño_propiedad);
+    // Verifica que req.session.userId esté definido
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Usuario no autenticado" });
+    }
 
     // Crear un nuevo remate en la base de datos
     const remateId = await createRemate([
       ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamaño_propiedad, 1
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad,
+      req.session.userId // Aquí agregamos usuario_admin_id
     ]);
 
-    // Procesar imágenes y anexos
+    // Procesar imágenes
     if (req.files["photo"]) {
       const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
       await agregarImagenes(imagenes);
     }
 
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
+    // Procesar la URL del anexo
+    if (anexo_url) {
+      await agregarAnexoUrl(anexo_url, remateId);
     }
 
     res.status(200).json({ message: "Remate creado exitosamente" });
@@ -117,23 +132,30 @@ exports.crearRemate = async (req, res) => {
 exports.updateRemate = async (req, res) => {
   try {
     const remateId = req.params.id;
-    const remateData = req.body;
-    const success = await updateRemate(remateId, remateData);
+    const {
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
+    } = req.body;
+
+    const success = await updateRemate(remateId, [
+      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
+      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, tamano_propiedad
+    ]);
+
     if (success) {
+      // Procesar la URL del anexo
+      if (req.body.anexo_url) {
+        const anexoUrl = req.body.anexo_url;
+        await agregarAnexoUrl(anexoUrl, remateId);
+      }
+
       res.json({ success: true, message: 'Remate actualizado correctamente' });
     } else {
       res.status(404).json({ success: false, error: 'Remate no encontrado' });
     }
-
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
-    }
-
-    res.status(200).json({ message: "Remate creado exitosamente" });
   } catch (error) {
-    console.error("Error al crear el remate:", error);
-    res.status(500).json({ message: "Hubo un problema al crear el remate" });
+    console.error("Error al actualizar el remate:", error);
+    res.status(500).json({ message: "Hubo un problema al actualizar el remate", error: error.message });
   }
 };
 
@@ -164,69 +186,77 @@ exports.getRemateForEdit = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los datos del remate' });
   }
 };
-
-// Guardar los cambios de un remate
-exports.updateRemate = async (req, res) => {
+// Controlador para guardar el cronograma de actividades
+exports.guardarCronograma = async (req, res) => {
   try {
-    const remateId = req.params.id;
-    const {
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-    } = req.body;
+    const { remates_id, nombre, fecha_inicio, fecha_fin } = req.body;
+    console.log("datos cronograma:", req.body);
 
-    // Actualizar el remate en la base de datos
-    await updateRemate(remateId, [
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-    ]);
-
-    // Procesar imágenes y anexos
-    if (req.files["photo"]) {
-      const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
-      await agregarImagenes(imagenes);
+    // Verifica que req.session.userId esté definido
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Usuario no autenticado" });
     }
 
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
-    }
+    // Guardar el cronograma en la base de datos
+    await createCronograma(remates_id, nombre, fecha_inicio, fecha_fin);
 
-    res.status(200).json({ success: true, message: "Remate actualizado exitosamente" });
+    // Actualizar el progreso del botón
+    res.status(200).json({ message: "Cronograma guardado exitosamente", fase: nombre });
   } catch (error) {
-    console.error("Error al actualizar el remate:", error);
-    res.status(500).json({ success: false, message: "Hubo un problema al actualizar el remate", error: error.message });
+    console.error("Error al guardar el cronograma:", error);
+    res.status(500).json({ message: "Hubo un problema al guardar el cronograma" });
   }
 };
 
-//alerta para el nuevo remate
-exports.crearRemate = async (req, res) => {
+// Controlador para obtener el estado actual del cronograma
+exports.obtenerCronograma = async (req, res) => {
   try {
-    const {
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado
-    } = req.body;
+    const { remates_id } = req.query;
 
-    // Crear un nuevo remate en la base de datos
-    const remateId = await createRemate([
-      ubicacion, precios, descripcion, categoria, N_banos, N_habitacion, pisina, patio, cocina, cochera,
-      balcon, jardin, pisos, comedor, sala_start, studio, lavanderia, fecha_remate, hora_remate, estado, 1
-    ]);
+    // Obtener el cronograma de la base de datos
+    const cronograma = await getCronograma(remates_id);
 
-    // Procesar imágenes y anexos
-    if (req.files["photo"]) {
-      const imagenes = req.files["photo"].map((file) => [file.buffer, remateId]);
-      await agregarImagenes(imagenes);
-    }
-
-    if (req.files["anexos"]) {
-      const anexos = req.files["anexos"].map((file) => [file.buffer, remateId]);
-      await agregarAnexos(anexos);
-    }
-
-    res.redirect('/admin/index?success=true'); 
+    res.status(200).json(cronograma);
   } catch (error) {
-    console.error("Error al crear el remate:", error);
-    res.redirect('/admin/index?success=false'); 
+    console.error("Error al obtener el cronograma:", error);
+    res.status(500).json({ message: "Hubo un problema al obtener el cronograma" });
+  }
+};
+
+
+// Crear seguimiento
+exports.createSeguimiento = async (req, res) => {
+  const {
+    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
+    fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
+  } = req.body;
+
+  const datosSeguimiento = [
+    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
+    fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
+  ];
+
+  try {
+    const nuevoSeguimientoId = await Seguimiento.createSeguimiento(datosSeguimiento);
+    res.status(201).json({ id: nuevoSeguimientoId, message: 'Seguimiento creado exitosamente' });
+  } catch (error) {
+    console.error('Error al crear el seguimiento:', error);
+    res.status(500).json({ message: 'Error al crear el seguimiento' });
+  }
+};
+
+// Obtener un seguimiento por ID
+exports.getSeguimientoById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const seguimiento = await Seguimiento.getSeguimientoById(id);
+    if (!seguimiento) {
+      return res.status(404).json({ message: 'Seguimiento no encontrado' });
+    }
+    res.json(seguimiento);
+  } catch (error) {
+    console.error('Error al obtener el seguimiento:', error);
+    res.status(500).json({ message: 'Error al obtener el seguimiento' });
   }
 };
 

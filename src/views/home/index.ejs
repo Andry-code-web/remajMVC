@@ -1,210 +1,769 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="/css/metodopago/metodopago.css">
 <section class="banner" id="banner">
-  <div class="banner_contenedor">
-    <div class="banner_video">
-      <video src="/img/video2.mp4" autoplay muted loop></video>
-    </div>
-    <div class="banner_info_filtro">
-      <div class="banner_info">
-        <p>_____BIENVENIDO A REMAJUD_____</p>
-        <h1>Nuestro Compromiso es que Encuentres tu remate.</h1>
+  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="2000">
+        <img src="/img/banner1.jpeg" class="d-block w-100" alt="...">
       </div>
-      <form action="" method="post">
-
-        <div class="contenedor_filtro_items">
-          <div class="items_filtro">
-            <select name="categoria" id="cotegoria">
-              <option value="">Eliga una categoria</option>
-              <option value="casa">Casas</option>
-              <option value="departamento">Departamento</option>
-              <option value="cocheras">Cocheras</option>
-              <option value="terrenos">Terrenos</option>
-              <option value="locales_comerciales">Locales Comerciales</option>
-              <option value="azoteas">Azoteas</option>
-              <option value="terreno_rural">Terreno Rural</option>
-              <option value="oficina">Oficinas</option>
-            </select>
-          </div>
-          <div class="items_filtro">
-            <select name="ciudad" id="ciudad">
-              <option value="">Seleccione una ciudad</option>
-              <option value="lima">Lima</option>
-              <option value="arequipa">Arequipa</option>
-              <option value="trujillo">Trujillo</option>
-              <option value="chiclayo">Chiclayo</option>
-              <option value="piura">Piura</option>
-              <option value="cusco">Cusco</option>
-              <option value="iquitos">Iquitos</option>
-              <option value="huancayo">Huancayo</option>
-              <option value="tacna">Tacna</option>
-              <option value="juliaca">Juliaca</option>
-            </select>
-          </div>
-          <div class="items_filtro">
-            <select name="departamento" id="departamento">
-              <option value="">Seleccione un departamento</option>
-            </select>
-          </div>
-          <div class="items_filtro">
-            <select name="precio" id="">
-              <option value="">Eliga el monto</option>
-              <option value="">$10000 - $15000</option>
-              <option value="">$20000 - $30000</option>
-              <option value="">$30000 - $50000</option>
-            </select>
-          </div>
-          <div class="btn_filtrar">
-            <button type="submit">
-              Buscar
-              <i class="ri-search-2-line"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+      <div class="carousel-item">
+        <img src="/img/banner2.jpeg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="/img/banner3.jpeg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="/img/banner4.jpeg" class="d-block w-100" alt="...">
+      </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+      <span class="carousel-icon" aria-hidden="true">
+        <i class="bi bi-chevron-left"></i>
+      </span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+      <span class="carousel-next-icon" aria-hidden="true">
+        <i class="bi bi-chevron-right"></i>
+      </span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </section>
 
-<section class="categoria" id="categorias">
-  <div class="contenedor_categorias">
-    <h2>NUESTRAS CATEGORIAS</h2>
-    <div class="categorias">
-      <a href="/remates?categoria=casa" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/casa.png" alt="">
-        </div>
-        <p>Casas</p>
+<div class="slider_contenedor">
+  <div class="slide-track">
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="terreno_rural">
+        <img src="/img/Terreno rural.png" alt="">
+        Terreno Rural
       </a>
-      <a href="/remates?categoria=departamento" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/departamento.png" alt="">
-        </div>
-        <p>Departamentos</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="casa">
+        <img src="/img/casa.png" alt="">
+        Casa
       </a>
-      <a href="/remates?categoria=cochera" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/cochera.png" alt="">
-        </div>
-        <p>Cocheras</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="cochera">
+        <img src="/img/cochera.png" alt="">
+        Cochera
       </a>
-      <a href="/remates?categoria=terreno" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/terreno.png" alt="">
-        </div>
-        <p>Terrenos</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="departamento">
+        <img src="/img/Departamentos.png" alt="">
+        Departamento
       </a>
-      <a href="/remates?categoria=local" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/local.png" alt="">
-        </div>
-        <p>Locales Comerciales</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="terraza">
+        <img src="/img/terraza.png" alt="">
+        Terraza
       </a>
-      <a href="/remates?categoria=azoteas" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/terraza.png" alt="">
-        </div>
-        <p>Azoteas</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="terreno">
+        <img src="/img/terreno.png" alt="">
+        Terreno
       </a>
-      <a href="/remates?categoria=terreno_rural" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/terreno_rural.png" alt="">
-        </div>
-        <p>Terreno Rural</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="local">
+        <img src="/img/tienda.png" alt="">
+        local
       </a>
-      <a href="/remates?categoria=oficinas" class="cate_remates">
-        <div class="img_categorias">
-          <img src="/img/oficina.png" alt="">
-        </div>
-        <p>Oficinas</p>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="oficina">
+        <img src="/img/oficina.png" alt="">
+        Oficina
+      </a>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="terreno_rural">
+        <img src="/img/Terreno rural.png" alt="">
+        Terreno Rural
+      </a>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="casa">
+        <img src="/img/casa.png" alt="">
+        Casa
+      </a>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="cochera">
+        <img src="/img/cochera.png" alt="">
+        Cochera
+      </a>
+    </div>
+    <div class="slide_img">
+      <a href="javascript:void(0)" data-categoria="departamento">
+        <img src="/img/Departamentos.png" alt="">
+        Departamento
       </a>
     </div>
   </div>
-</section>
+</div>
 
-<section class="subastas" id="subastas">
-
-  <div class="contenedor_card_subastas">
-    <% remates.forEach(remate=> { %>
-      <div class="carta">
-        <div class="imagen-contenedor">
+<div class="contenidoPrincipalPagina">
+  <aside class="barraLateralFiltros">
+    <h4>FILTROS</h4>
+    <hr>
+    <form action="/filtrar/" method="post" class="form_filtro">
+      <div>
+        <label for="numeroIdentificacionRemate">Número de Remate</label>
+        <input type="text" id="numeroIdentificacionRemate" name="id">
+      </div>
+      <div>
+        <label for="numeroExpedienteJudicial">Partida registral</label>
+        <input type="text" id="numeroExpedienteJudicial" name="partida_registral">
+      </div>
+      <div>
+        <label for="valorBasePropiedad">Precio Base</label>
+        <input type="text" id="valorBasePropiedad" name="precio">
+      </div>
+      <div class="contenedor-campo-formulario-ubicacion">
+        <label for="ubicacionGeograficaPropiedad">Ubicación</label>
+        <select name="ubicacion" id="ubicacionGeograficaPropiedad" class="selector-desplegable-ubicacion">
+          <option value="">Selecciona una ubicación</option>
+          <option value="Amazonas">Amazonas</option>
+          <option value="Ancash">Áncash</option>
+          <option value="Apurimac">Apurímac</option>
+          <option value="Arequipa">Arequipa</option>
+          <option value="Ayacucho">Ayacucho</option>
+          <option value="Cajamarca">Cajamarca</option>
+          <option value="Callao">Callao</option>
+          <option value="Cusco">Cusco</option>
+          <option value="Huancavelica">Huancavelica</option>
+          <option value="Huanuco">Huánuco</option>
+          <option value="Ica">Ica</option>
+          <option value="Junin">Junín</option>
+          <option value="La Libertad">La Libertad</option>
+          <option value="Lambayeque">Lambayeque</option>
+          <option value="Lima">Lima</option>
+          <option value="Loreto">Loreto</option>
+          <option value="Madre de Dios">Madre de Dios</option>
+          <option value="Moquegua">Moquegua</option>
+          <option value="Pasco">Pasco</option>
+          <option value="Piura">Piura</option>
+          <option value="Puno">Puno</option>
+          <option value="San Martin">San Martín</option>
+          <option value="Tacna">Tacna</option>
+          <option value="Tumbes">Tumbes</option>
+          <option value="Ucayali">Ucayali</option>
+        </select>
+      </div>
+      <div class="contenedor-campo-formulario-categoria">
+        <label for="categoria">Categoría</label>
+        <select name="categoria" id="categoria" class="selector-desplegable-categoria">
+          <option value="">Selecciona una categoria</option>
+          <option value="departamento">Departamento</option>
+          <option value="cochera">Cochera</option>
+          <option value="terreno">Terreno</option>
+          <option value="residencial">Residencial</option>
+          <option value="casa">Casa</option>
+          <option value="local">Local</option>
+          <option value="casa_playa">Casa de Playa</option>
+          <option value="terreno_urbano">Terreno Urbano</option>
+        </select>
+      </div>
+      <button type="submit" class="btn_filtrar">Buscar</button>
+    </form>
+  </aside>
+  <main class="listaSubastasDisponibles">
+    <nav aria-label="Navegación de remates">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+        <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
+        <% } %>
+        <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <% remates.forEach(remate => { %>
+    <div class="carta elementoSubastaIndividual">
+      <div class="imagenPropiedadSubasta">
+        <div class="contenedor_image">
           <% if (remate.imagen) { %>
-            <img src="data:image/jpeg;base64,<%= Buffer.from(remate.imagen).toString('base64') %>"
-              alt="Imagen del inmueble" class="imagen-propiedad">
-            <% } else { %>
-              <img src="/img/default.jpg" alt="Imagen no disponible" class="imagen-propiedad">
-              <% } %>
-                <a href="/auctions/<%= remate.id %>" class="renta-button">Renta +</a>
+            <a href="javascript:void(0);" style="text-decoration: none;" onclick="mostrarAlerta(<%= remate.id %>)">
+            <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Imagen del inmueble" class="imagen-propiedad">
+          </a>
+          <% } else { %>
+          <img src="/img/casa2.jfif" alt="Imagen no disponible" class="imagen-propiedad">
+          <% } %>
         </div>
-        <div class="contenido">
-          <div class="label">
-            <%= remate.categoria %>
+      </div>
+      <div class="contenidoInformativoSubasta">
+        <div class="detallesEspecificosSubasta">
+          <a id="informacion_general_subasta" href="javascript:void(0);" class="informacionGeneralSubasta" onclick="mostrarAlerta(<%= remate.id %>)">
+
+            <h2>Remate N° <%= String(remate.id).padStart(4, '0') %></h2>
+            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
+            <p class="lugar"><strong>LUGAR:</strong>
+              <%= remate.ubicacion %> Perú
+            </p>
+            <h3>Presentación de Ofertas</h3>
+            <p class="hora_remate">
+              <i class="ri-calendar-line"></i>
+              <%= new Date(remate.fecha_remate).toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              }) %>
+            </p>
+            <p class="hora_remate">
+              <i class="ri-time-line"></i></i>
+              <%= remate.hora_remate %>
+            </p>
+            <p class="descripcion_remate"><%= remate.descripcion %></p>
+          </a>
+          <%
+            const estados = {
+              finalizado: {
+                clase: '',
+                texto: 'Remate Adjudicado'
+              },
+              en_curso: {
+                clase: 'bg-success',
+                texto: 'Publicacion e Inscripcion'
+              }
+            }
+            const estadoActual = estados[remate.estado];
+          %>
+          <% if (estadoActual) { %>
+          <div class="estadoActualSubasta <%= estadoActual.clase %> text-light">
+            <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
+            <p><%= estadoActual.texto %></p>
           </div>
-          <h2 class="nombre_proyecto">Edificio los canarios</h2>
-          <div class="label">Dirección</div>
-          <p class="direccion">
-            <%= remate.ubicacion %>
-          </p>
-          <div class="detalles">
-            <div class="detalles-item">
-              <div class="label">M2</div>
-              <div class="detalles-valor">
-                <%= remate.tamaño_propiedad %>
-              </div>
-            </div>
-            <div class="detalles-item">
-              <div class="label">N° Pisos</div>
-              <div class="detalles-valor">
-                <%= remate.pisos %>
-              </div>
-            </div>
-            <div class="detalles-item">
-              <div class="label">N° de cuartos</div>
-              <div class="detalles-valor">
-                <%= remate.N_habitacion %>
-              </div>
-            </div>
+          <% } %>
+        </div>
+        <div class="contenedorBotonesAccion">
+          <div class="precio_remate">
+
+            <p>Precio base:<i class="fa-solid fa-gavel fa-beat icono-precio"></i>
+            </p>
+            <p>
+              S/ <%= remate.precios %>
+            </p>
           </div>
-          <div class="label">Precio</div>
-          <div class="precio">
-            <%= remate.precios %>
+          <div class="btn_acciones">
+            <a href="#" class="botonAccionSubasta seguimiento-button" data-remate-id="<%= remate.id %>"><i class="fas fa-chart-line"></i> Seguimiento</a>
+            <a href="#" class="botonAccionSubasta detalle-button" data-remate-id="<%= remate.id %>"> <i class="fas fa-info-circle"> </i> Detalles </a>
+            <a href="#" class="botonAccionSubasta aviso-button" target="_blank" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">
+              <i class="fas fa-building"></i> Aviso </a>
           </div>
         </div>
       </div>
-      <% }) %>
+    </div>
+    <% }) %>
+    <nav aria-label="Navegación de remates">
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= !pagination.hasPrevPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.prevPage %>" <%= !pagination.hasPrevPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+        <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+          <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+        </li>
+        <% } %>
+        <li class="page-item <%= !pagination.hasNextPage ? 'disabled' : '' %>">
+          <a class="page-link" href="?page=<%= pagination.nextPage %>" <%= !pagination.hasNextPage ? 'tabindex="-1" aria-disabled="true"' : '' %>>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </main>
+</div>
+
+<section class="tarjeta_seguimiento_detalle" style="display: none;">
+  <div class="judicial-card-container-x9875">
+    <div class="judicial-header-tabs-y7632">
+      <button class="tab-button-z4521 active-tab-w8901" onclick="switchTab('remate')">Remate</button>
+      <button class="tab-button-z4521" onclick="switchTab('inmuebles')">Inmuebles</button>
+      <button class="tab-button-z4521" onclick="switchTab('cronograma')">Cronograma</button>
+    </div>
+    <div id="remate" class="content-panel-j3267">
+      <div class="remate-columns">
+        <!-- Columna izquierda -->
+        <div class="column-left">
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Expediente:</span>
+            <span class="detail-value-q2345" id="expediente"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Distrito Judicial:</span>
+            <span class="detail-value-q2345" id="distrito_judicial"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Órgano Jurisdiccional:</span>
+            <span class="detail-value-q2345" id="organo_jurisdiccional"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Instancia:</span>
+            <span class="detail-value-q2345" id="instancia"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Juez:</span>
+            <span class="detail-value-q2345" id="juez"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Especialista:</span>
+            <span class="detail-value-q2345" id="especialista"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Materia:</span>
+            <span class="detail-value-q2345" id="materia"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Resolución:</span>
+            <span class="detail-value-q2345" id="resolucion"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Fecha Resolución:</span>
+            <span class="detail-value-q2345" id="fecha_resolucion"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Archivo:</span>
+            <span class="detail-value-q2345" id="archivo">
+              <a href="#" class="document-link-s9012" id="archivo_link"></a>
+            </span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Convocatoria:</span>
+            <span class="detail-value-q2345" id="convocatoria"></span>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="column-right">
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Tipo Cambio:</span>
+            <span class="detail-value-q2345" id="tipo_cambio"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Tasación:</span>
+            <span class="detail-value-q2345" id="tasacion"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Precio Base:</span>
+            <span class="detail-value-q2345" id="precio_base"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Incremento entre ofertas:</span>
+            <span class="detail-value-q2345" id="incremento_ofertas"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Arancel:</span>
+            <span class="detail-value-q2345" id="arancel"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Oblaje:</span>
+            <span class="detail-value-q2345" id="oblaje"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">Descripción:</span>
+            <span class="detail-value-q2345" id="descripcion"></span>
+          </div>
+          <div class="detail-row-n4567">
+            <span class="detail-label-p7890">N° inscritos:</span>
+            <span class="detail-value-q2345" id="numero_inscritos"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="inmuebles" class="content-panel-j3267">
+      <table class="data-table-m9012">
+        <thead>
+          <tr>
+            <th>PARTIDA REGISTRAL</th>
+            <th>TIPO INMUEBLE</th>
+            <th>DIRECCIÓN</th>
+            <th>CARGA Y/O GRAVAMEN</th>
+            <th>PORCENTAJE A REMATAR</th>
+          </tr>
+        </thead>
+        <tbody id="inmuebles_tbody">
+        </tbody>
+      </table>
+    </div>
+    <div id="cronograma" class="content-panel-j3267">
+      <table class="data-table-m9012">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>FASE</th>
+            <th>FECHA INICIO</th>
+            <th>FECHA FIN</th>
+          </tr>
+        </thead>
+        <tbody id="cronograma_tbody">
+        </tbody>
+      </table>
+    </div>
+    <button class="return-button-l6789" onclick="hideDetailCard()">← Regresar</button>
   </div>
-
-
 </section>
 
+
+<section class="tarjeta_seguimiento_seguimiento" style="display: none;">
+  <div class="contenedor-expediente">
+    <div class="encabezado-expediente">
+      DETALLE DE EXPEDIENTE
+    </div>
+    <div class="contenido-expediente">
+      <div class="cuadricula-informacion">
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">N° Expediente</span>
+          <span class="valor-expediente" id="expediente_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Instancia</span>
+          <span class="valor-expediente" id="instancia_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Distrito Judicial</span>
+          <span class="valor-expediente" id="distrito_judicial_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Órgano Jurisdiccional</span>
+          <span class="valor-expediente" id="organo_jurisdiccional_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Especialidad</span>
+          <span class="valor-expediente" id="especialidad_seguimiento"></span>
+        </div>
+      </div>
+    </div>
+    <div class="encabezado-expediente">
+      DETALLE DE SEGUIMIENTO
+    </div>
+    <div class="contenido-expediente">
+      <div class="cuadricula-informacion">
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">N° Convocatoria</span>
+          <span class="valor-expediente" id="convocatoria_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Fase convocatoria</span>
+          <span class="valor-expediente" id="fase_convocatoria_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Fecha de registro</span>
+          <span class="valor-expediente" id="fecha_registro_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Estado convocatoria</span>
+          <span class="valor-expediente" id="estado_convocatoria_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">Procesado por</span>
+          <span class="valor-expediente" id="procesado_por_seguimiento"></span>
+        </div>
+        <div class="elemento-informacion">
+          <span class="etiqueta-expediente">¿Reanudado?</span>
+          <span class="valor-expediente" id="reanudado_seguimiento"></span>
+        </div>
+      </div>
+    </div>
+    <button class="return-button-l6789" onclick="hideSeguimientoCard()">← Regresar</button>
+  </div>
+</section>
+
+<!-- Contenedor para el modal de método de pago -->
+<div class="payment-modal-overlay" id="metodo-pago-container" style="display: none;">
+  <div class="payment-modal-content">
+    <%- include('../layouts/Metodopago') %>
+  </div>
+</div>
 
 <script>
-  const departamentosPorCiudad = {
-    arequipa: ["Cayma", "Yanahuara", "Cerro Colorado", "José Luis Bustamante y Rivero", "Paucarpata"],
-    lima: ["Miraflores", "San Isidro", "Barranco", "Surco", "San Borja"],
-    trujillo: ["Víctor Larco", "El Porvenir", "Florencia de Mora", "La Esperanza", "Huanchaco"],
-    chiclayo: ["Pimentel", "Lambayeque", "Monsefú", "Reque", "Ferreñafe"],
-    piura: ["Sullana", "Catacaos", "Paita", "Sechura", "Talara"],
-    cusco: ["San Sebastián", "Wanchaq", "San Jerónimo", "Santiago", "Ollantaytambo"],
-    iquitos: ["Punchana", "Belén", "San Juan Bautista", "Iquitos", "Nauta"],
-    huancayo: ["El Tambo", "San Agustín de Cajas", "Sapallanga", "Huancán", "Chilca"],
-    tacna: ["Alto de la Alianza", "Ciudad Nueva", "Pocollay", "Calana", "Gregorio Albarracín"],
-    juliaca: ["Caracoto", "Cabana", "Cabanillas", "Coata", "Huata"]
-  };
+  document.addEventListener('DOMContentLoaded', function() {
+    const seguimientoButtons = document.querySelectorAll('.seguimiento-button');
+    const tarjetaSeguimientoSeguimiento = document.querySelector('.tarjeta_seguimiento_seguimiento');
+    const nubladoSeguimiento = document.createElement('div');
+    nubladoSeguimiento.classList.add('nublado');
 
-  document.getElementById("ciudad").addEventListener("change", function () {
-    const ciudadSeleccionada = this.value;
-    const departamentoSelect = document.getElementById("departamento");
+    seguimientoButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const remateId = this.closest('.carta').dataset.remateId;
+        fetch(`/remate/${remateId}`)
+          .then(response => response.json())
+          .then(data => {
+            document.body.appendChild(nubladoSeguimiento);
+            tarjetaSeguimientoSeguimiento.style.display = 'block';
+            fillSeguimientoCard(data);
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    });
 
-    // Limpia las opciones actuales del select de departamentos
-    departamentoSelect.innerHTML = '<option value="">Seleccione un departamento</option>';
+    window.hideSeguimientoCard = function() {
+      tarjetaSeguimientoSeguimiento.style.display = 'none';
+      document.body.removeChild(nubladoSeguimiento);
+    };
 
-    // Agrega las nuevas opciones si hay departamentos para la ciudad seleccionada
-    if (departamentosPorCiudad[ciudadSeleccionada]) {
-      departamentosPorCiudad[ciudadSeleccionada].forEach((departamento) => {
-        const option = document.createElement("option");
-        option.value = departamento.toLowerCase();
-        option.textContent = departamento;
-        departamentoSelect.appendChild(option);
+    const detalleButtons = document.querySelectorAll('.detalle-button');
+    const tarjetaSeguimientoDetalle = document.querySelector('.tarjeta_seguimiento_detalle');
+    const nubladoDetalle = document.createElement('div');
+    nubladoDetalle.classList.add('nublado');
+
+    detalleButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const remateId = this.closest('.carta').dataset.remateId;
+        fetch(`/remate/${remateId}`)
+          .then(response => response.json())
+          .then(data => {
+            document.body.appendChild(nubladoDetalle);
+            tarjetaSeguimientoDetalle.style.display = 'block';
+            fillDetailCard(data);
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    });
+
+    window.hideDetailCard = function() {
+      tarjetaSeguimientoDetalle.style.display = 'none';
+      document.body.removeChild(nubladoDetalle);
+    };
+
+    const avisoButtons = document.querySelectorAll('.aviso-button');
+
+    avisoButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const avisoUrl = this.getAttribute('data-aviso-url');
+        if (avisoUrl && avisoUrl !== '#') {
+          window.open(avisoUrl, '_blank');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay enlace disponible para este aviso.',
+          });
+        }
+      });
+    });
+
+    function fillDetailCard(data) {
+      const detalles = data.detalles;
+      const inmuebles = data.inmuebles;
+      const cronograma = data.cronograma;
+
+      // Llenar la sección de remate
+      document.getElementById('expediente').textContent = detalles.expediente || 'N/A';
+      document.getElementById('distrito_judicial').textContent = detalles.distrito_judicial || 'N/A';
+      document.getElementById('organo_jurisdiccional').textContent = detalles.organo_jurisdiccional || 'N/A';
+      document.getElementById('instancia').textContent = detalles.instancia || 'N/A';
+      document.getElementById('juez').textContent = detalles.juez || 'N/A';
+      document.getElementById('especialista').textContent = detalles.especialista || 'N/A';
+      document.getElementById('materia').textContent = detalles.materia || 'N/A';
+      document.getElementById('resolucion').textContent = detalles.resolucion || 'N/A';
+      document.getElementById('fecha_resolucion').textContent = detalles.fecha_resolucion || 'N/A';
+      document.getElementById('archivo_link').textContent = detalles.archivo || 'N/A';
+      document.getElementById('convocatoria').textContent = detalles.convocatoria || 'N/A';
+      document.getElementById('tipo_cambio').textContent = detalles.tipo_cambio || 'N/A';
+      document.getElementById('tasacion').textContent = detalles.tasacion || 'N/A';
+      document.getElementById('precio_base').textContent = detalles.precio_base || 'N/A';
+      document.getElementById('incremento_ofertas').textContent = detalles.incremento_ofertas || 'N/A';
+      document.getElementById('arancel').textContent = detalles.arancel || 'N/A';
+      document.getElementById('oblaje').textContent = detalles.oblaje || 'N/A';
+      document.getElementById('descripcion').textContent = detalles.descripcion || 'N/A';
+      document.getElementById('numero_inscritos').textContent = detalles.n_inscritos || 'N/A';
+
+      // Llenar la sección de inmuebles
+      const inmueblesTableBody = document.getElementById('inmuebles_tbody');
+      inmueblesTableBody.innerHTML = '';
+      inmuebles.forEach(inmueble => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+      <td>${inmueble.partida_registral}</td>
+      <td>${inmueble.tipo_inmueble}</td>
+      <td>${inmueble.direccion}</td>
+      <td>${inmueble.carga_ogravamen}</td>
+      <td>${inmueble.porcentaje_rematar}</td>
+    `;
+        inmueblesTableBody.appendChild(row);
+      });
+
+      // Llenar la sección de cronograma
+      const cronogramaTableBody = document.getElementById('cronograma_tbody');
+      cronogramaTableBody.innerHTML = '';
+      cronograma.forEach((actividad, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${actividad.actividad}</td>
+      <td>${actividad.fecha_actividad}</td>
+      <td>${actividad.fecha_actividad}</td>
+    `;
+        cronogramaTableBody.appendChild(row);
       });
     }
+
+    function fillSeguimientoCard(data) {
+      const seguimiento = data.seguimiento;
+
+      // Llenar la sección de seguimiento
+      document.getElementById('expediente_seguimiento').textContent = seguimiento.expediente || 'N/A';
+      document.getElementById('instancia_seguimiento').textContent = seguimiento.instancia || 'N/A';
+      document.getElementById('distrito_judicial_seguimiento').textContent = seguimiento.distrito_judicial || 'N/A';
+      document.getElementById('organo_jurisdiccional_seguimiento').textContent = seguimiento.organo_jurisdiccional || 'N/A';
+      document.getElementById('especialidad_seguimiento').textContent = seguimiento.especialidad || 'N/A';
+      document.getElementById('convocatoria_seguimiento').textContent = seguimiento.nro_convocatoria || 'N/A';
+      document.getElementById('fase_convocatoria_seguimiento').textContent = seguimiento.fase_convocatoria || 'N/A';
+      document.getElementById('fecha_registro_seguimiento').textContent = seguimiento.fecha_registro || 'N/A';
+      document.getElementById('estado_convocatoria_seguimiento').textContent = seguimiento.estado_convocatoria || 'N/A';
+      document.getElementById('procesado_por_seguimiento').textContent = seguimiento.procesado_por || 'N/A';
+      document.getElementById('reanudado_seguimiento').textContent = seguimiento.reanudado || 'N/A';
+    }
+  });
+
+  function switchTab(tabId) {
+    // Remove active classes from all tabs and panels
+    document.querySelectorAll('.tab-button-z4521').forEach(tab => {
+      tab.classList.remove('active-tab-w8901');
+    });
+    document.querySelectorAll('.content-panel-j3267').forEach(panel => {
+      panel.classList.remove('active-panel-k5432');
+    });
+
+    // Add active class to the selected tab and panel
+    document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active-tab-w8901');
+    document.getElementById(tabId).classList.add('active-panel-k5432');
+  }
+</script>
+
+<script>
+  document.querySelectorAll('.slide_img a').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault(); // Evita el comportamiento por defecto del enlace
+      const categoria = item.getAttribute('data-categoria');
+      window.location.href = `/filtrarG?categoria=${categoria}`; // Redirige a la ruta con el filtro
+    });
   });
 </script>
+
+<!-- nuevo script funcion click afuera  -->
+<script>
+  // Función para cerrar al hacer clic fuera
+document.addEventListener('click', function(event) {
+  const tarjeta = document.querySelector('.tarjeta_seguimiento_seguimiento');
+  const contenedor = document.querySelector('.contenedor-expediente');
+
+  if (tarjeta && contenedor) {
+    // Verifica si el clic fue fuera del contenedor
+    if (!contenedor.contains(event.target)) {
+      hideSeguimientoCard(); // Asumiendo que esta función ya existe
+    }
+  }
+});
+
+// Prevenir que los clics dentro del contenedor cierren la tarjeta
+document.querySelector('.contenedor-expediente')?.addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+</script>
+
+
+<!-- nuevo script 11/01/2025 click afuera modal detalle se cierra -->
+  <!-- nuevo script funcion click afuera -->
+<script>
+  // Función para cerrar al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    const tarjeta = document.querySelector('.tarjeta_seguimiento_detalle');
+    const contenedor = document.querySelector('.judicial-card-container-x9875');
+
+    if (tarjeta && contenedor) {
+      // Verifica si el clic fue fuera del contenedor
+      if (!contenedor.contains(event.target)) {
+        hideDetailCard(); // Asumiendo que esta función ya existe
+      }
+    }
+  });
+
+  // Prevenir que los clics dentro del contenedor cierren la tarjeta
+  document.querySelector('.judicial-card-container-x9875')?.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+
+  // Función para ocultar la tarjeta de detalle
+  function hideDetailCard() {
+    const tarjeta = document.querySelector('.tarjeta_seguimiento_detalle');
+    if (tarjeta) {
+      tarjeta.style.display = 'none';
+    }
+  }
+</script>
+
+<!-- alerta al ingresar a la subastas  -->
+<script>
+  function mostrarAlerta(remateId) {
+    Swal.fire({
+      title: `Remate N° ${String(remateId).padStart(4, '0')}`,
+      text: "Solo se puede acceder si realizaste el previo pago y estas correctamente validado",
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Siguiente',
+      denyButtonText: 'Depositar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Intentar acceder a la subasta
+        fetch(`/auctions/${remateId}`)
+          .then(response => {
+            if (response.redirected) {
+              // Si la respuesta es una redirección, significa que el usuario no está autenticado
+              Swal.fire({
+                title: 'INICIO DE SESIÓN OBLIGATORIA',
+                text: 'Debes iniciar sesión para poder acceder a esta página',
+                showCancelButton: true,
+                confirmButtonText: 'Iniciar Sesión',
+                cancelButtonText: 'Retroceder'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = '/auth/login';
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  mostrarAlerta(remateId);
+                }
+              });
+            } else {
+              // Si la respuesta no es una redirección, redirigir al usuario a la subasta
+              window.location.href = `/auctions/${remateId}`;
+            }
+          });
+      } else if (result.isDenied) {
+        document.getElementById('metodo-pago-container').style.display = 'block';
+        Swal.close(); // Cerrar la alerta
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnRetroceder = document.getElementById('retroceder');
+    btnRetroceder.addEventListener('click', () => {
+      document.getElementById('metodo-pago-container').style.display = 'none';
+      mostrarAlerta(remateId); // Ver la SweetAlert otra vez
+    });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

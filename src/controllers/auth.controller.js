@@ -5,7 +5,7 @@ require('dotenv').config();
 
 exports.register_vista = async (req, res) => {
   try {
-    res.render('layouts/main', {
+    res.render('layouts/auth', {
       content: 'auth/register'
     });
   } catch (error) {
@@ -16,10 +16,14 @@ exports.register_vista = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-    const { nombre_apellidos, correo, usuario, contrasena } = req.body;
+    const { nombre_apellidos, correo, usuario, contrasena, terminos_condiciones } = req.body;
 
     if (!nombre_apellidos || !correo || !usuario || !contrasena) {
       return res.status(400).json({ message: "Todos los campos son requeridos." });
+    }
+
+    if (!terminos_condiciones) {
+      return res.status(400).json({ message: "Debe aceptar los términos y condiciones." });
     }
 
     const existingUser = await User.findByUsername(usuario);
@@ -27,16 +31,10 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "El nombre de usuario ya está en uso." });
     }
 
+    
     const userId = await User.create(req.body);
 
-    // Almacena los datos del usuario en la sesión
-    req.session.user = {
-      id: userId,
-      nombre: nombre_apellidos,
-      usuario
-    };
-
-    res.status(201).redirect('/');
+    res.status(201).json({ message: "Registro exitoso" });
   } catch (error) {
     console.error("Error en el registro:", error);
     res.status(500).json({ message: "Error en el registro", error: error.message });
@@ -49,7 +47,9 @@ exports.login_vista = async (req, res) => {
     if (req.cookies.auth_token) {
       return res.redirect('/');
     }
-    res.render('auth/login');
+    res.render('layouts/auth', {
+      content: 'auth/login'
+    });
   } catch (error) {
     console.error('Error al cargar la vista de login:', error);
     res.status(500).render('error', { message: 'Error al cargar la página de login' });

@@ -2,67 +2,116 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RemajuD - Remates de Inmuebles</title>
-    <link rel="stylesheet" href="/css/remates_layouts/remates_layouts.css">
-    <!-- remates -->
-    <link rel="stylesheet" href="/css/remates/remates.css">
-    <!-- CDN DE ICONOS REMIX -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RemajuD - Remates de Inmuebles</title>
+  <link rel="stylesheet" href="/css/remates_layouts/remates_layouts.css">
+  <!-- remates -->
+  <link rel="stylesheet" href="/css/remates/remates.css">
+  <!-- CDN DE ICONOS REMIX -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 
-    <!-- ESTILOS COMPONENTES -->
+  <!-- ESTILOS COMPONENTES -->
 
-    <!-- ESTILOS GLOBALES -->
-    <link rel="stylesheet" href="/css/globales/globales.css">
+  <!-- ESTILOS GLOBALES -->
+  <link rel="stylesheet" href="/css/globales/globales.css">
 </head>
 
 <body>
-    <%- include('../partials/navbar') %>
+  <%- include('../partials/navbar') %>
 
-        <main class="">
-            <%- include('../' + remates) %>
-        </main>
+    <main class="">
+      <%- include('../' + remate) %>
+    </main>
+
+    <div id="resultados">
+      <% if (productos && productos.length> 0) { %>
+        <ul>
+          <% productos.forEach(function(producto) { %>
+            <li>
+              <%= producto.nombre %> - <%= producto.descripcion %>
+            </li>
+            <% }); %>
+        </ul>
+        <% } else { %>
+          <p>No se encontraron productos para esta categoría.</p>
+          <% } %>
+    </div>
 
 
-        <%- include('../partials/footer') %>
+    <% if (remates && remates.length> 0) { %>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Expediente</th>
+            <th>Precio Base</th>
+            <th>Distrito Judicial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% remates.forEach(remate=> { %>
+            <tr>
+              <td>
+                <%= remate.remates_id %>
+              </td>
+              <td>
+                <%= remate.expediente %>
+              </td>
+              <td>
+                <%= remate.precio_base %>
+              </td>
+              <td>
+                <%= remate.distrito_judicial %>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <p>No se encontraron resultados.</p>
+        <% } %>
+
+
+
+          <%- include('../partials/footer') %>
 
             <script>
-                window.addEventListener('scroll', () => {
-                    const header = document.getElementById('header');
-                    const banner = document.getElementById('banner');
-                    const categorias = document.getElementById('categorias');
-                    const subastas = document.getElementById('subastas');
-                    const bannerBottom = banner.getBoundingClientRect().bottom;
-                    const categoriasBottom = categorias.getBoundingClientRect().bottom;
-                    const subastasTop = subastas.getBoundingClientRect().top;
-                    if (bannerBottom > 0) {
-                        header.style.color = '#fffcfc';
-                    } else if (categoriasBottom > 0) {
-                        header.style.color = '#0a0000';
-                    } else if (subastasTop < window.innerHeight) {
-                        header.style.color = '#0a0000';
-                    } else {
-                        header.style.color = 'black';
-                    }
-                });
+              window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                const banner = document.getElementById('banner_remates2');
+                const categorias = document.getElementById('prueva1');
+                const subastas = document.getElementById('subastas');
+                const bannerBottom = banner.getBoundingClientRect().bottom;
+                const categoriasBottom = categorias.getBoundingClientRect().bottom;
+                const subastasTop = subastas.getBoundingClientRect().top;
+                if (bannerBottom > 0) {
+                  header.style.color = '#fffcfc';
+                } else if (categoriasBottom > 0) {
+                  header.style.color = '#0a0000';
+                } else if (subastasTop < window.innerHeight) {
+                  header.style.color = '#0a0000';
+                } else {
+                  header.style.color = 'black';
+                }
+              });
             </script>
 
             <script>
-                let lastScrollPosition = 0;
-                const navbar = document.querySelector('.navbar');
+              let lastScrollPosition = 0;
+              const navbar = document.querySelector('.navbar');
 
-                window.addEventListener('scroll', function () {
-                    const currentScrollPosition = window.pageYOffset;
+              window.addEventListener('scroll', function () {
+                const currentScrollPosition = window.pageYOffset;
 
-                    if (currentScrollPosition > lastScrollPosition) {
-                        navbar.classList.add('hidden');
-                    } else {
-                        navbar.classList.remove('hidden');
-                    }
+                if (currentScrollPosition > lastScrollPosition) {
+                  navbar.classList.add('hidden');
+                } else {
+                  navbar.classList.remove('hidden');
+                }
 
-                    lastScrollPosition = currentScrollPosition;
-                });
+                lastScrollPosition = currentScrollPosition;
+              });
             </script>
 </body>
 

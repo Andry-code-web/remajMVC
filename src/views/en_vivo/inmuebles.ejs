@@ -1,0 +1,129 @@
+<!-- ICONOS -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+<!-- ESTILOS HEADER Y FOOTER -->
+<link rel="stylesheet" href="/css/globales/globales.css" />
+
+<!-- ESTILOS TAGS -->
+<link rel="stylesheet" href="/css/tags/tags.css" />
+
+<!-- HEADER -->
+<%- include('../partials/navbar.ejs') %>
+
+<!-- CANVAS -->
+<canvas id="background-canvas"></canvas>
+
+<main class="main-wrapper">
+  <div class="inmuebles-container">
+    <div class="navigation-tabs">
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link active">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+    </div>
+
+    <div class="inmuebles-table">
+      <% if (inmuebles && inmuebles.length> 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Partida Registral</th>
+            <th>Tipo Inmueble</th>
+            <th>Dirección</th>
+            <th>Carga y/o Gravamen</th>
+            <th>Porcentaje a Rematar</th>
+            <th class="imagen-column">Imagenes inmuebles</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <% inmuebles.forEach(inmueble=> { %>
+          <tr>
+            <td><%= inmueble.partida_registral %></td>
+            <td><%= inmueble.tipo_inmueble %></td>
+            <td class="direccion-cell"><%= inmueble.direccion %></td>
+            <td class="gravamen-cell"><%= inmueble.carga_ogravamen %></td>
+            <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %></td>
+            <td class="imagen-cell">
+              <% if (inmueble.img_inmueble) { %>
+                <a href="#" onclick="showImageModal('data:image/jpeg;base64,<%= inmueble.img_inmueble %>')">Ver Imagen</a>
+              <% } else { %>
+                <span>No disponible</span>
+              <% } %>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <p class="no-data">No hay inmuebles disponibles.</p>
+      <% } %>
+    </div>
+    <a href="/en_vivo" class="back-button">Volver a Remates</a>
+  </div>
+</main>
+
+
+
+
+
+<!-- COMPONENTE FOOTER -->
+<%- include('../partials/footer') %>
+
+<!-- SCRIPT CANVAS -->
+<script src="/js/componentes/uvcanvas_envivo.js"></script>
+
+<!-- SCRIPT HEADER SCROLL -->
+<script>
+  let lastScrollTop = 0;
+  const header = document.getElementById("header");
+  const inmueblesTable = document.querySelector(".inmuebles-table");
+
+  window.addEventListener("scroll", () => {
+    const currentScrollTop =
+      window.scrollY || document.documentElement.scrollTop;
+
+    if (
+      currentScrollTop > lastScrollTop &&
+      currentScrollTop > inmueblesTable.offsetTop
+    ) {
+      header.style.transform = "translateY(-100%)";
+      header.style.opacity = "0";
+    } else {
+      header.style.transform = "translateY(0)";
+      header.style.opacity = "1";
+    }
+
+    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+  });
+</script>
+
+<!-- SCRIPT MODAL IMAGENES -->
+<script>
+  function showImageModal(imageSrc) {
+    if (!imageSrc) {
+        console.error("La fuente de la imagen está vacía");
+        return;
+    }
+    console.log("Mostrando imagen:", imageSrc);
+    const modal = document.getElementById("inmuebleImageModal");
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = imageSrc; // Asignar la fuente de la imagen
+    modal.style.display = "flex"; // Mostrar el modal
+}
+
+
+function closeImageModal() {
+    const modal = document.getElementById("inmuebleImageModal");
+    modal.style.display = "none"; // Ocultar el modal
+}
+
+// Cerrar el modal si el usuario hace clic fuera del contenido
+window.onclick = function (event) {
+    const modal = document.getElementById("inmuebleImageModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+};
+
+</script>

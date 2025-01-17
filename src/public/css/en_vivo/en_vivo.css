@@ -1,0 +1,376 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+/* Estilo del scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(107, 77, 230, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url("https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png"), auto;
+}
+
+#header {
+  color: black;
+}
+
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: white;
+}
+
+/* Contenedor principal */
+.property-container {
+  width: 100%;
+  height: auto;
+  background: transparent;
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  padding: 6rem 1.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Grid de subastas */
+.auction-grid {
+  width: 85%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Tarjeta de subasta */
+.auction-card {
+  position: relative;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 15px rgba(44, 62, 80, 0.3);
+  perspective: 1000px;
+  min-width: 320px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.auction-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(44, 62, 80, 0.1), rgba(44, 62, 80, 0.05));
+  border-radius: 20px 20px 0 0;
+  z-index: 0;
+}
+
+.auction-card:hover {
+  transform-origin: center bottom;
+  transform: perspective(1000px) rotateX(4deg) translateY(-15px);
+  box-shadow: 0 40px 45px -5px rgba(0, 0, 0, 0.2), 0 30px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(44, 62, 80, 0.3), 0 0 30px rgba(44, 62, 80, 0.3), 0 0 40px rgba(255, 255, 255, 0.6);
+}
+
+/* Encabezado de la tarjeta */
+.auction-header {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.auction-number {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de imagen */
+.auction-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin: 0 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.property-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.auction-card:hover .property-image {
+  transform: scale(1.05);
+}
+
+/* Contenido de la tarjeta */
+.auction-content {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+/* Título de la subasta */
+.auction-title {
+  font-size: 1.2rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auction-title i {
+  color: #2c3e50;
+}
+
+/* Información de la subasta */
+.auction-info {
+  margin: 1rem 0;
+  color: #2d3748;
+}
+
+.auction-info p {
+  font-family: "fuenteSecundaria";
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.auction-info i {
+  color: #2c3e50;
+}
+
+.auction-info h3 {
+  font-family: "fuenteSecundaria";
+  font-size: 1rem;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Sección de descripción */
+.description-section {
+  margin: 1rem 0;
+  background: rgba(44, 62, 80, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+
+.description-section h6 {
+  font-family: "fuenteSecundaria";
+  color: #1a1a2e;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.description-text {
+  color: #2d3748;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+/* Sección de precio */
+.price-section {
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.1), rgba(44, 62, 80, 0.05));
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border: 1px solid rgba(44, 62, 80, 0.15);
+}
+
+.price-label {
+  color: #2d3748;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.price-value {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.action-btn {
+  font-family: "fuenteSecundaria";
+  flex: 0 1 auto;
+  min-width: 95px;
+  max-width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: rgba(44, 62, 80, 0.1);
+  color: #1a1a2e;
+  border: 1px solid rgba(44, 62, 80, 0.2);
+}
+
+.action-btn:hover {
+  background: #2c3e50;
+  color: #1a1a2e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+}
+
+.action-btn i {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Estilos específicos para cada botón */
+.action-btn.seguimiento {
+  font-size: 10px;
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.action-btn.detalles {
+  background: rgba(52, 73, 94, 0.1);
+}
+
+.action-btn.aviso {
+  background: rgba(39, 55, 77, 0.1);
+}
+
+/* Mensaje de no resultados */
+.no-results {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  color: #2d3748;
+}
+
+.auction-details {
+  font-family: "fuenteSecundaria";
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(44, 62, 80, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+.auction-details .tipo_remate, .auction-details .lugar {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+.auction-details .tipo_remate strong, .auction-details .lugar strong {
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.auction-card {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+  .auction-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1100px) {
+  .auction-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
+  }
+  .property-container {
+    padding: 4rem 1rem 1rem;
+  }
+  .auction-card {
+    min-width: 300px;
+  }
+  .action-buttons {
+    padding: 0 1rem 1rem;
+  }
+  .action-btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    min-width: 85px;
+  }
+}
+
+/*# sourceMappingURL=en_vivo.css.map */

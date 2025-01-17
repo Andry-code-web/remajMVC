@@ -106,11 +106,16 @@ io.on('connection', (socket) => {
 
       
       // Obtener la hora local del cliente
-      const fechaCliente = new Date();
-      console.log(`Fecha y hora del cliente: ${fechaCliente.toString()}`);
+      const fechaHoraCliente = new Date();
+      const formatFecha = fechaHoraCliente.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      const formatHora = fechaHoraCliente.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      console.log(`Fecha y hora del cliente: ${fechaHoraCliente.toString()}`);
+      console.log(`Fecha del cliente: ${formatFecha}`);
+      console.log(`Hora del cliente: ${formatHora}`);
+      
 
       // Si necesitas enviar esta información al servidor:
-      fetch('/ruta/del/servidor', {
+      /* fetch('/ruta/del/servidor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fechaHoraCliente: fechaCliente.toISOString() })
@@ -119,7 +124,7 @@ io.on('connection', (socket) => {
         .then(data => console.log('Respuesta del servidor:', data))
         .catch(error => console.error('Error:', error));
 
-
+ */
 
 
       // Enviar la hora de inicio al cliente

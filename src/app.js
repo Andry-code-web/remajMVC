@@ -115,7 +115,7 @@ io.on('connection', (socket) => {
         console.log(`⏳ Temporizador programado para iniciar en ${timeDiff / 1000} segundos`);
         setTimeout(() => startAuctionTimer(remates_id), timeDiff);
       }
-      
+
       // Cargar mensajes persistentes del chat
       const [messages] = await db.execute(
         'SELECT m.monto, u.usuario FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
@@ -185,6 +185,7 @@ io.on('connection', (socket) => {
 
     auctionTimers[remates_id] = { intervalId, remainingTime };
     console.log(`⏳ Temporizador iniciado para la subasta ${remates_id}, duración: ${durationInSeconds} segundos`);
+     
   }
 
   socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {

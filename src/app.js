@@ -61,7 +61,7 @@ app.use('/terminos', require('./routes/terminoscondiciones.routes'))
 app.use('/comprar', require('./routes/comprar.routes'));
 app.use('/vender', require('./routes/vender.routes'));
 
-app.get('/unauthorized', (req, res) => {  
+app.get('/unauthorized', (req, res) => {
   res.render('unauthorized/unauthorized');
 });
 
@@ -102,13 +102,28 @@ io.on('connection', (socket) => {
         return;
       }
 
-      // Obtener la fecha y hora de inicio del remate
-      const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates WHERE id = ?', [remates_id]);
-      const fechaInicio = rows[0].fecha_remate;
-      const horaInicio = rows[0].hora_remate;
-      const fechaHoraInicio = new Date(`${fechaInicio}T${horaInicio}`);
+
+
+      
+      // Obtener la hora local del cliente
+      const fechaCliente = new Date();
+      console.log(`Fecha y hora del cliente: ${fechaCliente.toString()}`);
+
+      // Si necesitas enviar esta información al servidor:
+      fetch('/ruta/del/servidor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fechaHoraCliente: fechaCliente.toISOString() })
+      })
+        .then(response => response.json())
+        .then(data => console.log('Respuesta del servidor:', data))
+        .catch(error => console.error('Error:', error));
+
+
+
 
       // Enviar la hora de inicio al cliente
+      console.log('esta es la fecha y la hora:', rows[0].fecha_remate, rows[0].hora_remate);
       socket.emit('auction-start-time', { startTime: fechaHoraInicio });
 
       // Verificar si ya existe un temporizador para este remate
@@ -128,7 +143,7 @@ io.on('connection', (socket) => {
         auctionTimers[remates_id] = {
           startTime: fechaHoraInicio,
           remainingTime: timeDiffInSeconds > 0 ? timeDiffInSeconds : 0,
-          chatEnabled: true, // Inicialmente el chat está habilitado
+          chatEnabled: false, // Inicialmente el chat está habilitado
         };
       }
 
@@ -149,7 +164,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, durationInSeconds = 6 * 60 * 60) {
+  async function startAuctionTimer(remates_id, durationInSeconds = 0.005 * 60 * 60) {
     // Cancelar temporizador existente si existe
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
@@ -163,7 +178,7 @@ io.on('connection', (socket) => {
     async function finalizeAuction() {
       clearInterval(auctionTimers[remates_id]?.intervalId);
       const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
-    
+
       if (winner) {
         try {
           // Actualizar la base de datos con los resultados de la subasta
@@ -176,27 +191,15 @@ io.on('connection', (socket) => {
           console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
         }
       }
-    
+
       // Emitir eventos de finalización y deshabilitar el chat
       io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
       io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` }); // Emitir evento alert-auction-ended con mensaje personalizado
       console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-    
-      // Cambiar estado a "finalizado" cuando la subasta termine
-      try {
-        await db.execute(
-          'UPDATE remates SET estado = ? WHERE id = ?',
-          ['finalizado', remates_id] // Cambiar estado a "finalizado"
-        );
-        console.log(`✅ Estado de la subasta ${remates_id} actualizado a "finalizado"`);
-      } catch (error) {
-        console.error(`❌ Error al actualizar el estado de la subasta ${remates_id}:`, error.message || error);
-      }
-    
+
       // Eliminar el temporizador de la memoria
       delete auctionTimers[remates_id];
     }
-    
 
     // Iniciar el temporizador
     const intervalId = setInterval(async () => {
@@ -269,7 +272,6 @@ io.on('connection', (socket) => {
     }
   });
 });
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

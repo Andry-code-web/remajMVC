@@ -10,7 +10,9 @@ const {
   getUsuarioAdmin,
   getRemateById,
   updateRemate,
-  createCronograma // Nueva función agregada
+  createCronograma, // Nueva función agregada
+  getResumenClientes,
+  getCatalogoClientes
 } = require('../models/admin.model');
 
 // Vista administrador
@@ -80,10 +82,10 @@ exports.getAlladmin = async (req, res) => {
         imagen: imagen ? imagen.imagenes_inmueble : null
       };
     });
-    res.render('layouts/admin', { 
+    res.render('layouts/admin', {
       remates: rematesConImagenes,
       contet: 'admin/index',
-     });
+    });
   } catch (error) {
     console.error('Error fetching remates:', error);
     res.status(500).send('Error al cargar los datos');
@@ -186,6 +188,7 @@ exports.getRemateForEdit = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los datos del remate' });
   }
 };
+
 // Controlador para guardar el cronograma de actividades
 exports.guardarCronograma = async (req, res) => {
   try {
@@ -260,3 +263,30 @@ exports.getSeguimientoById = async (req, res) => {
   }
 };
 
+
+
+exports.obtenerResumen = async (req, res) => {
+  try {
+    const resumen = await getResumenClientes();
+    res.render('layouts/admin', {
+      cliente: resumen.clientes, // Accede al arreglo dentro del objeto
+      contet: 'admin/clientesAdmin',
+    });
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener el resumen de clientes.' });
+  }
+}
+
+
+exports.obtenerCatalogo = async (req, res) => {
+  try {
+    const catalogo = await getCatalogoClientes();
+    res.json(catalogo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener el catálogo de clientes.' });
+  }
+}

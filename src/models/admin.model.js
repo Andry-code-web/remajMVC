@@ -218,6 +218,42 @@ const getCronograma = async (remates_id) => {
 };
 
 
+
+const getResumenClientes = async () => {
+  const query = `
+      SELECT 
+        COUNT(*) AS totalClientes,
+        SUM(CASE WHEN estado = 'activo' THEN 1 ELSE 0 END) AS clientesActivos,
+        SUM(CASE WHEN MONTH(fecha_activacion) = MONTH(NOW()) AND YEAR(fecha_activacion) = YEAR(NOW()) THEN 1 ELSE 0 END) AS clientesNuevos
+      FROM remates;
+    `;
+  const [rows] = await db.query(query);
+  return rows[0];
+}
+
+const getCatalogoClientes = async () => {
+  const query = `
+      SELECT 
+        r.id,
+        r.ubicacion,
+        r.precios,
+        r.fecha_remate,
+        r.descripcion,
+        r.categoria,
+        i.img_inmuebles_id,
+        d.tasacion,
+        d.precio_base,
+        d.incremento_ofertas,
+        d.n_inscritos
+      FROM remates r
+      LEFT JOIN inmuebles i ON r.id = i.remates_id
+      LEFT JOIN detalles d ON r.id = d.remates_id
+      WHERE r.estado = 'activo';
+    `;
+  const [rows] = await db.query(query);
+  return rows;
+}
+
 module.exports = {
   getCronograma,
   getAllRemates,
@@ -230,4 +266,6 @@ module.exports = {
   getRemateById,
   updateRemate,
   createCronograma,
+  getResumenClientes,
+  getCatalogoClientes
 };

@@ -29,15 +29,20 @@ router.get('/editar-remate/:id', isAuthenticated, adminController.getRemateForEd
 // Ruta para guardar los cambios de un remate (protegida)
 router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo" }]), adminController.updateRemate);
 
+
 // Ruta para la vista de subasta (protegida)
-router.get('/subasta', isAuthenticated, (req, res) => {
+/* router.get('/subasta', isAuthenticated, (req, res) => {
   res.render("subasta");
-});
+}); */
 
 // Ruta para guardar el cronograma de actividades (protegida)
 router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCronograma);
 
 // Ruta para obtener el estado actual del cronograma (protegida)
 router.get('/obtener-cronograma', isAuthenticated, adminController.obtenerCronograma);
+
+
+router.get('/usuarios', adminController.obtenerResumen);
+router.get('/catalogo', adminController.obtenerCatalogo);
 
 module.exports = router;

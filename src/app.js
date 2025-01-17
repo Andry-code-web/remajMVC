@@ -115,6 +115,15 @@ io.on('connection', (socket) => {
         console.log(`⏳ Temporizador programado para iniciar en ${timeDiff / 1000} segundos`);
         setTimeout(() => startAuctionTimer(remates_id), timeDiff);
       }
+      
+      // Cargar mensajes persistentes del chat
+      const [messages] = await db.execute(
+        'SELECT m.monto, u.usuario FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
+        [remates_id]
+      );
+
+      socket.emit('load-messages', messages);
+
     } catch (error) {
       console.error('❌ Error al verificar la fecha y hora del remate:', error.message || error);
       socket.emit('error-message', 'Error al verificar la información del remate');
@@ -182,7 +191,9 @@ io.on('connection', (socket) => {
     if (!remates_id || !usuarios_id || monto === undefined) {
       socket.emit('error-message', 'Datos incompletos para el mensaje');
       return;
+      
     }
+
 
     // Verificar el estado de la subasta antes de permitir el mensaje
     const [row] = await db.execute('SELECT estado FROM remates WHERE id = ?', [remates_id]);

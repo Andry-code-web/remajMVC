@@ -414,13 +414,13 @@
     });
   });
 
-  formBid.addEventListener("submit"), (e) => {
+  formBid.addEventListener("submit", (e) => {
     e.preventDefault();
     const amount = parseFloat(inputBid.value);
     if (amount > highestAmount) {
       Swal.fire({
         title: "¿Estás seguro?",
-        text: `Estás a punto de ofertar USD$${amount}.`,
+        text: "Estás a punto de ofertar USD$${amount}.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -437,7 +437,16 @@
           inputBid.value = "";
         }
       });
-    } }
+    } else {
+      Swal.fire({
+        title: "Oferta inválida",
+        text: "La oferta debe ser mayor a USD$${highestAmount}",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    }
+  });
 
 </script>
 

@@ -632,6 +632,7 @@
 }
 
 .elementoSubastaIndividual {
+  position: relative; /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
   border: 1px solid #ddd;
   margin-bottom: 1rem;
   padding: 1rem;
@@ -665,6 +666,7 @@
   align-items: flex-start;
   margin-bottom: 1rem;
   gap: 2rem;
+  padding-right: 50px; /* Add space for the like button */
 }
 
 .informacionGeneralSubasta {
@@ -1185,6 +1187,50 @@
   /* Fondo semi-transparente */
   z-index: 1000;
   /* Asegurarse de que esté por encima de otros elementos */
+}
+
+/* Estilos para el botón de "Me Gusta" */
+.casilla-de-verificacion-me-gusta {
+  display: none;
+}
+
+.contenedor-boton-me-gusta {
+  display: inline-block;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icono-corazon-me-gusta {
+  color: #cccccc;
+  transition: color 0.2s ease;
+}
+
+.casilla-de-verificacion-me-gusta:checked + .contenedor-boton-me-gusta .icono-corazon-me-gusta {
+  color: #ff4136;
+}
+
+.casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+  position: absolute; /* Esto hace que el botón se posicione de forma absoluta */
+  bottom: 90px; /* Esto controla qué tan abajo está el botón */
+  right: 20px; /* Esto controla qué tan a la derecha está el botón */
+  z-index: 1; /* Esto asegura que el botón esté por encima de otros elementos */
+}
+
+.contenedor-boton-me-gusta:active {
+  animation: efecto-pulsacion 0.3s ease;
+}
+
+@keyframes efecto-pulsacion {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /*# sourceMappingURL=inicio.css.map */

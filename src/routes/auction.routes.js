@@ -15,7 +15,6 @@ router.get('/:id', authMiddleware.isAuthenticated, auctionController.getAuctionD
 router.post('/:id/join', authMiddleware.isAuthenticated, auctionController.joinAuction);
 router.post('/:id/bid', authMiddleware.isAuthenticated, auctionController.submitBid);
 router.post('/:id/message', authMiddleware.isAuthenticated, auctionController.submitMessage);
-router.post('/check-opportunities', authMiddleware.isAuthenticated, auctionController.checkOpportunities);
 router.get('/:id/top-bids', auctionController.getTopBids);
 
 module.exports = router;

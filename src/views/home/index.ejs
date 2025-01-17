@@ -250,7 +250,13 @@
             <p class="text-uppercase fs-5"><strong><%= remate.estado %></strong></p>
             <p><%= estadoActual.texto %></p>
           </div>
-          <% } %>
+          <% } %>}
+          <!-- boton me gusta -->
+          <input type="checkbox" id="casilla-me-gusta-<%= remate.id %>" class="casilla-de-verificacion-me-gusta" data-remate-id="<%= remate.id %>">
+          <label for="casilla-me-gusta-<%= remate.id %>" class="contenedor-boton-me-gusta">
+              <span class="icono-corazon-me-gusta">&#10084;</span>
+          </label>
+          <!-- cierre de boton me gusta -->
         </div>
         <div class="contenedorBotonesAccion">
           <div class="precio_remate">
@@ -714,7 +720,6 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
     }
   }
 </script>
-
 <!-- alerta al ingresar a la subastas  -->
 <script>
   function mostrarAlerta(remateId) {
@@ -747,8 +752,39 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
                 }
               });
             } else {
-              // Si la respuesta no es una redirección, redirigir al usuario a la subasta
-              window.location.href = `/auctions/${remateId}`;
+              // Verificar oportunidades
+              fetch('/check-opportunities', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ auctionId: remateId })
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // Si la validación es exitosa, redirigir al usuario a la subasta
+                  window.location.href = `/auctions/${remateId}`;
+                } else {
+                  // Si la validación falla, mostrar alerta
+                  Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: `No estás validado para el Remate N° ${String(remateId).padStart(4, '0')}`,
+                    showCancelButton: true,
+                    confirmButtonText: 'Solicitar Acceso',
+                    cancelButtonText: 'Retroceder',
+                    footer: '<a target="_blank" href="https://wa.link/2tmvgy">Quiero ingresar al remate</a>'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      document.getElementById('metodo-pago-container').style.display = 'block';
+                      Swal.close(); // Cerrar la alerta
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      mostrarAlerta(remateId);
+                    }
+                  });
+                }
+              });
             }
           });
       } else if (result.isDenied) {
@@ -765,5 +801,26 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
     });
   });
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const botonesMeGusta = document.querySelectorAll('.casilla-de-verificacion-me-gusta');
+    botonesMeGusta.forEach((boton) => {
+      const remateId = boton.getAttribute('data-remate-id');
+      boton.id = `casilla-me-gusta-${remateId}`;
+      const label = boton.nextElementSibling;
+      label.setAttribute('for', `casilla-me-gusta-${remateId}`);
+
+      // Añadir evento de clic para cada botón
+      boton.addEventListener('change', (event) => {
+        if (event.target.checked) {
+          console.log(`Botón de Me Gusta activado para remate ID: ${remateId}`);
+        } else {
+          console.log(`Botón de Me Gusta desactivado para remate ID: ${remateId}`);
+        }
+      }); 
+    });
+  });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></scrip>

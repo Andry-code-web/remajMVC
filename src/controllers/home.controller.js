@@ -203,3 +203,40 @@ exports.getFiltrarRemateG = async (req, res) => {
     });
   }
 };
+
+
+exports.checkOpportunities = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const auctionId = req.body.auctionId; // El auctionId es pasado en el body
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Usuario no autorizado' });
+    }
+
+    const [userRows] = await db.execute(
+      'SELECT usuario_validado FROM usuarios WHERE id = ?',
+      [userId]
+    );
+
+    if (userRows.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const user = userRows[0];
+
+    console.log('Usuario validado:', user.usuario_validado); // Depuración
+    console.log('Auction ID:', auctionId); // Depuración
+
+    // Verificar si el usuario está validado para el remate
+    if (String(user.usuario_validado) !== String(auctionId)) {
+      return res.status(403).json({ message: 'No estás validado para este remate' });
+    }
+
+    // Si el usuario está validado, continuar sin problemas
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al verificar validación:', error);
+    res.status(500).json({ message: 'Error al verificar validación' });
+  }
+};

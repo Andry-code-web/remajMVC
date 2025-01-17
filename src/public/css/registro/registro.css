@@ -63,9 +63,12 @@
 .progress-line {
   position: absolute;
   left: 0;
-  top: 0; /* Updated top position */
-  height: 100%; /* Updated height */
-  background: #780103; /* Updated background color */
+  top: 0;
+  /* Updated top position */
+  height: 100%;
+  /* Updated height */
+  background: #780103;
+  /* Updated background color */
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   width: 0%;
 }
@@ -74,7 +77,8 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin-top: -14px; /* Updated margin-top */
+  margin-top: -14px;
+  /* Updated margin-top */
 }
 
 .step {
@@ -85,26 +89,32 @@
   gap: 0.5rem;
 }
 .step .step-circle {
-  width: 28px; /* Updated width */
-  height: 28px; /* Updated height */
+  width: 28px;
+  /* Updated width */
+  height: 28px;
+  /* Updated height */
   border-radius: 50%;
   background: #fff;
   border: 2px solid #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem; /* Updated font-size */
+  font-size: 0.9rem;
+  /* Updated font-size */
   color: #666;
-  transition: all 0.3s ease; /* Updated transition */
+  transition: all 0.3s ease;
+  /* Updated transition */
 }
 .step .step-label {
   font-size: 0.85rem;
   font-weight: 500;
   color: #666;
-  margin-top: 0.25rem; /* Updated margin-top */
+  margin-top: 0.25rem;
+  /* Updated margin-top */
 }
 .step.active .step-circle {
-  background: #780103; /* Updated background color */
+  background: #780103;
+  /* Updated background color */
   border-color: #780103;
   color: #fff;
 }
@@ -113,7 +123,8 @@
   font-weight: 600;
 }
 .step:not(:last-child)::after {
-  display: none; /* Updated content */
+  display: none;
+  /* Updated content */
 }
 
 /* Formulario */

@@ -109,20 +109,11 @@ io.on('connection', (socket) => {
       console.log(`Fecha y hora del cliente: ${fechaHoraCliente.toString()}`);
       console.log(`Fecha del cliente: ${formatFecha}`);
       console.log(`Hora del cliente: ${formatHora}`);
+
+
       const [rows] = await db.execute('SELECT fecha_remate, hora_remate FROM remates');      
 
-      // Si necesitas enviar esta información al servidor:
-      /* fetch('/ruta/del/servidor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fechaHoraCliente: fechaCliente.toISOString() })
-      })
-        .then(response => response.json())
-        .then(data => console.log('Respuesta del servidor:', data))
-        .catch(error => console.error('Error:', error));
-
- */
-
+/* aqui */
 
       // Enviar la hora de inicio al cliente
       console.log('esta es la fecha y la hora:', rows[0].fecha_remate, rows[0].hora_remate);

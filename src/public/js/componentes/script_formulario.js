@@ -1,59 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Elementos comunes
-
     const secciones = document.querySelectorAll(".seccion");
     const botonesSiguiente = document.querySelectorAll(".siguiente");
     const botonesAnterior = document.querySelectorAll(".anterior");
     const steps = document.querySelectorAll(".step");
     const progressLine = document.querySelector(".progress-line");
+    const progressLabel = document.querySelector(".progress-label");
     let currentIndex = 0;
-
-   
 
     // Actualizar progreso visual
     const updateProgress = (index) => {
         const progress = (index / (secciones.length - 1)) * 100;
-        progressLine.style.width = `${progress}%`;
+        const labels = ['Registro', 'Ubicación', 'Usuario'];
+        
+        progressLine.style.setProperty('--progress', `${progress}%`);
 
+        // Actualizar estados de los pasos
         steps.forEach((step, i) => {
-            if (i <= index) {
-                step.classList.add("active");
-            } else {
+            if (i < index) {
+                step.classList.add("completed");
                 step.classList.remove("active");
+            } else if (i === index) {
+                step.classList.add("active");
+                step.classList.remove("completed");
+            } else {
+                step.classList.remove("active", "completed");
             }
         });
+
+        // Animar el cambio de etiqueta
+        progressLabel.style.opacity = "0";
+        progressLabel.style.transform = "translateY(10px)";
+        
+        setTimeout(() => {
+            progressLabel.textContent = labels[index];
+            progressLabel.style.opacity = "1";
+            progressLabel.style.transform = "translateY(0)";
+        }, 300);
     };
 
     // Función para manejar la transición entre secciones
     const animateTransition = async (newIndex) => {
-        // Añadir animación de desintegración
-        secciones[currentIndex].classList.add("dissolve");
-        
-        // Esperar a que termine la animación de desintegración
+        secciones[currentIndex].classList.add("dissolve-out");
         await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Ocultar sección actual
-        secciones[currentIndex].classList.remove("active", "dissolve");
-        
-        // Actualizar índice
+        secciones[currentIndex].classList.remove("active", "dissolve-out");
         currentIndex = newIndex;
-        
-        // Mostrar nueva sección con animación de integración
         secciones[currentIndex].classList.add("active");
-        
-        // Actualizar progreso
         updateProgress(currentIndex);
     };
 
-    // Validaciones de formulario
+    // Validaciones
     const validaciones = {
+        dni: (value) => {
+            if (!/^\d{8}$/.test(value)) {
+                return "El DNI debe tener exactamente 8 dígitos";
+            }
+            if (/^(\d)\1{7}$/.test(value)) {
+                return "DNI inválido: no puede contener todos los dígitos iguales";
+            }
+            if (['12345678', '87654321'].includes(value)) {
+                return "DNI inválido: no puede ser una secuencia numérica";
+            }
+            for (let i = 0; i < value.length - 3; i++) {
+                const pattern = value.slice(i, i + 4);
+                if (/(\d)\1{3}/.test(pattern)) {
+                    return "DNI inválido: no puede contener 4 números iguales consecutivos";
+                }
+            }
+            return "";
+        },
         celular: (value) => {
             const phoneRegex = /^9\d{8}$/;
             return phoneRegex.test(value) ? "" : "El número debe comenzar con 9 y tener 9 dígitos en total";
-        },
-        dni: (value) => {
-            const dniRegex = /^\d{8}$/;
-            return dniRegex.test(value) ? "" : "El DNI debe tener exactamente 8 dígitos";
         },
         EMAIL: (value) => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,35 +81,58 @@ document.addEventListener("DOMContentLoaded", () => {
             return value === email ? "" : "Los correos electrónicos no coinciden";
         },
         contrasena: (value) => {
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            return passwordRegex.test(value) ? "" : 
-                "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres especiales";
+            if (value.length < 8) return "La contraseña debe tener al menos 8 caracteres";
+            if (!/[A-Z]/.test(value)) return "La contraseña debe incluir al menos una mayúscula";
+            if (!/[a-z]/.test(value)) return "La contraseña debe incluir al menos una minúscula";
+            if (!/\d/.test(value)) return "La contraseña debe incluir al menos un número";
+            if (!/[!@#$%^&*]/.test(value)) return "La contraseña debe incluir al menos un carácter especial (!@#$%^&*)";
+            return "";
         }
     };
 
-    // Validación en tiempo real para la contraseña
-    const passwordInput = document.querySelector('input[name="contrasena"]');
-    if (passwordInput) {
-        passwordInput.addEventListener('input', function() {
-            const prevError = this.nextElementSibling;
-            if (prevError && prevError.classList.contains('error-message')) {
-                prevError.remove();
-            }
+    // Generador de alias
+    const generarAliasAleatorio = () => {
+        const prefijos = ['remajud', 'user', 'member'];
+        const adjetivos = ['legal', 'justice', 'law', 'court'];
+        const prefijo = prefijos[Math.floor(Math.random() * prefijos.length)];
+        const adjetivo = adjetivos[Math.floor(Math.random() * adjetivos.length)];
+        let numero = '';
+        for (let i = 0; i < 4; i++) {
+            numero += Math.floor(Math.random() * 10);
+        }
+        return `${prefijo}_${adjetivo}${numero}`;
+    };
 
-            const errorMessage = validaciones.contrasena(this.value);
-            if (errorMessage) {
-                const errorElement = document.createElement("p");
-                errorElement.classList.add("error-message");
-                errorElement.textContent = errorMessage;
-                this.insertAdjacentElement("afterend", errorElement);
-                this.classList.add("error");
-            } else {
-                this.classList.remove("error");
-            }
+    // Configuración del generador de alias
+    const btnGenerarAlias = document.getElementById('generar-alias');
+    const aliasContainer = document.getElementById('alias-container');
+    const aliasCreado = document.getElementById('alias-creado');
+    const inputUsuario = document.getElementById('usuario');
+    const btnCopiarAlias = document.getElementById('copiar-alias');
+
+    if (btnGenerarAlias) {
+        btnGenerarAlias.addEventListener('click', () => {
+            const alias = generarAliasAleatorio();
+            aliasCreado.textContent = alias;
+            aliasContainer.classList.add('show');
         });
     }
 
-    // Función de validación del formulario
+    if (btnCopiarAlias) {
+        btnCopiarAlias.addEventListener('click', () => {
+            const alias = aliasCreado.textContent;
+            navigator.clipboard.writeText(alias).then(() => {
+                inputUsuario.value = alias;
+                btnCopiarAlias.innerHTML = '<i class="bi bi-clipboard-check-fill"></i>';
+                setTimeout(() => {
+                    btnCopiarAlias.innerHTML = '<i class="bi bi-clipboard"></i>';
+                    aliasContainer.classList.remove('show');
+                }, 2000);
+            });
+        });
+    }
+
+    // Validación del formulario
     const isFormValid = (form) => {
         const inputs = form.querySelectorAll("input[required], select[required]");
         let isValid = true;
@@ -103,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let errorMessage = "";
 
             if (input.value.trim() === "") {
-                errorMessage = "Este campo es obligatorio.";
+                errorMessage = "Este campo es obligatorio";
             } 
             else if (validaciones[input.name]) {
                 errorMessage = validaciones[input.name](input.value, form);
@@ -116,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const mes = hoy.getMonth() - fechaNacimiento.getMonth();
 
                 if (edad < 18 || (edad === 18 && mes < 0) || (edad === 18 && mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-                    errorMessage = "Debes ser mayor de 18 años.";
+                    errorMessage = "Debes ser mayor de 18 años";
                 }
             }
 
@@ -155,74 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
-
-    // Evento de finalización del registro
-    document.querySelector(".finalizar").addEventListener("click", async (e) => {
-        e.preventDefault();
-        
-        const form = e.target.closest('form');
-        if (!isFormValid(form)) {
-            return;
-        }
-
-        const datos = {
-            nombre_apellidos: document.querySelector("[name='nombre_apellidos']").value.trim(),
-            correo: document.querySelector("[name='EMAIL']").value.trim(),
-            confirmar_correo: document.querySelector("[name='confirmar_email']").value.trim(),
-            estado_civil: document.querySelector("[name='estado_civil']").value,
-            fecha_nacimiento: document.querySelector("[name='fecha_nacimiento']").value,
-            sexo: document.querySelector("[name='sexo']").value,
-            dni: document.querySelector("[name='dni']").value.trim(),
-            celular: document.querySelector("[name='celular']").value.trim(),
-            departamento: document.querySelector("[name='departamento']").value.trim(),
-            provincia: document.querySelector("[name='provincia']").value.trim(),
-            distrito: document.querySelector("[name='distrito']").value.trim(),
-            direccion: document.querySelector("[name='direccion']").value.trim(),
-            usuario: document.querySelector("[name='usuario']").value.trim(),
-            contrasena: document.querySelector("[name='contrasena']").value,
-            terminos_condiciones: document.querySelector("[name='terminos_condiciones']").checked,
-        };
-
-        try {
-            const response = await fetch("/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(datos),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                await Swal.fire({
-                    title: "¡Registro exitoso!",
-                    text: "¡Bienvenido a REMAJUD!",
-                    icon: "success",
-                    confirmButtonText: "Iniciar sesión"
-                });
-                window.location.href = "/auth/login";
-            } else {
-                Swal.fire({
-                    title: "Error en el registro",
-                    text: result.message,
-                    icon: "error",
-                });
-            }
-        } catch (error) {
-            console.error("Error al enviar el formulario:", error);
-            Swal.fire({
-                title: "Error interno",
-                text: "Hubo un problema al procesar tu registro. Intenta nuevamente.",
-                icon: "error",
-            });
-        }
-    });
-
-    //
-
     // Inicialización
     secciones[currentIndex].classList.add("active");
+    progressLabel.classList.add("show");
     updateProgress(currentIndex);
 });

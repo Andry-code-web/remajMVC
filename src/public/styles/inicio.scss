@@ -1,9 +1,9 @@
 @use 'variables' as *;
 
-body {
+/* body {
     font-family: 'Segoe UI' !important;
 }
-
+ */
 /* General Styles */
 .banner {
     width: 100%;
@@ -53,10 +53,10 @@ body {
 
 /* bases remate */
 
-.bases_remate h2{
-    /* font-family: $fuentePrincipal; */
+.bases_remate h2 {
+    font-family: $fuentePrincipal;
     font-size: 1.5rem;
-  }
+}
 
 /* CATEGORIAS */
 @-webkit-keyframes scroll {
@@ -139,7 +139,7 @@ body {
     width: 100%;
     height: 100%;
     text-decoration: none;
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
     color: $colorterciario;
     font-size: 1.3rem;
     transition: .2s ease;
@@ -197,7 +197,7 @@ body {
 }
 
 .contenedor-expediente {
-    /* font-family: Arial, sans-serif; */
+    font-family: Arial, sans-serif;
     max-width: 1000px;
     margin: 20px auto;
     border: 1px solid #ddd;
@@ -276,7 +276,7 @@ body {
 }
 
 .judicial-card-container-x9875 {
-    /* font-family: Arial, sans-serif; */
+    font-family: Arial, sans-serif;
     max-width: 800px;
     margin: 20px auto;
     border: 1px solid #ccc;
@@ -379,13 +379,13 @@ body {
 
 /* icono combo */
 
-  
-  .icono-precio {
+
+.icono-precio {
     margin-left: 20px;
     font-size: 18px;
-    color: #780103; 
-  }
-  
+    color: #780103;
+}
+
 .seguimiento-button,
 .detalle-button,
 .aviso-button {
@@ -484,7 +484,7 @@ body {
 .banner_info h1 {
     width: 60%;
     font-size: 4.7rem;
-    /* font-family: "fuentePrincipal"; */
+    font-family: "fuentePrincipal";
     font-weight: 700;
     color: #fffcfc;
     text-shadow: 2px 2px 10px black;
@@ -493,7 +493,7 @@ body {
 .banner_info p {
     width: 50%;
     font-size: 1.2rem;
-    /* font-family: "fuenteSecundaria"; */
+    font-family: "fuenteSecundaria";
     font-weight: 300;
     color: #fffcfc;
     text-shadow: 2px 2px 5px black;
@@ -592,7 +592,7 @@ body {
 }
 
 .barraLateralFiltros h4 {
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
     font-weight: 700;
 }
 
@@ -604,7 +604,7 @@ body {
 
 .barraLateralFiltros label {
     font-size: .9rem;
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
     color: $colorterciario;
 }
 
@@ -627,7 +627,7 @@ body {
     border-radius: .5rem;
     color: #fff;
     font-size: 1.1rem;
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
     margin-top: 1rem;
 }
 
@@ -636,6 +636,7 @@ body {
 }
 
 .elementoSubastaIndividual {
+    position: relative;  /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
     border: 1px solid #ddd;
     margin-bottom: 1rem;
     padding: 1rem;
@@ -669,13 +670,15 @@ body {
     align-items: flex-start;
     margin-bottom: 1rem;
     gap: 2rem;
+    padding-right: 50px; /* Add space for the like button */
+
 }
 
 .informacionGeneralSubasta {
     text-decoration: none;
     color: black;
     cursor: pointer;
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
 }
 
 .informacionGeneralSubasta h2 {
@@ -706,7 +709,7 @@ body {
 }
 
 .descripcion_remate {
-    /* font-family: $fuenteParrafos !important; */
+    font-family: $fuenteParrafos !important;
     width: 80%;
     font-size: .9rem;
     font-weight: 200;
@@ -731,15 +734,15 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    /* font-family: $fuenteParrafos; */
+    font-family: $fuenteParrafos;
 }
 
-.anexos{
+.anexos {
     margin-top: 1rem;
 }
 
 .botonAccionSubasta {
-    /* font-family: $fuentePrincipal; */
+    font-family: $fuentePrincipal;
     background: #780103;
     border: none;
     padding: 0.5rem 1rem;
@@ -1109,7 +1112,7 @@ body {
 }
 
 .descripcion_remate {
-    /* font-family: $fuenteParrafos !important; */
+    font-family: $fuenteParrafos !important;
     width: 100%;
     font-size: .9rem;
     font-weight: 200;
@@ -1122,9 +1125,7 @@ body {
     max-width: calc(100% - 270px);
 }
 
-
-//nuevos cambios 
-
+//nuevos cambios
 
 /* Contenedor del panel de remate */
 #remate.content-panel-j3267 {
@@ -1182,5 +1183,68 @@ body {
     #remate .remate-columns {
         flex-direction: column;
         gap: 20px;
+    }
+}
+
+.payment-modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semi-transparente */
+    z-index: 1000;
+    /* Asegurarse de que esté por encima de otros elementos */
+}
+
+//nuevos cambios 17 enero 2024
+
+/* Estilos para el botón de "Me Gusta" */
+.casilla-de-verificacion-me-gusta {
+    display: none;
+}
+
+.contenedor-boton-me-gusta {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.icono-corazon-me-gusta {
+    color: #cccccc;
+    transition: color 0.2s ease;
+}
+
+.casilla-de-verificacion-me-gusta:checked+.contenedor-boton-me-gusta .icono-corazon-me-gusta {
+    color: #ff4136;
+}
+
+.casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+    position: absolute;  /* Esto hace que el botón se posicione de forma absoluta */
+    bottom: 90px;       /* Esto controla qué tan abajo está el botón */
+    right: 20px;        /* Esto controla qué tan a la derecha está el botón */
+    z-index: 1;         /* Esto asegura que el botón esté por encima de otros elementos */
+}
+
+.contenedor-boton-me-gusta:active {
+    animation: efecto-pulsacion 0.3s ease;
+}
+
+@keyframes efecto-pulsacion {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }

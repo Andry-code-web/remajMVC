@@ -36,7 +36,7 @@
 /* Lado derecho - Formulario */
 .right-side {
   width: 52%;
-  padding: 1.5rem;
+  padding: 2rem;
   background-color: #fff;
   overflow-y: auto;
   display: flex;

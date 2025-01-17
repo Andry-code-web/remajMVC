@@ -1,5 +1,3 @@
-
-
 <link rel="stylesheet" href="/css/admin/admin.css">
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +63,7 @@
     <% remates.forEach(function(remate) { %>
     <div class="property-card" data-id="">
       <div class="auction-number-container">
-        <span class="auction-number">Remate N° </span>
+        <span class="auction-number">Remate N° <%= remate.id %> </span>
       </div>
 
       <div class="property-image-container">
@@ -79,59 +77,25 @@
         </span>
       </div>
       <div class="property-buttons">
-        <button class="property-button" onclick="abrirModalSegimiento(<%= remate.id %>)">Seguimiento</button>
-        <button class="property-button" onclick="abrirModalDetalles(<%= remate.id %>)">Detalles</button>
-        <button class="property-button" onclick="abrirModalInmuebles(<%= remate.id %>)">Inmuebles</button>
-        <button class="property-button" data-remate-id="<%= remate.id %>" onclick="abrirModalcronograma(<%= remate.id %>)">
+        <button class="property-button" onclick="abrirModales('Seguimiento', <%= remate.id %>)">Seguimiento</button>
+        <button class="property-button" onclick="abrirModales('Detalles', <%= remate.id %>)">Detalles</button>
+        <button class="property-button" onclick="abrirModales('Inmuebles', <%= remate.id %>)">Inmuebles</button>
+        <button class="property-button" onclick="abrirModales('Cronograma', <%= remate.id %>)">
           Cronograma
           <div class="progress" style="width: 100%;">
             <div id="progress-bar-<%= remate.id %>" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-
-          <div class="search-container">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" id="buscador" class="search-input"
-              placeholder="Buscar por ubicación, precio o categoría..." onkeyup="buscarRemate()">
-          </div>
-
-          <div class="properties-grid" id="rematesGrid">
-            <% remates.forEach(function(remate) { %>
-              <div class="property-card" data-id="">
-                <div class="auction-number-container">
-                  <span class="auction-number">Remate N°  <%= remate.id %></span>
-                </div>
-
-                <div class="property-image-container">
-                  <% if (remate.imagen) { %>
-                    <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image">
-                    <% } else { %>
-                      <img src="/img/casa2.jfif" alt="Propiedad" class="property-image">
-                      <% } %>
-                        <span
-                          class="property-status <%= remate.estado === 'en_curso' ? 'status-active' : 'status-inactive' %>">
-                          <%= remate.estado %>
-                        </span>
-                </div>
-                <div class="property-buttons">
-                  <button class="property-button" onclick="abrirModalSegimiento(<%= remate.id %>)">Seguimiento</button>
-                  <button class="property-button" onclick="abrirModalDetalles(<%= remate.id %>)">Detalles</button>
-                  <button class="property-button" onclick="abrirModalInmuebles(<%= remate.id %>)">Inmuebles</button>
-                  <button class="property-button" data-remate-id="<%= remate.id %>"
-                    onclick="abrirModalcronograma(<%= remate.id %>)">
-                    Cronograma
-                    <div class="progress" style="width: 100%;">
-                      <div id="progress-bar-<%= remate.id %>" class="progress-bar" role="progressbar" style="width: 0%;"
-                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </button>
+        </button>
 
 
       </div>
+
       <div class="property-content">
         <h3 class="property-title">
           <%= remate.ubicacion %>
         </h3>
-        <div class="property-price">$<%= remate.precios %>
+        <div class="property-price">
+          $<%= remate.precios %>
         </div>
         <div class="property-details">
           <div class="detail-item">
@@ -159,7 +123,7 @@
             <i class="bi bi-pencil"></i>
             Editar
           </button>
-          <button class="action-button" onclick="eliminarRemate(, '<%= remate.ubicacion %>')">
+          <button class="action-button" onclick="eliminarRemate('<%= remate.ubicacion %>')">
             <i class="bi bi-trash"></i>
             Eliminar
           </button>
@@ -190,8 +154,117 @@
 <%- include('formCronograma') %>
 
 <script>
-  // Funciones de utilidad
-  const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
+  /* CERRAR MODALES */
+  function cerrarModales() {
+    const nuevoRemateModal = document.getElementById('modalNuevoRemate');
+    const editarRemateModal = document.getElementById('editModal');
+
+    const seguimientoModal = document.getElementById('seguimientoModal');
+    const detallesModal = document.getElementById('tarjetaDetalles');
+    const inmueblesModal = document.getElementById('tarjetaInmuebles');
+    const cronogramaModal = document.getElementById('tarjetaCronograma');
+
+
+    const modales = [nuevoRemateModal, editarRemateModal, seguimientoModal, detallesModal, inmueblesModal, cronogramaModal];
+
+    modales.forEach(modal => {
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Reactivar el scroll del cuerpo
+    document.body.classList.remove('body-no-scroll');
+  }
+
+  /* ABRIR MODALES */
+  function abrirModales(modalName, remateId) {
+    const editaModal = document.getElementById('editModal');
+
+    const seguimientoModal = document.getElementById('seguimientoModal');
+    const detallesModal = document.getElementById('tarjetaDetalles');
+    const inmueblesModal = document.getElementById('tarjetaInmuebles');
+    const cronogramaModal = document.getElementById('tarjetaCronograma');
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    document.body.appendChild(overlay);
+
+    let activeModal = null;
+
+    const modalMap = {
+      'Seguimiento': seguimientoModal,
+      'Detalles': detallesModal,
+      'Inmuebles': inmueblesModal,
+      'Cronograma': cronogramaModal,
+    };
+
+    function openModal(modal) {
+      if (activeModal) {
+        closeModal(activeModal);
+      }
+      modal.style.display = 'block';
+      overlay.style.display = 'block';
+      activeModal = modal;
+      document.body.style.overflow = 'hidden';
+
+      // Agregar lógica personalizada para cada modal si es necesario
+      if (modalName === 'Cronograma') {
+        console.log(`Mostrando cronograma para el remate ID: ${remateId}`);
+        // Aquí puedes inicializar la barra de progreso o cargar datos
+      }
+    }
+
+    function closeModal(modal) {
+      if (modal) {
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+        activeModal = null;
+      }
+    }
+
+    // Cerrar la tarjeta con Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && activeModal) {
+        closeModal(activeModal);
+      }
+    });
+
+    // Prevenir cierre del modal al hacer clic dentro de él
+    Object.values(modalMap).forEach(modal => {
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+    });
+
+    // Abrir el modal correspondiente
+    const modalToOpen = modalMap[modalName];
+    if (modalToOpen) {
+      openModal(modalToOpen);
+    } else {
+      console.error(`No se encontró el modal para el nombre: ${modalName}`);
+    }
+
+  }
+
+  /* cerrar nuevo remate */
+  function cerrarModalNuevoRemate() {
+    // Ocultar el modal
+    document.getElementById('modalNuevoRemate').style.display = 'none';
+
+    // Limpiar el formulario y el contenedor de previsualización de imágenes
+    document.getElementById('formNuevoRemate').reset();
+    document.getElementById('image-preview-container').innerHTML = '';
+
+    // Reactivar el scroll del cuerpo
+    document.body.classList.remove('body-no-scroll');
+  }
+
+
+
 
   // Gestión de métricas
   function actualizarMetricas() {
@@ -260,26 +333,6 @@
     });
   }
 
-  // Gestión de nuevo remate
-  function abrirModalNuevoRemate() {
-    // Mostrar el modal
-    document.getElementById('modalNuevoRemate').style.display = 'block';
-
-    // Deshabilitar el scroll del cuerpo
-    document.body.classList.add('body-no-scroll');
-  }
-
-  function cerrarModalNuevoRemate() {
-    // Ocultar el modal
-    document.getElementById('modalNuevoRemate').style.display = 'none';
-
-    // Limpiar el formulario y el contenedor de previsualización de imágenes
-    document.getElementById('formNuevoRemate').reset();
-    document.getElementById('image-preview-container').innerHTML = '';
-
-    // Reactivar el scroll del cuerpo
-    document.body.classList.remove('body-no-scroll');
-  }
 
   // Gestión de edición de remate no funciona cerra fuera modal
   function abrirModalEditar(id) {
@@ -330,40 +383,6 @@
     document.body.classList.remove('body-no-scroll');
   }
 
-  async function guardarCambios(event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const id = document.getElementById('editId').value;
-
-    try {
-      const response = await fetch(`/admin/editar-remate/${id}`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        Swal.fire({
-          title: '¡Éxito!',
-          text: 'Remate actualizado correctamente',
-          icon: 'success',
-        }).then(() => {
-          window.location.reload();
-        });
-      } else {
-        throw new Error(data.message || 'Error al actualizar el remate');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-        title: 'Error',
-        text: error.message,
-        icon: 'error',
-      });
-    }
-  }
 
   // Event Listeners falta cerrar fuera
   document.addEventListener('DOMContentLoaded', () => {
@@ -436,297 +455,8 @@
       });
     }
 
-    // Botón de cerrar sesión admin
-    document.getElementById('logout-button').addEventListener('click', function() {
-      window.location.href = '/admin/logout';
-    });
-
     // Botón de cancelar en el modal de edición
     document.querySelector('.boton_cancelar_formulario_editar').addEventListener('click', cerrarModalEditar);
-  });
-
-
-
-  // Abrir modales
-  document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.property-button');
-    const tarjetaDetalles = document.getElementById('tarjetaDetalles');
-    const tarjetaInmuebles = document.getElementById('tarjetaInmuebles');
-
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-    document.body.appendChild(overlay);
-
-    let activeModal = null;
-
-    const modalMap = {
-      'Detalles': tarjetaDetalles,
-      'Inmuebles': tarjetaInmuebles,
-    };
-
-    function openModal(modal) {
-      if (activeModal) {
-        closeModal(activeModal);
-      }
-      modal.style.display = 'block';
-      overlay.style.display = 'block';
-      activeModal = modal;
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(modal) {
-      if (modal) {
-        modal.style.display = 'none';
-        overlay.style.display = 'none';
-        document.body.style.overflow = '';
-        activeModal = null;
-      }
-    }
-
-    buttons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const buttonText = this.textContent.trim();
-        const modal = modalMap[buttonText];
-
-        if (modal) {
-          openModal(modal);
-        }
-      });
-    });
-
-    overlay.addEventListener('click', function() {
-      closeModal(activeModal);
-    });
-
-    const cancelButtons = document.querySelectorAll([
-      '.boton_cancelar_formulario_detalles',
-      '.boton_cancelar_formulario_inmuebles',
-      '.boton_cancelar_formulario_cronograma'
-    ].join(','));
-
-    cancelButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeModal(activeModal);
-      });
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && activeModal) {
-        closeModal(activeModal);
-      }
-    });
-
-    [tarjetaDetalles, tarjetaInmuebles].forEach(modal => {
-      if (modal) {
-        modal.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
-      }
-    });
-  });
-
-  // Funcionalidad para el modal de Detalles
-  function abrirModalDetalles(remateId) {
-    const modal = document.getElementById(`tarjetaDetalles${remateId}`);
-    if (!modal) return;
-
-    // Centrar el modal
-    modal.style.display = 'block';
-    modal.style.position = 'fixed';
-    modal.style.top = '50%';
-    modal.style.left = '50%';
-    modal.style.transform = 'translate(-50%, -50%)';
-
-    // Agregar evento para cerrar el modal al hacer clic fuera
-    window.addEventListener('click', cerrarModalDetallesAlHacerClickFuera);
-
-    // Cargar datos si existe el ID
-    if (remateId) {
-      fetch(`/admin/detalles/${remateId}`)
-        .then(response => response.json())
-        .then(data => {
-          // Llenar los campos del formulario con los datos
-          document.getElementById(`expediente${remateId}`).value = data.expediente || '';
-          document.getElementById(`distrito_judicial${remateId}`).value = data.distrito_judicial || '';
-          document.getElementById(`organo_juridiccional${remateId}`).value = data.organo_juridiccional || '';
-          document.getElementById(`instancia${remateId}`).value = data.instancia || '';
-          document.getElementById(`juez${remateId}`).value = data.juez || '';
-          document.getElementById(`especialista${remateId}`).value = data.especialista || '';
-          document.getElementById(`materia${remateId}`).value = data.materia || '';
-          document.getElementById(`resolucion${remateId}`).value = data.resolucion || '';
-          document.getElementById(`fecha_resolucion${remateId}`).value = data.fecha_resolucion || '';
-          document.getElementById(`nro_convocatoria${remateId}`).value = data.nro_convocatoria || '';
-          document.getElementById(`tipo_cambio${remateId}`).value = data.tipo_cambio || '';
-          document.getElementById(`tasacion${remateId}`).value = data.tasacion || '';
-          document.getElementById(`precio_base${remateId}`).value = data.precio_base || '';
-          document.getElementById(`incremento_ofertas${remateId}`).value = data.incremento_ofertas || '';
-          document.getElementById(`arancel${remateId}`).value = data.arancel || '';
-          document.getElementById(`oblaje${remateId}`).value = data.oblaje || '';
-          document.getElementById(`descripcion${remateId}`).value = data.descripcion || '';
-        })
-        .catch(error => console.error('Error:', error));
-    }
-  }
-
-  function cerrarModalDetalles() {
-    const modal = document.getElementById(`tarjetaDetalles${remateId}`);
-    if (modal) {
-      modal.style.display = 'none';
-    }
-
-    // Quitar el evento de clic fuera
-    window.removeEventListener('click', cerrarModalDetallesAlHacerClickFuera);
-  }
-
-  function cerrarModalDetallesAlHacerClickFuera(event) {
-    const modal = document.getElementById(`tarjetaDetalles${remateId}`);
-    if (!modal) return;
-
-    // Verificar si el clic ocurrió fuera del contenido del modal
-    if (!modal.contains(event.target) && event.target !== modal) {
-      cerrarModalDetalles();
-    }
-  }
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', () => {
-    // Botón cancelar
-    const btnCancelar = document.querySelector('.boton_cancelar_formulario_detalles');
-    if (btnCancelar) {
-      btnCancelar.addEventListener('click', cerrarModalDetalles);
-    }
-
-    // Cerrar al hacer click fuera del modal
-    window.addEventListener('click', (e) => {
-      const modal = document.getElementById(`tarjetaDetalles${remateId}`);
-      if (e.target === modal) {
-        cerrarModalDetalles();
-      }
-    });
-
-    // Manejar el envío del formulario
-    const form = document.getElementById(`formulario_detalles${remateId}`);
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-
-        try {
-          const response = await fetch('/admin/editar-detalles', {
-            method: 'POST',
-            body: formData
-          });
-
-          const data = await response.json();
-          if (data.success) {
-            alert('Detalles guardados correctamente');
-            cerrarModalDetalles();
-          } else {
-            throw new Error(data.message || 'Error al guardar los detalles');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Error al guardar los detalles');
-        }
-      });
-    }
-  });
-
-  // Funcionalidad para el modal de Inmuebles
-  function abrirModalInmuebles(remateId) {
-    const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
-    if (!modal) return;
-
-    // Centrar el modal
-    modal.style.display = 'block';
-    modal.style.position = 'fixed';
-    modal.style.top = '50%';
-    modal.style.left = '50%';
-    modal.style.transform = 'translate(-50%, -50%)';
-
-    // Agregar evento para cerrar el modal al hacer clic fuera
-    window.addEventListener('click', cerrarModalInmueblesAlHacerClickFuera);
-
-    // Cargar datos si existe el ID
-    if (remateId) {
-      fetch(`/admin/inmuebles/${remateId}`)
-        .then(response => response.json())
-        .then(data => {
-          // Llenar los campos del formulario con los datos
-          document.getElementById(`partida_registral${remateId}`).value = data.partida_registral || '';
-          document.getElementById(`tipo_inmueble${remateId}`).value = data.tipo_inmueble || '';
-          document.getElementById(`direccion${remateId}`).value = data.direccion || '';
-          document.getElementById(`carga_ogravamen${remateId}`).value = data.carga_ogravamen || '';
-          document.getElementById(`porcentaje_rematar${remateId}`).value = data.porcentaje_rematar || '';
-        })
-        .catch(error => console.error('Error:', error));
-    }
-  }
-
-  function cerrarModalInmuebles() {
-    const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
-    if (modal) {
-      modal.style.display = 'none';
-    }
-
-    // Quitar el evento de clic fuera
-    window.removeEventListener('click', cerrarModalInmueblesAlHacerClickFuera);
-  }
-
-  function cerrarModalInmueblesAlHacerClickFuera(event) {
-    const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
-    if (!modal) return;
-
-    // Verificar si el clic ocurrió fuera del contenido del modal
-    if (!modal.contains(event.target) && event.target !== modal) {
-      cerrarModalInmuebles();
-    }
-  }
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', () => {
-    // Botón cancelar
-    const btnCancelar = document.querySelector('.boton_cancelar_formulario_inmuebles');
-    if (btnCancelar) {
-      btnCancelar.addEventListener('click', cerrarModalInmuebles);
-    }
-
-    // Cerrar al hacer click fuera del modal
-    window.addEventListener('click', (e) => {
-      const modal = document.getElementById(`tarjetaInmuebles${remateId}`);
-      if (e.target === modal) {
-        cerrarModalInmuebles();
-      }
-    });
-
-    // Manejar el envío del formulario
-    const form = document.getElementById(`formulario_inmuebles${remateId}`);
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-
-        try {
-          const response = await fetch('/admin/editar-inmuebles', {
-            method: 'POST',
-            body: formData
-          });
-
-          const data = await response.json();
-          if (data.success) {
-            alert('Inmuebles guardados correctamente');
-            cerrarModalInmuebles();
-          } else {
-            throw new Error(data.message || 'Error al guardar los inmuebles');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Error al guardar los inmuebles');
-        }
-      });
-    }
   });
 </script>
 
@@ -812,48 +542,6 @@
         });
     });
   });
-
-  function abrirModalcronograma(remateId) {
-    const overlay = document.createElement('div');
-    overlay.className = 'overlay_sistema_remates';
-    document.body.appendChild(overlay);
-
-    const modal = document.getElementById('tarjetaCronograma');
-    const remateIdInput = document.getElementById('remate_id');
-    remateIdInput.value = remateId;
-    modal.style.display = 'block';
-
-    // Obtener el cronograma actual y filtrar las opciones del menú desplegable
-    fetch(`/admin/obtener-cronograma?remates_id=${remateId}`)
-      .then(response => response.json())
-      .then(cronograma => {
-        const select = document.getElementById('nombre');
-        const options = select.options;
-
-        for (let i = 0; i < options.length; i++) {
-          if (cronograma.includes(options[i].value)) {
-            options[i].style.display = 'none';
-          } else {
-            options[i].style.display = 'block';
-          }
-        }
-      })
-      .catch(error => {
-        console.error('Error al obtener el cronograma:', error);
-      });
-
-    overlay.addEventListener('click', cerrarModalCronograma);
-  }
-
-  function cerrarModalCronograma() {
-    const modal = document.getElementById('tarjetaCronograma');
-    const overlay = document.querySelector('.overlay_sistema_remates');
-
-    modal.style.display = 'none';
-    if (overlay) {
-      overlay.remove();
-    }
-  }
 
   function actualizarProgreso(remateId) {
     fetch(`/admin/obtener-cronograma?remates_id=${remateId}`)

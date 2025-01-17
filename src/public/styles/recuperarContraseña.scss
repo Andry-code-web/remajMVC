@@ -1,0 +1,132 @@
+@use "variables" as *;
+
+.contenedor-general {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* panel izquierdo */
+.left-panel {
+    width: 30%;
+    background-color: #c41e3a;
+    padding: 2rem;
+    color: #fff;
+
+    .profile-section {
+        text-align: left;
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .logo-container {
+            margin-top: 2rem;
+            text-align: center;
+
+            .logo {
+                max-width: 200px;
+                height: auto;
+            }
+        }
+    }
+}
+
+/* panel derecho */
+
+.right-panel {
+    width: 70%;
+    padding: 2rem;
+
+    .recovery-form {
+        max-width: 600px;
+        margin: 0 auto;
+
+        .main-title {
+            background-color: #c41e3a;
+            color: #fff;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            font-size: 1.5rem;
+        }
+
+        .form-content {
+            padding: 0 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+
+            label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: #333;
+            }
+
+            input {
+                width: 100%;
+                padding: 0.75rem;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 1rem;
+
+                &:focus {
+                    outline: none;
+                    border-color: #c41e3a;
+                }
+            }
+        }
+
+        .verify-button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: darken(#ff6b6b, 10%);
+            }
+        }
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .form-wrapper {
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%;
+    }
+
+    .left-panel {
+        padding: 1rem;
+    }
+}

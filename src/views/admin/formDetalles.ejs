@@ -1,197 +1,178 @@
 <% remates.forEach(function(remate) { %>
-  <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none; position: absolute;">
-    <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
-    <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
+<div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none">
+  <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
+  <form method="post" action="/admin/editar-detalles" id="formulario_detalles">
 
-      <!-- Expediente -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
-            <input type="text" id="expediente" name="expediente"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
-        </div>
-
-        <!-- Distrito Judicial -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito
-              Judicial</label>
-            <input type="text" id="distrito_judicial" name="distrito_judicial"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
+    <!-- Expediente -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
+          <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles" required>
         </div>
       </div>
 
-       <!-- Organo juridisccional -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano
-              Jurisdiccional</label>
-            <input type="text" id="organo_juridiccional" name="organo_juridiccional"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
+      <!-- Distrito Judicial -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito
+            Judicial</label>
+          <input type="text" id="distrito_judicial" name="distrito_judicial" class="entrada_texto_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- instancia -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
-            <input type="text" id="instancia" name="instancia"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
+    <!-- Organo juridisccional -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano
+            Jurisdiccional</label>
+          <input type="text" id="organo_juridiccional" name="organo_juridiccional" class="entrada_texto_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- juez -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
-            <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles"
-              required>
-          </div>
+      <!-- instancia -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
+          <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- especialista -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
-            <input type="text" id="especialista" name="especialista"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
+    <!-- juez -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
+          <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- materia -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
-            <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles"
-              required>
-          </div>
+      <!-- especialista -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
+          <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles" required>
         </div>
-        
-        <!-- resolucion -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
-            <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles"
-              required></textarea>
-          </div>
+      </div>
+    </div>
+
+    <!-- materia -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
+          <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- fecha resolucion -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha
-              Resolución</label>
-            <input type="date" id="fecha_resolucion" name="fecha_resolucion"
-              class="entrada_fecha_formulario_detalles" required>
-          </div>
+      <!-- resolucion -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
+          <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles" required></textarea>
         </div>
+      </div>
+    </div>
 
-        <!-- anexo -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
-            <input type="file" id="archivo" name="archivo" accept="application/pdf"
-              class="entrada_archivo_formulario_detalles" required>
-          </div>
+    <!-- fecha resolucion -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha
+            Resolución</label>
+          <input type="date" id="fecha_resolucion" name="fecha_resolucion" class="entrada_fecha_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- convocatoria -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
-            <input type="text" id="nro_convocatoria" name="nro_convocatoria"
-              class="entrada_texto_formulario_detalles" required>
-          </div>
+      <!-- anexo -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="archivo" class="etiqueta_campo_formulario_detalles">Archivo PDF</label>
+          <input type="file" id="archivo" name="archivo" accept="application/pdf" class="entrada_archivo_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- tipo cambio -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
-            <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+    <!-- convocatoria -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
+          <input type="text" id="nro_convocatoria" name="nro_convocatoria" class="entrada_texto_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- tasacion -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
-            <input type="number" id="tasacion" name="tasacion" step="0.01"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+      <!-- tipo cambio -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
+          <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001" class="entrada_numero_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- precio base -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
-            <input type="number" id="precio_base" name="precio_base" step="0.01"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+    <!-- tasacion -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="tasacion" class="etiqueta_campo_formulario_detalles">Tasación</label>
+          <input type="number" id="tasacion" name="tasacion" step="0.01" class="entrada_numero_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- Incremento entre ofertas -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento
-              entre ofertas</label>
-            <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+      <!-- precio base -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
+          <input type="number" id="precio_base" name="precio_base" step="0.01" class="entrada_numero_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- Arancel -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
-            <input type="number" id="arancel" name="arancel" step="0.01"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+    <!-- Incremento entre ofertas -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="incremento_ofertas" class="etiqueta_campo_formulario_detalles">Incremento
+            entre ofertas</label>
+          <input type="number" id="incremento_ofertas" name="incremento_ofertas" step="0.01" class="entrada_numero_formulario_detalles" required>
         </div>
       </div>
 
-      <!-- Oblaje -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
-            <input type="number" id="oblaje" name="oblaje" step="0.01"
-              class="entrada_numero_formulario_detalles" required>
-          </div>
+      <!-- Arancel -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
+          <input type="number" id="arancel" name="arancel" step="0.01" class="entrada_numero_formulario_detalles" required>
         </div>
+      </div>
+    </div>
 
-        <!-- Descripcion -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
-            <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles"
-              required></textarea>
-          </div>
+    <!-- Oblaje -->
+    <div class="fila_campos_formulario_detalles">
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
+          <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles" required>
         </div>
       </div>
-      <div class="contenedor_botones_formulario_detalles">
-        <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles"
-          onclick="cerrarModalDetalles()">Cancelar Registro</button>
-        <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
-          Detalles</button>
+
+      <!-- Descripcion -->
+      <div class="columna_campo_formulario_detalles">
+        <div class="grupo_campo_formulario_detalles">
+          <label for="descripcion" class="etiqueta_campo_formulario_detalles">Descripción</label>
+          <textarea id="descripcion" name="descripcion" class="entrada_texto_formulario_detalles" required></textarea>
+        </div>
       </div>
-    </form>
-  </div>
-  <% }); %>
+    </div>
+    <div class="contenedor_botones_formulario_detalles">
+      <button type="button" class="boton_formulario_detalles boton_cancelar_formulario_detalles" onclick="cerrarModales()">Cancelar Registro</button>
+      <button type="submit" class="boton_formulario_detalles boton_guardar_formulario_detalles">Guardar
+        Detalles</button>
+    </div>
+  </form>
+</div>
+<% }); %>

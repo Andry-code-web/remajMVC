@@ -1,3 +1,53 @@
+<style>
+    /* ... (estilos CSS anteriores sin cambios) ... */
+
+    .botones-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .boton-enviar-comprobante {
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+        font-size: 18px;
+        border: none;
+        background: none;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .boton-enviar-comprobante::before {
+        margin-left: auto;
+    }
+
+    .boton-enviar-comprobante::after,
+    .boton-enviar-comprobante::before {
+        content: '';
+        width: 0%;
+        height: 2px;
+        background: #4CAF50;
+        display: block;
+        transition: 0.5s;
+    }
+
+    .boton-enviar-comprobante:hover::after,
+    .boton-enviar-comprobante:hover::before {
+        width: 100%;
+    }
+
+    .boton-enviar-comprobante:hover {
+        color: #4CAF50;
+    }
+
+    /* Ajuste para el botón de retroceder */
+    .botonsalir {
+        margin-bottom: 0;
+    }
+</style>
+
 <div class="payment-container">
     <div class="payment-tabs">
         <div class="tab active" data-tab="card">
@@ -46,39 +96,44 @@
     <div class="security-badges">
         <small>Enviar tu comprobante de pago a:</small>
         <div>📧 remajud@remajud.com</div>
-        <button class="botonsalir" id="retroceder">Retroceder</button>
+        <div class="botones-container">
+            <button class="botonsalir" id="retroceder">Retroceder</button>
+            <button class="boton-enviar-comprobante" id="enviarComprobanteBoton">Enviar comprobante</button>
+        </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Tab switching functionality
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            // Add active class to clicked tab
-            tab.classList.add('active');
+    // Función para cambiar de pestaña
+    const switchTab = (tab) => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+        document.querySelector(tab.dataset.tab === 'card' ? '.card-section' : '.yape-section').classList.add('active');
+    };
 
-            // Hide all sections
-            document.querySelectorAll('.form-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            // Show selected section
-            const targetSection = tab.dataset.tab === 'card' ? '.card-section' : '.yape-section';
-            document.querySelector(targetSection).classList.add('active');
-        });
+    // Event listener para cambiar de pestaña
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab));
     });
 
-    // Card number formatting
-    /* document.getElementById('cardNumber').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
-        let formattedValue = '';
-        for (let i = 0; i < value.length; i++) {
-            if (i > 0 && i % 4 === 0) {
-                formattedValue += ' ';
+    // Event listener para el botón "Enviar comprobante"
+    document.getElementById('enviarComprobanteBoton').addEventListener('click', () => {
+        Swal.fire({
+            title: 'Escanea el siguiente QR para enviar tu comprobante',
+            text: 'Serás redirigido con un asesor de la empresa para poder comprobar tu pago y se habilitará tu ingreso.',
+            imageUrl: '/img/qr_metodo_pago.png',
+            imageWidth: 300,
+            imageHeight: 300,
+            imageAlt: 'Código QR',
+            showCancelButton: true,
+            confirmButtonText: 'Continuar',
+            cancelButtonText: 'Retroceder'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'https://wa.link/2tmvgy';
             }
-            formattedValue += value[i];
-        }
-        e.target.value = formattedValue;
-    }); */
+        });
+    });
 </script>

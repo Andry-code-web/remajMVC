@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="/css/metodopago/metodopago.css">
 <section class="banner" id="banner">
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -199,7 +200,7 @@
       <div class="imagenPropiedadSubasta">
         <div class="contenedor_image">
           <% if (remate.imagen) { %>
-          <a href="/auctions/<%= remate.id %>" style="text-decoration: none;">
+            <a href="javascript:void(0);" style="text-decoration: none;" onclick="mostrarAlerta(<%= remate.id %>)">
             <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Imagen del inmueble" class="imagen-propiedad">
           </a>
           <% } else { %>
@@ -209,7 +210,7 @@
       </div>
       <div class="contenidoInformativoSubasta">
         <div class="detallesEspecificosSubasta">
-          <a href="/auctions/<%= remate.id %>" class="informacionGeneralSubasta">
+          <a id="informacion_general_subasta" href="javascript:void(0);" class="informacionGeneralSubasta" onclick="mostrarAlerta(<%= remate.id %>)">
 
             <h2>Remate N° <%= String(remate.id).padStart(4, '0') %></h2>
             <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
@@ -486,6 +487,13 @@
   </div>
 </section>
 
+<!-- Contenedor para el modal de método de pago -->
+<div class="payment-modal-overlay" id="metodo-pago-container" style="display: none;">
+  <div class="payment-modal-content">
+    <%- include('../layouts/Metodopago') %>
+  </div>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const seguimientoButtons = document.querySelectorAll('.seguimiento-button');
@@ -705,6 +713,57 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
       tarjeta.style.display = 'none';
     }
   }
+</script>
+
+<!-- alerta al ingresar a la subastas  -->
+<script>
+  function mostrarAlerta(remateId) {
+    Swal.fire({
+      title: `Remate N° ${String(remateId).padStart(4, '0')}`,
+      text: "Solo se puede acceder si realizaste el previo pago y estas correctamente validado",
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Siguiente',
+      denyButtonText: 'Depositar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Intentar acceder a la subasta
+        fetch(`/auctions/${remateId}`)
+          .then(response => {
+            if (response.redirected) {
+              // Si la respuesta es una redirección, significa que el usuario no está autenticado
+              Swal.fire({
+                title: 'INICIO DE SESIÓN OBLIGATORIA',
+                text: 'Debes iniciar sesión para poder acceder a esta página',
+                showCancelButton: true,
+                confirmButtonText: 'Iniciar Sesión',
+                cancelButtonText: 'Retroceder'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = '/auth/login';
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  mostrarAlerta(remateId);
+                }
+              });
+            } else {
+              // Si la respuesta no es una redirección, redirigir al usuario a la subasta
+              window.location.href = `/auctions/${remateId}`;
+            }
+          });
+      } else if (result.isDenied) {
+        document.getElementById('metodo-pago-container').style.display = 'block';
+        Swal.close(); // Cerrar la alerta
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnRetroceder = document.getElementById('retroceder');
+    btnRetroceder.addEventListener('click', () => {
+      document.getElementById('metodo-pago-container').style.display = 'none';
+      mostrarAlerta(remateId); // Ver la SweetAlert otra vez
+    });
+  });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -11,7 +11,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
-    margin-top: 4rem;
+    margin-top: 3.8rem;
 }
 
 .carousel {
@@ -615,6 +615,10 @@
     border-radius: .8rem;
 }
 
+.barraLateralFiltros input:hover{
+    border: 1px solid #780103;
+}
+
 .barraLateralFiltros input:focus {
     outline: none;
 }
@@ -645,6 +649,12 @@
     background: #FBF8F3;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: .5s ease;
+}
+
+.elementoSubastaIndividual:hover{
+    transform: scale(1.02);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 47%);
 }
 
 .imagenPropiedadSubasta {
@@ -1041,7 +1051,7 @@
 
 .contenedor-campo-formulario-ubicacion,
 .contenedor-campo-formulario-categoria {
-    margin-bottom: 20px;
+    margin-bottom: .5rem;
 }
 
 .contenedor-campo-formulario-ubicacion label,
@@ -1073,7 +1083,7 @@
 
 .selector-desplegable-ubicacion:hover,
 .selector-desplegable-categoria:hover {
-    border-color: #999999;
+    border-color: #780103;
 }
 
 .selector-desplegable-ubicacion:focus,
@@ -1085,7 +1095,7 @@
 
 .selector-desplegable-ubicacion option[value=""],
 .selector-desplegable-categoria option[value=""] {
-    color: #999999;
+    color: #780103;
 }
 
 .detallesEspecificosSubasta {

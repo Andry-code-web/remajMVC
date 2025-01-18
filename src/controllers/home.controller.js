@@ -240,3 +240,36 @@ exports.checkOpportunities = async (req, res) => {
     res.status(500).json({ message: 'Error al verificar validación' });
   }
 };
+
+/* funcion dar like  */
+
+exports.toggleLike = async (req, res) => {
+  const { remateId } = req.body;
+  const userId = req.user.id;
+
+  try {
+    if (await Home.hasLiked(userId, remateId)) {
+      await Home.removeLike(userId, remateId);
+      res.json({ message: 'Like removido' });
+    } else {
+      await Home.addLike(userId, remateId);
+      res.json({ message: 'Like añadido' });
+    }
+  } catch (error) {
+    console.error('Error al manejar like:', error);
+    res.status(500).json({ error: 'Error al manejar like' });
+  }
+};
+/* verificación de likes */
+exports.checkLike = async (req, res) => {
+  const { remateId } = req.query;
+  const userId = req.user.id;
+
+  try {
+    const liked = await Home.hasLiked(userId, remateId);
+    res.json({ liked });
+  } catch (error) {
+    console.error('Error al verificar like:', error);
+    res.status(500).json({ error: 'Error al verificar like' });
+  }
+};

@@ -1232,5 +1232,12 @@
     transform: scale(1);
   }
 }
+.contenedor-boton-me-gusta {
+  color: gray; /* Color por defecto */
+}
+
+.contenedor-boton-me-gusta.liked {
+  color: red; /* Color cuando el like está activado */
+}
 
 /*# sourceMappingURL=inicio.css.map */

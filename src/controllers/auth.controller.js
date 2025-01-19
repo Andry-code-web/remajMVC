@@ -101,3 +101,113 @@ exports.logout = (req, res) => {
   });
 };
 
+// Recuperar contraseña
+exports.forgotPassword_vista = async (req, res) => {
+  try {
+    res.render('layouts/auth', {
+      content: 'auth/recuContra'
+    });
+  } catch (error) {
+    console.error('Error al cargar la vista de recuperación:', error);
+    res.status(500).render('error', { message: 'Error al cargar la página de recuperación' });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Verificar si el email existe
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(404).json({ message: "No existe una cuenta con este correo electrónico." });
+    }
+
+    // Generar token temporal
+    const resetToken = jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '1h' }
+    );
+
+    // Actualizar usuario con el token
+    await User.updateResetToken(user.id, resetToken);
+
+    // En un entorno real, aquí enviarías el email
+    // Por ahora, solo devolvemos éxito
+    res.json({
+      success: true,
+      message: "Se han enviado las instrucciones a tu correo electrónico."
+    });
+
+  } catch (error) {
+    console.error("Error en recuperación de contraseña:", error);
+    res.status(500).json({ message: "Error al procesar la solicitud." });
+  }
+};
+
+
+// Editar Usuario
+exports.editUser_vista = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect('/auth/login');
+    }
+
+    const user = await User.findById(req.session.user.id);
+    if (!user) {
+      return res.redirect('/auth/login');
+    }
+
+    res.render('layouts/auth', {
+      content: 'auth/editUsuario',
+      userData: user
+    });
+  } catch (error) {
+    console.error('Error al cargar la vista de edición:', error);
+    res.status(500).render('error', { message: 'Error al cargar la página de edición' });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "No autorizado" });
+    }
+
+    const { 
+      nombre_apellidos, 
+      correo, 
+      celular,
+      departamento,
+      provincia,
+      distrito,
+      direccion
+    } = req.body;
+
+    // Validar datos
+    if (!nombre_apellidos || !correo) {
+      return res.status(400).json({ message: "Nombre y correo son requeridos." });
+    }
+
+    // Actualizar usuario
+    await User.update(req.session.user.id, {
+      nombre_apellidos,
+      correo,
+      celular,
+      departamento,
+      provincia,
+      distrito,
+      direccion
+    });
+
+    res.json({ 
+      success: true, 
+      message: "Perfil actualizado correctamente" 
+    });
+
+  } catch (error) {
+    console.error("Error al actualizar usuario:", error);
+    res.status(500).json({ message: "Error al actualizar el perfil." });
+  }
+};

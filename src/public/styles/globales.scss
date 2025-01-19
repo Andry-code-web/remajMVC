@@ -126,6 +126,39 @@
   }
 }
 
+
+/* Estilos para el menú desplegable */
+.menu_desplegable {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #800000; /* Rojo oscuro */
+  color: #fff;
+  width: 250px;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu_desplegable.d-none {
+  display: none;
+}
+
+.cabezera_menu h3 {
+  margin: 0;
+}
+
+.cabezera_menu #btn_close {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.perfil_user {
+  margin-top: 1rem;
+}
+
 /* fin boton */
 
 .nav {

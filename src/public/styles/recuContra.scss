@@ -1,0 +1,130 @@
+/* Estilos para la página de recuperación de contraseña */
+.contenedor-general {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  /* Panel izquierdo */
+  .left-panel {
+    width: 30%;
+    background-color: #C41E3A; // Color rojo similar al de la imagen
+    padding: 2rem;
+    color: white;
+  
+    .profile-section {
+      text-align: left;
+      
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+  
+      .subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+  
+      .logo-container {
+        margin-top: 2rem;
+        text-align: center;
+  
+        .logo {
+          max-width: 200px;
+          height: auto;
+        }
+      }
+    }
+  }
+  
+  /* Panel derecho */
+  .right-panel {
+    width: 70%;
+    padding: 2rem;
+  
+    .recovery-form {
+      max-width: 600px;
+      margin: 0 auto;
+  
+      .main-title {
+        background-color: #C41E3A;
+        color: white;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        font-size: 1.5rem;
+      }
+  
+      .form-content {
+        padding: 0 1rem;
+      }
+  
+      .form-group {
+        margin-bottom: 1.5rem;
+  
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #333;
+        }
+  
+        input {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 1rem;
+  
+          &:focus {
+            outline: none;
+            border-color: #C41E3A;
+          }
+        }
+      }
+  
+      .verify-button {
+        background-color: #FF6B6B; 
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #FF6B6B;
+        }
+      }
+    }
+  }
+  
+  /* Responsive */
+/*   @media (max-width: 768px) {
+    .form-wrapper {
+      flex-direction: column;
+      margin: 1rem;
+    }
+  
+    .left-panel,
+    .right-panel {
+      width: 100%;
+    }
+  
+    .left-panel {
+      padding: 1rem;
+    }
+  } */

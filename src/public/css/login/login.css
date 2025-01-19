@@ -47,6 +47,7 @@
   justify-content: center;
 }
 
+/* contenedor de titulo y parrafo */
 .contenedor-titulo {
   font-family: "fuenteSecundaria";
   text-align: center;
@@ -62,6 +63,25 @@
 }
 .contenedor-titulo .parrafo {
   text-align: left;
+}
+
+/* imagen */
+.imagen_fondo {
+  position: relative;
+  left: 12rem;
+  top: 4rem;
+  width: 680px;
+  height: 430px;
+}
+
+/* imagen cambiante */
+.imagen-secundaria {
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+  position: relative;
+  left: 20rem;
+  top: 7rem;
+  width: 717px;
+  height: 460px;
 }
 
 .fondo {
@@ -193,16 +213,6 @@
   min-width: 200px;
   padding: 0 2rem;
   margin-top: 1rem;
-}
-
-.imagen-secundaria {
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
-  position: relative;
-  left: 13rem;
-  top: 4rem;
-  width: 700px;
-  height: 520px;
-  -webkit-filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
 }
 
 /*# sourceMappingURL=login.css.map */

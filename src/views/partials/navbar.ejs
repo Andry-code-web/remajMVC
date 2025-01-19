@@ -22,20 +22,74 @@
       <a href="/comprar">COMPRAR</a>
       <a href="/contacto">CONTACTO</a>
   </nav>
+
+
+  <!-- area del boton iniciar sesion ,el area desplegable -->
   <div class="contenedor_user_login">
     <% if (user) { %>
-      <a href="/auth/logout" title="Registrarme" class="login-btn">
-        <%= user.usuario %>
-      </a>
+      <!-- Menú desplegable al estar logueado -->
+      <div class="session">
+        <p class="d-flex align-items-center">
+          <span><%= user.usuario %></span>
+          <button class="btn_menu ms-1" id="btn_menu">
+            <i class="bi bi-list"></i>
+          </button>
+        </p>
+        <div class="menu_desplegable d-none flex-column justify-content-between" id="menu_desplegable">
+          <div>
+            <div class="cabezera_menu d-flex justify-content-between">
+              <h3>Subastas</h3>
+              <button id="btn_close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+            <ul>
+              <li><a href="#">Me gusta</a></li>
+              <li><a href="/editar_user/44">Editar usuario</a></li>
+            </ul>
+          </div>
+          <div class="perfil_user">
+            <div class="d-flex flex-row">
+              <i class="bi bi-person-bounding-box" style="font-size: 2.5rem; color: #fff; margin-right: 1rem;"></i>
+              <div class="d-flex flex-column">
+                <strong>Cliente</strong>
+                <small><%= user.usuario %></small>
+                <a href="/auth/logout" class="btn btn-danger btn-sm ms-2">Cerrar Sesión</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <% } else { %>
-      <a href="/auth/login" title="Registrarme" class="login-btn">
+      <!-- Botón de inicio de sesión -->
+      <a href="/auth/login" title="Iniciar sesión" class="login-btn">
         INICIAR SESIÓN
       </a>
     <% } %>
-    
   </div>
   
 </header>
+
+<!-- ventana desplegable -->
+ <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnMenu = document.getElementById("btn_menu");
+    const menuDesplegable = document.getElementById("menu_desplegable");
+    const btnClose = document.getElementById("btn_close");
+  
+    // Mostrar/Ocultar menú al hacer clic en el botón
+    btnMenu.addEventListener("click", () => {
+      menuDesplegable.classList.toggle("d-none");
+    });
+  
+    // Cerrar el menú al hacer clic en el botón de cerrar
+    btnClose.addEventListener("click", () => {
+      menuDesplegable.classList.add("d-none");
+    });
+  });
+  
+ </script>
+
 
 <!-- script boton en vivo -->
  <script>

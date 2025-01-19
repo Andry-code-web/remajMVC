@@ -1,0 +1,124 @@
+<div class="contenedor-general">
+    <div class="form-wrapper">
+      <!-- Panel izquierdo con información del usuario -->
+      <div class="left-panel">
+        <div class="profile-section">
+          <h2>Perfil del Usuario</h2>
+          <p class="subtitle">Información personal</p>
+          <div class="user-info">
+            <div class="avatar">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <p class="username"><%= userData.usuario %></p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Panel derecho con el formulario de edición -->
+      <div class="right-panel">
+        <div class="edit-form">
+          <h1 class="main-title">Editar Perfil</h1>
+          
+          <form id="updateProfileForm" class="form-content">
+            <!-- Datos personales -->
+            <div class="form-section">
+              <h3>Datos Personales</h3>
+              <div class="form-group">
+                <label for="nombre_apellidos">Nombres y Apellidos</label>
+                <input type="text" id="nombre_apellidos" name="nombre_apellidos" value="<%= userData.nombre_apellidos %>" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" value="<%= userData.correo %>" required>
+              </div>
+  
+              <div class="form-group">
+                <label for="celular">Celular</label>
+                <input type="tel" id="celular" name="celular" value="<%= userData.celular %>">
+              </div>
+            </div>
+  
+            <!-- Ubicación -->
+            <div class="form-section">
+              <h3>Ubicación</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="departamento">Departamento</label>
+                  <input type="text" id="departamento" name="departamento" value="<%= userData.departamento %>">
+                </div>
+                
+                <div class="form-group">
+                  <label for="provincia">Provincia</label>
+                  <input type="text" id="provincia" name="provincia" value="<%= userData.provincia %>">
+                </div>
+              </div>
+  
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="distrito">Distrito</label>
+                  <input type="text" id="distrito" name="distrito" value="<%= userData.distrito %>">
+                </div>
+                
+                <div class="form-group">
+                  <label for="direccion">Dirección</label>
+                  <input type="text" id="direccion" name="direccion" value="<%= userData.direccion %>">
+                </div>
+              </div>
+            </div>
+  
+            <div class="button-group">
+              <button type="submit" class="save-button">Guardar Cambios</button>
+              <a href="/" class="cancel-button">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+  
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+  
+    try {
+      const response = await fetch('/auth/update-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Perfil actualizado correctamente',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          window.location.href = '/';
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: result.message || 'Error al actualizar el perfil'
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al procesar la solicitud'
+      });
+    }
+  });
+  </script>
+  

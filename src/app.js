@@ -209,31 +209,37 @@ io.on('connection', (socket) => {
     if (!remates_id || !usuarios_id || monto === undefined) {
       socket.emit('error-message', 'Datos incompletos para el mensaje');
       return;
-
     }
-
-
+  
     // Verificar el estado de la subasta antes de permitir el mensaje
-    const [row] = await db.execute('SELECT estado FROM remates WHERE id = ?', [remates_id]);
+    const [row] = await db.execute('SELECT estado, precios FROM remates WHERE id = ?', [remates_id]);
     if (row.length === 0 || row[0].estado !== 'en_curso') {
       socket.emit('error-message', 'El chat no está habilitado en este momento');
       return;
     }
-
+  
+    const basePrice = parseFloat(row[0].precios); // Obtener el precio base de la subasta
+  
+    // Verificar que el monto sea mayor que el precio base
+    if (monto <= basePrice) {
+      socket.emit('error-message', `La oferta debe ser mayor a USD$${basePrice}`);
+      return;
+    }
+  
     try {
       // Insertar mensaje en la base de datos
       await db.execute(
         'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
         [monto, usuarios_id, remates_id]
       );
-
+  
       // Obtener el nombre del usuario
       const [userRows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
       const usuario = userRows.length > 0 ? userRows[0].usuario : 'Anónimo';
-
+  
       // Emitir mensaje al resto de los clientes en la subasta
       io.to(remates_id).emit('chat-message', { monto, usuario, remates_id });
-
+  
       // Actualizar el monto más alto si corresponde
       if (auctionTimers[remates_id]) {
         auctionTimers[remates_id].highestAmount = Math.max(monto, auctionTimers[remates_id].highestAmount || 0);
@@ -246,6 +252,7 @@ io.on('connection', (socket) => {
       socket.emit('error-message', 'Error al enviar el mensaje');
     }
   });
+  
 });
 
 // Iniciar servidor

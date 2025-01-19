@@ -314,8 +314,7 @@
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="module">
   import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
@@ -326,40 +325,48 @@
   const inputBid = document.getElementById("input-bid");
   const messages = document.getElementById("messages");
   let highestAmount = 0;
+  let basePrice = 0;
   const auctionId = <%- auction.id %>;
   const userId = "<%- user?.id || '0' %>";
   const userName = "<%- user?.usuario || 'Anónimo' %>";
+
+  // Función para obtener el precio base desde la base de datos
+  async function getBasePrice() {
+    try {
+      const response = await fetch(`/api/remates/precios/${auctionId}`);
+      const data = await response.json();
+      if (data.success) {
+        basePrice = parseFloat(data.precios);
+      } else {
+        throw new Error("No se pudo obtener el precio base.");
+      }
+    } catch (error) {
+      console.error("Error al obtener el precio base:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Ocurrió un problema al obtener el precio base.",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    }
+  }
+
+  // Obtener el precio base al cargar la página
+  getBasePrice();
 
   socket.emit("join-auction", auctionId);
 
   socket.on("load-messages", (loadedMessages) => {
     messages.innerHTML = "";
     loadedMessages.forEach(({ monto, usuario }) => {
-      const isCurrentUser = usuario === userName;
-      const messageClass = isCurrentUser ? "sent" : "received";
-      messages.insertAdjacentHTML(
-        "beforeend",
-        `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`
-      );
-      if (monto > highestAmount) {
-        highestAmount = monto;
-        inputBid.value = highestAmount;
-      }
+      addMessageToDOM(usuario, monto);
     });
   });
 
   socket.on("chat-message", ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
-      const isCurrentUser = usuario === userName;
-      const messageClass = isCurrentUser ? "sent" : "received";
-      messages.insertAdjacentHTML(
-        "beforeend",
-        `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`
-      );
-      if (monto > highestAmount) {
-        highestAmount = monto;
-        inputBid.value = highestAmount;
-      }
+      addMessageToDOM(usuario, monto);
     }
   });
 
@@ -368,17 +375,6 @@
     const minutes = Math.floor((remaining % 3600) / 60);
     const seconds = remaining % 60;
     timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  });
-
-  socket.on("auction-start-time", ({ startTime }) => {
-    const auctionStartTime = moment(startTime).utc();
-    const now = moment().utc();
-    const timeDiff = auctionStartTime.diff(now);
-    if (timeDiff > 0) {
-      setTimeout(() => socket.emit("start-auction-timer", auctionId), timeDiff);
-    } else {
-      socket.emit("start-auction-timer", auctionId);
-    }
   });
 
   socket.on("winner-announcement", (message) => {
@@ -402,7 +398,6 @@
   });
 
   socket.on("alert-auction-ended", ({ message }) => {
-    console.log("Evento alert-auction-ended recibido:", message);
     Swal.fire({
       title: "Subasta finalizada",
       text: message,
@@ -414,41 +409,99 @@
     });
   });
 
-  formBid.addEventListener("submit", (e) => {
+  formBid.addEventListener("submit", async (e) => {
     e.preventDefault();
     const amount = parseFloat(inputBid.value);
-    if (amount > highestAmount) {
-      Swal.fire({
-        title: "¿Estás seguro?",
-        text: "Estás a punto de ofertar USD$${amount}.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, ofertar",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          socket.emit("chat-message", {
-            monto: amount,
-            usuarios_id: userId,
-            remates_id: auctionId,
-          });
-          inputBid.value = "";
-        }
-      });
-    } else {
-      Swal.fire({
-        title: "Oferta inválida",
-        text: "La oferta debe ser mayor a USD$${highestAmount}",
-        icon: "error",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Entendido",
-      });
+
+    // Validar que el monto sea un número válido
+    if (isNaN(amount) || amount <= 0) {
+      showError("Entrada inválida", "Por favor, ingresa un monto válido.");
+      return;
     }
+
+    // Validar que el monto sea mayor al monto más alto y al precio base
+    const minAmount = Math.max(highestAmount, basePrice);
+    if (amount <= minAmount) {
+      showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount}.`);
+      return;
+    }
+
+    // Confirmación antes de enviar la oferta
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: `Estás a punto de ofertar USD$${amount}.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ofertar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        socket.emit("chat-message", {
+          monto: amount,
+          usuarios_id: userId,
+          remates_id: auctionId,
+        });
+        inputBid.value = ""; // Limpiar el campo de entrada
+      }
+    });
   });
 
+  // Función para mostrar mensajes de error
+  function showError(title, text) {
+    Swal.fire({
+      title,
+      text,
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    });
+  }
+
+  // Función para agregar mensajes al DOM
+  function addMessageToDOM(usuario, monto) {
+    const isCurrentUser = usuario === userName;
+    const messageClass = isCurrentUser ? "sent" : "received";
+    messages.insertAdjacentHTML(
+      "beforeend",
+      `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`
+    );
+    if (monto > highestAmount) {
+      highestAmount = monto;
+      inputBid.value = highestAmount; // Actualizar el valor del input
+      highlightHighestAmount();
+    }
+  }
+
+  // Resaltar el monto más alto
+  function highlightHighestAmount() {
+    inputBid.classList.add("highlight");
+    setTimeout(() => inputBid.classList.remove("highlight"), 1000);
+  }
+
+  // Manejo de errores de conexión con Socket.io
+  socket.on("connect_error", (error) => {
+    console.error("Socket error:", error);
+    showError("Error de conexión", "Ocurrió un problema con la conexión al servidor.");
+  });
 </script>
+
+<style>
+  .highlight {
+    background-color: #f0f8ff;
+    transition: background-color 1s ease;
+  }
+
+  .sent {
+    color: green;
+  }
+
+  .received {
+    color: blue;
+  }
+</style>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

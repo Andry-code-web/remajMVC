@@ -802,6 +802,7 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
   });
 </script>
 
+<!-- verificacion de me gusta  -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const botonesMeGusta = document.querySelectorAll('.casilla-de-verificacion-me-gusta');
@@ -811,16 +812,73 @@ document.querySelector('.contenedor-expediente')?.addEventListener('click', func
       const label = boton.nextElementSibling;
       label.setAttribute('for', `casilla-me-gusta-${remateId}`);
 
+      // Verificar si el usuario ya ha dado like
+      const userAuthenticated = <%= userAuthenticated ? 'true' : 'false' %>;
+      if (userAuthenticated) {
+        fetch(`/check-like?remateId=${remateId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.liked) {
+            boton.checked = true;
+            label.classList.add('liked');
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar like:', error);
+        });
+      }
+
       // Añadir evento de clic para cada botón
       boton.addEventListener('change', (event) => {
-        if (event.target.checked) {
-          console.log(`Botón de Me Gusta activado para remate ID: ${remateId}`);
+        const isChecked = event.target.checked;
+
+        if (!userAuthenticated) {
+          event.target.checked = false; // Desmarcar el checkbox
+          Swal.fire({
+            title: 'Inicia sesión para dar Me gusta',
+            text: `Debes iniciar sesión para darle me gusta a el Remate N° ${String(remateId).padStart(4, '0')}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iniciar sesión',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/auth/login';
+            }
+          });
         } else {
-          console.log(`Botón de Me Gusta desactivado para remate ID: ${remateId}`);
+          fetch('/toggle-like', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ remateId })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.message === 'Like añadido') {
+              label.classList.add('liked');
+            } else {
+              label.classList.remove('liked');
+            }
+          })
+          .catch(error => {
+            console.error('Error al manejar like:', error);
+          });
         }
-      }); 
+      });
     });
   });
 </script>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></scrip>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

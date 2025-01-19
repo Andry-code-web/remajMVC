@@ -9,5 +9,7 @@ router.get('/anexos/:id', homeController.getAnexos);
 router.post('/filtrar', homeController.getFiltrarRemate);
 router.get('/filtrarG', homeController.getFiltrarRemateG);
 router.post('/check-opportunities', authMiddleware.isAuthenticated, homeController.checkOpportunities);
+router.post('/toggle-like', authMiddleware.isAuthenticated, homeController.toggleLike); // Nueva ruta
+router.get('/check-like', authMiddleware.isAuthenticated, homeController.checkLike);
 
 module.exports = router;

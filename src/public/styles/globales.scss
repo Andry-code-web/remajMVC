@@ -7,7 +7,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 1rem 2rem;
-  background: white;
+  background: #780103;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
   padding: 15px 20px;
@@ -47,8 +47,8 @@
   align-items: center;
   padding: var(--pd);
   font-size: var(--fs);
-  color: var(--col1);
-  background: linear-gradient(to bottom, var(--col3), var(--col4));
+  color: var(--col4);
+  background: var(--col1);
   border-radius: 6px;
   text-decoration: none;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
@@ -168,13 +168,13 @@
 
 .nav a {
   text-decoration: none;
-  color: #333;
+  color: white;
   font-weight: bold;
 }
 
 .login-btn {
-  background: #780103;
-  color: white;
+  background: white;
+  color: #780103;
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;

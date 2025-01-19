@@ -132,6 +132,28 @@ class Home {
       throw error;
     }
   }
+/* funciones de dar likes */
+  static async hasLiked(userId, remateId) {
+    const [rows] = await db.execute(
+      'SELECT * FROM remajud.likes WHERE usuarios_id = ? AND remates_id = ?',
+      [userId, remateId]
+    );
+    return rows.length > 0;
+  }
+
+  static async addLike(userId, remateId) {
+    await db.execute(
+      'INSERT INTO remajud.likes (usuarios_id, remates_id) VALUES (?, ?)',
+      [userId, remateId]
+    );
+  }
+
+  static async removeLike(userId, remateId) {
+    await db.execute(
+      'DELETE FROM remajud.likes WHERE usuarios_id = ? AND remates_id = ?',
+      [userId, remateId]
+    );
+  }
 }
 
 module.exports = Home;

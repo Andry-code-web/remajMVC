@@ -255,6 +255,9 @@ form {
   overflow-y: auto;
   background-color: #fff;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+  /*    scroll-behavior: initial; */
 }
 
 /* Mensajes enviados por el usuario */
@@ -268,7 +271,7 @@ form {
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
-  margin-left: 49%;
+  margin-left: 44%;
 }
 
 /* Mensajes recibidos de otros usuarios */

@@ -28,7 +28,8 @@
 }
 
 .imagen-contenedor {
-    background-image: linear-gradient(to bottom, red, #670002);
+    background: -webkit-linear-gradient(90deg, #500001,#a70104,red);
+    background: linear-gradient(90deg, #500001,#a70104,red);
     height: 100%;
     width: 45%;
     display: flex;
@@ -56,14 +57,14 @@
     }
 }
 
-/* imagen */
+/* imagen  cambiante*/
 
 .imagen_fondo {
     position: relative;
-    left: 12rem;
-    top: 4rem;
-    width: 680px;
-    height: 430px;
+    left: 15rem;
+    top: 6rem;
+    width: 700px;
+    height: 420px;
 }
 
 
@@ -181,6 +182,7 @@
 .botonSoporte:hover {
     background-color: #8f0104;
     transform: translateY(-1px);
+
 }
 
 .contenedor_form form button:active,

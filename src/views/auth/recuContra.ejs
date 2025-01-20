@@ -1,37 +1,158 @@
-
-
-<!-- forgot-password.ejs -->
 <div class="contenedor-general">
-    <div class="form-wrapper">
-      <!-- Lado izquierdo - Panel con logo -->
-      <div class="left-panel">
-        <div class="profile-section">
-          <h2>Perfil del Usuario</h2>
-          <p class="subtitle">Información de usuario</p>
-          <div class="logo-container">
-            <img src="/img/logo.png" alt="Logo" class="logo">
+  <div class="contenedor-formulario">
+    <!-- Panel izquierdo  -->
+    <div class="left-panel">
+      <div class="profile-section">
+        <div class="header-content">
+          <h2>Recuperación de Cuenta</h2>
+          <p class="subtitle">Restablecer contraseña</p>
+        </div>
+        
+        <div class="info-box">
+          <i class="bi bi-shield-lock"></i>
+          <h3>Proceso Seguro</h3>
+          <p>Te enviaremos un correo con las instrucciones para recuperar tu cuenta de forma segura.</p>
+        </div>
+
+        <div class="steps-container">
+          <div class="step">
+            <i class="bi bi-envelope"></i>
+            <p>1. Ingresa tu correo</p>
+          </div>
+          <div class="step">
+            <i class="bi bi-check-circle"></i>
+            <p>2. Verifica tu bandeja</p>
+          </div>
+          <div class="step">
+            <i class="bi bi-key"></i>
+            <p>3. Restablece tu contraseña</p>
           </div>
         </div>
+
+        <div class="logo-container">
+          <img src="/img/logo.png" alt="Logo" class="logo">
+        </div>
       </div>
-  
-      <!-- Lado derecho - Formulario -->
-      <div class="right-panel">
-        <div class="recovery-form">
-          <h1 class="main-title">Información del Usuario</h1>
+    </div>
+
+    <!-- Panel derecho  -->
+    <div class="right-panel">
+      <div class="recovery-form">
+        <div class="form-header">
+          <h1 class="main-title">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Recuperar Contraseña
+          </h1>
+          <p class="description">Ingresa el correo electrónico asociado a tu cuenta para recibir las instrucciones de recuperación.</p>
+        </div>
+        
+        <form id="recoveryForm" class="form-content">
+          <div class="form-group">
+            <label for="email">
+              <i class="bi bi-envelope-fill"></i>
+              Correo electrónico
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="ejemplo@correo.com"
+              required
+            >
+          </div>
           
-          <div class="form-content">
-            <div class="form-group">
-              <label for="email">Correo electrónico</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            
+          <div class="button-group">
             <button type="submit" class="verify-button">
+              <i class="bi bi-send"></i>
               Verificar Email
             </button>
+            <a href="/auth/login" class="back-button">
+              <i class="bi bi-arrow-left"></i>
+              Volver al inicio de sesión
+            </a>
           </div>
+        </form>
+
+        <div class="help-section">
+          <h4>¿Necesitas ayuda?</h4>
+          <p>Si tienes problemas para recuperar tu cuenta, contáctanos:</p>
+          <button class="support-button" onclick="contactSupport()">
+            <i class="bi bi-headset"></i>
+            Contactar Soporte
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- COMPONENTE FOOTER -->
+<%- include('../partials/footer') %>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ESTILOS RECUPERACION CONTRASEÑA -->
+<link rel="stylesheet" href="/css/recuContra/recuContra.css">
 
 
+<script>
+  // Función para contactar a soporte
+  function contactSupport() {
+    Swal.fire({
+      title: "Soporte al cliente",
+      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
+      icon: "info",
+      confirmButtonColor: "#8b0000",
+      confirmButtonText: "Entendido"
+    });
+  }
+  
+  // Manejar el envío del formulario
+  document.getElementById('recoveryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    
+    try {
+      const response = await fetch('/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        Swal.fire({
+          title: '¡Correo enviado!',
+          text: 'Se han enviado las instrucciones a tu correo electrónico.',
+          icon: 'success',
+          confirmButtonColor: '#8b0000'
+        }).then(() => {
+          window.location.href = '/auth/login';
+        });
+      } else {
+        Swal.fire({
+          title: 'Correo no encontrado',
+          text: 'Ingrese un correo válido',
+          icon: 'error',
+          confirmButtonColor: '#8b0000',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonColor: '#8b0000'
+      });
+    }
+  });
+  </script>

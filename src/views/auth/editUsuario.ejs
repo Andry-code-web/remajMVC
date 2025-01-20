@@ -1,88 +1,175 @@
 <div class="contenedor-general">
-    <div class="form-wrapper">
-      <!-- Panel izquierdo con información del usuario -->
-      <div class="left-panel">
-        <div class="profile-section">
+  <div class="contenedor_formulario">
+    <!-- Panel izquierdo con información del usuario -->
+    <div class="left-panel">
+      <div class="profile-section">
+        <div class="header-content">
           <h2>Perfil del Usuario</h2>
-          <p class="subtitle">Información personal</p>
-          <div class="user-info">
-            <div class="avatar">
-              <i class="bi bi-person-circle"></i>
-            </div>
-            <p class="username"><%= userData.usuario %></p>
+          <p class="subtitle">INFORMACIÓN PERSONAL</p>
+        </div>
+
+        <div class="user-avatar">
+          <div class="avatar-circle">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <h3 class="username"><%= userData.usuario %></h3>
+        </div>
+
+        <div class="profile-info">
+          <div class="info-item">
+            <i class="bi bi-person-badge"></i>
+            <p>Usuario desde: <span>2024</span></p>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-envelope-check"></i>
+            <p>Email verificado</p>
           </div>
         </div>
-      </div>
-  
-      <!-- Panel derecho con el formulario de edición -->
-      <div class="right-panel">
-        <div class="edit-form">
-          <h1 class="main-title">Editar Perfil</h1>
-          
-          <form id="updateProfileForm" class="form-content">
-            <!-- Datos personales -->
-            <div class="form-section">
-              <h3>Datos Personales</h3>
-              <div class="form-group">
-                <label for="nombre_apellidos">Nombres y Apellidos</label>
-                <input type="text" id="nombre_apellidos" name="nombre_apellidos" value="<%= userData.nombre_apellidos %>" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="correo">Correo Electrónico</label>
-                <input type="email" id="correo" name="correo" value="<%= userData.correo %>" required>
-              </div>
-  
-              <div class="form-group">
-                <label for="celular">Celular</label>
-                <input type="tel" id="celular" name="celular" value="<%= userData.celular %>">
-              </div>
-            </div>
-  
-            <!-- Ubicación -->
-            <div class="form-section">
-              <h3>Ubicación</h3>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="departamento">Departamento</label>
-                  <input type="text" id="departamento" name="departamento" value="<%= userData.departamento %>">
-                </div>
-                
-                <div class="form-group">
-                  <label for="provincia">Provincia</label>
-                  <input type="text" id="provincia" name="provincia" value="<%= userData.provincia %>">
-                </div>
-              </div>
-  
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="distrito">Distrito</label>
-                  <input type="text" id="distrito" name="distrito" value="<%= userData.distrito %>">
-                </div>
-                
-                <div class="form-group">
-                  <label for="direccion">Dirección</label>
-                  <input type="text" id="direccion" name="direccion" value="<%= userData.direccion %>">
-                </div>
-              </div>
-            </div>
-  
-            <div class="button-group">
-              <button type="submit" class="save-button">Guardar Cambios</button>
-              <a href="/" class="cancel-button">Cancelar</a>
-            </div>
-          </form>
+
+        <div class="profile-actions">
+          <a href="/" class="action-link">
+            <i class="bi bi-house-door"></i>
+            Ir al inicio
+          </a>
+          <a href="/auth/logout" class="action-link">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar sesión
+          </a>
         </div>
       </div>
     </div>
+
+    <!-- Panel derecho con el formulario de edición -->
+    <div class="right-panel">
+      <div class="edit-form">
+        <div class="form-header">
+          <h1 class="main-title">
+            <i class="bi bi-pencil-square"></i>
+            Editar Perfil
+          </h1>
+          <p class="description">Actualiza tu información personal</p>
+        </div>
+
+        <form id="updateProfileForm" class="form-content">
+          <div class="form-section">
+            <div class="form-group">
+              <label for="nombreUsuario">
+                <i class="bi bi-person-fill"></i>
+                Nombre de usuario
+              </label>
+              <input 
+                type="text" 
+                id="nombre_apellidos" 
+                name="nombre_apellidos" 
+                value="<%= usuarios.usuario %>" 
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="correo">
+                <i class="bi bi-envelope-fill"></i>
+                Correo Electrónico
+              </label>
+              <input 
+                type="email" 
+                id="correo" 
+                name="correo" 
+                value="<%= usuarios.correo %>" 
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="confirmar_correo">
+                <i class="bi bi-envelope-check-fill"></i>
+                Confirmar Correo
+              </label>
+              <input 
+                type="email" 
+                id="confirmar_correo" 
+                name="confirmar_correo" 
+                value="<%= usuarios.confirmar_correo %>"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="celular">
+                <i class="bi bi-phone-fill"></i>
+                Teléfono 
+              </label>
+              <input 
+                type="tel" 
+                id="celular" 
+                name="celular" 
+                value="<%= ususarios.celular %>"
+                pattern="[9][0-9]{8}"
+                title="El número debe comenzar con 9 y tener 9 dígitos"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="save-button">
+              <i class="bi bi-check-circle"></i>
+              Guardar Cambios
+            </button>
+            <a href="/" class="cancel-button">
+              <i class="bi bi-x-circle"></i>
+              Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  
-  <script>
+</div>
+
+
+<!-- COMPONENTE FOOTER -->
+<%- include('../partials/footer') %>
+
+<!-- ESTILOS EDITAR USUARIO -->
+<link rel="stylesheet" href="css/editUsuario/editUsuario.css">
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- script editar usuario -->
+<script>
   document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
     e.preventDefault();
   
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
+  
+    // Validar que los correos coincidan
+    if (data.correo !== data.confirmar_correo) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Los correos electrónicos no coinciden',
+        confirmButtonColor: '#8b0000'
+      });
+      return;
+    }
+  
+    // Validar formato del teléfono
+    const phoneRegex = /^9\d{8}$/;
+    if (!phoneRegex.test(data.celular)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'El número de teléfono debe comenzar con 9 y tener 9 dígitos',
+        confirmButtonColor: '#8b0000'
+      });
+      return;
+    }
   
     try {
       const response = await fetch('/auth/update-profile', {
@@ -100,6 +187,7 @@
           icon: 'success',
           title: '¡Éxito!',
           text: 'Perfil actualizado correctamente',
+          confirmButtonColor: '#8b0000',
           confirmButtonText: 'OK'
         }).then(() => {
           window.location.href = '/';
@@ -108,7 +196,8 @@
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: result.message || 'Error al actualizar el perfil'
+          text: result.message || 'Error al actualizar el perfil',
+          confirmButtonColor: '#8b0000'
         });
       }
     } catch (error) {
@@ -116,9 +205,16 @@
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error al procesar la solicitud'
+        text: 'Error al procesar la solicitud',
+        confirmButtonColor: '#8b0000'
       });
     }
   });
-  </script>
   
+  // Pre-llenar el campo de confirmación de correo
+  document.addEventListener('DOMContentLoaded', () => {
+    const correoInput = document.getElementById('correo');
+    const confirmarCorreoInput = document.getElementById('confirmar_correo');
+    confirmarCorreoInput.value = correoInput.value;
+  });
+  </script>

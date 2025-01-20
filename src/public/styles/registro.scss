@@ -6,6 +6,18 @@
     box-sizing: border-box;
 }
 
+/* efecto de entrada */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .contenedor-general {
     width: 100%;
     height: 100vh;
@@ -23,11 +35,15 @@
     width: 45%;
     position: relative;
     /* overflow: hidden; */
-    background: linear-gradient(135deg, #780103, #a01417);
-    display: flex;
+    background: -webkit-linear-gradient(90deg, #500001,#a70104,red);
+    background: linear-gradient(90deg, #500001,#a70104,red);
+/*     background: linear-gradient(135deg, #780103, #a01417);
+ */    display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
+    animation: slideInFromLeft 0.8s ease-out forwards;
+    opacity: 0;
   
     /* Contenedor de título y párrafo */
     .contenedor-titulo {
@@ -36,7 +52,7 @@
       z-index: 2;
       max-width: 80%;
       margin: 0 auto;
-      margin-bottom: 5rem;
+      margin-bottom: 1rem;
   
       .tittle-frase {
         font-size: 2.5rem;
@@ -53,11 +69,14 @@
     /* Imagen cambiante */
     .imagen-secundaria {
       position: relative;
-      width: 500px;
-      height: 430px;
+      width: 700px;
+      height: 420px;
       top: 1rem;
-      left: 20rem;
-    }
+      left: 13rem;
+      animation: slideInFromLeft 0.8s ease-out forwards;
+      opacity: 0;
+      -webkit-animation: slideInFromLeft 0.8s ease-out forwards;
+}
   }
 
   .overlay {
@@ -93,6 +112,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    margin-top: 4rem;
   }
   
   /* Progreso Bar */
@@ -230,7 +250,9 @@
     margin: 0 auto;
     padding: 2rem 1rem;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
+    animation: slideInFromLeft 0.8s ease-out forwards;
+    opacity: 0;
   }
   
   .form-title {
@@ -479,26 +501,46 @@
   }
   
 
-  /* Ajustes específicos para cada sección */
+  /* Ajustes para cada sección */
 .seccion1 {
     width: 100%; 
   }
   
-  .seccion2 {
-    width: 70%; 
+.seccion2 {
+  width: 80%; 
+
+  .form-group {
+    input {
+      padding: 1.05rem 2rem; 
+      font-size: 1rem; 
+    }
+
+    label {
+      font-size: 1rem; 
+    }
+
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label {
+      font-size: 0.9rem; 
+    }
   }
+
+  .form-row.two-columns {
+    gap: 2rem;
+  }
+}
   
   .seccion3 {
     width: 340px; 
   }
   .seccion.active {
     display: block;
-    animation: dissolveIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: dissolveIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   
   .seccion.dissolve-out {
-    animation: dissolveOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    -webkit-animation: dissolveOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: dissolveOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    -webkit-animation: dissolveOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 

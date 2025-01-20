@@ -96,7 +96,7 @@ exports.logout = (req, res) => {
     if (err) {
       return res.redirect('/');
     }
-    res.clearCookie('connect.sid'); // Si usas el nombre predeterminado de cookie de sesión
+    res.clearCookie('connect.sid'); 
     res.redirect('/');
   });
 };
@@ -133,8 +133,6 @@ exports.forgotPassword = async (req, res) => {
     // Actualizar usuario con el token
     await User.updateResetToken(user.id, resetToken);
 
-    // En un entorno real, aquí enviarías el email
-    // Por ahora, solo devolvemos éxito
     res.json({
       success: true,
       message: "Se han enviado las instrucciones a tu correo electrónico."

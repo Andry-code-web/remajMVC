@@ -214,6 +214,15 @@ const getCronograma = async (remates_id) => {
 };
 
 
+/* CLIENTES */
+
+const getClientes = async () => {
+  const query = `SELECT * FROM usuarios`;
+
+  const [clientes] = await db.query(query);
+  return clientes;
+
+}
 
 const getResumenClientes = async () => {
   const query = `
@@ -262,6 +271,8 @@ module.exports = {
   getRemateById,
   updateRemate,
   createCronograma,
+  getClientes,
   getResumenClientes,
-  getCatalogoClientes
+  getCatalogoClientes,
+  
 };

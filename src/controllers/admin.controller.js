@@ -11,6 +11,7 @@ const {
   getRemateById,
   updateRemate,
   createCronograma, // Nueva función agregada
+  getClientes,
   getResumenClientes,
   getCatalogoClientes
 } = require('../models/admin.model');
@@ -263,7 +264,19 @@ exports.getSeguimientoById = async (req, res) => {
   }
 };
 
-
+/* CONTROLLER CLIENTES */
+exports.getClientes = async (req, res) => {
+  try {
+    const clientes = await getClientes();
+    res.render('layouts/admin', {
+      clientes,
+      contet: 'admin/clientesAdmin',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los clientes.' });
+  }
+}
 
 exports.obtenerResumen = async (req, res) => {
   try {

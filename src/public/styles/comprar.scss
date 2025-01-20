@@ -16,7 +16,7 @@
 }
 
 .seccion_principal_destacada_comercial {
-    background: linear-gradient(45deg, rgba(124, 1, 7, 0.308), rgba(226, 43, 58, 0.336)), url('/img/banner2.jpeg');
+    background: linear-gradient(45deg, rgb(102 0 5 / 74%), rgb(137 0 11 / 80%)), url('/img/banner_comprar.jpg');
     background-size: cover;
     background-position: center;
     min-height: 500px;
@@ -36,7 +36,7 @@
 }
 
 .subtitulo_destacado_comercial_naranja {
-    color: #a10707;
+    color: white;
     font-size: 1.8em;
     margin-bottom: 20px;
 }
@@ -48,8 +48,8 @@
 }
 
 .boton_contacto_principal_destacado {
-    background: #8b0404;
-    color: white;
+    background: white;
+    color: #8b0404;
     padding: 15px 40px;
     border-radius: 25px;
     text-decoration: none;
@@ -156,7 +156,7 @@
 }
 
 .contenedor_beneficios_principales_area {
-    background: #eb0505ec;
+    background: #8b0404;
     color: white;
     padding: 80px 20px;
     text-align: center;

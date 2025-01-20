@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 * {
     margin: 0;
     padding: 0;
@@ -105,15 +107,38 @@
 }
 
 .tarjeta_modalidad_individual {
+    height: 500px;
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 20px;
     background: white;
 }
 
-.imagen_modalidad_compra {
+.image_icon{
     width: 100%;
-    height: 200px;
+    height: 35%;
+    position: relative;
+}
+
+.image_icon:before {
+    content: '';
+    width: 100px;
+    height: 100px;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #9f0404;
+}
+
+.imagen_modalidad_compra {
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -123,6 +148,7 @@
     font-size: 1.5em;
     color: #333;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .lista_pasos_modalidad {

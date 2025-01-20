@@ -670,15 +670,15 @@
   flex: 1;
 }
 
-.detallesEspecificosSubasta {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  gap: 2rem;
-  padding-right: 50px; /* Add space for the like button */
-}
+/* .detallesEspecificosSubasta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 2rem;
+    padding-right: 50px;
 
+} */
 .informacionGeneralSubasta {
   text-decoration: none;
   color: black;

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 require('dotenv').config();
 
+// Registro
 exports.register_vista = async (req, res) => {
   try {
     res.render('layouts/auth', {
@@ -41,7 +42,7 @@ exports.register = async (req, res) => {
   }
 };
 
-
+//Login
 exports.login_vista = async (req, res) => {
   try {
     if (req.cookies.auth_token) {
@@ -101,6 +102,7 @@ exports.logout = (req, res) => {
   });
 };
 
+
 // Recuperar contraseña
 exports.forgotPassword_vista = async (req, res) => {
   try {
@@ -117,13 +119,11 @@ exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Verificar si el email existe
     const user = await User.findByEmail(email);
     if (!user) {
       return res.status(404).json({ message: "No existe una cuenta con este correo electrónico." });
     }
 
-    // Generar token temporal
     const resetToken = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET || 'your-secret-key',
@@ -146,20 +146,22 @@ exports.forgotPassword = async (req, res) => {
 
 
 // Editar Usuario
+// Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {
     if (!req.session.user) {
       return res.redirect('/auth/login');
     }
 
-    const user = await User.findById(req.session.user.id);
+    const usuario = req.params.usuario || req.session.user.usuario;
+    const user = await User.findByUsername(usuario);
     if (!user) {
       return res.redirect('/auth/login');
     }
-
     res.render('layouts/auth', {
       content: 'auth/editUsuario',
-      userData: user
+      userData: user,
+      usuario
     });
   } catch (error) {
     console.error('Error al cargar la vista de edición:', error);
@@ -174,13 +176,10 @@ exports.updateUser = async (req, res) => {
     }
 
     const { 
-      nombre_apellidos, 
+      usuario,
       correo, 
+      confirmar_correo,
       celular,
-      departamento,
-      provincia,
-      distrito,
-      direccion
     } = req.body;
 
     // Validar datos
@@ -190,13 +189,10 @@ exports.updateUser = async (req, res) => {
 
     // Actualizar usuario
     await User.update(req.session.user.id, {
-      nombre_apellidos,
+      usuario,
       correo,
+      confirmar_correo,
       celular,
-      departamento,
-      provincia,
-      distrito,
-      direccion
     });
 
     res.json({ 

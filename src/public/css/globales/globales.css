@@ -123,35 +123,157 @@
 }
 
 /* Estilos para el menú desplegable */
-.menu_desplegable {
+.contenedor_user_login {
+  position: relative;
+}
+.contenedor_user_login .login_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  color: #780103;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.contenedor_user_login .login_button:hover {
+  background: #780103, 10%;
+}
+.contenedor_user_login .login_button i {
+  font-size: 1.2rem;
+}
+.contenedor_user_login .session {
+  position: relative;
+}
+.contenedor_user_login .session .user_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  /* background: transparent; */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.contenedor_user_login .session .user_button i {
+  color: #780103;
+}
+.contenedor_user_login .session .user_button i:last-child {
+  font-size: 0.8rem;
+}
+.contenedor_user_login .session .user_button:hover {
+  background: #f8f8f8;
+}
+.contenedor_user_login .session .menu_desplegable {
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #800000; /* Rojo oscuro */
-  color: #fff;
-  width: 250px;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.menu_desplegable.d-none {
+  width: 280px;
+  background: #780103;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 0.5rem;
   display: none;
+  overflow: hidden;
 }
-
-.cabezera_menu h3 {
+.contenedor_user_login .session .menu_desplegable.active {
+  display: block;
+}
+.contenedor_user_login .session .menu_desplegable .menu_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.contenedor_user_login .session .menu_desplegable .menu_header h3 {
+  color: white;
   margin: 0;
+  font-size: 1.2rem;
 }
-
-.cabezera_menu #btn_close {
+.contenedor_user_login .session .menu_desplegable .menu_header .close_button {
   background: none;
   border: none;
-  color: #fff;
+  color: white;
   cursor: pointer;
+  padding: 0.5rem;
 }
-
-.perfil_user {
-  margin-top: 1rem;
+.contenedor_user_login .session .menu_desplegable .menu_header .close_button:hover {
+  opacity: 0.8;
+}
+.contenedor_user_login .session .menu_desplegable .menu_content {
+  padding: 1rem;
+}
+.contenedor_user_login .session .menu_desplegable .menu_content .menu_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contenedor_user_login .session .menu_desplegable .menu_content .menu_list li {
+  margin-bottom: 0.5rem;
+}
+.contenedor_user_login .session .menu_desplegable .menu_content .menu_list li a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.contenedor_user_login .session .menu_desplegable .menu_content .menu_list li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.contenedor_user_login .session .menu_desplegable .menu_content .menu_list li a i {
+  font-size: 1.2rem;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile {
+  background: #780103, 5%;
+  padding: 1rem;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .profile_info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .profile_info i {
+  font-size: 2.5rem;
+  color: white;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .profile_info .user_details {
+  display: flex;
+  flex-direction: column;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .profile_info .user_details .user_type {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .profile_info .user_details .user_name {
+  color: white;
+  font-weight: 600;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .logout_button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 60%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .logout_button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.contenedor_user_login .session .menu_desplegable .user_profile .logout_button i {
+  font-size: 1.2rem;
 }
 
 /* fin boton */

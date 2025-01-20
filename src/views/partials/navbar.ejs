@@ -1,8 +1,8 @@
 <header class="header" id="header">
   <div class="logo-container">
-      <a href="#" class="logo">
-        <img src="/img/logo_header.jpeg" alt="">
-      </a>
+    <a href="#" class="logo">
+      <img src="/img/logo_header.jpeg" alt="">
+    </a>
   </div>
 
   <!-- boton en vivo -->
@@ -16,115 +16,137 @@
   </a>
 
   <nav class="nav">
-      <a href="/">INICIO</a>
-      <a href="/remates/index">REMATES</a>
-      <a href="/vender">VENDER</a>
-      <a href="/comprar">COMPRAR</a>
-      <a href="/contacto">CONTACTO</a>
+    <a href="/">INICIO</a>
+    <a href="/remates/index">REMATES</a>
+    <a href="/vender">VENDER</a>
+    <a href="/comprar">COMPRAR</a>
+    <a href="/contacto">CONTACTO</a>
   </nav>
 
 
-  <!-- area del boton iniciar sesion ,el area desplegable -->
+  <!-- área del botón iniciar sesión y menú desplegable -->
   <div class="contenedor_user_login">
     <% if (user) { %>
-      <!-- Menú desplegable al estar logueado -->
-      <div class="session">
-        <p class="d-flex align-items-center">
-          <span><%= user.usuario %></span>
-          <button class="btn_menu ms-1" id="btn_menu">
-            <i class="bi bi-list"></i>
+    <div class="session">
+      <button class="user_button" id="btn_menu">
+        <i class="bi bi-person-circle"></i>
+        <span class="username"><%= user.usuario %></span>
+        <i class="bi bi-chevron-down"></i>
+      </button>
+      <div class="menu_desplegable" id="menu_desplegable">
+        <div class="menu_header">
+          <h3>Remajud</h3>
+          <button class="close_button" id="btn_close">
+            <i class="bi bi-x-lg"></i>
           </button>
-        </p>
-        <div class="menu_desplegable d-none flex-column justify-content-between" id="menu_desplegable">
-          <div>
-            <div class="cabezera_menu d-flex justify-content-between">
-              <h3>Subastas</h3>
-              <button id="btn_close">
-                <i class="bi bi-x-lg"></i>
-              </button>
+        </div>
+        <div class="menu_content">
+          <ul class="menu_list">
+            <li>
+              <a href="/">
+                <i class="bi bi-heart"></i>
+                <span>Me gusta</span>
+              </a>
+            </li>
+            <li>
+              <a href="/auth/edit-profile">
+                <i class="bi bi-pencil"></i>
+                <span>Editar usuario</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="user_profile">
+          <div class="profile_info">
+            <i class="bi bi-person-circle"></i>
+            <div class="user_details">
+              <span class="user_type">Cliente</span>
+              <span class="user_name"><%= user.usuario %></span>
             </div>
-            <ul>
-              <li><a href="#">Me gusta</a></li>
-              <li><a href="/editar_user/44">Editar usuario</a></li>
-            </ul>
           </div>
-          <div class="perfil_user">
-            <div class="d-flex flex-row">
-              <i class="bi bi-person-bounding-box" style="font-size: 2.5rem; color: #fff; margin-right: 1rem;"></i>
-              <div class="d-flex flex-column">
-                <strong>Cliente</strong>
-                <small><%= user.usuario %></small>
-                <a href="/auth/logout" class="btn btn-danger btn-sm ms-2">Cerrar Sesión</a>
-              </div>
-            </div>
-          </div>
+          <a href="/auth/logout" class="logout_button">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Cerrar Sesión</span>
+          </a>
         </div>
       </div>
+    </div>
     <% } else { %>
-      <!-- Botón de inicio de sesión -->
-      <a href="/auth/login" title="Iniciar sesión" class="login-btn">
-        INICIAR SESIÓN
-      </a>
+    <a href="/auth/login" class="login_button">
+      <i class="bi bi-box-arrow-in-right"></i>
+      <span>INICIAR SESIÓN</span>
+    </a>
     <% } %>
   </div>
-  
+
 </header>
 
 <!-- ventana desplegable -->
- <script>
+<script>
   document.addEventListener("DOMContentLoaded", () => {
     const btnMenu = document.getElementById("btn_menu");
     const menuDesplegable = document.getElementById("menu_desplegable");
     const btnClose = document.getElementById("btn_close");
-  
-    // Mostrar/Ocultar menú al hacer clic en el botón
-    btnMenu.addEventListener("click", () => {
-      menuDesplegable.classList.toggle("d-none");
+
+    // Mostrar/Ocultar menú
+    btnMenu.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menuDesplegable.classList.toggle("active");
     });
-  
-    // Cerrar el menú al hacer clic en el botón de cerrar
+
+    // Cerrar menú con botón de cierre
     btnClose.addEventListener("click", () => {
-      menuDesplegable.classList.add("d-none");
+      menuDesplegable.classList.remove("active");
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener("click", (e) => {
+      if (!menuDesplegable.contains(e.target) && !btnMenu.contains(e.target)) {
+        menuDesplegable.classList.remove("active");
+      }
+    });
+
+    // Prevenir cierre al hacer clic dentro del menú
+    menuDesplegable.addEventListener("click", (e) => {
+      e.stopPropagation();
     });
   });
-  
- </script>
+</script>
 
 
 <!-- script boton en vivo -->
- <script>
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.boton-vivo');
-    
+
     buttons.forEach(button => {
       const eye = button.querySelector('.eye');
       const iris = eye.querySelector('.iris');
-      
+
       document.addEventListener('mousemove', (e) => {
         const eyeRect = eye.getBoundingClientRect();
         const eyeCenterX = eyeRect.left + eyeRect.width / 2;
         const eyeCenterY = eyeRect.top + eyeRect.height / 2;
-        
+
         // Calcular el ángulo y la distancia
         const deltaX = e.clientX - eyeCenterX;
         const deltaY = e.clientY - eyeCenterY;
         const angle = Math.atan2(deltaY, deltaX);
-        
+
         // Aumentar el rango de movimiento
         const maxDistance = eyeRect.width / 3;
         const distance = Math.min(
           Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 10,
           maxDistance
         );
-        
+
         // Calcular la nueva posición
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
-        
+
         // Aplicar la transformación con una transición más suave
         iris.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
       });
     });
   });
- </script>
-  
+</script>

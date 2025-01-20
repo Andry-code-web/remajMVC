@@ -195,10 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
-
-    
-
     // Inicialización
     secciones[currentIndex].classList.add("active");
     progressLabel.classList.add("show");

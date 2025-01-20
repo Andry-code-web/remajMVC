@@ -183,28 +183,36 @@ io.on('connection', (socket) => {
   }
 
   async function finalizeAuction(remates_id) {
-    clearInterval(auctionTimers[remates_id]?.intervalId);
-    const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
-
+    const auctionTimer = auctionTimers[remates_id];
+    if (!auctionTimer) {
+      console.error(`❌ No se encontró el temporizador para el remate ${remates_id}`);
+      return;
+    }
+  
+    clearInterval(auctionTimer.intervalId);
+    const { highestAmount = 0, highestBidder: winner = null } = auctionTimer;
+  
+    const UPDATE_QUERY = 'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?';
+    const FINALIZED_STATE = 'finalizado';
+  
     if (winner) {
       try {
-        await db.execute(
-          'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
-          ['finalizado', winner, highestAmount, remates_id]
-        );
+        await db.execute(UPDATE_QUERY, [FINALIZED_STATE, winner, highestAmount, remates_id]);
         console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
       } catch (error) {
         console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
       }
+    } else {
+      console.log(`⚠️ Remate ${remates_id} finalizado sin ganador.`);
     }
-
+  
     io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` });
+    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner || 'Anónimo'}, nos comunicaremos en 24 horas` });
     console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-
+  
     delete auctionTimers[remates_id];
   }
-
+  
   socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {
     if (!remates_id || !usuarios_id || monto === undefined) {
       console.warn("Datos incompletos recibidos:", { remates_id, usuarios_id, monto });

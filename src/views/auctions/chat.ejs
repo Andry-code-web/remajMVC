@@ -324,7 +324,7 @@
   const formBid = document.getElementById("form-bid");
   const inputBid = document.getElementById("input-bid");
   const messages = document.getElementById("messages");
-  
+
   let highestAmount = 0;
   let basePrice = 0;
   const auctionId = <%- auction.id %>;
@@ -332,31 +332,30 @@
   const userName = "<%- user?.usuario || 'Anónimo' %>";
 
   // Función para obtener el precio base desde la base de datos
-async function getBasePrice() {
-  try {
-    const response = await fetch(`db/remates/precios/${auctionId}`);
-    const data = await response.json();
+  async function getBasePrice() {
+    try {
+      const response = await fetch(`db/remates/precios/${auctionId}`);
+      const data = await response.json();
 
-    if (data.success) {
-      basePrice = parseFloat(data.precios);
-      // Actualiza el precio base en el DOM
-      const priceDisplay = document.querySelector("#chat p:first-of-type");
-      priceDisplay.textContent = `Precio base: S/${basePrice}`;
-    } else {
-      throw new Error(data.message || "No se pudo obtener el precio base.");
+      if (data.success) {
+        basePrice = parseInt(data.precios, 10); // Asegurarse de que el precio base sea un entero
+        // Actualiza el precio base en el DOM
+        const priceDisplay = document.querySelector("#chat p:first-of-type");
+        priceDisplay.textContent = `Precio base: S/${basePrice}`;
+      } else {
+        throw new Error(data.message || "No se pudo obtener el precio base.");
+      }
+    } catch (error) {
+      console.error("Error al obtener el precio base:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Ocurrió un problema al obtener el precio base.",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
     }
-  } catch (error) {
-    console.error("Error al obtener el precio base:", error);
-    Swal.fire({
-      title: "Error",
-      text: "Ocurrió un problema al obtener el precio base.",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Entendido",
-    });
   }
-}
-
 
   socket.emit("join-auction", auctionId);
 
@@ -394,7 +393,7 @@ async function getBasePrice() {
 
   formBid.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const amount = parseFloat(inputBid.value);
+    const amount = parseInt(inputBid.value, 10); // Asegurarse de que el monto sea un entero
 
     // Validar que el monto sea un número válido
     if (isNaN(amount) || amount <= 0) {
@@ -402,9 +401,18 @@ async function getBasePrice() {
       return;
     }
 
-    // Validar que el monto sea mayor al monto más alto y al precio base
+    // Calcular la oferta recomendada
+    const recommendedAmount = highestAmount + 100;
+
+    // Determinar el monto final a enviar
+    let finalAmount = amount;
+    if (amount <= recommendedAmount) {
+      finalAmount = recommendedAmount;
+    }
+
+    // Validar que el monto final sea mayor al monto más alto y al precio base
     const minAmount = Math.max(highestAmount, basePrice);
-    if (amount <= minAmount) {
+    if (finalAmount <= minAmount) {
       showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount}.`);
       return;
     }
@@ -412,7 +420,7 @@ async function getBasePrice() {
     // Confirmación antes de enviar la oferta
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás a punto de ofertar USD$${amount}.`,
+      text: `Estás a punto de ofertar USD$${finalAmount}.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -422,11 +430,11 @@ async function getBasePrice() {
     }).then((result) => {
       if (result.isConfirmed) {
         socket.emit("chat-message", {
-          monto: amount,
+          monto: finalAmount,
           usuarios_id: userId,
           remates_id: auctionId,
         });
-        inputBid.value = ""; // Limpiar el campo de entrada
+        inputBid.value = finalAmount; // Actualizar el campo de entrada con el monto final
       }
     });
   });
@@ -452,7 +460,7 @@ async function getBasePrice() {
     );
     if (monto > highestAmount) {
       highestAmount = monto;
-      inputBid.value = highestAmount; // Actualizar el valor del input
+      inputBid.value = highestAmount + 100; // Actualizar el valor del input con el monto más alto + 100
       highlightHighestAmount();
     }
   }
@@ -469,8 +477,8 @@ async function getBasePrice() {
     showError("Error de conexión", "Ocurrió un problema con la conexión al servidor.");
   });
 
-
 </script>
+
 
 
 

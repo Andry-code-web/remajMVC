@@ -55,6 +55,16 @@
     </div>
     </div>
     </div>
+
+
+    <!-- Importar reCAPTCHA y SweetAlert2 -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<link rel="stylesheet" href="/css/login/login.css">
+
+<!-- sweet alert  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     
     <!-- sweetAlert -->
     <script>
@@ -70,71 +80,21 @@
           
     </script>
 
-
-    <!-- recaptcha -->
     <script>
       document.getElementById('loginForm').addEventListener('submit', async function (event) {
-        event.preventDefault(); // Evita que el formulario se envíe de manera predeterminada
+        event.preventDefault();
     
-        // Verificar si el captcha está completo
-        const captchaResponse = grecaptcha.getResponse();
-        if (captchaResponse === '') {
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse === '') {
           Swal.fire({
-            icon: 'error',
             title: 'Error',
-            text: 'Por favor, completa el captcha'
+            text: 'Por favor, completa el captcha',
+            icon: 'error',
           });
-          return; // Detiene la ejecución si el captcha no está completo
+          return; 
         }
     
-        // Si el captcha está completo, continuar con el proceso de envío
-        const formData = new FormData(this); // Obtener datos del formulario
-        const data = {
-          usuario: formData.get('usuario'), // Extraer valor del campo usuario
-          contrasena: formData.get('contrasena'), // Extraer valor del campo contraseña
-          captcha: captchaResponse // Agregar respuesta del captcha
-        };
-    
-        try {
-          const responseServer = await fetch('/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-    
-          const result = await responseServer.json(); // Convertir la respuesta del servidor a JSON
-    
-          if (result.success) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Éxito',
-              text: 'Inicio de sesión correcto'
-            }).then(() => {
-              window.location.href = '/dashboard'; // Redirigir a la página de destino
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: result.message || 'Usuario o contraseña incorrectos'
-            });
-          }
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Ocurrió un error en el servidor. Por favor, intenta de nuevo más tarde.'
-          });
-        }
+        this.submit();
       });
     </script>
-<!-- Importar reCAPTCHA y SweetAlert2 -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-
-<link rel="stylesheet" href="/css/login/login.css">
-
-<!-- sweet alert  -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    

@@ -33,6 +33,7 @@
   width: 100%;
 }
 
+
 /* boton en vivo */
 .boton-vivo {
   --fs: 1.25em;
@@ -128,35 +129,185 @@
 
 
 /* Estilos para el menú desplegable */
-.menu_desplegable {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #800000; /* Rojo oscuro */
-  color: #fff;
-  width: 250px;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+.contenedor_user_login {
+  position: relative;
 
-.menu_desplegable.d-none {
-  display: none;
-}
+  .login_button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: #780103;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s;
 
-.cabezera_menu h3 {
-  margin: 0;
-}
+    &:hover {
+      background: (#780103, 10%);
+    }
 
-.cabezera_menu #btn_close {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
+    i {
+      font-size: 1.2rem;
+    }
+  }
 
-.perfil_user {
-  margin-top: 1rem;
+  .session {
+    position: relative;
+
+    .user_button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      /* background: transparent; */
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      i {
+        color: #780103;
+        &:last-child {
+          font-size: 0.8rem;
+        }
+      }
+
+      &:hover {
+        background: #f8f8f8;
+      }
+    }
+
+    .menu_desplegable {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: #780103;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-top: 0.5rem;
+      display: none;
+      overflow: hidden;
+
+      &.active {
+        display: block;
+      }
+
+      .menu_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+
+        h3 {
+          color: white;
+          margin: 0;
+          font-size: 1.2rem;
+        }
+
+        .close_button {
+          background: none;
+          border: none;
+          color: white;
+          cursor: pointer;
+          padding: 0.5rem;
+          
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+
+      .menu_content {
+        padding: 1rem;
+
+        .menu_list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            margin-bottom: 0.5rem;
+
+            a {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              color: white;
+              text-decoration: none;
+              padding: 0.5rem;
+              border-radius: 4px;
+              transition: background 0.3s;
+
+              &:hover {
+                background: rgba(255,255,255,0.1);
+              }
+
+              i {
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+      }
+
+      .user_profile {
+        background: (#780103, 5%);
+        padding: 1rem;
+
+        .profile_info {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+
+          i {
+            font-size: 2.5rem;
+            color: white;
+          }
+
+          .user_details {
+            display: flex;
+            flex-direction: column;
+
+            .user_type {
+              color: rgba(255,255,255,0.7);
+              font-size: 0.9rem;
+            }
+
+            .user_name {
+              color: white;
+              font-weight: 600;
+            }
+          }
+        }
+
+        .logout_button {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          width: 60%;
+          padding: 0.75rem;
+          background: rgba(255,255,255,0.1);
+          border: none;
+          border-radius: 4px;
+          color: white;
+          text-decoration: none;
+          transition: background 0.3s;
+
+          &:hover {
+            background: rgba(255,255,255,0.2);
+          }
+
+          i {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
 }
 
 /* fin boton */
@@ -325,3 +476,6 @@ footer {
   flex-direction: row;
   gap: 1rem;
 }
+
+
+

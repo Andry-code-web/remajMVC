@@ -1,4 +1,8 @@
+<!-- sweat alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- estilos -->
 <link rel="stylesheet" href="/css/comprar/comprar.css">
+<!-- Vista -->
 <div class="contenedor_principal_pagina_comercial">
     <div class="espacio_cabecera_personalizada">
         <!-- Header será agregado después -->
@@ -91,23 +95,74 @@
     <section class="seccion_formulario_contacto_empresarial">
         <div class="formulario_contacto_empresarial_container">
             <h2>¡Envía tus datos!</h2>
-            <form>
-                <select class="campo_formulario_personalizado_empresarial">
+            <form id="formulario" action="/comprar/quierocomprar" method="POST" class="queremoscomprar">
+                <select name="tipo_cliente" class="campo_formulario_personalizado_empresarial">
                     <option>Tipo de Cliente</option>
+                    <option>Natural</option>
+                    <option>Juridico</option>
                 </select>
-                <input type="text" placeholder="Nombre*" class="campo_formulario_personalizado_empresarial">
-                <input type="text" placeholder="Apellido*" class="campo_formulario_personalizado_empresarial">
-                <input type="tel" placeholder="Teléfono" class="campo_formulario_personalizado_empresarial">
-                <input type="email" placeholder="Correo electrónico*"
+                <input type="text" name="nombre" placeholder="Nombre*"
                     class="campo_formulario_personalizado_empresarial">
-                <select class="campo_formulario_personalizado_empresarial">
-                    <option>Departamento</option>
+                <input type="text" name="apellido" placeholder="Apellido*"
+                    class="campo_formulario_personalizado_empresarial">
+                <input type="tel" name="telefono" placeholder="Teléfono"
+                    class="campo_formulario_personalizado_empresarial">
+                <input type="email" name="correo_electronico" placeholder="Correo electrónico*"
+                    class="campo_formulario_personalizado_empresarial">
+                <select name="departamento" class="campo_formulario_personalizado_empresarial">
+                    <option value="#">Departamento</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Áncash">Áncash</option>
+                    <option value="Apurímac">Apurímac</option>
+                    <option value="Arequipa">Arequipa</option>
+                    <option value="Ayacucho">Ayacucho</option>
+                    <option value="Cajamarca">Cajamarca</option>
+                    <option value="Callao">Callao</option>
+                    <option value="Cusco">Cusco</option>
+                    <option value="Huancavelica">Huancavelica</option>
+                    <option value="Huánuco">Huánuco</option>
+                    <option value="Ica">Ica</option>
+                    <option value="Junín">Junín</option>
+                    <option value="La Libertad">La Libertad</option>
+                    <option value="Lambayeque">Lambayeque</option>
+                    <option value="Lima">Lima</option>
+                    <option value="Loreto">Loreto</option>
+                    <option value="Madre de Dios">Madre de Dios</option>
+                    <option value="Moquegua">Moquegua</option>
+                    <option value="Pasco">Pasco</option>
+                    <option value="Piura">Piura</option>
+                    <option value="Puno">Puno</option>
+                    <option value="San Martín">San Martín</option>
+                    <option value="Tacna">Tacna</option>
+                    <option value="Tumbes">Tumbes</option>
+                    <option value="Ucayali">Ucayali</option>
                 </select>
-                <input type="text" placeholder="Ciudad" class="campo_formulario_personalizado_empresarial">
-                <textarea placeholder="Describe los productos que te interesan"
+                <input type="text" name="ciudad" placeholder="Ciudad"
+                    class="campo_formulario_personalizado_empresarial">
+                <textarea name="productos_interes" placeholder="Describe los productos que te interesan"
                     class="campo_formulario_personalizado_empresarial" rows="4"></textarea>
                 <button type="submit" class="boton_enviar_formulario_morado">Enviar</button>
             </form>
         </div>
     </section>
 </div>
+
+
+<!-- sweat alert form -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: 'El formulario se envió con éxito.',
+                imageUrl: "/img/asistenta_subasta.png",
+                imageWidth: 250,
+                imageHeight: 250,
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+</script>

@@ -109,8 +109,6 @@ const deleteRemate = async (remateId) => {
   const queryMensajes = 'DELETE FROM mensajes WHERE remates_id = ?';
   const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
   const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
-  /* const queryDetalles = 'DELETE FROM detalles WHERE remate_id = ?'; */
-  /* const queryInmuebles = 'DELETE FROM inmuebles WHERE remate_id = ?'; */
   const queryCronograma = 'DELETE FROM cronograma WHERE remates_id = ?';
   const queryRemate = 'DELETE FROM remates WHERE id = ?';
 
@@ -118,8 +116,6 @@ const deleteRemate = async (remateId) => {
     await db.query(queryMensajes, [remateId]);
     await db.query(queryAnexos, [remateId]);
     await db.query(queryImagenes, [remateId]);
-    /* await db.query(queryDetalles, [remateId]);
-    await db.query(queryInmuebles, [remateId]); */
     await db.query(queryCronograma, [remateId]);
     const [result] = await db.query(queryRemate, [remateId]);
     return result.affectedRows > 0;

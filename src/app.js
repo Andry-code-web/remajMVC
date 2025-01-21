@@ -109,7 +109,7 @@ io.on('connection', (socket) => {
 
       // Si el remate ya está en curso, calcular tiempo restante
       if (rows[0].estado === 'en_curso') {
-        const duracionTotal = 0.005 * 60 * 60; // 6 horas en segundos
+        const duracionTotal = 6 * 60 * 60; // 6 horas en segundos
 
         // Obtener el tiempo transcurrido desde el inicio del remate
         const tiempoTranscurrido = Math.floor((now - fechaRemate) / 1000);
@@ -145,16 +145,14 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, remainingTime = 0.005 * 60 * 60) {
-    // Cancelar temporizador existente si existe
+  async function startAuctionTimer(remates_id, remainingTime = 6 * 60 * 60) {
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
       console.log(`⏹️ Temporizador existente cancelado para la subasta ${remates_id}`);
     }
 
     try {
-      // Actualizar estado a en_curso si es un nuevo inicio
-      if (remainingTime === 0.005 * 60 * 60) {
+      if (remainingTime === 6 * 60 * 60) {
         await db.execute(
           'UPDATE remates SET estado = ? WHERE id = ?',
           ['en_curso', remates_id]
@@ -175,7 +173,7 @@ io.on('connection', (socket) => {
     }, 1000);
 
     io.to(remates_id).emit('auction-started', 'La subasta ha comenzado');
-    io.to(remates_id).emit('chat-enabled', true);  // Corregido remate_id a remates_id
+    io.to(remates_id).emit('chat-enabled', true);
     io.to(remates_id).emit('timer-update', remainingTime);
 
     auctionTimers[remates_id] = { intervalId, remainingTime };
@@ -183,87 +181,81 @@ io.on('connection', (socket) => {
   }
 
   async function finalizeAuction(remates_id) {
-    const auctionTimer = auctionTimers[remates_id];
-    if (!auctionTimer) {
-      console.error(`❌ No se encontró el temporizador para el remate ${remates_id}`);
-      return;
-    }
-  
-    clearInterval(auctionTimer.intervalId);
-    const { highestAmount = 0, highestBidder: winner = null } = auctionTimer;
-  
-    const UPDATE_QUERY = 'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?';
-    const FINALIZED_STATE = 'finalizado';
-  
+    clearInterval(auctionTimers[remates_id]?.intervalId);
+    const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
+
     if (winner) {
       try {
-        await db.execute(UPDATE_QUERY, [FINALIZED_STATE, winner, highestAmount, remates_id]);
+        await db.execute(
+          'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
+          ['finalizado', winner, highestAmount, remates_id]
+        );
         console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
       } catch (error) {
         console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
       }
-    } else {
-      console.log(`⚠️ Remate ${remates_id} finalizado sin ganador.`);
     }
-  
+
     io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner || 'Anónimo'}, nos comunicaremos en 24 horas` });
+    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` });
     console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-  
+
     delete auctionTimers[remates_id];
   }
-  
+
   socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {
     if (!remates_id || !usuarios_id || monto === undefined) {
-      console.warn("Datos incompletos recibidos:", { remates_id, usuarios_id, monto });
       socket.emit('error-message', 'Datos incompletos para el mensaje');
       return;
     }
-  
+
+    const [row] = await db.execute('SELECT estado, precios, hora_remate FROM remates WHERE id = ?', [remates_id]);
+
+    if (row.length === 0 || row[0].estado !== 'en_curso') {
+      socket.emit('error-message', 'El chat no está habilitado en este momento');
+      return;
+    }
+
+    const basePrice = parseFloat(row[0].precios);
+    const chatStartTime = new Date();
+    const [hour, minute, second] = row[0].hora_remate.split(':');
+    chatStartTime.setHours(hour, minute, second);
+    const currentTime = new Date();
+
+    if (currentTime < chatStartTime) {
+      socket.emit('error-message', 'El chat aún no está habilitado');
+      return;
+    }
+
+    if (monto <= basePrice) {
+      socket.emit('error-message', `La oferta debe ser mayor a USD$${basePrice}`);
+      return;
+    }
+
     try {
-      const [row] = await db.execute('SELECT estado, precios FROM remates WHERE id = ?', [remates_id]);
-      if (row.length === 0) {
-        socket.emit('error-message', 'Subasta no encontrada');
-        return;
-      }
-  
-      if (row[0].estado !== 'en_curso') {
-        socket.emit('error-message', 'El chat no está habilitado en este momento');
-        return;
-      }
-  
-      const basePrice = parseFloat(row[0].precios);
-      if (monto <= basePrice) {
-        socket.emit('error-message', `La oferta debe ser mayor a USD$${basePrice}`);
-        return;
-      }
-  
       await db.execute(
         'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
         [monto, usuarios_id, remates_id]
       );
-  
+
       const [userRows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
       const usuario = userRows.length > 0 ? userRows[0].usuario : 'Anónimo';
-  
-      if (!auctionTimers[remates_id]) {
-        auctionTimers[remates_id] = { highestAmount: 0, highestBidder: null };
-      }
-  
-      auctionTimers[remates_id].highestAmount = Math.max(monto, auctionTimers[remates_id].highestAmount);
-      if (auctionTimers[remates_id].highestAmount === monto) {
-        auctionTimers[remates_id].highestBidder = usuario;
-      }
-  
+
       io.to(remates_id).emit('chat-message', { monto, usuario, remates_id });
+
+      if (auctionTimers[remates_id]) {
+        auctionTimers[remates_id].highestAmount = Math.max(monto, auctionTimers[remates_id].highestAmount || 0);
+        if (auctionTimers[remates_id].highestAmount === monto) {
+          auctionTimers[remates_id].highestBidder = usuario;
+        }
+      }
     } catch (error) {
-      console.error('❌ Error al procesar el mensaje:', error.message || error);
-      socket.emit('error-message', 'Error al procesar el mensaje');
+      console.error('❌ Error al guardar el mensaje:', error.message || error);
+      socket.emit('error-message', 'Error al enviar el mensaje');
     }
   });
-  
-  
 });
+
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

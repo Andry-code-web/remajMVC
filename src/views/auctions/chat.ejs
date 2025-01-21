@@ -364,11 +364,13 @@
     loadedMessages.forEach(({ monto, usuario }) => {
       addMessageToDOM(usuario, monto);
     });
+    scrollToBottom();
   });
 
   socket.on("chat-message", ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
       addMessageToDOM(usuario, monto);
+      scrollToBottom();
     }
   });
 
@@ -469,6 +471,11 @@
   function highlightHighestAmount() {
     inputBid.classList.add("highlight");
     setTimeout(() => inputBid.classList.remove("highlight"), 1000);
+  }
+
+  // Función para desplazarse al último mensaje
+  function scrollToBottom() {
+    messages.scrollTop = messages.scrollHeight;
   }
 
   // Manejo de errores de conexión con Socket.io

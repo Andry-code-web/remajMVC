@@ -255,9 +255,6 @@ form {
   overflow-y: auto;
   background-color: #fff;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column-reverse;
-  /*    scroll-behavior: initial; */
 }
 
 /* Mensajes enviados por el usuario */

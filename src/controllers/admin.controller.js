@@ -15,6 +15,8 @@ const {
   getResumenClientes,
   getCatalogoClientes
 } = require('../models/admin.model');
+const { query } = require('../config/database');
+const db = require('../config/database');
 
 // Vista administrador
 exports.getloginadmin = async (req, res) => {
@@ -264,19 +266,87 @@ exports.getSeguimientoById = async (req, res) => {
   }
 };
 
+
 /* CONTROLLER CLIENTES */
 exports.getClientes = async (req, res) => {
   try {
+    console.log('Iniciando el controlador getClientes');
+
+    // Obtener los IDs de los remates disponibles
+    const query = `SELECT id FROM remates`;
+    const [rows] = await db.query(query);
+
+    console.log('IDs de remates disponibles:', rows);
+
+    // Extraer los IDs de remates disponibles
+    const id_remate = rows.map(row => row.id);
+    console.log('IDs de remates extraídos:', id_remate);
+
+    // Obtener los clientes
     const clientes = await getClientes();
+    console.log('Clientes obtenidos:', clientes);
+
+    // Obtener los remates validados por cliente
+    for (const cliente of clientes) {
+      console.log(`Procesando cliente ID: ${cliente.id}`);
+
+      const [rematesValidados] = await db.query(
+        `SELECT remate_id FROM usuario_remate WHERE usuario_id = ? AND validado = 1`,
+        [cliente.id]
+      );
+
+      console.log(`Remates validados para cliente ID ${cliente.id}:`, rematesValidados);
+
+      // Asegurarse de que remates_validos sea un arreglo
+      cliente.remates_validos = rematesValidados.map(r => r.remate_id) || [];
+    }
+
+    console.log('Clientes con remates validados:', clientes);
+
+    // Pasar los datos a la vista
     res.render('layouts/admin', {
       clientes,
+      id_remate,
       contet: 'admin/clientesAdmin',
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error en getClientes:', error);
     res.status(500).json({ message: 'Error al obtener los clientes.' });
   }
-}
+};
+
+
+
+
+exports.validarClienteEnRemate = async (req, res) => {
+  try {
+    const { clienteId, remateId } = req.body;
+
+    // Verificar si ya existe una validación para este cliente y remate
+    const [validacionExistente] = await db.query(
+      `SELECT * FROM usuario_remate WHERE usuario_id = ? AND remate_id = ?`,
+      [clienteId, remateId]
+    );
+
+    if (validacionExistente.length > 0) {
+      return res.status(400).json({ message: 'El cliente ya está validado en este remate.' });
+    }
+
+    // Insertar la validación con la fecha actual
+    await db.query(
+      `INSERT INTO usuario_remate (usuario_id, remate_id, validado, fecha_validacion) VALUES (?, ?, 1, NOW())`,
+      [clienteId, remateId]
+    );
+
+    res.status(200).json({ message: 'Cliente validado correctamente en el remate.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al validar el cliente en el remate.' });
+  }
+};
+
+
+
 
 exports.obtenerResumen = async (req, res) => {
   try {

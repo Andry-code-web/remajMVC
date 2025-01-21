@@ -224,6 +224,8 @@ const getClientes = async () => {
 
 }
 
+
+
 const getResumenClientes = async () => {
   const query = `
       SELECT 

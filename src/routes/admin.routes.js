@@ -41,6 +41,9 @@ router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCrono
 // Ruta para obtener el estado actual del cronograma (protegida)
 router.get('/obtener-cronograma', isAuthenticated, adminController.obtenerCronograma);
 
+/* CLIENTES */
+
+router.post('/validar-cliente', adminController.validarClienteEnRemate);
 
 router.get('/usuarios', adminController.getClientes);
 /* router.get('/catalogo', adminController.obtenerCatalogo); */

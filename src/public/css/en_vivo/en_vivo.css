@@ -323,6 +323,11 @@
   font-weight: 600;
 }
 
+/* inforGeneral */
+.informacionGeneralSubasta {
+  text-decoration: none;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from {

@@ -192,6 +192,33 @@
   color: #8b0000;
 }
 
+.contenedor-contraseña input {
+    width: 100%;
+    padding: 0.75rem; 
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+
+.verify-button-contra {
+  background: #8b0000;
+  color: white;
+  border: none;
+  padding: 0.75rem; 
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+  margin: 10px;
+}
+
 @media (max-width: 768px) {
   .contenedor-general {
     padding: 1rem;

@@ -1,44 +1,59 @@
-const User = require('../models/user.model');
-const jwt = require('jsonwebtoken');
-const bcryptjs = require('bcryptjs');
-require('dotenv').config();
+const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
+const bcryptjs = require("bcryptjs");
+require("dotenv").config();
 
 // Registro
 exports.register_vista = async (req, res) => {
   try {
-    res.render('layouts/auth', {
-      content: 'auth/register'
+    res.render("layouts/auth", {
+      content: "auth/register",
     });
   } catch (error) {
-    console.error('No se encontró la vista: ', error);
-    res.status(500).render('error', { message: 'Error al cargar la página de registro' });
+    console.error("No se encontró la vista: ", error);
+    res
+      .status(500)
+      .render("error", { message: "Error al cargar la página de registro" });
   }
 };
 
 exports.register = async (req, res) => {
   try {
-    const { nombre_apellidos, correo, usuario, contrasena, terminos_condiciones } = req.body;
+    const {
+      nombre_apellidos,
+      correo,
+      usuario,
+      contrasena,
+      terminos_condiciones,
+    } = req.body;
 
     if (!nombre_apellidos || !correo || !usuario || !contrasena) {
-      return res.status(400).json({ message: "Todos los campos son requeridos." });
+      return res
+        .status(400)
+        .json({ message: "Todos los campos son requeridos." });
     }
 
     if (!terminos_condiciones) {
-      return res.status(400).json({ message: "Debe aceptar los términos y condiciones." });
+      return res
+        .status(400)
+        .json({ message: "Debe aceptar los términos y condiciones." });
     }
 
     const existingUser = await User.findByUsername(usuario);
     if (existingUser) {
-      return res.status(400).json({ message: "El nombre de usuario ya está en uso." });
+      return res
+        .status(400)
+        .json({ message: "El nombre de usuario ya está en uso." });
     }
 
-    
     const userId = await User.create(req.body);
 
     res.status(201).json({ message: "Registro exitoso" });
   } catch (error) {
     console.error("Error en el registro:", error);
-    res.status(500).json({ message: "Error en el registro", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error en el registro", error: error.message });
   }
 };
 
@@ -46,14 +61,16 @@ exports.register = async (req, res) => {
 exports.login_vista = async (req, res) => {
   try {
     if (req.cookies.auth_token) {
-      return res.redirect('/');
+      return res.redirect("/");
     }
-    res.render('layouts/auth', {
-      content: 'auth/login'
+    res.render("layouts/auth", {
+      content: "auth/login",
     });
   } catch (error) {
-    console.error('Error al cargar la vista de login:', error);
-    res.status(500).render('error', { message: 'Error al cargar la página de login' });
+    console.error("Error al cargar la vista de login:", error);
+    res
+      .status(500)
+      .render("error", { message: "Error al cargar la página de login" });
   }
 };
 
@@ -62,7 +79,9 @@ exports.login = async (req, res) => {
     const { usuario, contrasena } = req.body;
 
     if (!usuario || !contrasena) {
-      return res.status(400).json({ message: "Usuario y contraseña son requeridos." });
+      return res
+        .status(400)
+        .json({ message: "Usuario y contraseña son requeridos." });
     }
 
     const user = await User.findByUsername(usuario);
@@ -83,35 +102,38 @@ exports.login = async (req, res) => {
 
     console.log("Usuario guardado en la sesión:", req.session.user);
 
-    res.redirect('/');
+    res.redirect("/");
   } catch (error) {
     console.error("Error en el login:", error);
-    res.status(500).json({ message: "Error en el login.", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error en el login.", error: error.message });
   }
 };
-
-
 
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.redirect('/');
+      return res.redirect("/");
     }
-    res.clearCookie('connect.sid'); 
-    res.redirect('/');
+    res.clearCookie("connect.sid");
+    res.redirect("/");
   });
 };
-
 
 // Recuperar contraseña
 exports.forgotPassword_vista = async (req, res) => {
   try {
-    res.render('layouts/auth', {
-      content: 'auth/recuContra'
+    res.render("layouts/auth", {
+      content: "auth/recuContra",
     });
   } catch (error) {
-    console.error('Error al cargar la vista de recuperación:', error);
-    res.status(500).render('error', { message: 'Error al cargar la página de recuperación' });
+    console.error("Error al cargar la vista de recuperación:", error);
+    res
+      .status(500)
+      .render("error", {
+        message: "Error al cargar la página de recuperación",
+      });
   }
 };
 
@@ -121,51 +143,62 @@ exports.forgotPassword = async (req, res) => {
 
     const user = await User.findByEmail(email);
     if (!user) {
-      return res.status(404).json({ message: "No existe una cuenta con este correo electrónico." });
+      return res
+        .status(404)
+        .json({ message: "No existe una cuenta con este correo electrónico." });
     }
-
-    const resetToken = jwt.sign(
-      { id: user.id },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '1h' }
-    );
-
-    // Actualizar usuario con el token
-    await User.updateResetToken(user.id, resetToken);
 
     res.json({
       success: true,
-      message: "Se han enviado las instrucciones a tu correo electrónico."
+      message: "Se han enviado las instrucciones a tu correo electrónico.",
     });
-
   } catch (error) {
     console.error("Error en recuperación de contraseña:", error);
     res.status(500).json({ message: "Error al procesar la solicitud." });
   }
 };
 
+// cambiar contraseña
+exports.cambiarContra = async (req, res) => {
+  try {
+    const { password, confirmPassword } = req.body;
+    const { id } = req.params;
+    const user = await User.findByToken(token);
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Las contraseñas no coinciden." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+    res.json({ success: true, message: "Contraseña cambiada con éxito." });
+  } catch (error) {
+    console.error("Error al cambiar contraseña:", error);
+    res.status(500).json({ message: "Error al procesar la solicitud." });
+  }
+};
 
-// Editar Usuario
 // Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {
     if (!req.session.user) {
-      return res.redirect('/auth/login');
+      return res.redirect("/auth/login");
     }
 
     const usuario = req.params.usuario || req.session.user.usuario;
     const user = await User.findByUsername(usuario);
     if (!user) {
-      return res.redirect('/auth/login');
+      return res.redirect("/auth/login");
     }
-    res.render('layouts/auth', {
-      content: 'auth/editUsuario',
+    res.render("layouts/auth", {
+      content: "auth/editUsuario",
       userData: user,
-      usuario
+      usuario,
     });
   } catch (error) {
-    console.error('Error al cargar la vista de edición:', error);
-    res.status(500).render('error', { message: 'Error al cargar la página de edición' });
+    console.error("Error al cargar la vista de edición:", error);
+    res
+      .status(500)
+      .render("error", { message: "Error al cargar la página de edición" });
   }
 };
 
@@ -175,16 +208,13 @@ exports.updateUser = async (req, res) => {
       return res.status(401).json({ message: "No autorizado" });
     }
 
-    const { 
-      usuario,
-      correo, 
-      confirmar_correo,
-      celular,
-    } = req.body;
+    const { usuario, correo, confirmar_correo, celular } = req.body;
 
     // Validar datos
     if (!nombre_apellidos || !correo) {
-      return res.status(400).json({ message: "Nombre y correo son requeridos." });
+      return res
+        .status(400)
+        .json({ message: "Nombre y correo son requeridos." });
     }
 
     // Actualizar usuario
@@ -195,11 +225,10 @@ exports.updateUser = async (req, res) => {
       celular,
     });
 
-    res.json({ 
-      success: true, 
-      message: "Perfil actualizado correctamente" 
+    res.json({
+      success: true,
+      message: "Perfil actualizado correctamente",
     });
-
   } catch (error) {
     console.error("Error al actualizar usuario:", error);
     res.status(500).json({ message: "Error al actualizar el perfil." });

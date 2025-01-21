@@ -7,7 +7,7 @@
           <h2>Recuperación de Cuenta</h2>
           <p class="subtitle">Restablecer contraseña</p>
         </div>
-        
+
         <div class="info-box">
           <i class="bi bi-shield-lock"></i>
           <h3>Proceso Seguro</h3>
@@ -30,8 +30,8 @@
         </div>
 
         <div class="logo-container">
-          <img src="/img/logo.png" alt="Logo" class="logo">
-        </div>
+<!--           <img src="/img/logo.png" alt="Logo" class="logo">
+ -->        </div>
       </div>
     </div>
 
@@ -45,38 +45,39 @@
           </h1>
           <p class="description">Ingresa el correo electrónico asociado a tu cuenta para recibir las instrucciones de recuperación.</p>
         </div>
-        
-        <form id="recoveryForm" class="form-content">
-          <div class="form-group">
-            <label for="email">
-              <i class="bi bi-envelope-fill"></i>
-              Correo electrónico
-            </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              placeholder="ejemplo@correo.com"
-              required
-            >
-          </div>
-          
-          <div class="button-group">
-            <button type="submit" class="verify-button">
-              <i class="bi bi-send"></i>
-              Verificar Email
-            </button>
-            <a href="/auth/login" class="back-button">
-              <i class="bi bi-arrow-left"></i>
-              Volver al inicio de sesión
-            </a>
-          </div>
-        </form>
+
+        <div id="verificarCorreo">
+          <form id="recoveryForm" class="form-content" style="display: block;">
+            <div class="form-group">
+              <label for="email">
+                <i class="bi bi-envelope-fill"></i>
+                Correo electrónico
+              </label>
+              <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div class="button-group">
+              <button type="submit" class="verify-button">
+                <i class="bi bi-send"></i>
+                Verificar Email
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="contenedor-contraseña">
+          <form id="contraseñas" action="/auth/cambiar-contra" style="display: none;">
+            <input type="password" required placeholder="Contraseña">
+            <input type="password" required placeholder="Repetir contraseña">
+            <button type="submit" class="verify-button-contra">
+              <i class="bi bi-arrow-clockwise"></i>
+              Restablecer Contraseña</button>
+          </form>
+        </div>
 
         <div class="help-section">
           <h4>¿Necesitas ayuda?</h4>
           <p>Si tienes problemas para recuperar tu cuenta, contáctanos:</p>
-          <button class="support-button" onclick="contactSupport()">
+          <button class="support-button" id="boton_soporte" onclick="botonSoporte()">
             <i class="bi bi-headset"></i>
             Contactar Soporte
           </button>
@@ -98,7 +99,7 @@
 <!-- ESTILOS RECUPERACION CONTRASEÑA -->
 <link rel="stylesheet" href="/css/recuContra/recuContra.css">
 
-
+<!-- 
 <script>
   // Función para contactar a soporte
   function contactSupport() {
@@ -155,4 +156,53 @@
       });
     }
   });
-  </script>
+  </script> -->
+
+<script>
+  const recoveryForm = document.getElementById('recoveryForm');
+  const verificarCorreo = document.getElementById('verificarCorreo');
+  const subirContraseñas = document.getElementById('contraseñas');
+  recoveryForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Evita el envío predeterminado del formulario
+
+    const email = document.getElementById('email').value;
+
+    try {
+      const response = await fetch('/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email
+        })
+      });
+
+      const result = await response.json(); // Parsear la respuesta como JSON
+
+      if (result.success) {
+        verificarCorreo.style.display = 'none';
+        subirContraseñas.style.display = 'block';
+      } else {
+        alert(result.message); // Mostrar mensaje de error
+      }
+    } catch (error) {
+      console.error('Error al enviar el correo:', error);
+      alert('Hubo un error al intentar enviar el correo. Inténtalo de nuevo más tarde.');
+    }
+  });
+</script>
+
+
+<!-- mostrar alerta de contactar soporte -->
+<script>
+  function botonSoporte() {
+    Swal.fire({
+      title: "Soporte al cliente",
+      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "OK"
+    });
+  }
+</script>

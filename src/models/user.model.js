@@ -9,8 +9,8 @@ class User {
 
     // Obtener la fecha y hora actuales
     const now = new Date();
-    const fechaRegistro = now.toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
-    const horaRegistro = now.toTimeString().split(' ')[0]; // Hora en formato HH:mm:ss
+    const fechaRegistro = now.toISOString().split("T")[0]; // Fecha en formato YYYY-MM-DD
+    const horaRegistro = now.toTimeString().split(" ")[0]; // Hora en formato HH:mm:ss
 
     // Query con columnas explícitas
     const sql = `
@@ -40,22 +40,30 @@ class User {
       hashedPassword,
       terminosCondiciones,
       fechaRegistro, // Fecha actual
-      horaRegistro   // Hora actual
+      horaRegistro, // Hora actual
     ];
-    
+
     console.log("Datos recibidos:", userData);
     console.log("Contraseña hasheada:", hashedPassword);
 
     // Ejecutar el query
     const [result] = await db.execute(sql, values);
     return result.insertId;
-}
-
+  }
 
   static async findByUsername(usuario) {
-    const [rows] = await db.execute('SELECT * FROM usuarios WHERE usuario = ?', [usuario]);
+    const [rows] = await db.execute(
+      "SELECT * FROM usuarios WHERE usuario = ?",
+      [usuario]
+    );
     return rows[0];
   }
+
+  static async findByEmail(email) {
+    const [rows] = await db.execute("SELECT * FROM usuarios WHERE correo = ?", [email,]);
+    return rows[0];
+  }
+
 }
 
 

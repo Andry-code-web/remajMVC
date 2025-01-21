@@ -149,6 +149,13 @@
   color: #64748b;
 }
 
+.btn_validar {
+  padding: 1rem 0.5rem;
+  background: none;
+  font-family: "segoe ui";
+  font-weight: 500;
+}
+
 /* Tarjetas de clientes */
 .cards-container {
   display: grid;

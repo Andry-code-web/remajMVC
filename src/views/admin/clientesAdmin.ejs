@@ -41,35 +41,41 @@
             <th>CLIENTE</th>
             <th>CONTACTO</th>
             <th>COMPRAS</th>
-            <th>OPORTUNIDADES</th>
+            <th>ID REMATE VALID</th>
           </tr>
         </thead>
         <tbody id="clientesTableBody">
-          <% if (cliente && cliente.length > 0) { %>
-          <% cliente.forEach((clientes) => { %>
-          <td>
-            <div class="client-info">
-              <img src="<%= clientes.avatar %>" alt="<%= clientes.nombre %>" class="client-avatar">
-              <div>
-                <div class="client-name"><%= clientes.nombre %></div>
-                <div class="client-id">ID: <%= clientes.id %></div>
+          <% if (clientes && clientes.length > 0) { %>
+          <% clientes.forEach((cliente) => { %>
+          <tr>
+            <td>
+              <div class="client-info">
+                <img src="<%= cliente.avatar %>" alt="<%= cliente.nombre %>" class="client-avatar">
+                <div>
+                  <div class="client-name"><%= cliente.nombre %></div>
+                  <div class="client-id">ID: <%= cliente.id %></div>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div><%= clientes.email %></div>
-            <div style="color: #6b7280"><%= clientes.telefono %></div>
-          </td>
-          <td>
-            <div><%= clientes.comprasTotal %> compras</div>
-            <div style="color: #6b7280">Última: <%= clientes.ultimaCompra %></div>
-          </td>
-          <td>
-            <div class="opportunities-badge">
-              Oportunidades
-              <span class="opportunities-count"><%= clientes.oportunidades %></span>
-            </div>
-          </td>
+            </td>
+            <td>
+              <div><%= cliente.correo %></div>
+              <div style="color: #6b7280"><%= cliente.telefono %></div>
+            </td>
+            <td>
+              <div><%= cliente.comprasTotal %> compras</div>
+              <div style="color: #6b7280">Última: <%= cliente.ultimaCompra %></div>
+            </td>
+            <td>
+              <div class="opportunities-badge">
+                <% if (cliente.usuario_validado == null) { %>
+                <span class="opportunities-count">0</span>
+                <button class="btn_validar" id="btn_validar">validar cliente</button>
+                <% } else { %>
+                <span class="opportunities-count"><%= cliente.usuario_validado %></span>
+                <% } %>
+              </div>
+            </td>
+          </tr>
           <% }); %>
           <% } else { %>
           <tr>
@@ -91,7 +97,7 @@
 </div>
 
 
-<script>
+<!-- <script>
   // Datos para el gráfico
   const datosSemanales = {
     nuevosUsuarios: [3, 5, 2, 4],
@@ -318,4 +324,4 @@
       initChart();
     });
   });
-</script>
+</script> -->

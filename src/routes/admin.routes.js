@@ -42,7 +42,7 @@ router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCrono
 router.get('/obtener-cronograma', isAuthenticated, adminController.obtenerCronograma);
 
 
-router.get('/usuarios', adminController.obtenerResumen);
-router.get('/catalogo', adminController.obtenerCatalogo);
+router.get('/usuarios', adminController.getClientes);
+/* router.get('/catalogo', adminController.obtenerCatalogo); */
 
 module.exports = router;

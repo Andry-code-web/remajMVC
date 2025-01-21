@@ -1,139 +1,106 @@
-<style>
-    /* ... (estilos CSS anteriores sin cambios) ... */
-
-    .botones-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-    }
-
-    .boton-enviar-comprobante {
-        color: rgb(0, 0, 0);
-        text-decoration: none;
-        font-size: 18px;
-        border: none;
-        background: none;
-        font-weight: 600;
-        font-family: 'Poppins', sans-serif;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .boton-enviar-comprobante::before {
-        margin-left: auto;
-    }
-
-    .boton-enviar-comprobante::after,
-    .boton-enviar-comprobante::before {
-        content: '';
-        width: 0%;
-        height: 2px;
-        background: #4CAF50;
-        display: block;
-        transition: 0.5s;
-    }
-
-    .boton-enviar-comprobante:hover::after,
-    .boton-enviar-comprobante:hover::before {
-        width: 100%;
-    }
-
-    .boton-enviar-comprobante:hover {
-        color: #4CAF50;
-    }
-
-    /* Ajuste para el botón de retroceder */
-    .botonsalir {
-        margin-bottom: 0;
-    }
-</style>
-
-<div class="payment-container">
-    <div class="payment-tabs">
-        <div class="tab active" data-tab="card">
-            <span>💳</span>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<div class="contenedor-sistema-pagos-electronico">
+    <div class="navegacion-metodos-transaccion">
+        <div class="elemento-navegacion-activo" data-identificador-metodo="tarjeta">
+            <i data-lucide="credit-card"></i>
             Tarjeta débito/crédito
         </div>
-        <div class="tab" data-tab="yape">
-            <span>📱</span>
+        <div class="elemento-navegacion-secundario" data-identificador-metodo="yape">
+            <i data-lucide="smartphone"></i>
             Yape
         </div>
     </div>
 
-    <div class="payment-content">
-        <div class="form-section card-section active">
-            <h3>Información de Cuentas</h3>
-            <div class="account-info">
-                <div class="bank-account">
-                    <h4>BCP</h4>
-                    <p>CCI: 00219400212345678901</p>
+    <div class="contenedor-principal-formularios">
+        <div class="seccion-formulario-tarjeta-bancaria elemento-visible">
+            <h3><i data-lucide="info"></i> Información de Cuentas</h3>
+            <div class="contenedor-informacion-bancaria">
+                <div class="elemento-cuenta-interbancaria">
+                    <h4><i data-lucide="landmark"></i> BCP</h4>
+                    <p><i data-lucide="hash"></i> CCI: 00219400212345678901</p>
                 </div>
-                <div class="bank-account">
-                    <h4>Interbank</h4>
-                    <p>CCI: 00319400212345678902</p>
+                <div class="elemento-cuenta-interbancaria">
+                    <h4><i data-lucide="landmark"></i> Interbank</h4>
+                    <p><i data-lucide="hash"></i> CCI: 00319400212345678902</p>
                 </div>
-                <div class="bank-account">
-                    <h4>BBVA</h4>
-                    <p>CCI: 00119400212345678903</p>
+                <div class="elemento-cuenta-interbancaria">
+                    <h4><i data-lucide="landmark"></i> BBVA</h4>
+                    <p><i data-lucide="hash"></i> CCI: 00119400212345678903</p>
                 </div>
-                <div class="bank-account">
-                    <h4>Scotiabank</h4>
-                    <p>CCI: 00919400212345678904</p>
+                <div class="elemento-cuenta-interbancaria">
+                    <h4><i data-lucide="landmark"></i> Scotiabank</h4>
+                    <p><i data-lucide="hash"></i> CCI: 00919400212345678904</p>
                 </div>
             </div>
         </div>
 
-        <div class="form-section yape-section">
-            <h3>Escanea el código QR</h3>
-            <div class="qr-placeholder">
-                <img class="imagen-yape-qr" src="/img/yape.jpg" alt="">
+        <div class="seccion-formulario-yape">
+            <h3><i data-lucide="qr-code"></i> Escanea el código QR</h3>
+            <div class="contenedor-codigo-qr-yape">
+                <img class="visualizacion-codigo-qr" src="/img/qr_metodo_pago.png" alt="Código QR de Yape">
             </div>
-            <p>Yape a: Montano Quispe Cleofer</p>
-            <p>Monto: S/ 5000.00</p>
+            <p><i data-lucide="user"></i> Yape a: Montano Quispe Cleofer</p>
+            <p><i data-lucide="dollar-sign"></i> Monto: $ 5000.00</p>
         </div>
     </div>
 
-    <div class="security-badges">
-        <small>Enviar tu comprobante de pago a:</small>
-        <div>📧 remajud@remajud.com</div>
-        <div class="botones-container">
-            <button class="botonsalir" id="retroceder">Retroceder</button>
-            <button class="boton-enviar-comprobante" id="enviarComprobanteBoton">Enviar comprobante</button>
+    <div class="seccion-seguridad-verificacion">
+        <small><i data-lucide="send"></i> Enviar tu comprobante de pago a:</small>
+        <div><i data-lucide="mail"></i> remajud@remajud.com</div>
+        <div class="contenedor-botones-accion">
+            <button class="boton-navegacion-retroceso" id="botonRetroceder">
+                <i data-lucide="arrow-left"></i> Retroceder
+            </button>
+            <button class="boton-confirmacion-transaccion" id="botonEnviarComprobante">
+                <i data-lucide="send"></i> Enviar comprobante
+            </button>
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Función para cambiar de pestaña
-    const switchTab = (tab) => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
-        document.querySelector(tab.dataset.tab === 'card' ? '.card-section' : '.yape-section').classList.add('active');
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
 
-    // Event listener para cambiar de pestaña
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => switchTab(tab));
-    });
+        const alternarVisualizacionFormulario = (elementoNavegacion) => {
+            document.querySelectorAll('.elemento-navegacion-activo, .elemento-navegacion-secundario')
+                .forEach(elemento => elemento.classList.remove('elemento-navegacion-activo'));
 
-    // Event listener para el botón "Enviar comprobante"
-    document.getElementById('enviarComprobanteBoton').addEventListener('click', () => {
-        Swal.fire({
-            title: 'Escanea el siguiente QR para enviar tu comprobante',
-            text: 'Serás redirigido con un asesor de la empresa para poder comprobar tu pago y se habilitará tu ingreso.',
-            imageUrl: '/img/qr_metodo_pago.png',
-            imageWidth: 300,
-            imageHeight: 300,
-            imageAlt: 'Código QR',
-            showCancelButton: true,
-            confirmButtonText: 'Continuar',
-            cancelButtonText: 'Retroceder'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = 'https://wa.link/2tmvgy';
-            }
+            elementoNavegacion.classList.add('elemento-navegacion-activo');
+
+            const identificadorMetodo = elementoNavegacion.dataset.identificadorMetodo;
+            document.querySelectorAll('.seccion-formulario-tarjeta-bancaria, .seccion-formulario-yape')
+                .forEach(seccion => seccion.classList.remove('elemento-visible'));
+
+            const seccionMostrar = identificadorMetodo === 'tarjeta'
+                ? '.seccion-formulario-tarjeta-bancaria'
+                : '.seccion-formulario-yape';
+            document.querySelector(seccionMostrar).classList.add('elemento-visible');
+        };
+
+        document.querySelectorAll('.elemento-navegacion-activo, .elemento-navegacion-secundario')
+            .forEach(elementoNavegacion => {
+                elementoNavegacion.addEventListener('click', () => {
+                    alternarVisualizacionFormulario(elementoNavegacion);
+                });
+            });
+
+        document.getElementById('botonEnviarComprobante').addEventListener('click', () => {
+            Swal.fire({
+                title: 'Escanea el siguiente QR para enviar tu comprobante',
+                text: 'Serás redirigido con un asesor de la empresa para poder comprobar tu pago y se habilitará tu ingreso.',
+                imageUrl: '/img/qr_metodo_pago.png',
+                imageWidth: 300,
+                imageHeight: 300,
+                imageAlt: 'Código QR',
+                showCancelButton: true,
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Retroceder'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'https://wa.link/2tmvgy';
+                }
+            });
         });
     });
 </script>

@@ -674,15 +674,15 @@
     flex: 1;
 }
 
-/* .detallesEspecificosSubasta {
+.detallesEspecificosSubasta {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 1rem;
     gap: 2rem;
-    padding-right: 50px;
+    /* padding-right: 50px;  *//* Add space for the like button */
 
-} */
+}
 
 .informacionGeneralSubasta {
     text-decoration: none;
@@ -1258,12 +1258,3 @@
         transform: scale(1);
     }
 }
-
-//nuevos cambios boton de likes 
-.contenedor-boton-me-gusta {
-    color: gray; /* Color por defecto */
-  }
-  
-  .contenedor-boton-me-gusta.liked {
-    color: red; /* Color cuando el like está activado */
-  }

@@ -204,7 +204,6 @@ exports.getFiltrarRemateG = async (req, res) => {
   }
 };
 
-
 exports.checkOpportunities = async (req, res) => {
   try {
     const userId = req.user?.id;
@@ -215,21 +214,21 @@ exports.checkOpportunities = async (req, res) => {
     }
 
     const [userRows] = await db.execute(
-      'SELECT usuario_validado FROM usuarios WHERE id = ?',
-      [userId]
+      'SELECT * FROM usuario_remate WHERE usuario_id = ? AND remate_id = ?',
+      [userId, auctionId]
     );
 
     if (userRows.length === 0) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
+      return res.status(404).json({ message: 'Usuario no encontrado o no está validado para este remate' });
     }
 
     const user = userRows[0];
 
-    console.log('Usuario validado:', user.usuario_validado); // Depuración
+    console.log('Usuario validado:', user.validado); // Depuración
     console.log('Auction ID:', auctionId); // Depuración
 
     // Verificar si el usuario está validado para el remate
-    if (String(user.usuario_validado) !== String(auctionId)) {
+    if (user.validado !== 1) {
       return res.status(403).json({ message: 'No estás validado para este remate' });
     }
 

@@ -73,7 +73,6 @@ const auctionTimers = {};
 
 // Mantener un registro global de temporizadores
 
-
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
@@ -88,7 +87,7 @@ io.on('connection', (socket) => {
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {
-      // Obtener la fecha y hora del remate y el estado actual
+      // Obtener la fecha, hora y estado del remate
       const [rows] = await db.execute(
         'SELECT fecha_remate, hora_remate, estado FROM remates WHERE id = ?',
         [remates_id]
@@ -102,30 +101,23 @@ io.on('connection', (socket) => {
       const fechaRemate = new Date(rows[0].fecha_remate);
       const [hour, minute, second] = rows[0].hora_remate.split(':');
       fechaRemate.setHours(hour, minute, second);
+
       const now = new Date();
 
-      console.log('Fecha y hora del remate:', fechaRemate);
-      console.log('Fecha y hora actual del cliente:', now);
-
-      // Si el remate ya está en curso, calcular tiempo restante
+      // Validar estado y manejar el cronómetro según corresponda
       if (rows[0].estado === 'en_curso') {
-        const duracionTotal = 6 * 60 * 60; // 6 horas en segundos
-
-        // Obtener el tiempo transcurrido desde el inicio del remate
+        const duracionTotal = 0.006 * 60 * 60; // 6 horas en segundos
         const tiempoTranscurrido = Math.floor((now - fechaRemate) / 1000);
         const tiempoRestante = Math.max(0, duracionTotal - tiempoTranscurrido);
 
         if (tiempoRestante > 0) {
           startAuctionTimer(remates_id, tiempoRestante);
         } else {
-          // Si ya pasó el tiempo, finalizar la subasta
           await finalizeAuction(remates_id);
         }
       } else if (now >= fechaRemate && rows[0].estado !== 'finalizado') {
-        // Si es hora de iniciar y no ha iniciado, comenzar nuevo temporizador
         startAuctionTimer(remates_id);
       } else if (rows[0].estado !== 'finalizado') {
-        // Programar inicio futuro
         const timeDiff = fechaRemate - now;
         console.log(`⏳ Temporizador programado para iniciar en ${timeDiff / 1000} segundos`);
         setTimeout(() => startAuctionTimer(remates_id), timeDiff);
@@ -145,14 +137,14 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, remainingTime = 6 * 60 * 60) {
+  async function startAuctionTimer(remates_id, remainingTime = 0.006 * 60 * 60) {
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
       console.log(`⏹️ Temporizador existente cancelado para la subasta ${remates_id}`);
     }
 
     try {
-      if (remainingTime === 6 * 60 * 60) {
+      if (remainingTime === 0.006 * 60 * 60) {
         await db.execute(
           'UPDATE remates SET estado = ? WHERE id = ?',
           ['en_curso', remates_id]
@@ -181,26 +173,30 @@ io.on('connection', (socket) => {
   }
 
   async function finalizeAuction(remates_id) {
-    clearInterval(auctionTimers[remates_id]?.intervalId);
-    const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
+    try {
+      clearInterval(auctionTimers[remates_id]?.intervalId);
 
-    if (winner) {
-      try {
-        await db.execute(
-          'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
-          ['finalizado', winner, highestAmount, remates_id]
-        );
-        console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
-      } catch (error) {
-        console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
-      }
+      const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
+
+      await db.execute(
+        'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
+        ['finalizado', winner, highestAmount, remates_id]
+      );
+
+      io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
+      io.to(remates_id).emit('alert-auction-ended', {
+        message: winner
+          ? `Felicidades ${winner}, nos comunicaremos en 24 horas`
+          : 'La subasta ha finalizado sin ganador',
+      });
+      io.to(remates_id).emit('status-update', { estado: 'finalizado', remates_id });
+
+      console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
+    } catch (error) {
+      console.error(`❌ Error al finalizar el remate ${remates_id}:`, error.message || error);
+    } finally {
+      delete auctionTimers[remates_id];
     }
-
-    io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` });
-    console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-
-    delete auctionTimers[remates_id];
   }
 
   socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {

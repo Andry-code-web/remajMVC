@@ -97,26 +97,26 @@
     </div>
  -->
     <!-- Chat (inicialmente oculto) -->
-    <div id="auction-chat" class="chat" style="display: none;">
-
+    <div id="auction-chat1" class="chat" style="display: none;">
+      <section id="chat">
+        <!-- Contenedor de la barra de progreso -->
+        <p class="fecha-subasta" id="countdown1">
+          <span id="countdown-timer">00:00:00</span>
+        </p>
+        <ul id="messages"></ul>
+  
+        <!-- Formulario de oferta -->
+        <form id="form-bid" class="message-form">
+          <div class="input-container">
+            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>"/>
+            <button type="submit" class="send-btn">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
-    <section id="chat">
-      <!-- Contenedor de la barra de progreso -->
-      <p class="fecha-subasta" id="countdown1">
-        <span id="countdown-timer">00:00:00</span>
-      </p>
-      <ul id="messages"></ul>
-
-      <!-- Formulario de oferta -->
-      <form id="form-bid" class="message-form">
-        <div class="input-container">
-          <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>"/>
-          <button type="submit" class="send-btn">
-            Enviar
-          </button>
-        </div>
-      </form>
-    </section>
+ 
   </div>
 
   <!-- Clasificación -->
@@ -375,11 +375,24 @@
   });
 
   socket.on("timer-update", (remaining) => {
-    const hours = Math.floor(remaining / 3600);
-    const minutes = Math.floor((remaining % 3600) / 60);
-    const seconds = remaining % 60;
-    timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  });
+  // Selecciona los elementos necesarios
+  const auctionChat = document.getElementById("auction-chat1");
+  const timerDisplay = document.getElementById("countdown-timer");
+
+  // Calcula horas, minutos y segundos a partir del tiempo restante
+  const hours = Math.floor(remaining / 3600);
+  const minutes = Math.floor((remaining % 3600) / 60);
+  const seconds = remaining % 60;
+
+  // Actualiza el contenido del temporizador
+  timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+  // Si el tiempo restante llega a 0, oculta el chat
+  if (remaining >= 0) {
+    auctionChat.style.display = "block";
+  }
+});
+
 
   socket.on("alert-auction-ended", ({ message }) => {
     Swal.fire({

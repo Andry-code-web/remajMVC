@@ -21,7 +21,7 @@
 
   <div id="active-panel" class="active-content-section active">
     <!-- Estado: En Curso -->
-    <div class="active-panel-content" id="en_curso"
+   <!--  <div class="active-panel-content" id="en_curso"
       style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
       <div class="active-user-info">
         <div class="active-user">
@@ -41,14 +41,14 @@
         </div>
       </div>
 
-      <!--   <div class="active-bid-controls">
+      <div class="active-bid-controls">
         <button class="active-join-button" id="unirse" data-auction-id="<%= auction.id %>">Unirse al remate N° <%=
             auction.id %></button>
-      </div> -->
-    </div>
+      </div>
+    </div> -->
 
     <!-- Estado: Finalizado -->
-    <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
+   <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
       <div class="finished-best-offer">
         <div class="finished-crown-label">
           <span class="finished-crown">👑</span>
@@ -65,10 +65,10 @@
           </span>
         </div>
         <% } %>
-    </div>
+    </div> 
 
     <!-- Estado: Activo -->
-    <!--  <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
+   <!--  <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
       <div class="progress-user-info">
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
@@ -98,26 +98,25 @@
  -->
     <!-- Chat (inicialmente oculto) -->
     <div id="auction-chat" class="chat" style="display: none;">
-      <section id="chat">
-        <!-- Contenedor de la barra de progreso -->
-        <p class="fecha-subasta" id="countdown1">
-          <span id="countdown-timer">00:00:00</span>
-        </p>
-        <ul id="messages"></ul>
 
-        <!-- Formulario de oferta -->
-        <form id="form-bid" class="message-form">
-          <div class="input-container">
-            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off"
-              value="<%= auction.precios %>" />
-            <button type="submit" class="send-btn">
-              Enviar
-            </button>
-          </div>
-        </form>
-      </section>
     </div>
+    <section id="chat">
+      <!-- Contenedor de la barra de progreso -->
+      <p class="fecha-subasta" id="countdown1">
+        <span id="countdown-timer">00:00:00</span>
+      </p>
+      <ul id="messages"></ul>
 
+      <!-- Formulario de oferta -->
+      <form id="form-bid" class="message-form">
+        <div class="input-container">
+          <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>"/>
+          <button type="submit" class="send-btn">
+            Enviar
+          </button>
+        </div>
+      </form>
+    </section>
   </div>
 
   <!-- Clasificación -->
@@ -328,7 +327,7 @@
 
   let highestAmount = 0;
   let basePrice = 0;
-  const auctionId = <% - auction.id %>;
+  const auctionId = <%- auction.id %>;
   const userId = "<%- user?.id || '0' %>";
   const userName = "<%- user?.usuario || 'Anónimo' %>";
 
@@ -486,6 +485,7 @@
   });
 
 </script>
+
 
 
 

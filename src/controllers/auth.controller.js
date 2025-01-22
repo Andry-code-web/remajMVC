@@ -215,7 +215,6 @@ exports.resetPassword = async (req, res) => {
 };
 
 // Controlador para Editar Usuario
-// Controlador para Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {
     if (!req.session.user) {

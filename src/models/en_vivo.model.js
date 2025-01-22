@@ -1,9 +1,10 @@
 const db = require('../config/database');
 
 class EnVivo {
-    static async getAll() {
-        const query = "SELECT * FROM remajud.remates WHERE estado = 'en_curso'";
-        return await db.execute(query).then(([rows]) => rows);
+    static async getAll(usuario_id) {
+        const query = "SELECT * FROM remajud.likes WHERE usuarios_id = ? ";
+        const [rows] = await db.execute(query, [usuario_id]);
+        return rows;
     }
 
     static async getImagenesInmuebles() {

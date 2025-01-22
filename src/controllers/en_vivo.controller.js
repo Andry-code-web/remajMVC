@@ -5,13 +5,13 @@ const path = require("path");
 exports.getEnVivo = async (req, res) => {
     try {
         // Obtener datos de remates y anexos
-        const enVivoData = await EnVivo.getAll();
+        const userId = req.session.user.id;
+        console.log('id del usuario:', userId);
+        
+        const enVivoData = await EnVivo.getAll(userId);
         const imgInmuebles = await EnVivo.getImagenesInmuebles();
-        const anexosData = await EnVivo.getAnexosAll(); // Traemos todos los anexos
+        const anexosData = await EnVivo.getAnexosAll(); 
 
-        console.log("Datos de remates:", enVivoData);
-        console.log("Imágenes de inmuebles:", imgInmuebles);
-        console.log("Datos de anexos:", anexosData);
 
         // Combinar datos con imágenes y anexos
         const dataConImagenesYAnexos = enVivoData.map((auction) => {

@@ -60,7 +60,7 @@
 .auction-grid {
   width: 85%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 2fr);
   gap: 2rem;
   padding: 1rem;
 }

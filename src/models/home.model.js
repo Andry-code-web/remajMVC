@@ -132,6 +132,9 @@ class Home {
       throw error;
     }
   }
+
+
+
 /* funciones de dar likes */
   static async hasLiked(userId, remateId) {
     const [rows] = await db.execute(

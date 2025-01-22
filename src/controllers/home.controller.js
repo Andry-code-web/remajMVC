@@ -240,8 +240,9 @@ exports.checkOpportunities = async (req, res) => {
   }
 };
 
-/* funcion dar like  */
 
+
+/* funcion dar like  */
 exports.toggleLike = async (req, res) => {
   const { remateId } = req.body;
   const userId = req.user.id;

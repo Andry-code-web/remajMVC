@@ -7,10 +7,10 @@ exports.getEnVivo = async (req, res) => {
         // Obtener datos de remates y anexos
         const userId = req.session.user.id;
         console.log('id del usuario:', userId);
-        
+        // Obtener datos de remates y anexos
         const enVivoData = await EnVivo.getAll(userId);
         const imgInmuebles = await EnVivo.getImagenesInmuebles();
-        const anexosData = await EnVivo.getAnexosAll(); 
+        const anexosData = await EnVivo.getAnexosAll(); // Traemos todos los anexos
 
 
         // Combinar datos con imágenes y anexos
@@ -31,8 +31,6 @@ exports.getEnVivo = async (req, res) => {
         res.render("error", { message: "Error al obtener datos de subastas en vivo" });
     }
 };
-
-
 
 
 

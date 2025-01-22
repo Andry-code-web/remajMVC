@@ -1,6 +1,5 @@
 @use 'variables' as *;
 
-
 /* Estilo del scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -13,19 +12,16 @@
 ::-webkit-scrollbar-thumb {
   background: black;
   border-radius: 4px;
-
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: black;
 }
 
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
 }
 
 #header {
@@ -60,7 +56,7 @@
 .auction-grid {
   width: 85%;
   display: grid;
-  grid-template-columns: repeat(2, 2fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   padding: 1rem;
 }
@@ -81,6 +77,8 @@
   perspective: 1000px;
   min-width: 320px;
   border: 1px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .auction-card::before {
@@ -110,30 +108,20 @@
     0 0 40px rgba(255, 255, 255, 0.6);
 }
 
-/* Encabezado de la tarjeta */
-.auction-header {
-  position: relative;
-  padding: 1.5rem;
-  z-index: 1;
-}
-
-.auction-number {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1a1a2e;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.auction-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
 
 /* Contenedor de imagen */
 .auction-image {
-  position: relative;
-  height: 200px;
+  flex: 0 0 40%;
+  height: auto;
+  max-height: 100%;
   overflow: hidden;
-  border-radius: 15px;
-  margin: 0 1rem;
+  border-radius: 15px 0 0 15px;
+  margin: 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -149,10 +137,28 @@
 }
 
 /* Contenido de la tarjeta */
-.auction-content {
-  position: relative;
+.auction-details-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 1.5rem;
+}
+
+/* Encabezado de la tarjeta */
+.auction-header {
+  position: relative;
+  margin-bottom: 1rem;
   z-index: 1;
+}
+
+.auction-number {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Título de la subasta */
@@ -171,7 +177,7 @@
 
 /* Información de la subasta */
 .auction-info {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   color: #2d3748;
 }
 
@@ -197,9 +203,10 @@
     font-weight: 600;
   }
 }
+
 /* Sección de descripción */
 .description-section {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   background: rgba(44, 62, 80, 0.05);
   padding: 1rem;
   border-radius: 12px;
@@ -233,7 +240,7 @@
   );
   padding: 1rem;
   border-radius: 12px;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   border: 1px solid rgba(44, 62, 80, 0.15);
 }
 
@@ -254,8 +261,8 @@
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 0 1.5rem 1.5rem;
+  margin-top: auto;
+  padding: 0;
 }
 
 .action-btn {
@@ -314,7 +321,6 @@
   color: #2d3748;
 }
 
-
 .auction-details {
   font-family: $fuenteSecundaria;
   margin-bottom: 1rem;
@@ -339,16 +345,13 @@
 .informacionGeneralSubasta {
   text-decoration: none;
 }
+
 /* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
-    -webkit-transform: translateY(20px);
-    -moz-transform: translateY(20px);
-    -ms-transform: translateY(20px);
-    -o-transform: translateY(20px);
-}
+  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -359,17 +362,16 @@
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-
 /* Media Queries */
 @media (max-width: 1400px) {
   .auction-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 1100px) {
   .auction-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -384,6 +386,19 @@
   
   .auction-card {
     min-width: 300px;
+  }
+  
+  .auction-content {
+    flex-direction: column;
+  }
+
+  .auction-image {
+    flex: 0 0 200px;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .auction-details-wrapper {
+    padding: 1rem;
   }
   
   .action-buttons {

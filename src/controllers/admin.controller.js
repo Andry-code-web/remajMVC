@@ -12,8 +12,10 @@ const {
   updateRemate,
   createCronograma, // Nueva función agregada
   getClientes,
+  getEstadisticas,
   getResumenClientes,
-  getCatalogoClientes
+  getCatalogoClientes,
+  createSeguimiento,
 } = require('../models/admin.model');
 const { query } = require('../config/database');
 const db = require('../config/database');
@@ -230,7 +232,6 @@ exports.obtenerCronograma = async (req, res) => {
 };
 
 
-// Crear seguimiento
 exports.createSeguimiento = async (req, res) => {
   const {
     expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
@@ -238,18 +239,33 @@ exports.createSeguimiento = async (req, res) => {
   } = req.body;
 
   const datosSeguimiento = [
-    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
-    fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
+    expediente || null,
+    distrito_judicial || null,
+    instancia || null,
+    organo_juridico || null,
+    especialidad || null,
+    nro_convocatoria || null,
+    fecha_registro || null,
+    procesado_por || null,
+    reanudado || null,
+    fase_convocatoria || null,
+    estado_convocatoria || null,
+    remates_id || null
   ];
 
   try {
-    const nuevoSeguimientoId = await Seguimiento.createSeguimiento(datosSeguimiento);
-    res.status(201).json({ id: nuevoSeguimientoId, message: 'Seguimiento creado exitosamente' });
+    const query = `
+      INSERT INTO seguimiento (expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const [guardarSeguimiento] = await db.execute(query, datosSeguimiento);
+    res.status(201).json({ id: guardarSeguimiento.insertId, message: 'Seguimiento creado exitosamente' });
   } catch (error) {
     console.error('Error al crear el seguimiento:', error);
-    res.status(500).json({ message: 'Error al crear el seguimiento' });
+    res.status(500).json({ error: 'Error al crear el seguimiento' });
   }
 };
+
 
 // Obtener un seguimiento por ID
 exports.getSeguimientoById = async (req, res) => {
@@ -303,10 +319,24 @@ exports.getClientes = async (req, res) => {
 
     console.log('Clientes con remates validados:', clientes);
 
+    // Total de clientes
+    const numeroClientes = clientes.length;
+
+    // Estadísticas de nuevos clientes registrados este mes
+    const queryE = `SELECT * FROM usuarios 
+    WHERE MONTH(fecha_registro) = MONTH(NOW())
+    AND YEAR(fecha_registro) = YEAR(NOW())`;
+    const [estadistica] = await db.query(queryE);
+
+    const nuevosClientesES = estadistica.length;
+
     // Pasar los datos a la vista
     res.render('layouts/admin', {
       clientes,
       id_remate,
+      numeroClientes,
+      estadistica,
+      nuevosClientesES,
       contet: 'admin/clientesAdmin',
     });
   } catch (error) {

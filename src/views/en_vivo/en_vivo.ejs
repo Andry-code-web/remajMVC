@@ -31,64 +31,62 @@
     <div class="auction-grid">
       <% if (enVivoData && enVivoData.length > 0) { %>
       <% enVivoData.forEach((auction) => { %>
-          <div class="auction-card">
-            <a href="/auctions/ <%= auction.id %>" class="informacionGeneralSubasta">
-          <div class="auction-header">
-            <span class="auction-number">Remate N° <%= auction.id %></span>
+      <div class="auction-card">
+        <div class="auction-header">
+          <span class="auction-number">Remate N° <%= auction.id %></span>
+        </div>
+
+        <div class="auction-image">
+          <img src="data:image/jpeg;base64,<%= auction.imagen || '' %>" alt="Imagen de propiedad" class="property-image" />
+        </div>
+
+        <div class="auction-content">
+          <div class="auction-details">
+            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
+            <p class="lugar"><strong>LUGAR:</strong> <%= auction.ubicacion %> Perú</p>
           </div>
-  
-          <div class="auction-image">
-            <img src="data:image/jpeg;base64,<%= auction.imagen || '' %>" alt="Imagen de propiedad" class="property-image" />
+
+          <div class="auction-info">
+            <h3>Presentación de Ofertas</h3>
+            <p class="hora_remate">
+              <i class="ri-calendar-line"></i>
+              <%= new Date(auction.fecha_remate).toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              }) %>
+            </p>
+            <p class="hora_remate">
+              <i class="ri-time-line"></i>
+              <%= auction.hora_remate %>
+            </p>
           </div>
-  
-          <div class="auction-content">
-            <div class="auction-details">
-              <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
-              <p class="lugar"><strong>LUGAR:</strong> <%= auction.ubicacion %> Perú</p>
-            </div>
-  
-            <div class="auction-info">
-              <h3>Presentación de Ofertas</h3>
-              <p class="hora_remate">
-                <i class="ri-calendar-line"></i>
-                <%= new Date(auction.fecha_remate).toLocaleDateString('es-PE', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric'
-                }) %>
-              </p>
-              <p class="hora_remate">
-                <i class="ri-time-line"></i>
-                <%= auction.hora_remate %>
-              </p>
-            </div>
-  
-            <div class="description-section">
-              <h6>Descripción</h6>
-              <p class="description-text"><%= auction.descripcion %></p>
-            </div>
-  
-            <div class="price-section">
-              <span class="price-label">Precio Base:</span>
-              <p class="price-value">USD$ <%= auction.precios %></p>
-            </div>
-  
-            <div class="action-buttons">
-              <a href="/en_vivo/seguimiento/<%= auction.id %>" class="action-btn seguimiento">
-                <i class="fas fa-chart-line"></i> Seguimiento
-              </a>
-              <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
-                <i class="fas fa-info-circle"></i> Detalles
-              </a>
-              <a href="<%= auction.anexo || '#' %>" 
-                class="action-btn aviso <%= auction.anexo ? '' : 'disabled' %>" 
-                target="_blank">
-                 <i class="fas fa-building"></i> Aviso
-             </a>        
-            </div>
+
+          <div class="description-section">
+            <h6>Descripción</h6>
+            <p class="description-text"><%= auction.descripcion %></p>
+          </div>
+
+          <div class="price-section">
+            <span class="price-label">Precio Base:</span>
+            <p class="price-value">USD$ <%= auction.precio_base %></p>
+          </div>
+
+          <div class="action-buttons">
+            <a href="/en_vivo/seguimiento/<%= auction.id %>" class="action-btn seguimiento">
+              <i class="fas fa-chart-line"></i> Seguimiento
+            </a>
+            <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
+              <i class="fas fa-info-circle"></i> Detalles
+            </a>
+            <a href="<%= auction.anexo || '#' %>" 
+              class="action-btn aviso <%= auction.anexo ? '' : 'disabled' %>" 
+              target="_blank">
+               <i class="fas fa-building"></i> Aviso
+           </a>        
           </div>
         </div>
-      </a>
+      </div>
       <% }); %>
       <% } else { %>
       <div class="no-results">
@@ -97,6 +95,7 @@
       <% } %>
     </div>
   </section>
+  
   
   <!-- SCRIPT EN_VIVO -->
   <script src="/js/script_en_vivo.js"></script>

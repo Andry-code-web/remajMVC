@@ -1,0 +1,259 @@
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.contenedor-general {
+  font-family: "fuenteSecundaria";
+  min-height: 90vh;
+  background-color: #f5f5f5;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor_formulario {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 4rem;
+}
+
+/* Panel izquierdo */
+.left-panel {
+  width: 35%;
+  background: linear-gradient(135deg, #8b0000 0%, #C41E3A 100%);
+  color: white;
+  padding: 2rem;
+  position: relative;
+}
+
+.header-content {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-content h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+.user-avatar {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.avatar-circle {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-circle i {
+  font-size: 3rem;
+}
+
+.username {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.profile-info {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item i {
+  font-size: 1.2rem;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.action-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+}
+
+.action-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Panel derecho */
+.right-panel {
+  width: 65%;
+  padding: 2rem;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main-title {
+  color: #8b0000;
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.description {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.form-section {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #8b0000;
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+  outline: none;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.save-button, .cancel-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.save-button {
+  background: #8b0000;
+  color: white;
+  border: none;
+}
+
+.save-button:hover {
+  background: #660000;
+}
+
+.cancel-button {
+  background: #6c757d;
+  color: white;
+  border: none;
+}
+
+.cancel-button:hover {
+  background: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .contenedor-general {
+    padding: 1rem;
+    min-height: 100vh;
+  }
+  .contenedor_formulario {
+    flex-direction: column;
+  }
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    padding: 1.5rem;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+}/*# sourceMappingURL=editUsuario.css.map */

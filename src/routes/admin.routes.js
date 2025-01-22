@@ -48,4 +48,7 @@ router.post('/validar-cliente', adminController.validarClienteEnRemate);
 router.get('/usuarios', adminController.getClientes);
 /* router.get('/catalogo', adminController.obtenerCatalogo); */
 
+// Ruta para crear un seguimiento (protegida)
+router.post('/crear-seguimiento', isAuthenticated, adminController.createSeguimiento);
+
 module.exports = router;

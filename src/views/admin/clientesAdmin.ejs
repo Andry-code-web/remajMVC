@@ -9,23 +9,27 @@
         <div class="stat-icon">👥</div>
         <div class="stat-info">
           <h3>Total Clientes</h3>
-          <p id="totalClientes">3</p>
+          <p id="totalClientes">
+            <%= numeroClientes %>
+          </p>
         </div>
       </div>
 
-      <div class="stat-box" id="clientesActivosBox">
+      <!-- <div class="stat-box" id="clientesActivosBox">
         <div class="stat-icon">✅</div>
         <div class="stat-info">
           <h3>Clientes Activos</h3>
           <p id="clientesActivos">2</p>
         </div>
-      </div>
+      </div> -->
 
       <div class="stat-box" id="clientesNuevosBox">
         <div class="stat-icon">📅</div>
         <div class="stat-info">
           <h3>Nuevos este mes</h3>
-          <p id="clientesNuevos">2</p>
+          <p id="clientesNuevos">
+            <%= nuevosClientesES %>
+          </p>
         </div>
       </div>
     </div>
@@ -34,7 +38,7 @@
       <input type="text" id="searchInput" placeholder="Buscar por nombre, email o ID..." class="search-input">
     </div>
 
-    <div class="table-container">
+    <div class="table-container" id="total_cliente">
       <table class="clients-table">
         <thead>
           <tr>
@@ -116,12 +120,12 @@
       </table>
     </div>
 
-    <div id="cardsContent" class="cards-container hidden"></div>
+    <div id="nuevos_clintes" class="nuevos_clintes">
+      <canvas id="activityChart"></canvas>
+    </div>
   </div>
 
-  <div id="chartContent" class="chart-container hidden">
-    <canvas id="activityChart"></canvas>
-  </div>
+  
 </div>
 
 
@@ -155,231 +159,11 @@
   });
 </script>
 
-<!-- <script>
-  // Datos para el gráfico
-  const datosSemanales = {
-    nuevosUsuarios: [3, 5, 2, 4],
-    compras: [8, 12, 6, 10]
-  };
+<script>
+  document.addEventListener('DOMContentLoaded', () =>{
+    const totalCliente = document.getElementById('total_cliente');
+    const nuevosClientes = document.getElementById('nuevos_clintes');
 
-  function actualizarEstadisticas() {
-    document.getElementById('totalClientes').textContent = clientes.length;
-    document.getElementById('clientesActivos').textContent =
-      clientes.filter(cliente => cliente.oportunidades > 0).length;
-    document.getElementById('clientesNuevos').textContent = 2;
-  }
-
-  function renderizarTablaClientes(clientesFiltrados) {
-    const tbody = document.getElementById('clientesTableBody');
-    tbody.innerHTML = '';
-
-    clientesFiltrados.forEach(cliente => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>
-            <div class="client-info">
-                <img src="${cliente.avatar}" alt="${cliente.nombre}" class="client-avatar">
-                <div>
-                    <div class="client-name">${cliente.nombre}</div>
-                    <div class="client-id">ID: ${cliente.id}</div>
-                </div>
-            </div>
-        </td>
-        <td>
-            <div>${cliente.email}</div>
-            <div style="color: #6b7280">${cliente.telefono}</div>
-        </td>
-        <td>
-            <div>${cliente.comprasTotal} compras</div>
-            <div style="color: #6b7280">Última: ${cliente.ultimaCompra}</div>
-        </td>
-        <td>
-            <div class="opportunities-badge">
-                Oportunidades
-                <span class="opportunities-count">${cliente.oportunidades}</span>
-            </div>
-        </td>
-    `;
-      tbody.appendChild(tr);
-    });
-  }
-
-
-
-  //
-  function renderizarTarjetasClientes(clientesFiltrados) {
-    const container = document.getElementById('cardsContent');
-    container.innerHTML = '';
-
-    const clientesActivos = clientesFiltrados.filter(cliente => cliente.oportunidades > 0);
-
-    clientesActivos.forEach(cliente => {
-      const card = document.createElement('div');
-      card.className = 'client-card';
-      card.innerHTML = `
-        <div class="card-header">
-            <div class="card-opportunities">
-                Oportunidades
-                <span class="card-opportunities-count">${cliente.oportunidades}</span>
-            </div>
-            <img src="${cliente.avatar}" alt="${cliente.nombre}" class="card-avatar">
-        </div>
-        <div class="card-body">
-            <h3 class="card-name">${cliente.nombre}</h3>
-            <div class="card-id">${cliente.id}</div>
-            <div class="card-contact">
-                <div class="card-email">${cliente.email}</div>
-                <div class="card-phone">${cliente.telefono}</div>
-            </div>
-            <div class="card-stats">
-                <div class="stat-item">
-                    <div class="stat-label">Compras totales</div>
-                    <div class="stat-value">${cliente.comprasTotal}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Última compra</div>
-                    <div class="stat-value">${cliente.ultimaCompra}</div>
-                </div>
-            </div>
-        </div>
-    `;
-      container.appendChild(card);
-    });
-  }
-
-  function buscarClientes(query) {
-    return clientes.filter(cliente =>
-      cliente.nombre.toLowerCase().includes(query.toLowerCase()) ||
-      cliente.email.toLowerCase().includes(query.toLowerCase()) ||
-      cliente.id.toLowerCase().includes(query.toLowerCase())
-    );
-  }
-
-  function toggleCardsView() {
-    const tableContainer = document.querySelector('.table-container');
-    const cardsContent = document.getElementById('cardsContent');
-    const chartContent = document.getElementById('chartContent');
-
-    if (tableContainer.style.display === 'none') {
-      tableContainer.style.display = 'block';
-      cardsContent.classList.add('hidden');
-      chartContent.classList.add('hidden');
-    } else {
-      tableContainer.style.display = 'none';
-      cardsContent.classList.remove('hidden');
-      chartContent.classList.add('hidden');
-      renderizarTarjetasClientes(clientes);
-    }
-  }
-
-  function initChart() {
-    const ctx = document.getElementById('activityChart').getContext('2d');
-
-    if (window.activityChart instanceof Chart) {
-      window.activityChart.destroy();
-    }
-
-    window.activityChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-        datasets: [{
-            label: 'Nuevos Usuarios',
-            data: datosSemanales.nuevosUsuarios,
-            backgroundColor: 'rgba(37, 99, 235, 0.8)',
-            borderColor: 'rgba(37, 99, 235, 1)',
-            borderWidth: 1,
-            borderRadius: 8,
-            barThickness: 20
-          },
-          {
-            label: 'Compras Realizadas',
-            data: datosSemanales.compras,
-            backgroundColor: 'rgba(14, 165, 233, 0.8)',
-            borderColor: 'rgba(14, 165, 233, 1)',
-            borderWidth: 1,
-            borderRadius: 8,
-            barThickness: 20
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              font: {
-                family: 'Poppins',
-                size: 12
-              },
-              padding: 20
-            }
-          },
-          title: {
-            display: true,
-            text: 'Actividad Mensual por Semana',
-            font: {
-              family: 'Poppins',
-              size: 16,
-              weight: 'bold'
-            },
-            padding: {
-              top: 10,
-              bottom: 30
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: true,
-              color: 'rgba(0, 0, 0, 0.05)'
-            },
-            ticks: {
-              font: {
-                family: 'Poppins'
-              }
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              font: {
-                family: 'Poppins'
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    actualizarEstadisticas();
-    renderizarTablaClientes(clientes);
-
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-      const clientesFiltrados = buscarClientes(e.target.value);
-      renderizarTablaClientes(clientesFiltrados);
-      renderizarTarjetasClientes(clientesFiltrados);
-    });
-
-    document.getElementById('clientesActivosBox').addEventListener('click', toggleCardsView);
-    document.getElementById('clientesNuevosBox').addEventListener('click', () => {
-      const tableContainer = document.querySelector('.table-container');
-      const cardsContent = document.getElementById('cardsContent');
-      const chartContent = document.getElementById('chartContent');
-
-      tableContainer.style.display = 'none';
-      cardsContent.classList.add('hidden');
-      chartContent.classList.remove('hidden');
-      initChart();
-    });
-  });
-</script> -->
+    
+  })
+</script>

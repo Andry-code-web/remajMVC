@@ -34,6 +34,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /*   cursor: url('https://www.greenpeasforbreakfast.com/wp-content/uploads/2019/01/body-cursor.png'), auto;
+   */
 }
 
 #header {
@@ -68,7 +70,7 @@
 .auction-grid {
   width: 85%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 2fr);
   gap: 2rem;
   padding: 1rem;
 }
@@ -85,8 +87,6 @@
   perspective: 1000px;
   min-width: 320px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
 }
 
 .auction-card::before {
@@ -107,46 +107,10 @@
   box-shadow: 0 40px 45px -5px rgba(0, 0, 0, 0.2), 0 30px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(44, 62, 80, 0.3), 0 0 30px rgba(44, 62, 80, 0.3), 0 0 40px rgba(255, 255, 255, 0.6);
 }
 
-.auction-content {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-/* Contenedor de imagen */
-.auction-image {
-  flex: 0 0 40%;
-  height: auto;
-  max-height: 100%;
-  overflow: hidden;
-  border-radius: 15px 0 0 15px;
-  margin: 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.property-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.auction-card:hover .property-image {
-  transform: scale(1.05);
-}
-
-/* Contenido de la tarjeta */
-.auction-details-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-}
-
 /* Encabezado de la tarjeta */
 .auction-header {
   position: relative;
-  margin-bottom: 1rem;
+  padding: 1.5rem;
   z-index: 1;
 }
 
@@ -158,6 +122,35 @@
   padding: 0.5rem 1rem;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de imagen */
+.auction-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin: 0 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.property-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.auction-card:hover .property-image {
+  transform: scale(1.05);
+}
+
+/* Contenido de la tarjeta */
+.auction-content {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 1;
 }
 
 /* Título de la subasta */
@@ -176,7 +169,7 @@
 
 /* Información de la subasta */
 .auction-info {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   color: #2d3748;
 }
 
@@ -203,7 +196,7 @@
 
 /* Sección de descripción */
 .description-section {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   background: rgba(44, 62, 80, 0.05);
   padding: 1rem;
   border-radius: 12px;
@@ -233,7 +226,7 @@
   background: linear-gradient(135deg, rgba(44, 62, 80, 0.1), rgba(44, 62, 80, 0.05));
   padding: 1rem;
   border-radius: 12px;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   border: 1px solid rgba(44, 62, 80, 0.15);
 }
 
@@ -254,8 +247,8 @@
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-  margin-top: auto;
-  padding: 0;
+  margin-top: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
 }
 
 .action-btn {
@@ -342,6 +335,10 @@
   from {
     opacity: 0;
     transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -355,12 +352,12 @@
 /* Media Queries */
 @media (max-width: 1400px) {
   .auction-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 1100px) {
   .auction-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 768px) {
@@ -373,16 +370,6 @@
   .auction-card {
     min-width: 300px;
   }
-  .auction-content {
-    flex-direction: column;
-  }
-  .auction-image {
-    flex: 0 0 200px;
-    border-radius: 15px 15px 0 0;
-  }
-  .auction-details-wrapper {
-    padding: 1rem;
-  }
   .action-buttons {
     padding: 0 1rem 1rem;
   }
@@ -391,6 +378,4 @@
     font-size: 0.8rem;
     min-width: 85px;
   }
-}
-
-/*# sourceMappingURL=en_vivo.css.map */
+}/*# sourceMappingURL=en_vivo.css.map */

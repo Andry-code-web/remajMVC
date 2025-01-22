@@ -1,0 +1,238 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "fuentePrincipal";
+  src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "fuenteSecundaria";
+  src: url("/fonts/font_sang/SangBleuKingdomTrial-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "fuenteParrafos";
+  src: url("/fonts/GHEA Zartonk W05 ExtraBold.ttf") format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.espacio_cabecera_temporal {
+  height: 80px;
+  background: #f5f5f5;
+}
+
+.contenedor_pagina_principal {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.seccion_hero_comercial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.contenido_hero_izquierda {
+  padding-right: 40px;
+}
+
+.titulo_hero_principal {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.descripcion_hero_detallada {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.boton_registro_destacado {
+  background: #ce0505;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 25px;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.imagen_hero_derecha {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.seccion_seleccion_productos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 60px 0;
+  background: #f9f9f9;
+  margin: -150px 0;
+}
+
+.lista_caracteristicas_productos {
+  list-style: none;
+}
+
+.item_caracteristica_producto {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.item_caracteristica_producto::before {
+  content: "✓";
+  color: rgba(194, 8, 8, 0.8549019608);
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.seccion_modalidades_compra {
+  padding: 60px 0;
+}
+
+.titulo_modalidades_principal {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.contenedor_tarjetas_modalidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.tarjeta_modalidad_individual {
+  height: 500px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  background: white;
+}
+
+.image_icon {
+  width: 100%;
+  height: 35%;
+  position: relative;
+}
+
+.image_icon:before {
+  content: "";
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #9f0404;
+}
+
+.imagen_modalidad_compra {
+  width: 25%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.titulo_modalidad_compra {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.lista_pasos_modalidad {
+  list-style: decimal;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.paso_modalidad_individual {
+  margin-bottom: 10px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.enlace_mas_informacion {
+  color: rgba(199, 3, 3, 0.8901960784);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.seccion_beneficios_plataforma {
+  padding: 60px 0;
+  background: #f9f9f9;
+}
+
+.contenedor_tarjetas_beneficios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.tarjeta_beneficio_individual {
+  text-align: center;
+  padding: 20px;
+}
+
+.icono_beneficio {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.titulo_beneficio {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.descripcion_beneficio {
+  color: #666;
+  line-height: 1.4;
+}
+
+.seccion_cta_final {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.espacio_pie_pagina_temporal {
+  height: 200px;
+  background: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .seccion_hero_comercial,
+  .seccion_seleccion_productos {
+    grid-template-columns: 1fr;
+  }
+  .contenido_hero_izquierda {
+    padding-right: 0;
+  }
+}/*# sourceMappingURL=vender.css.map */

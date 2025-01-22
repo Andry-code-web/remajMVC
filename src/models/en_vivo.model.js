@@ -16,8 +16,6 @@ class EnVivo {
     }
 
 
-
-
     static async getSeguimiento(remates_id) {
         const query = `SELECT * FROM remajud.seguimiento WHERE remates_id = ?`;
 

@@ -1,3 +1,5 @@
+<% remates.forEach(function(remate) { %>
+
 <div id="seguimientoModal" class="modal seguimiento-modal" style="display: none;">
   <!--   <div class="modal-content seguimiento-modal-content"> -->
   <div class="modal-header seguimiento-modal-header">
@@ -8,7 +10,7 @@
       <i class="bi bi-x"></i>
     </button>
   </div>
-  <form id="seguimientoForm" class="seguimiento-form" onsubmit="guardarCambios(event)">
+  <form id="seguimientoForm" class="seguimiento-form" method="post" action="/admin/crear-seguimiento">
     <input type="hidden" id="seguimientoId" name="id">
 
     <!-- Expediente -->
@@ -85,3 +87,4 @@
   </form>
   <!-- </div> -->
 </div>
+<% }); %>

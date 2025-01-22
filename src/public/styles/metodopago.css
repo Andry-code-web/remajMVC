@@ -1,0 +1,184 @@
+.contenedor-sistema-pagos-electronico {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: white;
+}
+
+.navegacion-metodos-transaccion {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #fffcfc;
+}
+
+.elemento-navegacion-activo,
+.elemento-navegacion-secundario {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.elemento-navegacion-activo i,
+.elemento-navegacion-secundario i {
+  width: 24px;
+  height: 24px;
+}
+
+.elemento-navegacion-activo {
+  border-bottom-color: #00665e;
+  background-color: rgba(0, 102, 94, 0.1);
+  border-radius: 8px 8px 0 0;
+  font-weight: bold;
+}
+
+.contenedor-principal-formularios {
+  position: relative;
+}
+
+.seccion-formulario-tarjeta-bancaria,
+.seccion-formulario-yape {
+  display: none;
+  padding: 1.5rem;
+}
+
+.elemento-visible {
+  display: block;
+}
+
+.contenedor-informacion-bancaria {
+  display: grid;
+  gap: 1rem;
+}
+
+.elemento-cuenta-interbancaria {
+  background-color: #fffcfc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.elemento-cuenta-interbancaria:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.elemento-cuenta-interbancaria h4 {
+  margin: 0 0 0.5rem 0;
+  color: #0a0000;
+  font-family: "Helvetica", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.elemento-cuenta-interbancaria h4 i {
+  width: 24px;
+  height: 24px;
+  color: #e25427;
+}
+.elemento-cuenta-interbancaria p {
+  margin: 0;
+  font-family: monospace;
+  color: #0a0000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.elemento-cuenta-interbancaria p i {
+  width: 18px;
+  height: 18px;
+  color: #00665e;
+}
+
+.contenedor-codigo-qr-yape {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.visualizacion-codigo-qr {
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.seccion-seguridad-verificacion {
+  margin-top: 2rem;
+  text-align: center;
+}
+.seccion-seguridad-verificacion small, .seccion-seguridad-verificacion div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.seccion-seguridad-verificacion small i, .seccion-seguridad-verificacion div i {
+  width: 18px;
+  height: 18px;
+  color: #00665e;
+}
+
+.contenedor-botones-accion {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.boton-navegacion-retroceso,
+.boton-confirmacion-transaccion {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.boton-navegacion-retroceso i,
+.boton-confirmacion-transaccion i {
+  width: 18px;
+  height: 18px;
+}
+
+.boton-navegacion-retroceso {
+  background-color: #fffcfc;
+  color: #0a0000;
+  border: 1px solid rgba(10, 0, 0, 0.2);
+}
+.boton-navegacion-retroceso:hover {
+  background-color: #f2f2f2;
+}
+
+.boton-confirmacion-transaccion {
+  background-color: #d00000;
+  color: #fffcfc;
+}
+.boton-confirmacion-transaccion:hover {
+  background-color: #b80000;
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0a0000;
+  font-family: "Helvetica", sans-serif;
+  margin-bottom: 1rem;
+}
+h3 i {
+  width: 24px;
+  height: 24px;
+  color: #e25427;
+}/*# sourceMappingURL=metodopago.css.map */

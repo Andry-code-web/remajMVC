@@ -50,67 +50,38 @@
           <p class="description">Actualiza tu información personal</p>
         </div>
 
-        <form id="updateProfileForm" class="form-content">
+        <form id="updateProfileForm" method="post" class="form-content">
           <div class="form-section">
             <div class="form-group">
               <label for="nombreUsuario">
                 <i class="bi bi-person-fill"></i>
                 Nombre de usuario
               </label>
-              <input 
-                type="text" 
-                id="nombre_apellidos" 
-                name="nombre_apellidos" 
-                
-                required
-              >
+              <input type="text" id="username" name="usuario" required>
             </div>
-
             <div class="form-group">
               <label for="correo">
                 <i class="bi bi-envelope-fill"></i>
                 Correo Electrónico
               </label>
-              <input 
-                type="email" 
-                id="correo" 
-                name="correo" 
-              
-                required
-              >
+              <input type="email" id="email" name="correo" required>
             </div>
-
             <div class="form-group">
               <label for="confirmar_correo">
                 <i class="bi bi-envelope-check-fill"></i>
                 Confirmar Correo
               </label>
-              <input 
-                type="email" 
-                id="confirmar_correo" 
-                name="confirmar_correo" 
-                
-                required
-              >
+              <input type="email" id="email" name="confirmar_correo"  required>
             </div>
-
             <div class="form-group">
               <label for="celular">
                 <i class="bi bi-phone-fill"></i>
                 Teléfono 
               </label>
-              <input 
-                type="tel" 
-                id="celular" 
-                name="celular" 
-                
-                pattern="[9][0-9]{8}"
-                title="El número debe comenzar con 9 y tener 9 dígitos"
-                required
-              >
+              <input type="tel" id="celular"  name="celular" required>
             </div>
           </div>
-
+        
           <div class="button-group">
             <button type="submit" class="save-button">
               <i class="bi bi-check-circle"></i>
@@ -146,27 +117,29 @@
     e.preventDefault();
   
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
+    const data = {
+      usuario: formData.get('usuario'),
+      correo: formData.get('correo'),
+      confirmar_correo: formData.get('confirmar_correo'),
+      celular: formData.get('celular')
+    };
   
-    // Validar que los correos coincidan
+    // Validaciones
     if (data.correo !== data.confirmar_correo) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Los correos electrónicos no coinciden',
-        confirmButtonColor: '#8b0000'
+        text: 'Los correos electrónicos no coinciden'
       });
       return;
     }
   
-    // Validar formato del teléfono
     const phoneRegex = /^9\d{8}$/;
     if (!phoneRegex.test(data.celular)) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'El número de teléfono debe comenzar con 9 y tener 9 dígitos',
-        confirmButtonColor: '#8b0000'
+        text: 'El número de teléfono debe comenzar con 9 y tener 9 dígitos'
       });
       return;
     }
@@ -182,22 +155,21 @@
   
       const result = await response.json();
   
-      if (response.ok) {
+      if (result.success) {
         Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
           text: 'Perfil actualizado correctamente',
-          confirmButtonColor: '#8b0000',
-          confirmButtonText: 'OK'
+          showConfirmButton: false,
+          timer: 1500
         }).then(() => {
-          window.location.href = '/';
+          window.location.reload();
         });
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: result.message || 'Error al actualizar el perfil',
-          confirmButtonColor: '#8b0000'
+          text: result.message || 'Error al actualizar el perfil'
         });
       }
     } catch (error) {
@@ -205,16 +177,8 @@
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error al procesar la solicitud',
-        confirmButtonColor: '#8b0000'
+        text: 'Hubo un error al actualizar el perfil'
       });
     }
-  });
-  
-  // Pre-llenar el campo de confirmación de correo
-  document.addEventListener('DOMContentLoaded', () => {
-    const correoInput = document.getElementById('correo');
-    const confirmarCorreoInput = document.getElementById('confirmar_correo');
-    confirmarCorreoInput.value = correoInput.value;
   });
   </script>

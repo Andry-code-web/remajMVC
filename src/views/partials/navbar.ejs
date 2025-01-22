@@ -6,7 +6,7 @@
   </div>
 
   <!-- boton en vivo -->
-  <a class="boton-vivo" href="/en_vivo">
+  <a class="boton-vivo" href="/en_vivo" id="botonEnVivo">
     <span class="eye">
       <span class="iris">
         <span class="pupil"></span>
@@ -149,4 +149,36 @@
       });
     });
   });
+</script>
+
+<script>
+   // Validación de inicio de sesión
+   const botonEnVivo = document.getElementById('botonEnVivo');
+   botonEnVivo.addEventListener('click', (e) => {
+     e.preventDefault();
+     
+     // Verificar si el usuario está logueado
+     const isLoggedIn = <%- user ? 'true' : 'false' %>;
+     
+     if (!isLoggedIn) {
+       Swal.fire({
+         title: '¡Acceso Restringido!',
+         text: 'Debes iniciar sesión para acceder a los remates en vivo',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Iniciar Sesión',
+         cancelButtonText: 'Cancelar'
+       }).then((result) => {
+         if (result.isConfirmed) {
+           window.location.href = '/auth/login';
+         }
+       });
+     } else {
+       // Si está logueado, redirigir a la página en vivo
+       window.location.href = '/en_vivo';
+     }
+   });
+
 </script>

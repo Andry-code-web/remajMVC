@@ -65,12 +65,18 @@
         </div>
 
         <div class="contenedor-contraseña">
-          <form id="contraseñas" action="/auth/cambiar-contra" style="display: none;">
-            <input type="password" required placeholder="Contraseña">
-            <input type="password" required placeholder="Repetir contraseña">
+          <form id="contraseñas" action="/auth/reset-password" method="POST" style="display: none;">
+            <input type="hidden" id="resetEmail" name="email">
+            <div class="form-group">
+              <input type="password" name="password" required placeholder="Nueva Contraseña" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="confirmPassword" required placeholder="Confirmar Contraseña" class="form-control">
+            </div>
             <button type="submit" class="verify-button-contra">
               <i class="bi bi-arrow-clockwise"></i>
-              Restablecer Contraseña</button>
+              Restablecer Contraseña
+            </button>
           </form>
         </div>
 
@@ -99,64 +105,6 @@
 <!-- ESTILOS RECUPERACION CONTRASEÑA -->
 <link rel="stylesheet" href="/css/recuContra/recuContra.css">
 
-<!-- 
-<script>
-  // Función para contactar a soporte
-  function contactSupport() {
-    Swal.fire({
-      title: "Soporte al cliente",
-      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
-      icon: "info",
-      confirmButtonColor: "#8b0000",
-      confirmButtonText: "Entendido"
-    });
-  }
-  
-  // Manejar el envío del formulario
-  document.getElementById('recoveryForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    
-    try {
-      const response = await fetch('/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email })
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        Swal.fire({
-          title: '¡Correo enviado!',
-          text: 'Se han enviado las instrucciones a tu correo electrónico.',
-          icon: 'success',
-          confirmButtonColor: '#8b0000'
-        }).then(() => {
-          window.location.href = '/auth/login';
-        });
-      } else {
-        Swal.fire({
-          title: 'Correo no encontrado',
-          text: 'Ingrese un correo válido',
-          icon: 'error',
-          confirmButtonColor: '#8b0000',
-          confirmButtonText: 'OK'
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente.',
-        icon: 'error',
-        confirmButtonColor: '#8b0000'
-      });
-    }
-  });
-  </script> -->
 
 <script>
   const recoveryForm = document.getElementById('recoveryForm');
@@ -206,3 +154,4 @@
     });
   }
 </script>
+

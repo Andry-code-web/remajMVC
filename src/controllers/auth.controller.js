@@ -143,41 +143,79 @@ exports.forgotPassword = async (req, res) => {
 
     const user = await User.findByEmail(email);
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "No existe una cuenta con este correo electrónico." });
+      return res.status(404).json({
+        success: false,
+        message: "No existe una cuenta con este correo electrónico."
+      });
     }
 
     res.json({
       success: true,
-      message: "Se han enviado las instrucciones a tu correo electrónico.",
+      message: "Email verificado correctamente.",
     });
   } catch (error) {
     console.error("Error en recuperación de contraseña:", error);
-    res.status(500).json({ message: "Error al procesar la solicitud." });
+    res.status(500).json({
+      success: false,
+      message: "Error al procesar la solicitud."
+    });
   }
 };
 
-// cambiar contraseña
-exports.cambiarContra = async (req, res) => {
+// Controlador para restablecer la contraseña
+exports.resetPassword = async (req, res) => {
   try {
-    const { password, confirmPassword } = req.body;
-    const { id } = req.params;
-    const user = await User.findByToken(token);
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Las contraseñas no coinciden." });
+    const { email, password, confirmPassword } = req.body;
+    
+    console.log('Datos recibidos:', { email, password: '***', confirmPassword: '***' });
+
+    if (!email || !password || !confirmPassword) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Todos los campos son obligatorios." 
+      });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
-    await user.save();
-    res.json({ success: true, message: "Contraseña cambiada con éxito." });
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Las contraseñas no coinciden." 
+      });
+    }
+
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Usuario no encontrado." 
+      });
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const updated = await User.updatePassword(user.id, hashedPassword);
+
+    if (!updated) {
+      return res.status(500).json({ 
+        success: false,
+        message: "Error al actualizar la contraseña." 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: "Contraseña restablecida con éxito." 
+    });
   } catch (error) {
-    console.error("Error al cambiar contraseña:", error);
-    res.status(500).json({ message: "Error al procesar la solicitud." });
+    console.error("Error al restablecer contraseña:", error);
+    res.status(500).json({ 
+      success: false,
+      message: "Error al procesar la solicitud." 
+    });
   }
 };
 
-// Editar Usuario
+// Controlador para Editar Usuario
+// Controlador para Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {
     if (!req.session.user) {
@@ -202,35 +240,82 @@ exports.editUser_vista = async (req, res) => {
   }
 };
 
+// Actualizar Usuario
 exports.updateUser = async (req, res) => {
   try {
     if (!req.session.user) {
-      return res.status(401).json({ message: "No autorizado" });
+      return res.status(401).json({ 
+        success: false,
+        message: "No autorizado" 
+      });
     }
 
     const { usuario, correo, confirmar_correo, celular } = req.body;
 
     // Validar datos
-    if (!nombre_apellidos || !correo) {
-      return res
-        .status(400)
-        .json({ message: "Nombre y correo son requeridos." });
+    if (!usuario || !correo || !confirmar_correo || !celular) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Todos los campos son requeridos." 
+      });
     }
 
-    // Actualizar usuario
-    await User.update(req.session.user.id, {
-      usuario,
-      correo,
-      confirmar_correo,
-      celular,
-    });
+    if (correo !== confirmar_correo) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Los correos electrónicos no coinciden." 
+      });
+    }
 
-    res.json({
-      success: true,
-      message: "Perfil actualizado correctamente",
-    });
+    // Validar teléfono
+    const phoneRegex = /^9\d{8}$/;
+    if (!phoneRegex.test(celular)) {
+      return res.status(400).json({ 
+        success: false,
+        message: "El número de teléfono debe comenzar con 9 y tener 9 dígitos." 
+      });
+    }
+
+    try {
+      // Actualizar usuario
+      await User.update(req.session.user.id, {
+        usuario,
+        correo,
+        celular,
+      });
+
+      // Actualizar la sesión con los nuevos datos
+      req.session.user = {
+        ...req.session.user,
+        usuario,
+        correo,
+        celular,
+      };
+
+      res.json({
+        success: true,
+        message: "Perfil actualizado correctamente",
+      });
+    } catch (error) {
+      if (error.message.includes('correo electrónico ya está en uso')) {
+        return res.status(400).json({ 
+          success: false,
+          message: "El correo electrónico ya está registrado." 
+        });
+      }
+      if (error.message.includes('nombre de usuario ya está en uso')) {
+        return res.status(400).json({ 
+          success: false,
+          message: "El nombre de usuario ya está en uso." 
+        });
+      }
+      throw error;
+    }
   } catch (error) {
     console.error("Error al actualizar usuario:", error);
-    res.status(500).json({ message: "Error al actualizar el perfil." });
+    res.status(500).json({ 
+      success: false,
+      message: "Error al actualizar el perfil." 
+    });
   }
 };

@@ -9,9 +9,13 @@ router.get('/login', authController.login_vista);
 router.post('/login', authController.login);
 router.get('/logout', isAuthenticated, authController.logout);
 
-// edit/cambiar contraseña usuario
+// rutas para cambiar contraseña 
 router.get('/forgot-password', authController.forgotPassword_vista);
 router.post('/forgot-password', authController.forgotPassword);
+router.post("/reset-password", authController.resetPassword);
+
+
+// rutas para editar usuario
 router.get('/edit-profile', isAuthenticated, authController.editUser_vista);
 router.post('/update-profile', isAuthenticated, authController.updateUser);
 

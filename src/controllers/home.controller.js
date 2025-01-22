@@ -251,9 +251,12 @@ exports.toggleLike = async (req, res) => {
     if (await Home.hasLiked(userId, remateId)) {
       await Home.removeLike(userId, remateId);
       res.json({ message: 'Like removido' });
+      console.log('Like removido del usuario con id :',userId,'del remate con id n°:',remateId);
     } else {
       await Home.addLike(userId, remateId);
       res.json({ message: 'Like añadido' });
+      console.log('Like añadido del usuario con id n°:',userId,'del remate N°:',remateId);
+
     }
   } catch (error) {
     console.error('Error al manejar like:', error);
@@ -264,7 +267,6 @@ exports.toggleLike = async (req, res) => {
 exports.checkLike = async (req, res) => {
   const { remateId } = req.query;
   const userId = req.user.id;
-
   try {
     const liked = await Home.hasLiked(userId, remateId);
     res.json({ liked });

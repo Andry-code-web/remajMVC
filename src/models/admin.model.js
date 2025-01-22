@@ -103,7 +103,7 @@ const agregarAnexoUrl = async (anexoUrl, remateId) => {
   `;
   await db.query(query, [anexoUrl, remateId]);
 };
-
+  
 // Función para eliminar un remate
 const deleteRemate = async (remateId) => {
   const queryMensajes = 'DELETE FROM mensajes WHERE remates_id = ?';

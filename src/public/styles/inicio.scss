@@ -615,7 +615,7 @@
     border-radius: .8rem;
 }
 
-.barraLateralFiltros input:hover{
+.barraLateralFiltros input:hover {
     border: 1px solid #780103;
 }
 
@@ -640,7 +640,8 @@
 }
 
 .elementoSubastaIndividual {
-    position: relative;  /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
+    position: relative;
+    /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
     border: 1px solid #ddd;
     margin-bottom: 1rem;
     padding: 1rem;
@@ -652,7 +653,7 @@
     transition: .5s ease;
 }
 
-.elementoSubastaIndividual:hover{
+.elementoSubastaIndividual:hover {
     transform: scale(1.02);
     box-shadow: 0 3px 6px rgb(0 0 0 / 47%);
 }
@@ -680,7 +681,8 @@
     align-items: flex-start;
     margin-bottom: 1rem;
     gap: 2rem;
-    /* padding-right: 50px;  *//* Add space for the like button */
+    /* padding-right: 50px;  */
+    /* Add space for the like button */
 
 }
 
@@ -1228,18 +1230,30 @@
 .icono-corazon-me-gusta {
     color: #cccccc;
     transition: color 0.2s ease;
+    display: grid;
+    align-content: stretch;
+    justify-content: space-around;
 }
 
 .casilla-de-verificacion-me-gusta:checked+.contenedor-boton-me-gusta .icono-corazon-me-gusta {
     color: #ff4136;
 }
 
-.casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
-    position: absolute;  /* Esto hace que el botón se posicione de forma absoluta */
-    bottom: 90px;       /* Esto controla qué tan abajo está el botón */
-    right: 20px;        /* Esto controla qué tan a la derecha está el botón */
-    z-index: 1;         /* Esto asegura que el botón esté por encima de otros elementos */
+.casilla-de-verificacion-me-gusta+.contenedor-boton-me-gusta {
+    position: absolute;
+    /* Esto hace que el botón se posicione de forma absoluta */
+    bottom: 90px;
+    /* Esto controla qué tan abajo está el botón */
+    right: 20px;
+    /* Esto controla qué tan a la derecha está el botón */
+    z-index: 1;
+    /* Esto asegura que el botón esté por encima de otros elementos */
+    background: #7d2b2b;
+    border-radius: 10px;
+    width: 75px;
+    height: 35px;
 }
+
 
 .contenedor-boton-me-gusta:active {
     animation: efecto-pulsacion 0.3s ease;
@@ -1257,4 +1271,5 @@
     100% {
         transform: scale(1);
     }
+
 }

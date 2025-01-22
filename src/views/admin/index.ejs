@@ -169,7 +169,7 @@
                 });
 
                 // Reactivar el scroll del cuerpo
-                document.body.classList.remove('body-no-scroll');
+                document.body.style.overflow = ''; // Cambiado aquí
               }
 
               /* ABRIR MODALES */
@@ -255,7 +255,8 @@
                 document.getElementById('image-preview-container').innerHTML = '';
 
                 // Reactivar el scroll del cuerpo
-                document.body.classList.remove('body-no-scroll');
+                document.body.style.overflow = ''; // Cambiado aquí
+
               }
 
 
@@ -354,7 +355,7 @@
                     document.getElementById('editFechaRemate').value = data.fecha_remate.split('T')[0];
                     document.getElementById('editHoraRemate').value = data.hora_remate;
                     document.getElementById('editEstado').value = data.estado;
-                    document.getElementById('editTamañoPropiedad').value = data.tamano_propiedad;
+                    document.getElementById('editTamañoPropiedad').value = data.tamaño_propiedad;
                     document.getElementById('editPisina').value = data.pisina;
                     document.getElementById('editPatio').value = data.patio;
                     document.getElementById('editCocina').value = data.cocina;
@@ -384,7 +385,8 @@
                 document.getElementById('editModal').style.display = 'none';
 
                 // Reactivar el scroll del cuerpo
-                document.body.classList.remove('body-no-scroll');
+                document.body.style.overflow = ''; // Cambiado aquí
+
               }
 
 

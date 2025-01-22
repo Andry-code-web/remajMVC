@@ -7,7 +7,8 @@
     <h2 class="titulo_formulario_sistema_remates">Cronograma de Actividades</h2>
     <div class="campo_formulario_sistema_remates">
       <label for="remate_id" class="etiqueta_campo_sistema_remates">ID del Remate:</label>
-      <input type="number" id="remate_id" name="remates_id" class="entrada_campo_sistema_remates" required />
+      <select name="remate_id" id="remate_id" class="entrada_campo_sistema_remates"></select>
+      <option value="remate_id"><%= remate.id %></option>
     </div>
     <div class="campo_formulario_sistema_remates">
       <label for="nombre" class="etiqueta_campo_sistema_remates">Fase:</label>

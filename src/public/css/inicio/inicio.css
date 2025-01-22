@@ -636,7 +636,8 @@
 }
 
 .elementoSubastaIndividual {
-  position: relative; /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
+  position: relative;
+  /* Esto es necesario para que el posicionamiento absoluto funcione correctamente */
   border: 1px solid #ddd;
   margin-bottom: 1rem;
   padding: 1rem;
@@ -676,7 +677,8 @@
   align-items: flex-start;
   margin-bottom: 1rem;
   gap: 2rem;
-  /* padding-right: 50px;  */ /* Add space for the like button */
+  /* padding-right: 50px;  */
+  /* Add space for the like button */
 }
 
 .informacionGeneralSubasta {
@@ -1214,6 +1216,9 @@
 .icono-corazon-me-gusta {
   color: #cccccc;
   transition: color 0.2s ease;
+  display: grid;
+  align-content: stretch;
+  justify-content: space-around;
 }
 
 .casilla-de-verificacion-me-gusta:checked + .contenedor-boton-me-gusta .icono-corazon-me-gusta {
@@ -1221,10 +1226,18 @@
 }
 
 .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
-  position: absolute; /* Esto hace que el botón se posicione de forma absoluta */
-  bottom: 90px; /* Esto controla qué tan abajo está el botón */
-  right: 20px; /* Esto controla qué tan a la derecha está el botón */
-  z-index: 1; /* Esto asegura que el botón esté por encima de otros elementos */
+  position: absolute;
+  /* Esto hace que el botón se posicione de forma absoluta */
+  bottom: 90px;
+  /* Esto controla qué tan abajo está el botón */
+  right: 20px;
+  /* Esto controla qué tan a la derecha está el botón */
+  z-index: 1;
+  /* Esto asegura que el botón esté por encima de otros elementos */
+  background: #7d2b2b;
+  border-radius: 10px;
+  width: 75px;
+  height: 35px;
 }
 
 .contenedor-boton-me-gusta:active {

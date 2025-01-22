@@ -55,11 +55,16 @@
   align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  border: none;
 }
 
 .stat-box:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box:focus {
+  outline: none;
 }
 
 .stat-icon {

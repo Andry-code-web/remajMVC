@@ -216,10 +216,14 @@ exports.guardarCronograma = async (req, res) => {
   }
 };
 
-// Controlador para obtener el estado actual del cronograma
 exports.obtenerCronograma = async (req, res) => {
   try {
     const { remates_id } = req.query;
+    
+    // Validar si remates_id es válido
+    if (!remates_id || remates_id === 'null') {
+      return res.status(400).json({ message: "El parámetro remates_id es obligatorio" });
+    }
 
     // Obtener el cronograma de la base de datos
     const cronograma = await getCronograma(remates_id);
@@ -284,36 +288,31 @@ exports.getSeguimientoById = async (req, res) => {
 
 
 /* CONTROLLER CLIENTES */
+/* CONTROLLER CLIENTES */
 exports.getClientes = async (req, res) => {
   try {
     console.log('Iniciando el controlador getClientes');
 
     // Obtener los IDs de los remates disponibles
-    const query = `SELECT id FROM remates`;
-    const [rows] = await db.query(query);
-
+    const queryRemates = `SELECT id FROM remates`;
+    const [rows] = await db.query(queryRemates);
     console.log('IDs de remates disponibles:', rows);
 
     // Extraer los IDs de remates disponibles
     const id_remate = rows.map(row => row.id);
-    console.log('IDs de remates extraídos:', id_remate);
 
     // Obtener los clientes
-    const clientes = await getClientes();
+    const clientesQuery = `SELECT * FROM usuarios`;
+    const [clientes] = await db.query(clientesQuery);
     console.log('Clientes obtenidos:', clientes);
 
     // Obtener los remates validados por cliente
     for (const cliente of clientes) {
       console.log(`Procesando cliente ID: ${cliente.id}`);
-
       const [rematesValidados] = await db.query(
         `SELECT remate_id FROM usuario_remate WHERE usuario_id = ? AND validado = 1`,
         [cliente.id]
       );
-
-      console.log(`Remates validados para cliente ID ${cliente.id}:`, rematesValidados);
-
-      // Asegurarse de que remates_validos sea un arreglo
       cliente.remates_validos = rematesValidados.map(r => r.remate_id) || [];
     }
 
@@ -323,20 +322,64 @@ exports.getClientes = async (req, res) => {
     const numeroClientes = clientes.length;
 
     // Estadísticas de nuevos clientes registrados este mes
-    const queryE = `SELECT * FROM usuarios 
-    WHERE MONTH(fecha_registro) = MONTH(NOW())
-    AND YEAR(fecha_registro) = YEAR(NOW())`;
-    const [estadistica] = await db.query(queryE);
+    const queryEstadisticasMes = `
+      SELECT * FROM usuarios 
+      WHERE MONTH(fecha_registro) = MONTH(NOW())
+      AND YEAR(fecha_registro) = YEAR(NOW())`;
+    const [estadisticaMes] = await db.query(queryEstadisticasMes);
+    const nuevosClientesES = estadisticaMes.length;
 
-    const nuevosClientesES = estadistica.length;
+    // Estadísticas por día de la semana del mes actual
+    const queryDias = `
+      SELECT 
+        DAYOFWEEK(fecha_registro) AS dia_semana, 
+        COUNT(*) AS total
+      FROM usuarios
+      WHERE MONTH(fecha_registro) = MONTH(NOW())
+      AND YEAR(fecha_registro) = YEAR(NOW())
+      GROUP BY dia_semana
+      ORDER BY dia_semana;
+    `;
+    const [registrosPorDia] = await db.query(queryDias);
+    console.log('Registros agrupados por día:', registrosPorDia);
 
-    // Pasar los datos a la vista
+    // Estadísticas filtradas por año y mes si se pasan parámetros
+    const { anio, mes } = req.query;
+    let registrosFiltrados = [];
+    let noDataMessage = '';
+
+    if (anio && mes) {
+      console.log(`Filtrando estadísticas para el año ${anio} y mes ${mes}`);
+      const queryFiltrados = `
+        SELECT 
+          DAYOFWEEK(fecha_registro) AS dia_semana, 
+          COUNT(*) AS total
+        FROM usuarios
+        WHERE YEAR(fecha_registro) = ? AND MONTH(fecha_registro) = ?
+        GROUP BY dia_semana
+        ORDER BY dia_semana;
+      `;
+      const [filtrados] = await db.query(queryFiltrados, [anio, mes]);
+      registrosFiltrados = filtrados;
+      console.log('Registros filtrados:', registrosFiltrados);
+
+      if (registrosFiltrados.length === 0) {
+        noDataMessage = 'No se encontraron datos para el año y mes seleccionados.';
+      }
+    }
+
+    // Pasar datos a la vista
     res.render('layouts/admin', {
       clientes,
       id_remate,
       numeroClientes,
-      estadistica,
+      estadisticaMes,
       nuevosClientesES,
+      registrosPorDia,
+      registrosFiltrados,
+      noDataMessage,  // Aquí pasas la variable
+      anio: anio || null,
+      mes: mes || null,
       contet: 'admin/clientesAdmin',
     });
   } catch (error) {

@@ -84,7 +84,7 @@
     const formatPrice = (price) => Number(String(price).replace(/[^0-9.-]+/g, '')) || 0;
 
     // Gestión de métricas
-    function actualizarMetricas() {
+    /* function actualizarMetricas() {
       const remates = document.querySelectorAll('.property-card');
       const totalRemates = remates.length;
       let rematesActivos = 0;
@@ -101,7 +101,7 @@
       document.getElementById('totalRemates').textContent = totalRemates;
       document.getElementById('rematesActivos').textContent = rematesActivos;
       document.getElementById('montoTotal').textContent = `$${montoTotal.toLocaleString()}`;
-    }
+    } */
 
     // Gestión de búsqueda
     function buscarRemate() {
@@ -237,7 +237,7 @@
 
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
-      actualizarMetricas();
+      /* actualizarMetricas(); */
 
       // Manejador para cerrar modales al hacer clic fuera
       window.onclick = function(event) {

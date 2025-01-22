@@ -39,13 +39,14 @@ router.post('/editar-remate/:id', isAuthenticated, upload.fields([{ name: "photo
 router.post('/guardar-cronograma', isAuthenticated, adminController.guardarCronograma);
 
 // Ruta para obtener el estado actual del cronograma (protegida)
-router.get('/obtener-cronograma', isAuthenticated, adminController.obtenerCronograma);
+router.get('/obtener-cronograma/:id', isAuthenticated, adminController.obtenerCronograma);
 
 /* CLIENTES */
 
 router.post('/validar-cliente', adminController.validarClienteEnRemate);
 
 router.get('/usuarios', adminController.getClientes);
+router.post('/usuarios', adminController.getClientes);
 /* router.get('/catalogo', adminController.obtenerCatalogo); */
 
 // Ruta para crear un seguimiento (protegida)

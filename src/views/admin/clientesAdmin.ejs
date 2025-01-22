@@ -5,7 +5,7 @@
 <div class="container">
   <div id="dashboardContent">
     <div class="stats-container">
-      <div class="stat-box">
+      <button class="stat-box" id="btn_totalClientes">
         <div class="stat-icon">👥</div>
         <div class="stat-info">
           <h3>Total Clientes</h3>
@@ -13,7 +13,7 @@
             <%= numeroClientes %>
           </p>
         </div>
-      </div>
+      </button>
 
       <!-- <div class="stat-box" id="clientesActivosBox">
         <div class="stat-icon">✅</div>
@@ -23,7 +23,7 @@
         </div>
       </div> -->
 
-      <div class="stat-box" id="clientesNuevosBox">
+      <button class="stat-box" id="btn_nuevosClientes">
         <div class="stat-icon">📅</div>
         <div class="stat-info">
           <h3>Nuevos este mes</h3>
@@ -31,12 +31,12 @@
             <%= nuevosClientesES %>
           </p>
         </div>
-      </div>
+      </button>
     </div>
 
-    <div class="search-container">
+    <!--     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Buscar por nombre, email o ID..." class="search-input">
-    </div>
+    </div> -->
 
     <div class="table-container" id="total_cliente">
       <table class="clients-table">
@@ -72,14 +72,14 @@
             <td>
               <div class="opportunities-badge validar">
                 <span class="opportunities-count">
-                    <% if (cliente.remates_validos && cliente.remates_validos.length > 0) { %>
-                    <%= cliente.remates_validos.join(', ') %>
-                    <% } else { %>
-                    0
-                    <% } %>
-                  </span>
+                  <% if (cliente.remates_validos && cliente.remates_validos.length > 0) { %>
+                  <%= cliente.remates_validos.join(', ') %>
+                  <% } else { %>
+                  0
+                  <% } %>
+                </span>
                 <div class="btn-group">
-                  
+
                   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Validar Cliente
                   </button>
@@ -121,11 +121,39 @@
     </div>
 
     <div id="nuevos_clintes" class="nuevos_clintes">
-      <canvas id="activityChart"></canvas>
+      <form id="filtroEstadisticas" method="GET" action="/admin/usuarios">
+        <label for="anio">Año:</label>
+        <select id="anio" name="anio">
+          <% for (let year = 2020; year <= new Date().getFullYear(); year++) { %>
+          <option value="<%= year %>" <%= anio == year ? 'selected' : '' %>><%= year %></option>
+          <% } %>
+        </select>
+
+        <label for="mes">Mes:</label>
+        <select id="mes" name="mes">
+          <% const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']; %>
+          <% for (let i = 0; i < meses.length; i++) { %>
+          <option value="<%= i + 1 %>" <%= mes == (i + 1) ? 'selected' : '' %>><%= meses[i] %></option>
+          <% } %>
+        </select>
+
+        <button type="submit">Filtrar</button>
+      </form>
+
+      <!-- Mostrar el mensaje de alerta si no hay datos -->
+      <% if (noDataMessage) { %>
+      <div class="alert alert-warning">
+        <%= noDataMessage %>
+      </div>
+      <% } else { %>
+      <!-- Mostrar los datos en el gráfico si hay registros -->
+      <canvas id="myChart" width="400" height="200"></canvas>
+      <% } %>
     </div>
+
   </div>
 
-  
+
 </div>
 
 
@@ -160,10 +188,86 @@
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () =>{
+  document.addEventListener('DOMContentLoaded', () => {
     const totalCliente = document.getElementById('total_cliente');
     const nuevosClientes = document.getElementById('nuevos_clintes');
+    const btnTotalClientes = document.getElementById('btn_totalClientes');
+    const btnNuevosClientes = document.getElementById('btn_nuevosClientes');
+    const myChart = document.getElementById('myChart');
 
-    
-  })
+    // Datos del gráfico
+    const registrosPorDia = <%- JSON.stringify(registrosPorDia) %>;
+    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const registros = Array(7).fill(0);
+
+    // Procesar los registros por día
+    registrosPorDia.forEach(({
+      dia_semana,
+      total
+    }) => {
+      registros[dia_semana - 1] = total; // MySQL: 1 = Domingo
+    });
+
+    // Inicialmente, al cargar la página, mostrar solo total_cliente y ocultar nuevos_clintes
+    totalCliente.style.display = 'block';
+    nuevosClientes.style.display = 'none';
+
+    // Mostrar los datos de totalCliente y ocultar los de nuevosClientes
+    if (btnTotalClientes) {
+      btnTotalClientes.addEventListener('click', () => {
+        totalCliente.style.display = 'block';
+        nuevosClientes.style.display = 'none';
+      });
+    }
+
+    // Mostrar u ocultar nuevosClientes al hacer clic
+    if (btnNuevosClientes) {
+      btnNuevosClientes.addEventListener('click', () => {
+        totalCliente.style.display = 'none'; // Ocultar totalCliente
+        nuevosClientes.style.display = 'block'; // Mostrar nuevosClientes
+
+        // Si el div de nuevosClientes es visible, crear el gráfico
+        if (nuevosClientes.style.display === 'block') {
+          const ctx = myChart.getContext('2d');
+
+          // Obtener el último mes y el año actual
+          const today = new Date();
+          const lastMonth = today.getMonth(); // El mes actual (0 = enero, 11 = diciembre)
+          const currentYear = today.getFullYear(); // Año actual
+
+          // Actualiza el gráfico con los datos correspondientes al último mes
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: diasSemana,
+              datasets: [{
+                label: `Clientes nuevos en ${diasSemana[lastMonth]} ${currentYear}`,
+                data: registros, // Puedes ajustar este dato para el último mes si tienes más registros
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              animations: {
+                tension: {
+                  duration: 1000,
+                  easing: 'easeInQuad',
+                  from: 1,
+                  to: 0,
+                  loop: true
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+      });
+    }
+  });
 </script>

@@ -12,6 +12,7 @@
   </div>
   <form id="seguimientoForm" class="seguimiento-form" method="post" action="/admin/crear-seguimiento">
     <input type="hidden" id="seguimientoId" name="id">
+    <input type="hidden" id="remateId" name="remates_id" value="<%= remate.id %>">
 
     <!-- Expediente -->
     <div class="form-group seguimiento-form-group">
@@ -35,7 +36,7 @@
     <!-- Órgano Jurídico -->
     <div class="form-group seguimiento-form-group">
       <label for="editOrganoJuridico" class="seguimiento-label">Órgano Jurídico</label>
-      <input type="text" id="editOrganoJuridico" name="organo_juridico" class="seguimiento-input" required>
+      <input type="text" id="editOrganoJuridico" name="organo_juridiccional" class="seguimiento-input" required>
     </div>
 
     <!-- Especialidad -->

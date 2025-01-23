@@ -1,64 +1,60 @@
 <% remates.forEach(function(remate) { %>
-<div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none">
-  <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
-  <form method="post" action="/admin/editar-inmuebles" id="formulario_inmuebles">
-
-    <!-- Partida Registral -->
-    <div class="fila_campos_formulario_inmuebles">
-      <div class="columna_campo_formulario_inmuebles">
-        <div class="grupo_campo_formulario_inmuebles">
-          <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida
-            Registral</label>
-          <input type="text" id="partida_registral" name="partida_registral" class="entrada_texto_formulario_inmuebles" required>
+  <div id="tarjetaInmuebles" class="tarjeta_formulario_inmuebles" style="display: none">
+    <h2 class="titulo_formulario_inmuebles">Inmuebles de Remate</h2>
+    <form method="post" action="/admin/crear-inmueble" id="formulario_inmuebles">
+      <input type="hidden" name="remate_id" value="<%= remate.id %>">
+  
+      <!-- Partida Registral -->
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="partida_registral" class="etiqueta_campo_formulario_inmuebles">Partida Registral</label>
+            <input type="text" id="partida_registral" name="partida_registral" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+  
+        <!-- Tipo Inmueble -->
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo Inmueble</label>
+            <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles" required>
+          </div>
         </div>
       </div>
-
-      <!-- Tipo Inmueble -->
-      <div class="columna_campo_formulario_inmuebles">
-        <div class="grupo_campo_formulario_inmuebles">
-          <label for="tipo_inmueble" class="etiqueta_campo_formulario_inmuebles">Tipo
-            Inmueble</label>
-          <input type="text" id="tipo_inmueble" name="tipo_inmueble" class="entrada_texto_formulario_inmuebles" required>
+  
+      <!-- Direccion -->
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
+            <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles" required>
+          </div>
+        </div>
+  
+        <!-- Carga y/o gravamen -->
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="carga_ogravamen" class="etiqueta_campo_formulario_inmuebles">Carga Y/O gravamen</label>
+            <input type="text" id="carga_ogravamen" name="carga_ogravamen" class="entrada_texto_formulario_inmuebles" required>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Direccion -->
-    <div class="fila_campos_formulario_inmuebles">
-      <div class="columna_campo_formulario_inmuebles">
-        <div class="grupo_campo_formulario_inmuebles">
-          <label for="direccion" class="etiqueta_campo_formulario_inmuebles">Dirección</label>
-          <input type="text" id="direccion" name="direccion" class="entrada_texto_formulario_inmuebles" required>
+  
+      <!-- Porcentaje a rematar -->
+      <div class="fila_campos_formulario_inmuebles">
+        <div class="columna_campo_formulario_inmuebles">
+          <div class="grupo_campo_formulario_inmuebles">
+            <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje a Rematar</label>
+            <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01" class="entrada_numero_formulario_inmuebles" required>
+          </div>
         </div>
       </div>
-
-      <!-- Carfa y/o gravamen -->
-      <div class="columna_campo_formulario_inmuebles">
-        <div class="grupo_campo_formulario_inmuebles">
-          <label for="carga_ogravamen " class="etiqueta_campo_formulario_inmuebles">Carga Y/O
-            gravamen</label>
-          <input type="text" id="carga_ogravamen" name="carga_ogravamen" class="entrada_texto_formulario_inmuebles" required>
-        </div>
+  
+      <!-- botones -->
+      <div class="contenedor_botones_formulario_inmuebles">
+        <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles" onclick="cerrarModales()">Cancelar Registro</button>
+        <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar Inmuebles</button>
       </div>
-    </div>
-
-    <!-- Porcentaje a rematar -->
-    <div class="fila_campos_formulario_inmuebles">
-      <div class="columna_campo_formulario_inmuebles">
-        <div class="grupo_campo_formulario_inmuebles">
-          <label for="porcentaje_rematar" class="etiqueta_campo_formulario_inmuebles">Porcentaje
-            a Rematar</label>
-          <input type="number" id="porcentaje_rematar" name="porcentaje_rematar" step="0.01" class="entrada_numero_formulario_inmuebles" required>
-        </div>
-      </div>
-    </div>
-
-    <!-- botones -->
-    <div class="contenedor_botones_formulario_inmuebles">
-      <button type="button" class="boton_formulario_inmuebles boton_cancelar_formulario_inmuebles" onclick="cerrarModales()">Cancelar Registro</button>
-      <button type="submit" class="boton_formulario_inmuebles boton_guardar_formulario_inmuebles">Guardar
-        Inmuebles</button>
-    </div>
-  </form>
-</div>
-<% }); %>
+    </form>
+  </div>
+  <% }); %>

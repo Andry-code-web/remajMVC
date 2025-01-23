@@ -48,7 +48,7 @@
     </div> -->
 
     <!-- Estado: Finalizado -->
-  <!--   <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
+   <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
       <div class="finished-best-offer">
         <div class="finished-crown-label">
           <span class="finished-crown">👑</span>
@@ -65,7 +65,7 @@
           </span>
         </div>
         <% } %>
-    </div> -->
+    </div> 
 
     <!-- Estado: Activo -->
    <!--  <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
@@ -97,26 +97,27 @@
     </div>
  -->
     <!-- Chat (inicialmente oculto) -->
-    <div id="auction-chat" class="chat" style="display: none;">
-
+    <div id="auction-chat1" class="chat" style="display: none;">
+      <section id="chat">
+        <!-- Contenedor de la barra de progreso -->
+        <p class="fecha-subasta" id="countdown1">
+          <span id="countdown-timer">00:00:00</span>
+        </p>
+        <ul id="messages"></ul>
+  
+        <!-- Formulario de oferta -->
+        <form id="form-bid" class="message-form">
+          <div class="input-container">
+            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>"/>
+            <button type="submit" class="send-btn" id="submit-btn" disabled>
+              Enviar
+            </button>  
+          </div>
+        </form>
+      </section>
     </div>
-    <section id="chat">
-      <!-- Contenedor de la barra de progreso -->
-      <p class="fecha-subasta" id="countdown1">
-        <span id="countdown-timer">00:00:00</span>
-      </p>
-      <ul id="messages"></ul>
 
-      <!-- Formulario de oferta -->
-      <form id="form-bid" class="message-form">
-        <div class="input-container">
-          <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" />
-          <button type="submit" class="send-btn">
-            Enviar
-          </button>
-        </div>
-      </form>
-    </section>
+
   </div>
 
   <!-- Clasificación -->
@@ -318,91 +319,72 @@
 
 
 <script type="module">
-  import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-
-  const socket = io();
-  const timerDisplay = document.getElementById("countdown-timer");
-  const formBid = document.getElementById("form-bid");
-  const inputBid = document.getElementById("input-bid");
-  const messages = document.getElementById("messages");
-  let highestAmount = 0;
+  import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
+  
+  const socket = io()
+  const timerDisplay = document.getElementById("countdown-timer")
+  const formBid = document.getElementById("form-bid")
+  const inputBid = document.getElementById("input-bid")
+  const messages = document.getElementById("messages")
+  const submitButton = document.getElementById("submit-btn")
+  const auctionChat = document.getElementById("auction-chat1")
+  
+  let highestAmount = 0
+  let basePrice = 0
   const auctionId = <%- auction.id %>;
-  const userId = "<%- user?.id || '0' %>";
-  const userName = "<%- user?.usuario || 'Anónimo' %>";
-
-  socket.emit("join-auction", auctionId);
-
+  const userId = "<%- user?.id || '0' %>"
+  const userName = "<%- user?.usuario || 'Anónimo' %>"
+  
+  socket.emit("join-auction", auctionId)
+  
   socket.on("load-messages", (loadedMessages) => {
-    messages.innerHTML = "";
+    messages.innerHTML = ""
     loadedMessages.forEach(({ monto, usuario }) => {
-      const isCurrentUser = usuario === userName;
-      const messageClass = isCurrentUser ? "sent" : "received";
-      messages.insertAdjacentHTML(
-        "beforeend",
-        `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`
-      );
-      if (monto > highestAmount) {
-        highestAmount = monto;
-        inputBid.value = highestAmount;
-      }
-    });
-  });
-
+      addMessageToDOM(usuario, monto)
+    })
+    scrollToBottom()
+  })
+  
   socket.on("chat-message", ({ monto, usuario, remates_id }) => {
     if (remates_id === auctionId) {
-      const isCurrentUser = usuario === userName;
-      const messageClass = isCurrentUser ? "sent" : "received";
-      messages.insertAdjacentHTML(
-        "beforeend",
-        `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`
-      );
-      if (monto > highestAmount) {
-        highestAmount = monto;
-        inputBid.value = highestAmount;
-      }
+      addMessageToDOM(usuario, monto)
+      scrollToBottom()
     }
-  });
-
+  })
+  
   socket.on("timer-update", (remaining) => {
-    const hours = Math.floor(remaining / 3600);
-    const minutes = Math.floor((remaining % 3600) / 60);
-    const seconds = remaining % 60;
-    timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  });
-
-  socket.on("auction-start-time", ({ startTime }) => {
-    const auctionStartTime = moment(startTime).utc();
-    const now = moment().utc();
-    const timeDiff = auctionStartTime.diff(now);
-    if (timeDiff > 0) {
-      setTimeout(() => socket.emit("start-auction-timer", auctionId), timeDiff);
+    const hours = Math.floor(remaining / 3600)
+    const minutes = Math.floor((remaining % 3600) / 60)
+    const seconds = remaining % 60
+  
+    timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+  
+    if (remaining > 0) {
+      auctionChat.style.display = "block"
+      submitButton.disabled = false
     } else {
-      socket.emit("start-auction-timer", auctionId);
+      auctionChat.style.display = "none"
+      submitButton.disabled = true
     }
-  });
-
-  socket.on("winner-announcement", (message) => {
-    Swal.fire({
-      title: "¡Subasta finalizada!",
-      text: message,
-      icon: "success",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Aceptar",
-    });
-  });
-
+  })
+  
+  socket.on("auction-started", (message) => {
+    console.log(message)
+    submitButton.disabled = false
+  })
+  
+  socket.on("chat-enabled", (enabled) => {
+    submitButton.disabled = !enabled
+    auctionChat.style.display = enabled ? "block" : "none"
+  })
+  
   socket.on("auction-ended", (message) => {
-    Swal.fire({
-      title: "Subasta finalizada",
-      text: message,
-      icon: "info",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Aceptar",
-    });
-  });
-
+    console.log(message)
+    submitButton.disabled = true
+    auctionChat.style.display = "none"
+  })
+  
   socket.on("alert-auction-ended", ({ message }) => {
-    console.log("Evento alert-auction-ended recibido:", message);
     Swal.fire({
       title: "Subasta finalizada",
       text: message,
@@ -410,36 +392,119 @@
       confirmButtonColor: "#3085d6",
       confirmButtonText: "Aceptar",
     }).then(() => {
-      window.location.reload();
-    });
-  });
-
-  formBid.addEventListener("submit"), (e) => {
-    e.preventDefault();
-    const amount = parseFloat(inputBid.value);
-    if (amount > highestAmount) {
-      Swal.fire({
-        title: "¿Estás seguro?",
-        text: `Estás a punto de ofertar USD$${amount}.`,
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, ofertar",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          socket.emit("chat-message", {
-            monto: amount,
-            usuarios_id: userId,
-            remates_id: auctionId,
-          });
-          inputBid.value = "";
-        }
-      });
-    } }
-
-</script>
+      window.location.reload()
+    })
+  })
+  
+  socket.on("error-message", (message) => {
+    showError("Error", message)
+    auctionChat.style.display = "none"
+  })
+  
+  formBid.addEventListener("submit", async (e) => {
+    e.preventDefault()
+    if (submitButton.disabled || auctionChat.style.display === "none") {
+      return // No hacer nada si el botón está deshabilitado o el chat no está visible
+    }
+    const amount = Number.parseInt(inputBid.value, 10)
+  
+    if (isNaN(amount) || amount <= 0) {
+      showError("Entrada inválida", "Por favor, ingresa un monto válido.")
+      return
+    }
+  
+    const recommendedAmount = highestAmount + 100
+    let finalAmount = amount
+    if (amount <= recommendedAmount) {
+      finalAmount = recommendedAmount
+    }
+  
+    const minAmount = Math.max(highestAmount, basePrice)
+    if (finalAmount <= minAmount) {
+      showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount}.`)
+      return
+    }
+  
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: `Estás a punto de ofertar USD$${finalAmount}.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ofertar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        socket.emit("chat-message", {
+          monto: finalAmount,
+          usuarios_id: userId,
+          remates_id: auctionId,
+        })
+        inputBid.value = finalAmount
+      }
+    })
+  })
+  
+  function showError(title, text) {
+    Swal.fire({
+      title,
+      text,
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    })
+    submitButton.disabled = true
+  }
+  
+  function addMessageToDOM(usuario, monto) {
+    const isCurrentUser = usuario === userName
+    const messageClass = isCurrentUser ? "sent" : "received"
+    messages.insertAdjacentHTML("beforeend", `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`)
+    if (monto > highestAmount) {
+      highestAmount = monto
+      inputBid.value = highestAmount + 100
+      highlightHighestAmount()
+    }
+  }
+  
+  function highlightHighestAmount() {
+    inputBid.classList.add("highlight")
+    setTimeout(() => inputBid.classList.remove("highlight"), 1000)
+  }
+  
+  function scrollToBottom() {
+    messages.scrollTop = messages.scrollHeight
+  }
+  
+  socket.on("connect_error", (error) => {
+    console.error("Socket error:", error)
+    showError("Error de conexión", "Ocurrió un problema con la conexión al servidor.")
+  })
+  
+  // Initialize base price
+  async function initializeBasePrice() {
+    try {
+      const response = await fetch(`/db/remates/precios/${auctionId}`)
+      const data = await response.json()
+  
+      if (data.success) {
+        basePrice = Number.parseInt(data.precios, 10)
+        const priceDisplay = document.querySelector("#chat p:first-of-type")
+        priceDisplay.textContent = `Precio base: USD$${basePrice}`
+      } else {
+        throw new Error(data.message || "No se pudo obtener el precio base.")
+      }
+    } catch (error) {
+      console.error("Error al obtener el precio base:", error)
+      showError("Error", "Ocurrió un problema al obtener el precio base.")
+    }
+  }
+  
+  
+  
+  </script>
+  
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

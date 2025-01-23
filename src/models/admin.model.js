@@ -103,13 +103,15 @@ const agregarAnexoUrl = async (anexoUrl, remateId) => {
   `;
   await db.query(query, [anexoUrl, remateId]);
 };
-  
+
 // Función para eliminar un remate
 const deleteRemate = async (remateId) => {
   const queryMensajes = 'DELETE FROM mensajes WHERE remates_id = ?';
   const queryAnexos = 'DELETE FROM anexos WHERE remates_id = ?';
   const queryImagenes = 'DELETE FROM img_inmuebles WHERE remates_id = ?';
   const queryCronograma = 'DELETE FROM cronograma WHERE remates_id = ?';
+  const querySeguimiento = 'DELETE FROM seguimiento WHERE remates_id = ?';
+  const queryLikes = 'DELETE FROM likes WHERE remates_id = ?'; // Eliminar registros en likes
   const queryRemate = 'DELETE FROM remates WHERE id = ?';
 
   try {
@@ -117,6 +119,8 @@ const deleteRemate = async (remateId) => {
     await db.query(queryAnexos, [remateId]);
     await db.query(queryImagenes, [remateId]);
     await db.query(queryCronograma, [remateId]);
+    await db.query(querySeguimiento, [remateId]); // Eliminar registros en seguimiento
+    await db.query(queryLikes, [remateId]); // Eliminar registros en likes
     const [result] = await db.query(queryRemate, [remateId]);
     return result.affectedRows > 0;
   } catch (error) {
@@ -261,6 +265,63 @@ const getCatalogoClientes = async () => {
   return rows;
 }
 
+/* seguimiento */
+
+const createSeguimiento = async (datosSeguimiento) => {
+  const query = `
+    INSERT INTO seguimiento (expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  const [result] = await db.query(query, datosSeguimiento);
+  return result.insertId;
+};
+
+
+// Función para insertar un nuevo inmueble
+const insertInmueble = async (datosInmueble) => {
+  const [partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remate_id] = datosInmueble;
+
+  const query = `
+    INSERT INTO inmuebles (partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remates_id)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  try {
+    const [result] = await db.query(query, [partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remate_id]);
+    return result.insertId;
+  } catch (error) {
+    throw new Error('Error al insertar el inmueble: ' + error.message);
+  }
+};
+
+
+
+// Función para insertar nuevos detalles de remate
+const insertDetalles = async (datosDetalles) => {
+  const [
+    expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+    materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
+    incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
+  ] = datosDetalles;
+
+  const query = `
+    INSERT INTO detalles (expediente, distrito_judicial, organo_juridiccional, instancia, juez,
+      especialista, materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion,
+      precio_base, incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remates_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  try {
+    const [result] = await db.query(query, [
+      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+      materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
+      incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
+    ]);
+    return result.insertId;
+  } catch (error) {
+    throw new Error('Error al insertar los detalles: ' + error.message);
+  }
+};
 module.exports = {
   getCronograma,
   getAllRemates,
@@ -276,5 +337,7 @@ module.exports = {
   getClientes,
   getResumenClientes,
   getCatalogoClientes,
-  
+  createSeguimiento,
+  insertInmueble,
+  insertDetalles,
 };

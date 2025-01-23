@@ -52,4 +52,11 @@ router.post('/usuarios', adminController.getClientes);
 // Ruta para crear un seguimiento (protegida)
 router.post('/crear-seguimiento', isAuthenticated, adminController.createSeguimiento);
 
+/* ruta para inmuebles (protegida) */
+router.post('/crear-inmueble', isAuthenticated, adminController.crearInmueble);
+
+/* crear detalles (protegida) */
+router.post('/crear-detalles', isAuthenticated, adminController.crearDetalles);
+
+
 module.exports = router;

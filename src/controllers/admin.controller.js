@@ -16,6 +16,8 @@ const {
   getResumenClientes,
   getCatalogoClientes,
   createSeguimiento,
+  insertInmueble,
+  insertDetalles,
 } = require('../models/admin.model');
 const { query } = require('../config/database');
 const db = require('../config/database');
@@ -166,7 +168,6 @@ exports.updateRemate = async (req, res) => {
   }
 };
 
-// Eliminar un remate
 exports.deleteRemate = async (req, res) => {
   try {
     const remateId = req.query.deleteId;
@@ -234,11 +235,10 @@ exports.obtenerCronograma = async (req, res) => {
     res.status(500).json({ message: "Hubo un problema al obtener el cronograma" });
   }
 };
-
-
+/* seguimiento */
 exports.createSeguimiento = async (req, res) => {
   const {
-    expediente, distrito_judicial, instancia, organo_juridico, especialidad, nro_convocatoria,
+    expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria,
     fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
   } = req.body;
 
@@ -246,7 +246,7 @@ exports.createSeguimiento = async (req, res) => {
     expediente || null,
     distrito_judicial || null,
     instancia || null,
-    organo_juridico || null,
+    organo_juridiccional || null,
     especialidad || null,
     nro_convocatoria || null,
     fecha_registro || null,
@@ -267,22 +267,6 @@ exports.createSeguimiento = async (req, res) => {
   } catch (error) {
     console.error('Error al crear el seguimiento:', error);
     res.status(500).json({ error: 'Error al crear el seguimiento' });
-  }
-};
-
-
-// Obtener un seguimiento por ID
-exports.getSeguimientoById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const seguimiento = await Seguimiento.getSeguimientoById(id);
-    if (!seguimiento) {
-      return res.status(404).json({ message: 'Seguimiento no encontrado' });
-    }
-    res.json(seguimiento);
-  } catch (error) {
-    console.error('Error al obtener el seguimiento:', error);
-    res.status(500).json({ message: 'Error al obtener el seguimiento' });
   }
 };
 
@@ -446,3 +430,76 @@ exports.obtenerCatalogo = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener el catálogo de clientes.' });
   }
 }
+
+
+// Controlador para insertar un nuevo inmueble
+exports.crearInmueble = async (req, res) => {
+  const { remate_id, partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar } = req.body;
+
+  console.log('Datos recibidos:', req.body); // Registro de depuración
+
+  const datosInmueble = [
+    partida_registral || null,
+    tipo_inmueble || null,
+    direccion || null,
+    carga_ogravamen || null,
+    porcentaje_rematar || null,
+    remate_id || null
+  ];
+
+  try {
+    const newInmuebleId = await insertInmueble(datosInmueble);
+    if (newInmuebleId) {
+      res.json({ success: true, message: 'Inmueble creado exitosamente', inmuebleId: newInmuebleId });
+    } else {
+      res.json({ success: false, message: 'Error al crear el inmueble' });
+    }
+  } catch (error) {
+    console.error('Error al crear el inmueble:', error);
+    res.json({ success: false, error: error.message });
+  }
+};
+
+
+// Controlador para crear nuevos detalles de remate
+exports.crearDetalles = async (req, res) => {
+  const {
+    remate_id, expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+    materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
+    incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo
+  } = req.body;
+
+  const datosDetalles = [
+    expediente || null,
+    distrito_judicial || null,
+    organo_juridiccional || null,
+    instancia || null,
+    juez || null,
+    especialista || null,
+    materia || null,
+    resolucion || null,
+    fecha_resolucion || null,
+    nro_convocatoria || null,
+    tipo_cambio || null,
+    tasacion || null,
+    precio_base || null,
+    incremento_ofertas || null,
+    arancel || null,
+    oblaje || null,
+    descripcion_de_detalles || null,
+    archivo || null,
+    remate_id || null
+  ];
+
+  try {
+    const newDetalleId = await insertDetalles(datosDetalles);
+    if (newDetalleId) {
+      res.json({ success: true, message: 'Detalles creados exitosamente', detalleId: newDetalleId });
+    } else {
+      res.json({ success: false, message: 'Error al crear los detalles' });
+    }
+  } catch (error) {
+    console.error('Error al crear los detalles:', error);
+    res.json({ success: false, error: error.message });
+  }
+};

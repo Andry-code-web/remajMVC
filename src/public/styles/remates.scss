@@ -230,102 +230,202 @@ form {
 
 /* Estilos generales del chat */
 #chat {
-    font-family: Arial, sans-serif;
-    margin: 0px auto;
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0 auto;
     max-width: 600px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
+/* Efecto de fondo dinámico */
+#chat::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 76, 76, 0.15), transparent 70%);
+    transform: rotate(45deg);
+    z-index: 0;
+    animation: rotateBg 15s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes rotateBg {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#chat * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Lista de mensajes */
 #messages {
     list-style: none;
-    padding: 0;
+    padding: 10px;
     margin: 0 0 20px;
     border: 1px solid #ddd;
     height: 400px;
     overflow-y: auto;
-    background-color: #fff;
-    border-radius: 10px;
+    background: linear-gradient(180deg, #ffffff, #f3f4f6);
+    border-radius: 15px;
+    box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+}
 
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Mensajes enviados por el usuario */
 #messages .sent {
-    color: #ddd;
+    color: #fff;
     text-align: right;
-    margin: 5px 10px;
-    padding: 10px;
-    border-radius: 15px 15px 0 15px;
-    background-color: #ee2f2f;
+    margin: 8px 10px;
+    padding: 12px 15px;
+    border-radius: 20px 20px 0 20px;
+    background: linear-gradient(135deg, #ff6b6b, #e02e2e);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: inline-block;
     max-width: 70%;
     word-wrap: break-word;
-    margin-left: 44%;
+    margin-left: 30%;
+    animation: bounceInRight 0.3s ease-in-out;
+}
+
+/* Animación de los mensajes enviados */
+@keyframes bounceInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* Mensajes recibidos de otros usuarios */
 #messages .received {
     text-align: left;
-    margin: 5px 10px;
-    padding: 10px;
-    border-radius: 15px 15px 15px 0;
-    background-color: #c6fec6;
+    margin: 8px 10px;
+    padding: 12px 15px;
+    border-radius: 20px 20px 20px 0;
+    background: linear-gradient(135deg, #a1ffce, #61d2a4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: inline-block;
     max-width: 70%;
     word-wrap: break-word;
+    animation: bounceInLeft 0.3s ease-in-out;
+}
+
+/* Animación de los mensajes recibidos */
+@keyframes bounceInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* Contenedor del input y botón */
 .input-container {
     display: flex;
-    padding: 10px;
+    padding: 15px;
     border-top: 1px solid #ddd;
-    background-color: #fff;
-    border-radius: 0 0 10px 10px;
+    background: linear-gradient(180deg, #ffffff, #f7f7f7);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Campo de entrada */
 .input-field {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 20px;
-    font-size: 14px;
+    border-radius: 25px;
+    font-size: 16px;
     outline: none;
-    transition: border-color 0.3s;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
 }
 
 .input-field:focus {
-    border-color: #de2020;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    border-color: #ff4c4c;
+    box-shadow: 0 0 10px rgba(255, 76, 76, 0.5);
 }
 
+/* Botón de enviar */
 .send-btn {
     margin-left: 10px;
-    padding: 10px 20px;
-    background-color: #dc1717;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #ff4c4c, #dc1717);
     color: #fff;
+    font-weight: bold;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .send-btn:hover {
-    background-color: #e24a4a;
+    background: linear-gradient(135deg, #e24a4a, #b81212);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
 }
 
+/* Temporizador */
 #countdown {
     font-size: 3rem;
     font-weight: bold;
+    text-align: center;
+    color: #ff4c4c;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    animation: glow 1.5s infinite alternate;
 }
 
-#fecha {
-    /*    line-height: 5em; */
-    margin: 0 auto;
-    text-align: center;
-    font-size: 163%;
+/* Brillo intermitente */
+@keyframes glow {
+    from {
+        text-shadow: 2px 2px 10px rgba(255, 76, 76, 0.5);
+    }
+    to {
+        text-shadow: 2px 2px 20px rgba(255, 76, 76, 1);
+    }
+}
 
+/* Fecha */
+#fecha {
+    margin: 10px auto;
     text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #555;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease;
 }

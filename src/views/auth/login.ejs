@@ -1,6 +1,4 @@
- 
-
- <!-- contenedor general -->
+<!-- contenedor general de login -->
  <div class="contenedor">
   <!-- Contenedor principal -->
   <div class="imagen-contenedor slideInleft">
@@ -38,9 +36,10 @@
         </div>
 
         <!-- Añadido: Div para el captcha -->
-        <!-- <div class="mt-1 mx-2">
+        <div class="mt-1 mx-2">
           <div class="g-recaptcha" data-sitekey="6LdPuLoqAAAAACCaJURWz8HVYuzYbGVrmsegdg8t"></div> 
-        </div> -->
+        </div> 
+        <!-- fin del captcha -->
 
          <!-- Botón para enviar el formulario -->
         <button type="submit">Iniciar sesión</button> 
@@ -78,7 +77,8 @@
           )}
           
     </script>
-<!-- 
+
+    <!-- RECAPTCHA -->
     <script>
       document.getElementById('loginForm').addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -92,8 +92,7 @@
           });
           return; 
         }
-    
         this.submit();
       });
-    </script> -->
+    </script>
     

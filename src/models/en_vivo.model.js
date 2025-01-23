@@ -4,14 +4,16 @@ class EnVivo {
     static async getAll(usuario_id) {
         const query = `
             SELECT 
-                r.*, 
-                l.usuarios_id AS liked_by_user
+                r.*,
+                CASE WHEN l.usuarios_id IS NOT NULL THEN TRUE ELSE FALSE END as liked
             FROM 
                 remates r
-            INNER JOIN 
-                likes l ON r.id = l.remates_id
+            LEFT JOIN 
+                likes l ON r.id = l.remates_id AND l.usuarios_id = ?
             WHERE 
-                l.usuarios_id = ?
+                r.estado = 'en_curso'
+            ORDER BY 
+                r.fecha_remate ASC, r.hora_remate ASC
         `;
         const [rows] = await db.execute(query, [usuario_id]);
         return rows;

@@ -2,9 +2,9 @@ const EnVivo = require("../models/en_vivo.model");
 
 exports.getEnVivo = async (req, res) => {
     try {
-        // Obtener el ID del usuario si está logueado
-        const userId = req.session.user ? req.session.user.id : null;
-        
+        // Obtener el ID del usuario que dio like
+        const userId = req.session.user.id;
+        console.log('id del usuario:', userId);
         // Obtener datos de remates y anexos
         const enVivoData = await EnVivo.getAll(userId);
         const imgInmuebles = await EnVivo.getImagenesInmuebles();

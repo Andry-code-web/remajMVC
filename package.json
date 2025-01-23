@@ -30,9 +30,9 @@
     "build:en_vivo": "sass src/public/styles/en_vivo.scss src/public/css/en_vivo/en_vivo.css",
     "build:tags": "sass src/public/styles/tags.scss src/public/css/tags/tags.css",
     "build:terminos_condicione": "sass src/public/styles/terminos_condicione.scss src/public/css/terminos_condicione/terminos_condicione.css",
-    "build:vender":"sass src/public/styles/vender.scss src/public/css/vender/vender.css",
-    "build:comprar":"sass src/public/styles/comprar.scss src/public/css/comprar/comprar.css",
-    "build:clientesAdmin":"sass src/public/styles/admin/clientesAdmin.scss src/public/css/clientesAdmin/clientesAdmin.css",
+    "build:vender": "sass src/public/styles/vender.scss src/public/css/vender/vender.css",
+    "build:comprar": "sass src/public/styles/comprar.scss src/public/css/comprar/comprar.css",
+    "build:clientesAdmin": "sass src/public/styles/admin/clientesAdmin.scss src/public/css/clientesAdmin/clientesAdmin.css",
     "dev:server": "nodemon app.js"
   },
   "dependencies": {

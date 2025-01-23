@@ -268,7 +268,8 @@ form {
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
-  margin-left: 49%;
+  margin-left: 44%;
+  margin-top: 4%;
 }
 
 /* Mensajes recibidos de otros usuarios */
@@ -277,10 +278,12 @@ form {
   margin: 5px 10px;
   padding: 10px;
   border-radius: 15px 15px 15px 0;
-  background-color: #c6fec6;
+  background-color: #ffffff;
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
+  box-shadow: 0px 2px 10px 0px black;
+  margin-top: 4%;
 }
 
 /* Contenedor del input y botón */

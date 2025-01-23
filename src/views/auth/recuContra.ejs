@@ -47,31 +47,25 @@
         </div>
 
         <div id="verificarCorreo">
-          <form id="recoveryForm" class="form-content" style="display: block;">
+          <form id="recoveryForm" class="verificar-correo">
             <div class="form-group">
-              <label for="email">
-                <i class="bi bi-envelope-fill"></i>
-                Correo electrónico
-              </label>
-              <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+              <input type="email" id="email" name="email" required placeholder="Correo Electrónico" class="form-control">
             </div>
-            <div class="button-group">
-              <button type="submit" class="verify-button">
-                <i class="bi bi-send"></i>
-                Verificar Email
-              </button>
-            </div>
+            <button type="submit" class="verify-button">
+              <i class="bi bi-envelope-check"></i>
+              Verificar Correo
+            </button>
           </form>
         </div>
 
         <div class="contenedor-contraseña">
-          <form id="contraseñas" action="/auth/reset-password" method="POST" style="display: none;">
+          <form id="resetPasswordForm" style="display: none;">
             <input type="hidden" id="resetEmail" name="email">
             <div class="form-group">
-              <input type="password" name="password" required placeholder="Nueva Contraseña" class="form-control">
+              <input type="password" id="password" name="password" required placeholder="Nueva Contraseña" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" name="confirmPassword" required placeholder="Confirmar Contraseña" class="form-control">
+              <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirmar Contraseña" class="form-control">
             </div>
             <button type="submit" class="verify-button-contra">
               <i class="bi bi-arrow-clockwise"></i>
@@ -80,6 +74,7 @@
           </form>
         </div>
 
+        <!-- area soporte -->
         <div class="help-section">
           <h4>¿Necesitas ayuda?</h4>
           <p>Si tienes problemas para recuperar tu cuenta, contáctanos:</p>
@@ -107,41 +102,104 @@
 
 
 <script>
-  const recoveryForm = document.getElementById('recoveryForm');
-  const verificarCorreo = document.getElementById('verificarCorreo');
-  const subirContraseñas = document.getElementById('contraseñas');
-  recoveryForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita el envío predeterminado del formulario
-
-    const email = document.getElementById('email').value;
-
-    try {
-      const response = await fetch('/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email
-        })
-      });
-
-      const result = await response.json(); // Parsear la respuesta como JSON
-
-      if (result.success) {
-        verificarCorreo.style.display = 'none';
-        subirContraseñas.style.display = 'block';
-      } else {
-        alert(result.message); // Mostrar mensaje de error
+  document.addEventListener('DOMContentLoaded', function() {
+    const recoveryForm = document.getElementById('recoveryForm');
+    const resetPasswordForm = document.getElementById('resetPasswordForm');
+    const resetEmailInput = document.getElementById('resetEmail');
+  
+    // Manejar verificación de email
+    recoveryForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const email = document.getElementById('email').value;
+  
+      try {
+        const response = await fetch('/auth/forgot-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+  
+        const result = await response.json();
+  
+        if (result.success) {
+          resetEmailInput.value = email;
+          recoveryForm.style.display = 'none';
+          resetPasswordForm.style.display = 'block';
+          Swal.fire({
+            icon: 'success',
+            title: '¡Email verificado!',
+            text: 'Ahora puedes establecer tu nueva contraseña'
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: result.message
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al procesar tu solicitud'
+        });
       }
-    } catch (error) {
-      console.error('Error al enviar el correo:', error);
-      alert('Hubo un error al intentar enviar el correo. Inténtalo de nuevo más tarde.');
-    }
+    });
+  
+    // Manejar restablecimiento de contraseña
+    resetPasswordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const data = {
+        email: resetEmailInput.value,
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value
+      };
+  
+      try {
+        const response = await fetch('/auth/reset-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+  
+        const result = await response.json();
+  
+        if (result.success) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Contraseña actualizada correctamente',
+            confirmButtonText: 'Ir al login'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/auth/login';
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: result.message
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al actualizar la contraseña'
+        });
+      }
+    });
   });
-</script>
-
-
+  </script>
 <!-- mostrar alerta de contactar soporte -->
 <script>
   function botonSoporte() {

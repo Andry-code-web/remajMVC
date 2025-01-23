@@ -276,7 +276,6 @@
   font-size: 1.2rem;
 }
 
-/* fin boton */
 .nav {
   display: flex;
   gap: 2rem;
@@ -298,7 +297,7 @@
   text-decoration: none;
 }
 
-/* BOTON */
+/* fin header */
 /* FOOTER */
 footer {
   width: 100%;

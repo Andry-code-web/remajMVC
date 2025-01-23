@@ -129,17 +129,23 @@ exports.forgotPassword_vista = async (req, res) => {
     });
   } catch (error) {
     console.error("Error al cargar la vista de recuperación:", error);
-    res
-      .status(500)
-      .render("error", {
-        message: "Error al cargar la página de recuperación",
-      });
+    res.status(500).render("error", {
+      message: "Error al cargar la página de recuperación",
+    });
   }
 };
 
+// Verificar email para recuperación
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "El correo electrónico es obligatorio."
+      });
+    }
 
     const user = await User.findByEmail(email);
     if (!user) {
@@ -151,7 +157,7 @@ exports.forgotPassword = async (req, res) => {
 
     res.json({
       success: true,
-      message: "Email verificado correctamente.",
+      message: "Email verificado correctamente."
     });
   } catch (error) {
     console.error("Error en recuperación de contraseña:", error);
@@ -162,58 +168,61 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// Controlador para restablecer la contraseña
+// Restablecer contraseña
 exports.resetPassword = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body;
-    
-    console.log('Datos recibidos:', { email, password: '***', confirmPassword: '***' });
 
+    // Validar campos obligatorios
     if (!email || !password || !confirmPassword) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: "Todos los campos son obligatorios." 
+        message: "Todos los campos son obligatorios."
       });
     }
 
+    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: "Las contraseñas no coinciden." 
+        message: "Las contraseñas no coinciden."
       });
     }
 
+    // Buscar usuario por email
     const user = await User.findByEmail(email);
     if (!user) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: "Usuario no encontrado." 
+        message: "Usuario no encontrado."
       });
     }
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    // Encriptar nueva contraseña
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
+
+    // Actualizar contraseña
     const updated = await User.updatePassword(user.id, hashedPassword);
-
     if (!updated) {
-      return res.status(500).json({ 
+      return res.status(500).json({
         success: false,
-        message: "Error al actualizar la contraseña." 
+        message: "Error al actualizar la contraseña."
       });
     }
 
-    res.json({ 
-      success: true, 
-      message: "Contraseña restablecida con éxito." 
+    res.json({
+      success: true,
+      message: "Contraseña actualizada correctamente."
     });
   } catch (error) {
     console.error("Error al restablecer contraseña:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: "Error al procesar la solicitud." 
+      message: "Error al restablecer la contraseña."
     });
   }
 };
-
 // Controlador para Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {

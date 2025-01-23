@@ -1,39 +1,45 @@
 const EnVivo = require("../models/en_vivo.model");
-const fs = require("fs").promises;
-const path = require("path");
 
 exports.getEnVivo = async (req, res) => {
     try {
-        // Obtener datos de remates y anexos
-        const userId = req.session.user.id;
-        console.log('id del usuario:', userId);
+        // Obtener el ID del usuario si está logueado
+        const userId = req.session.user ? req.session.user.id : null;
+        
         // Obtener datos de remates y anexos
         const enVivoData = await EnVivo.getAll(userId);
         const imgInmuebles = await EnVivo.getImagenesInmuebles();
-        const anexosData = await EnVivo.getAnexosAll(); // Traemos todos los anexos
-
+        const anexosData = await EnVivo.getAnexosAll();
 
         // Combinar datos con imágenes y anexos
-        const dataConImagenesYAnexos = enVivoData.map((auction) => {
-            const imagenBase64 = imgInmuebles.find((img) => img.remates_id === auction.id)?.imagenes_inmueble || "";
-            const anexo = anexosData.find((anexo) => anexo.remates_id === auction.id)?.papeles_inmuebles || ""; // Enlace al PDF o aviso
+        const dataConImagenesYAnexos = enVivoData.map((remate) => {
+            // Buscar la imagen correspondiente
+            const imagenData = imgInmuebles.find(img => img.remates_id === remate.id);
+            // Buscar el anexo correspondiente
+            const anexoData = anexosData.find(anexo => anexo.remates_id === remate.id);
 
             return {
-                ...auction,
-                imagen: imagenBase64,
-                anexo, // Incluimos el enlace del anexo
+                ...remate,
+                imagen: imagenData ? imagenData.imagenes_inmueble : null,
+                anexo: anexoData ? anexoData.papeles_inmuebles : null
             };
         });
 
-        res.render("en_vivo/en_vivo", { enVivoData: dataConImagenesYAnexos });
+        // Renderizar la vista con los datos
+        res.render("en_vivo/en_vivo", { 
+            enVivoData: dataConImagenesYAnexos,
+            user: req.session.user || null
+        });
+
     } catch (error) {
         console.error("Error en getEnVivo:", error);
-        res.render("error", { message: "Error al obtener datos de subastas en vivo" });
+        res.status(500).render("error", { 
+            message: "Error al obtener datos de subastas en vivo",
+            error: process.env.NODE_ENV === 'development' ? error : {}
+        });
     }
 };
 
-
-
+// Los demás controladores se mantienen igual...
 exports.getSeguimiento = async (req, res) => {
     try {
         const auctionId = req.params.id;
@@ -70,49 +76,31 @@ exports.getDetalles = async (req, res) => {
     }
 };
 
-
 exports.getInmuebles = async (req, res) => {
     try {
         const auctionId = req.params.id;
         const inmuebles = await EnVivo.getInmuebles(auctionId);
 
-        // Enriquecer cada inmueble con la imagen correspondiente
-        const inmueblesConImagenes = await Promise.all(
-            inmuebles.map(async (inmueble) => {
-                if (inmueble.img_inmuebles_id) {
-                    const imagen = await EnVivo.getImagenInmuebleById(inmueble.img_inmuebles_id);
-                    return {
-                        ...inmueble,
-                        img_inmueble: imagen ? imagen.imagenes_inmueble : null, 
-                    };
-                }
-                return { ...inmueble, img_inmueble: null };
-            })
-        );
-        
-
         res.render("en_vivo/inmuebles", {
-            inmuebles: inmueblesConImagenes || [],
-            auctionId,
+            inmuebles: inmuebles || [],
+            auctionId
         });
     } catch (error) {
         console.error('Error en getInmuebles:', error);
         res.render("error", {
-            message: "Error al cargar los inmuebles",
+            message: "Error al cargar los inmuebles"
         });
     }
 };
 
-
 exports.getCronograma = async (req, res) => {
     try {
-        const auctionId = req.params.id; 
+        const auctionId = req.params.id;
         const cronograma = await EnVivo.getCronograma(auctionId);
-        console.log('datos cronograma: ', cronograma);
 
         res.render("en_vivo/cronograma", {
             cronograma: cronograma || [],
-            auctionId // Pasamos auctionId a la vista
+            auctionId
         });
     } catch (error) {
         console.error('Error en getCronograma:', error);
@@ -121,8 +109,6 @@ exports.getCronograma = async (req, res) => {
         });
     }
 };
-
-
 
 exports.getAviso = async (req, res) => {
     const { id } = req.params;
@@ -140,5 +126,3 @@ exports.getAviso = async (req, res) => {
         res.status(500).send('Hubo un error al obtener el enlace del aviso.');
     }
 };
-
-

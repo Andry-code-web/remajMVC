@@ -64,11 +64,11 @@ class User {
     return rows[0];
   }
 
-  static async findById(id) {
+  /* static async findById(id) {
     const [rows] = await db.execute("SELECT * FROM usuarios WHERE id = ?", [id]);
     return rows[0];
   }
-
+ */
   static async updatePassword(userId, hashedPassword) {
     try {
       await db.execute(
@@ -82,7 +82,17 @@ class User {
     }
   }
 
-
+  static async findByEmail(email) {
+    if (!email) {
+      throw new Error("El correo electrónico no puede estar vacío");
+    }
+  
+    const [rows] = await db.execute("SELECT * FROM usuarios WHERE correo = ?", [
+      email,
+    ]);
+    return rows[0];
+  }
+  
 
   // aqui va ir model de editar usuario
   static async update(userId, userData) {
@@ -112,7 +122,6 @@ class User {
       const updateFields = [];
       const values = [];
 
-      // Agregar campos a actualizar
       if (userData.usuario) {
         updateFields.push('usuario = ?');
         values.push(userData.usuario);
@@ -121,12 +130,15 @@ class User {
         updateFields.push('correo = ?');
         values.push(userData.correo);
       }
+      if (userData.confirmar_correocorreo) {
+        updateFields.push('confirmar_correo = ?');
+        values.push(userData.confirmar_correo);
+      }
       if (userData.celular) {
         updateFields.push('celular = ?');
         values.push(userData.celular);
       }
 
-      // Agregar el ID del usuario al final del array de valores
       values.push(userId);
 
       const sql = `

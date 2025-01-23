@@ -124,23 +124,12 @@
   </div>
 </div>
 
-<!-- añadir nuevo remate -->
-<%- include('../admin/formNuevoremate') %>
-
-<!-- Modal de edición -->
-<%- include('../admin/editarRemate') %>
-
-<!-- modal seguimiento -->
-<%- include('../admin/formSeguimiento') %>
-
-<!-- Modal de Detalles -->
-<%- include('../admin/formDetalles') %>
-
-<!-- Modal de Inmuebles -->
-<%- include('../admin/forminmuebles') %>
-
-<!-- MODAL CRONOGRAMA -->
-<%- include('../admin/formCronograma') %>
+<%- include(process.cwd() + '/src/views/admin/formNuevoremate') %>
+<%- include(process.cwd() + '/src/views/admin/editarRemate') %>
+<%- include(process.cwd() + '/src/views/admin/formSeguimiento') %>
+<%- include(process.cwd() + '/src/views/admin/formDetalles') %>
+<%- include(process.cwd() + '/src/views/admin/forminmuebles') %>
+<%- include(process.cwd() + '/src/views/admin/formCronograma') %>
 
 <script>
   /* CERRAR MODALES */

@@ -223,6 +223,8 @@ exports.resetPassword = async (req, res) => {
     });
   }
 };
+
+
 // Controlador para Editar Usuario
 exports.editUser_vista = async (req, res) => {
   try {
@@ -247,6 +249,7 @@ exports.editUser_vista = async (req, res) => {
       .render("error", { message: "Error al cargar la página de edición" });
   }
 };
+
 
 // Actualizar Usuario
 exports.updateUser = async (req, res) => {
@@ -293,12 +296,12 @@ exports.updateUser = async (req, res) => {
       });
 
       // Actualizar la sesión con los nuevos datos
-      req.session.user = {
+      /* req.session.user = {
         ...req.session.user,
         usuario,
         correo,
         celular,
-      };
+      }; */
 
       res.json({
         success: true,

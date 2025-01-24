@@ -265,8 +265,8 @@ body {
 
 /* Status Section */
 .contenedor-estado {
-  width: 240px;
-  height: 45px;
+  width: 110px;
+  height: 37px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -276,7 +276,8 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin: 0 auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: -36px;
+  margin-right: 194px;
   
   &[style*="green"] {
     background: linear-gradient(135deg, #28a745, #218838) !important;
@@ -293,7 +294,7 @@ body {
       margin: 0;
       
       &.text-uppercase {
-        font-size: 32px;
+        font-size: 18px;
       }
     }
   }
@@ -307,7 +308,7 @@ body {
   gap: 0.5rem;
   padding: 0.8rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -319,6 +320,7 @@ body {
     background: #780103;
     color: white;
     border: 1px solid #780103;
+    width: 137px;
     
     &:hover {
       background: #5a0102;
@@ -362,6 +364,24 @@ body {
   }
 }
 
+.btn-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 105px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  background: #5a0102;
+  color: white;
+  margin-right: 50px;
+}
 /* No Results Message */
 .no-results {
   grid-column: 1 / -1;

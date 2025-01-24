@@ -23,8 +23,8 @@
   <%- include('../partials/navbar.ejs') %>
 
   <!-- CANVAS -->
-  <canvas id="background-canvas"></canvas>
-
+<!--   <canvas id="background-canvas"></canvas>
+ -->
   <!-- en_vivo.ejs -->
   <section class="property-container">
     <div class="auction-grid ">
@@ -92,11 +92,18 @@
           </div>
           <% } %>
           <!-- estado fin -->
+
+          <!-- boton de entrada a chat de remate -->
+          <div class="content_btn_chat">
+            <a href="/auctions/<%= auction.id %>" class="btn-chat">
+              CHAT
+            </a>
+          </div>
         </div>
 
         <div class="div4 content_btn_seguimiento">
           <a href="/en_vivo/seguimiento/<%= auction.id %>" class="action-btn seguimiento">
-            <i class="fas fa-chart-line"></i> Seguimiento
+            <i class="fas fa-chart-line"></i> Bases de remate
           </a>
         </div>
         <div class="div5 content_btn_detalles">

@@ -39,14 +39,20 @@
     display: flex;
     flex-direction: column;
     padding-top: 60px;
+    --background-overlay: "";
+    background-image:linear-gradient(rgb(106, 32, 32), rgba(109, 56, 56, 0.11)),
+    url("/img/fondoMartillos.png");
+    background-color: #ca9595;
+    background-size: 300px;
 }
+
 
 /* Contenedores principales */
 .seguimiento-container,
 .detalles-container,
 .inmuebles-container,
 .cronograma-container {
-    font-family: $fuentePrincipal;
+    font-family: "Segoe UI";
     flex: 1;
     max-width: 1200px;
     width: 100%;
@@ -77,11 +83,11 @@
 
     &:hover {
         background: #F7FAFC;
-        color: #2B4B81;
+        color: #810709;
     }
 
     &.active {
-        background: #2B4B81;
+        background: #810709;
         color: white;
     }
 }
@@ -102,7 +108,7 @@
     }
 
     thead {
-        background: #2B4B81;
+        background: #780103;
 
         th {
             padding: 1rem;
@@ -121,12 +127,12 @@
             }
 
             &:hover {
-                background: rgba(43, 75, 129, 0.05);
+                background: #0e0a0a(23, 24, 27, 0.05);
             }
 
             td {
                 padding: 1rem;
-                color: #4A5568;
+                color: #141010;
                 border-bottom: 1px solid #E2E8F0;
             }
         }
@@ -145,7 +151,7 @@
 .detalles-table {
     .label {
         font-weight: 600;
-        color: #2B4B81;
+        color: #000000;
         background: rgba(43, 75, 129, 0.05);
     }
 }
@@ -168,7 +174,7 @@
     width: fit-content;
     margin: 2rem auto;
     padding: 0.8rem 1.5rem;
-    background: #2B4B81;
+    background: #6f1b1d;
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -194,7 +200,7 @@
     }
 
     &:hover {
-        background: #1A365D;
+        background: #811113;
         transform: translateY(-2px);
 
         &::before {
@@ -248,7 +254,9 @@
     text-decoration: none;
     cursor: pointer;
 }
-
+.section-title {
+    color: white;
+}
 /* Media Queries */
 @media (max-width: 1024px) {
     .table-base {

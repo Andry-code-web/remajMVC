@@ -51,6 +51,7 @@
           <p class="description">Actualiza tu información personal</p>
         </div>
 
+        
         <form id="updateProfileForm" method="post" class="form-content">
           <div class="form-section">
             <div class="form-group">
@@ -58,28 +59,28 @@
                 <i class="bi bi-person-fill"></i>
                 Nombre de usuario
               </label>
-              <input type="text" id="username" name="usuario" required>
+              <input type="text" id="username" name="usuario" value="<%- userData.usuario%>" required>
             </div>
             <div class="form-group">
               <label for="correo">
                 <i class="bi bi-envelope-fill"></i>
                 Correo Electrónico
               </label>
-              <input type="email" id="email" name="correo" required>
+              <input type="email" id="email"  name="correo" value="<%- userData.correo %>" required>
             </div>
             <div class="form-group">
               <label for="confirmar_correo">
                 <i class="bi bi-envelope-check-fill"></i>
                 Confirmar Correo
               </label>
-              <input type="email" id="email" name="confirmar_correo"  required>
+              <input type="email" id="email" name="confirmar_correo" value="<%- userData.confirmar_correo %>"  required>
             </div>
             <div class="form-group">
               <label for="celular">
                 <i class="bi bi-phone-fill"></i>
                 Teléfono 
               </label>
-              <input type="tel" id="celular"  name="celular" required>
+              <input type="tel" id="celular"  name="celular" value="<%- userData.celular %>" required>
             </div>
           </div>
         
@@ -111,6 +112,8 @@
 
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
 <!-- script editar usuario -->
 <script>
@@ -183,3 +186,4 @@
     }
   });
   </script>
+<!-- quiero que al momento que el usuario quiera editar algo en el formulario. que se envie sin porblemas, sin que pida que se ponga todo, osea si el usuario solo quiere cambiar usuario, que solo eso cambie , sin la necesidad de poner todos los datos -->

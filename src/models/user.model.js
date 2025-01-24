@@ -39,12 +39,10 @@ class User {
       userData.usuario || null,
       hashedPassword,
       terminosCondiciones,
-      fechaRegistro, // Fecha actual
-      horaRegistro, // Hora actual
+      fechaRegistro, 
+      horaRegistro,
     ];
 
-    console.log("Datos recibidos:", userData);
-    console.log("Contraseña hasheada:", hashedPassword);
 
     // Ejecutar el query
     const [result] = await db.execute(sql, values);
@@ -64,11 +62,7 @@ class User {
     return rows[0];
   }
 
-  /* static async findById(id) {
-    const [rows] = await db.execute("SELECT * FROM usuarios WHERE id = ?", [id]);
-    return rows[0];
-  }
- */
+
   static async updatePassword(userId, hashedPassword) {
     try {
       await db.execute(
@@ -94,6 +88,7 @@ class User {
   }
   
 
+  
   // aqui va ir model de editar usuario
   static async update(userId, userData) {
     try {

@@ -51,6 +51,10 @@
   display: flex;
   flex-direction: column;
   padding-top: 60px;
+  --background-overlay: "";
+  background-image: linear-gradient(rgb(106, 32, 32), rgba(109, 56, 56, 0.11)), url("/img/fondoMartillos.png");
+  background-color: #ca9595;
+  background-size: 300px;
 }
 
 /* Contenedores principales */
@@ -58,7 +62,7 @@
 .detalles-container,
 .inmuebles-container,
 .cronograma-container {
-  font-family: "fuentePrincipal";
+  font-family: "Segoe UI";
   flex: 1;
   max-width: 1200px;
   width: 100%;
@@ -89,10 +93,10 @@
 }
 .tab-link:hover {
   background: #F7FAFC;
-  color: #2B4B81;
+  color: #810709;
 }
 .tab-link.active {
-  background: #2B4B81;
+  background: #810709;
   color: white;
 }
 
@@ -120,7 +124,7 @@
 .detalles-table thead,
 .inmuebles-table thead,
 .cronograma-table thead {
-  background: #2B4B81;
+  background: #780103;
 }
 .table-base thead th, .seguimiento-table thead th,
 .detalles-table thead th,
@@ -143,14 +147,14 @@
 .detalles-table tbody tr:hover,
 .inmuebles-table tbody tr:hover,
 .cronograma-table tbody tr:hover {
-  background: rgba(43, 75, 129, 0.05);
+  background: #0e0a0a 23, 24, 27, 0.05;
 }
 .table-base tbody tr td, .seguimiento-table tbody tr td,
 .detalles-table tbody tr td,
 .inmuebles-table tbody tr td,
 .cronograma-table tbody tr td {
   padding: 1rem;
-  color: #4A5568;
+  color: #141010;
   border-bottom: 1px solid #E2E8F0;
 }
 
@@ -158,7 +162,7 @@
 /* Estilos específicos para detalles */
 .detalles-table .label {
   font-weight: 600;
-  color: #2B4B81;
+  color: #000000;
   background: rgba(43, 75, 129, 0.05);
 }
 
@@ -180,7 +184,7 @@
   width: fit-content;
   margin: 2rem auto;
   padding: 0.8rem 1.5rem;
-  background: #2B4B81;
+  background: #6f1b1d;
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -200,7 +204,7 @@
   transition: 0.5s;
 }
 .back-button:hover {
-  background: #1A365D;
+  background: #811113;
   transform: translateY(-2px);
 }
 .back-button:hover::before {
@@ -251,6 +255,10 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.section-title {
+  color: white;
 }
 
 /* Media Queries */

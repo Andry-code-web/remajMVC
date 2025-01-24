@@ -83,8 +83,6 @@ const timers = {};
 const auctionTimers = {};
 
 // Mantener un registro global de temporizadores
-
-
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 

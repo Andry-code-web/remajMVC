@@ -386,21 +386,26 @@ exports.validarClienteEnRemate = async (req, res) => {
     );
 
     if (validacionExistente.length > 0) {
-      return res.status(400).json({ message: 'El cliente ya está validado en este remate.' });
+      // Si ya existe, eliminar la validación
+      await db.query(
+        `DELETE FROM usuario_remate WHERE usuario_id = ? AND remate_id = ?`,
+        [clienteId, remateId]
+      );
+      return res.status(200).json({ message: 'Validación eliminada correctamente.' });
+    } else {
+      // Si no existe, insertar la validación
+      await db.query(
+        `INSERT INTO usuario_remate (usuario_id, remate_id, validado, fecha_validacion) VALUES (?, ?, 1, NOW())`,
+        [clienteId, remateId]
+      );
+      return res.status(200).json({ message: 'Cliente validado correctamente en el remate.' });
     }
-
-    // Insertar la validación con la fecha actual
-    await db.query(
-      `INSERT INTO usuario_remate (usuario_id, remate_id, validado, fecha_validacion) VALUES (?, ?, 1, NOW())`,
-      [clienteId, remateId]
-    );
-
-    res.status(200).json({ message: 'Cliente validado correctamente en el remate.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al validar el cliente en el remate.' });
+    res.status(500).json({ message: 'Error al validar o eliminar la validación del cliente en el remate.' });
   }
 };
+
 
 
 

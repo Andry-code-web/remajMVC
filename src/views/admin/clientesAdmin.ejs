@@ -156,35 +156,42 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  document.addEventListener("click", (event) => {
-    if (event.target.classList.contains("dropdown-item")) {
-      const clienteId = event.target.dataset.clienteId;
-      const remateId = event.target.dataset.remateId;
+ document.addEventListener("click", (event) => {
+  if (event.target.classList.contains("dropdown-item")) {
+    const clienteId = event.target.dataset.clienteId;
+    const remateId = event.target.dataset.remateId;
 
-      fetch("/admin/validar-cliente", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            clienteId,
-            remateId
-          }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.message) {
-            alert(data.message); // Puedes usar SweetAlert2 para mejorar la experiencia.
-            location.reload(); // Recargar la página para actualizar los datos.
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  });
+    fetch("/admin/validar-cliente", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clienteId,
+        remateId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message); // Mejora con SweetAlert2 si lo prefieres
+          Swal.fire({
+            icon: 'success',
+            title: 'Cliente validado',
+            text: data.message,
+          });
+          event.target.classList.toggle("text-danger"); // Cambia la clase visualmente
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+});
+
 </script>
 
 <script>

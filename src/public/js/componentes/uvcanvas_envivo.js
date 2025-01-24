@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function animate() {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(44, 42, 42, 0.9)';
+      ctx.strokeStyle = 'rgba(104, 2, 2, 0.47)';
       ctx.lineWidth = 1;
 
       lines.forEach(line => {

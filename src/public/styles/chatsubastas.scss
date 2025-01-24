@@ -46,8 +46,8 @@
   }
 
   .active-tab.active {
-      color: #2196F3;
-      border-bottom: 2px solid #2196F3;
+      color: #222324;
+      border-bottom: 2px solid #ff0000;
   }
 
   .active-panel-content {
@@ -121,7 +121,7 @@
   }
 
   .active-join-button:hover {
-      background: #1976D2;
+      background: #ffe5e5;
   }
 
   .active-classification-table {
@@ -133,11 +133,11 @@
   .active-classification-table td {
       padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #ffe5e5;
   }
 
   .active-classification-table th {
-      background-color: #f8f9fa;
+      background-color: #ffefef;
       font-weight: bold;
       color: #666;
   }

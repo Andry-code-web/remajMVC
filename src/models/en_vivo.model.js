@@ -50,7 +50,6 @@ class EnVivo {
         return rows;
     }
 
-    // Los demás métodos se mantienen igual...
     static async getSeguimiento(remates_id) {
         const query = `SELECT * FROM remajud.seguimiento WHERE remates_id = ?`;
         const [rows] = await db.execute(query, [remates_id]);
@@ -60,8 +59,20 @@ class EnVivo {
     static async getDetalles(remates_id) {
         const query = "SELECT * FROM remajud.detalles WHERE remates_id = ?";
         const [rows] = await db.execute(query, [remates_id]);
+    
+        rows.forEach(row => {
+            if (row.archivo) {
+                // Asegurar que los enlaces absolutos no se alteren
+                if (!row.archivo.startsWith('http://') && !row.archivo.startsWith('https://')) {
+                    row.archivo = `/uploads/${row.archivo}`; // Solo agregar prefijo a archivos locales
+                }
+            }
+        });
+    
         return rows;
     }
+    
+    
 
     static async getInmuebles(remates_id) {
         const query = `

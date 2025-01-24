@@ -1,5 +1,8 @@
 <!-- ICONOS -->
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<link
+  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+  rel="stylesheet"
+/>
 
 <!-- ESTILOS HEADER Y FOOTER -->
 <link rel="stylesheet" href="/css/globales/globales.css" />
@@ -17,8 +20,12 @@
   <div class="inmuebles-container">
     <div class="navigation-tabs">
       <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link">Detalles</a>
-      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link active">Inmuebles</a>
-      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link active"
+        >Inmuebles</a
+      >
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link"
+        >Cronograma</a
+      >
     </div>
 
     <div class="inmuebles-table">
@@ -36,7 +43,6 @@
         </thead>
 
         <tbody>
-
           <% inmuebles.forEach(inmueble=> { %>
           <tr>
             <td><%= inmueble.partida_registral %></td>
@@ -46,9 +52,13 @@
             <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %></td>
             <td class="imagen-cell">
               <% if (inmueble.img_inmueble) { %>
-                <a href="#" onclick="showImageModal('data:image/jpeg;base64,<%= inmueble.img_inmueble %>')">Ver Imagen</a>
+              <a
+                href="#"
+                onclick="showImageModal('data:image/jpeg;base64,<%= inmueble.img_inmueble %>')"
+                >Ver Imagen</a
+              >
               <% } else { %>
-                <span>No disponible</span>
+              <span>No disponible</span>
               <% } %>
             </td>
           </tr>
@@ -63,9 +73,13 @@
   </div>
 </main>
 
-
-
-
+<!-- Modal  -->
+<div id="imageModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Imagen del inmueble" />
+  </div>
+</div>
 
 <!-- COMPONENTE FOOTER -->
 <%- include('../partials/footer') %>
@@ -98,32 +112,24 @@
   });
 </script>
 
-<!-- SCRIPT MODAL IMAGENES -->
+<!-- SCRIPT MODAL IMAGEN -->
 <script>
+  // Función para mostrar el modal con la imagen
   function showImageModal(imageSrc) {
-    if (!imageSrc) {
-        console.error("La fuente de la imagen está vacía");
-        return;
-    }
-    console.log("Mostrando imagen:", imageSrc);
-    const modal = document.getElementById("inmuebleImageModal");
-    const modalImage = document.getElementById("modalImage");
-    modalImage.src = imageSrc; // Asignar la fuente de la imagen
-    modal.style.display = "flex"; // Mostrar el modal
-}
+    document.getElementById("modalImage").src = imageSrc;
+    document.getElementById("imageModal").style.display = "block";
+  }
 
+  // Función para cerrar el modal
+  function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
 
-function closeImageModal() {
-    const modal = document.getElementById("inmuebleImageModal");
-    modal.style.display = "none"; // Ocultar el modal
-}
-
-// Cerrar el modal si el usuario hace clic fuera del contenido
-window.onclick = function (event) {
-    const modal = document.getElementById("inmuebleImageModal");
-    if (event.target === modal) {
+  // Cerrar el modal si se hace clic fuera de él
+  window.onclick = function (event) {
+    var modal = document.getElementById("imageModal");
+    if (event.target == modal) {
       modal.style.display = "none";
     }
-};
-
+  };
 </script>

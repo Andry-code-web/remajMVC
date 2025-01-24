@@ -12,9 +12,9 @@ exports.getEnVivo = async (req, res) => {
 
         // Combinar datos con imágenes y anexos
         const dataConImagenesYAnexos = enVivoData.map((remate) => {
-            // Buscar la imagen correspondiente
+            // imagen
             const imagenData = imgInmuebles.find(img => img.remates_id === remate.id);
-            // Buscar el anexo correspondiente
+            // anexo
             const anexoData = anexosData.find(anexo => anexo.remates_id === remate.id);
 
             return {
@@ -39,7 +39,6 @@ exports.getEnVivo = async (req, res) => {
     }
 };
 
-// Los demás controladores se mantienen igual...
 exports.getSeguimiento = async (req, res) => {
     try {
         const auctionId = req.params.id;

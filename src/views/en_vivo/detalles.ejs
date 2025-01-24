@@ -1,12 +1,14 @@
-
 <!-- ICONOS -->
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<link
+  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+  rel="stylesheet"
+/>
 
 <!-- ESTILOS HEADER Y FOOTER -->
 <link rel="stylesheet" href="/css/globales/globales.css" />
 
 <!-- ESTILOS TAGS -->
-<link rel="stylesheet" href="/css/tags/tags.css">
+<link rel="stylesheet" href="/css/tags/tags.css" />
 
 <!-- HEADER -->
 <%- include('../partials/navbar.ejs') %>
@@ -17,12 +19,18 @@
 <main class="main-wrapper">
   <div class="detalles-container">
     <div class="navigation-tabs">
-      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
-      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
-      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active"
+        >Detalles</a
+      >
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link"
+        >Inmuebles</a
+      >
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link"
+        >Cronograma</a
+      >
     </div>
-    <% if (detalles && detalles.length > 0) { %>
-    <% detalles.forEach(detalle => { %>
+    <% if (detalles && detalles.length > 0) { %> <% detalles.forEach(detalle =>
+    { %>
     <div class="detalles-table">
       <table>
         <tbody>
@@ -41,7 +49,7 @@
           <tr>
             <td class="label">Juez:</td>
             <td class="value"><%= detalle.juez %></td>
-            <td class="label">Especialista: </td>
+            <td class="label">Especialista:</td>
             <td class="value"><%= detalle.especialista %></td>
           </tr>
           <tr>
@@ -54,7 +62,13 @@
             <td class="label">Fecha Resolución:</td>
             <td class="value"><%= detalle.fecha_resolucion %></td>
             <td class="label">Archivo:</td>
-            <td class="value"><%= detalle.archivo %></td>
+            <td class="value">
+              <% if (detalle.archivo) { %>
+                <a href="<%= detalle.archivo %>" class="download-link" target="_blank">Descargar Archivo</a>
+              <% } else { %>
+              <span>No disponible</span>
+              <% } %>
+            </td>
           </tr>
           <tr>
             <td class="label">Convocatoria:</td>
@@ -82,13 +96,14 @@
           </tr>
           <tr>
             <td class="label">Descripción:</td>
-            <td class="value" colspan="3"><%= detalle.descripcion %></td>
+            <td class="value" colspan="3">
+              <%= detalle.descripcion_de_detalles %>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <% }); %>
-    <% } else { %>
+    <% }); %> <% } else { %>
     <p class="no-data">No hay detalles disponibles.</p>
     <% } %>
     <a href="/en_vivo" class="back-button">Volver a Remates</a>

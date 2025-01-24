@@ -713,6 +713,12 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.hora_remate i,
+.fecha_remate i {
+  font-size: 1.25rem;
+  color: #780103;
+}
+
 .informacionGeneralSubasta h3 {
   font-size: 1rem;
 }

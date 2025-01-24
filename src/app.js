@@ -81,8 +81,8 @@ app.get('/unauthorized', (req, res) => {
 let highestAmount = 0;
 const timers = {};
 const auctionTimers = {};
-
 // Mantener un registro global de temporizadores
+
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 

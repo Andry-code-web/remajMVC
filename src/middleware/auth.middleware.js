@@ -20,7 +20,7 @@ exports.isAuthenticated = (req, res, next) => {
     }
   }
 
-  return res.redirect('/unauthorized');
+  return res.redirect('/');
 };
 
 exports.setUserLocals = (req, res, next) => {

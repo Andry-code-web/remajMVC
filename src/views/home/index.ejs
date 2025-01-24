@@ -277,10 +277,11 @@
             <p>Precio base:<i class="fa-solid fa-gavel fa-beat icono-precio"></i>
             </p>
             <p>
-              S/ <%= remate.precios %>
+              $ <%= remate.precios %>
             </p>
           </div>
           <div class="btn_acciones">
+            <a  id="informacion_general_subastaa" href="javascript:void(0);" class="botonAccionSubasta detalle-button" onclick="mostrarAlerta(<%= remate.id %>)"><i class="fa-solid fa-hammer fa-fade"> </i> Ingresar </a>
             <a href="/en_vivo/seguimiento/<%= remate.id %>" class="botonAccionSubasta seguimiento-button"><i class="fas fa-chart-line"></i> Seguimiento</a>
             <a href="/en_vivo/detalles/<%= remate.id %>" class="botonAccionSubasta detalle-button" data-remate-id="<%= remate.id %>"> <i class="fas fa-info-circle"> </i> Detalles </a>
             <a href="#" class="botonAccionSubasta aviso-button" target="_blank" data-aviso-url="<%= remate.anexos && remate.anexos.length > 0 ? remate.anexos[0].papeles_inmuebles : '#' %>">

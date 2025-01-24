@@ -1234,7 +1234,7 @@
   /* Esto controla qué tan a la derecha está el botón */
   z-index: 1;
   /* Esto asegura que el botón esté por encima de otros elementos */
-  background: #7d2b2b;
+  background: #780103;
   border-radius: 10px;
   width: 75px;
   height: 35px;
@@ -1254,6 +1254,11 @@
   100% {
     transform: scale(1);
   }
+}
+/* Nueva configuracion */
+#informacion_general_subastaa {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
 /*# sourceMappingURL=inicio.css.map */

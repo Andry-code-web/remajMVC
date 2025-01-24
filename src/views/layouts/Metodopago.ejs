@@ -1,14 +1,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<div class="contenedor-sistema-pagos-electronico">
+<div class="contenedor-sistema-pagos-electronico" id="metodo-pago-container">
     <div class="navegacion-metodos-transaccion">
         <div class="elemento-navegacion-activo" data-identificador-metodo="tarjeta">
             <i data-lucide="credit-card"></i>
             Tarjeta débito/crédito
-        </div>
-        <div class="elemento-navegacion-secundario" data-identificador-metodo="yape">
-            <i data-lucide="smartphone"></i>
-            Yape
         </div>
     </div>
 
@@ -17,31 +13,10 @@
             <h3><i data-lucide="info"></i> Información de Cuentas</h3>
             <div class="contenedor-informacion-bancaria">
                 <div class="elemento-cuenta-interbancaria">
-                    <h4><i data-lucide="landmark"></i> BCP</h4>
+                    <h4><i data-lucide="landmark"></i> BCP $</h4>
                     <p><i data-lucide="hash"></i> CCI: 00219400212345678901</p>
                 </div>
-                <div class="elemento-cuenta-interbancaria">
-                    <h4><i data-lucide="landmark"></i> Interbank</h4>
-                    <p><i data-lucide="hash"></i> CCI: 00319400212345678902</p>
-                </div>
-                <div class="elemento-cuenta-interbancaria">
-                    <h4><i data-lucide="landmark"></i> BBVA</h4>
-                    <p><i data-lucide="hash"></i> CCI: 00119400212345678903</p>
-                </div>
-                <div class="elemento-cuenta-interbancaria">
-                    <h4><i data-lucide="landmark"></i> Scotiabank</h4>
-                    <p><i data-lucide="hash"></i> CCI: 00919400212345678904</p>
-                </div>
             </div>
-        </div>
-
-        <div class="seccion-formulario-yape">
-            <h3><i data-lucide="qr-code"></i> Escanea el código QR</h3>
-            <div class="contenedor-codigo-qr-yape">
-                <img class="visualizacion-codigo-qr" src="/img/qr_metodo_pago.png" alt="Código QR de Yape">
-            </div>
-            <p><i data-lucide="user"></i> Yape a: Montano Quispe Cleofer</p>
-            <p><i data-lucide="dollar-sign"></i> Monto: $ 5000.00</p>
         </div>
     </div>
 
@@ -102,5 +77,18 @@
                 }
             });
         });
+        document.getElementById('botonRetroceder').addEventListener('click', () => {
+            document.getElementById('metodo-pago-container').style.display = 'none';
+            mostrarAlerta(remateId); // Mostrar la SweetAlert nuevamente
+        });
+    });
+    if (result.isDenied) {
+        document.getElementById('metodo-pago-container').style.display = 'block';
+        Swal.close(); // Cerrar la alerta
+    }
+    // Llamar a la función mostrarAlerta al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        const remateId = 123; // Reemplaza con el ID del remate real
+        mostrarAlerta(remateId);
     });
 </script>

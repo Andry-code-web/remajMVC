@@ -1,0 +1,124 @@
+.tarjeta-informativa-remate-contenedor {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none; /* Inicialmente oculto */
+  }
+  
+  .contenedor-remate-informacion {
+    padding: 30px;
+  }
+  
+  .titulo-principal-remate-encabezado {
+    color: #8b0000;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+  }
+  
+  .seccion-remate-informacion {
+    display: none;
+  }
+  
+  .seccion-remate-informacion.activa {
+    display: block;
+  }
+  
+  .subtitulo-remate-seccion {
+    color: #8b0000;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+  
+  .separador-remate-linea {
+    border: none;
+    height: 2px;
+    background-color: #8b0000;
+    margin-bottom: 20px;
+  }
+  
+  .lista-definiciones-remate-detallada,
+  .lista-recomendaciones-remate-importante,
+  .lista-desarrollo-oferta-detallada,
+  .lista-pagos-remate-detallada,
+  .detalles-cuenta-bancaria-transferencia {
+    padding-left: 20px;
+  }
+  
+  .lista-definiciones-remate-detallada li,
+  .lista-recomendaciones-remate-importante li,
+  .lista-desarrollo-oferta-detallada li,
+  .lista-pagos-remate-detallada li,
+  .detalles-cuenta-bancaria-transferencia li {
+    margin-bottom: 10px;
+  }
+  
+  .parrafo-remate-descripcion {
+    line-height: 1.6;
+    text-align: justify;
+  }
+  
+  .icono-font-awesome {
+    margin-right: 10px;
+    color: #8b0000;
+  }
+  
+  .botones-navegacion-remate {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .boton-nav-remate {
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-nav-remate:hover {
+    background-color: #6d0000;
+  }
+  
+  .boton-nav-remate:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .boton-cerrar-remate {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    color: #8b0000;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .contenedor-remate-informacion {
+      padding: 20px;
+    }
+  
+    .titulo-principal-remate-encabezado {
+      font-size: 2em;
+    }
+  
+    .subtitulo-remate-seccion {
+      font-size: 1.5em;
+    }
+  }
+  

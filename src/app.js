@@ -42,13 +42,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
       httpOnly: true,
-      domain: '.remajud.com', // Comparte cookies entre subdominios
-      maxAge: 3600000, // 1 hora
+      maxAge: 3600000,
     },
   })
 );
+
 
 
 app.use((req, res, next) => {

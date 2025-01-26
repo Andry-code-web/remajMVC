@@ -33,6 +33,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('trust proxy', 1); // Confía en el proxy para HTTPS
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
@@ -40,11 +42,21 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
-      maxAge: 3600000,
+      secure: process.env.NODE_ENV === 'production', // Solo seguro en producción
+      maxAge: 3600000, // 1 hora
+      sameSite: 'lax', // Protección CSRF
+      domain: 'remajud.com', // Asegúrate de que coincide con tu dominio
     },
   })
 );
+
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production' && !req.secure) {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
 
 app.use(flash());
 app.use(morgan('dev'));

@@ -42,20 +42,22 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // Solo seguro en producción
+      secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
+      httpOnly: true,
+      domain: '.remajud.com', // Comparte cookies entre subdominios
       maxAge: 3600000, // 1 hora
-      sameSite: 'lax', // Protección CSRF
-      domain: 'remajud.com', // Asegúrate de que coincide con tu dominio
     },
   })
 );
 
+
 app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'production' && !req.secure) {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
     return res.redirect(`https://${req.headers.host}${req.url}`);
   }
   next();
 });
+
 
 
 app.use(flash());

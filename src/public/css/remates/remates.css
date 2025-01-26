@@ -240,16 +240,16 @@ form {
   font-family: "Poppins", Arial, sans-serif;
   margin: 0 auto;
   max-width: 600px;
-  background: linear-gradient(135deg, #ffffff, #f1f1f1);
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
 }
 
-/* Fondo animado */
+/* Efecto de fondo dinámico */
 #chat::before {
   content: "";
   position: absolute;
@@ -257,10 +257,10 @@ form {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, rgba(255, 76, 76, 0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 76, 76, 0.15), transparent 70%);
   transform: rotate(45deg);
   z-index: 0;
-  animation: rotateBg 10s linear infinite;
+  animation: rotateBg 15s linear infinite;
   opacity: 0.8;
 }
 
@@ -282,16 +282,16 @@ form {
   list-style: none;
   padding: 10px;
   margin: 0 0 20px;
-  border: 1px solid rgba(200, 200, 200, 0.5);
+  border: 1px solid #ddd;
   height: 400px;
   overflow-y: auto;
-  background: linear-gradient(180deg, #ffffff, #f9f9f9);
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
   border-radius: 15px;
   box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.05);
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Efecto de entrada */
+/* Animación de entrada */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -302,23 +302,24 @@ form {
     transform: translateY(0);
   }
 }
-/* Mensajes enviados */
+/* Mensajes enviados por el usuario */
 #messages .sent {
   color: #fff;
   text-align: right;
   margin: 8px 10px;
   padding: 12px 15px;
   border-radius: 20px 20px 0 20px;
-  background: linear-gradient(135deg, #ff7f7f, #ff5252);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #ff6b6b, #e02e2e);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
   margin-left: 30%;
-  animation: slideInRight 0.3s ease-in-out;
+  animation: bounceInRight 0.3s ease-in-out;
 }
 
-@keyframes slideInRight {
+/* Animación de los mensajes enviados */
+@keyframes bounceInRight {
   from {
     opacity: 0;
     transform: translateX(20px);
@@ -328,21 +329,22 @@ form {
     transform: translateX(0);
   }
 }
-/* Mensajes recibidos */
+/* Mensajes recibidos de otros usuarios */
 #messages .received {
   text-align: left;
   margin: 8px 10px;
   padding: 12px 15px;
   border-radius: 20px 20px 20px 0;
-  background: linear-gradient(135deg, #85e085, #59c759);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #a1ffce, #61d2a4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
-  animation: slideInLeft 0.3s ease-in-out;
+  animation: bounceInLeft 0.3s ease-in-out;
 }
 
-@keyframes slideInLeft {
+/* Animación de los mensajes recibidos */
+@keyframes bounceInLeft {
   from {
     opacity: 0;
     transform: translateX(-20px);
@@ -352,39 +354,38 @@ form {
     transform: translateX(0);
   }
 }
-/* Contenedor del input */
+/* Contenedor del input y botón */
 .input-container {
   display: flex;
   padding: 15px;
   border-top: 1px solid #ddd;
-  background: linear-gradient(180deg, #ffffff, #f5f5f5);
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
   border-radius: 0 0 20px 20px;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Campo de texto */
+/* Campo de entrada */
 .input-field {
   flex: 1;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
+  padding: 12px;
+  border: 1px solid #ccc;
   border-radius: 25px;
   font-size: 16px;
-  background: #ffffff;
   outline: none;
+  background: #f9f9f9;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input-field:focus {
-  border-color: #ff5252;
-  box-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+  border-color: #ff4c4c;
+  box-shadow: 0 0 10px rgba(255, 76, 76, 0.5);
 }
 
 /* Botón de enviar */
 .send-btn {
   margin-left: 10px;
   padding: 12px 25px;
-  background: linear-gradient(135deg, #ff5252, #ff0000);
+  background: linear-gradient(135deg, #ff4c4c, #dc1717);
   color: #fff;
   font-weight: bold;
   border: none;
@@ -395,8 +396,8 @@ form {
 }
 
 .send-btn:hover {
-  background: linear-gradient(135deg, #ff7676, #e60000);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #e24a4a, #b81212);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transform: scale(1.05);
 }
 
@@ -405,18 +406,19 @@ form {
   font-size: 3rem;
   font-weight: bold;
   text-align: center;
-  color: #ff5252;
+  color: #ff4c4c;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  margin-bottom: 15px;
-  animation: pulse 1.5s infinite alternate;
+  margin-bottom: 10px;
+  animation: glow 1.5s infinite alternate;
 }
 
-@keyframes pulse {
+/* Brillo intermitente */
+@keyframes glow {
   from {
-    text-shadow: 2px 2px 10px rgba(255, 82, 82, 0.5);
+    text-shadow: 2px 2px 10px rgba(255, 76, 76, 0.5);
   }
   to {
-    text-shadow: 2px 2px 20px rgb(255, 82, 82);
+    text-shadow: 2px 2px 20px rgb(255, 76, 76);
   }
 }
 /* Fecha */
@@ -425,7 +427,7 @@ form {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #666;
+  color: #555;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease;
 }

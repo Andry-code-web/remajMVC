@@ -295,17 +295,20 @@ exports.updateUser = async (req, res) => {
         celular,
       });
 
-      // Actualizar la sesión con los nuevos datos
-      /* req.session.user = {
-        ...req.session.user,
-        usuario,
-        correo,
-        celular,
-      }; */
+      // Destruir sesión 
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error al destruir la sesión:', err);
+          return res.status(500).json({ 
+            success: false,
+            message: "Error al cerrar la sesión." 
+          });
+        }
 
-      res.json({
-        success: true,
-        message: "Perfil actualizado correctamente",
+        res.json({
+          success: true,
+          message: "Perfil actualizado correctamente. Por favor, inicia sesión nuevamente.",
+        });
       });
     } catch (error) {
       if (error.message.includes('correo electrónico ya está en uso')) {

@@ -91,17 +91,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Generador de alias
-    const generarAliasAleatorio = () => {
-        const prefijos = ['remajud', 'user', 'member'];
-        const adjetivos = ['legal', 'justice', 'law', 'court'];
-        const prefijo = prefijos[Math.floor(Math.random() * prefijos.length)];
-        const adjetivo = adjetivos[Math.floor(Math.random() * adjetivos.length)];
-        let numero = '';
-        for (let i = 0; i < 4; i++) {
-            numero += Math.floor(Math.random() * 10);
-        }
-        return `${prefijo}_${adjetivo}${numero}`;
-    };
+    // Generador de alias alfanumérico (letras y números)
+const generarAliasAleatorio = () => {
+    const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let alias = "";
+
+    for (let i = 0; i < 8; i++) { // Generar alias de 8 caracteres (puedes ajustar la longitud aquí)
+        alias += caracteres[Math.floor(Math.random() * caracteres.length)];
+    }
+
+    return alias;
+};
+
 
     // Configuración del generador de alias
     const btnGenerarAlias = document.getElementById('generar-alias');

@@ -5,28 +5,13 @@ exports.getEnVivo = async (req, res) => {
         // Obtener el ID del usuario que dio like
         const userId = req.session.user.id;
         console.log('id del usuario:', userId);
-        // Obtener datos de remates y anexos
+        
+        // Obtener datos de remates con imágenes y anexos
         const enVivoData = await EnVivo.getAll(userId);
-        const imgInmuebles = await EnVivo.getImagenesInmuebles();
-        const anexosData = await EnVivo.getAnexosAll();
-
-        // Combinar datos con imágenes y anexos
-        const dataConImagenesYAnexos = enVivoData.map((remate) => {
-            // imagen
-            const imagenData = imgInmuebles.find(img => img.remates_id === remate.id);
-            // anexo
-            const anexoData = anexosData.find(anexo => anexo.remates_id === remate.id);
-
-            return {
-                ...remate,
-                imagen: imagenData ? imagenData.imagenes_inmueble : null,
-                anexo: anexoData ? anexoData.papeles_inmuebles : null
-            };
-        });
 
         // Renderizar la vista con los datos
         res.render("en_vivo/en_vivo", { 
-            enVivoData: dataConImagenesYAnexos,
+            enVivoData: enVivoData,
             user: req.session.user || null
         });
 
@@ -125,3 +110,21 @@ exports.getAviso = async (req, res) => {
         res.status(500).send('Hubo un error al obtener el enlace del aviso.');
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,11 +11,15 @@
     from {
         opacity: 0;
         transform: translateX(-100px);
-    }
+        -webkit-transform: translateX(-100px);
+        -moz-transform: translateX(-100px);
+        -ms-transform: translateX(-100px);
+        -o-transform: translateX(-100px);
+}
     to {
         opacity: 1;
         transform: translateX(0);
-}
+    }
 }
 
 .contenedor {
@@ -58,7 +62,6 @@
 }
 
 /* imagen  cambiante*/
-
 .imagen_fondo {
     position: relative;
     left: 15rem;
@@ -66,7 +69,6 @@
     width: 700px;
     height: 420px;
 }
-
 
 /* imagen cambiante */
 .imagen-secundaria {
@@ -77,8 +79,6 @@
     width: 717px;
     height: 460px;
 }
-
-
 
 .fondo {
     width: 55%; 
@@ -126,13 +126,17 @@
     margin-left: 2px;
 }
 
+.input-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
 .contenedor_form form input {
     width: 100%;
     height: 45px;
     border-radius: 8px;
     border: 1px solid #ddd;
     padding: 0 1rem;
-    margin-bottom: 1.5rem;
     transition: all 0.3s ease;
     font-size: 14px;
     background: white;
@@ -142,6 +146,30 @@
     outline: none;
     border-color: #780103;
     box-shadow: 0 0 0 1px #780103;
+}
+
+/* .check-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #28a745;
+    font-size: 1.2rem;
+    display: none;
+} */
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 0;
+    margin: 0;
 }
 
 .olvide {
@@ -157,8 +185,8 @@
     text-decoration: underline;
 }
 
-.contenedor_form form button,
-.contenedor_form form .registrar,
+.btn-iniciar-sesion,
+.registrar,
 .botonSoporte {
     width: 100%;
     height: 45px;
@@ -177,16 +205,15 @@
     align-items: center;
 }
 
-.contenedor_form form button:hover,
-.contenedor_form form .registrar:hover,
+.btn-iniciar-sesion:hover,
+.registrar:hover,
 .botonSoporte:hover {
     background-color: #8f0104;
     transform: translateY(-1px);
-
 }
 
-.contenedor_form form button:active,
-.contenedor_form form .registrar:active,
+.btn-iniciar-sesion:active,
+.registrar:active,
 .botonSoporte:active {
     background-color: #670002;
     transform: translateY(1px);
@@ -212,3 +239,11 @@
     margin-top: 1rem;
 }
 
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.mx-2 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

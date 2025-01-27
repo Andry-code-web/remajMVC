@@ -1,13 +1,13 @@
 <!-- contenedor general de login -->
- <div class="contenedor">
+<div class="contenedor">
   <!-- Contenedor principal -->
   <div class="imagen-contenedor slideInleft">
     <!-- contenedor-letras -->
     <div class="contenedor-titulo">
       <h1 class="tittle-frase">Inicia Sesión y Encuentra Tu Oportunidad Perfecta</h1>
-      <p class="parrafo">hola que hace, hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,hola que hace,</p>
-     </div>
-<!-- Imagen de fondo -->
+      <p class="parrafo">"Da el primer paso hacia tus próximos grandes ahorros. Inicia sesión y aprovecha las oportunidades únicas de nuestros remates."</p>
+    </div>
+    <!-- Imagen de fondo -->
     <img class="imagen_fondo" src="/img/llave.png" width="100%" height="100%"> 
   </div>
 
@@ -19,8 +19,10 @@
       <form class="slideInLeft" method="POST" id="loginForm">
 
         <!-- Formulario de inicio de sesión -->
-        <label for="usuario">Usuario</label> 
-        <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu Usuario" required> 
+        <div class="input-wrapper">
+          <label for="usuario">Usuario</label> 
+          <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu Usuario" required> 
+     </div>
 
         <!-- Campo de entrada para el usuario -->
         <div class="contenedor_contraseña">
@@ -28,9 +30,14 @@
           <!-- Contenedor para el campo de contraseña -->
           <label for="contraseña">Contraseña</label>
           <div class="input-container">
-
+            
             <!-- Contenedor para el input de contraseña-->
-            <input type="password" name="contrasena" id="contrasena" placeholder="Ingresa tu Contraseña" required> 
+            <div class="input-wrapper">
+              <input type="password" name="contrasena" id="contrasena" placeholder="Ingresa tu Contraseña" required> 
+              <button type="button" class="toggle-password" title="Mostrar/Ocultar contraseña">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
             <a href="/auth/forgot-password" class="olvide">Olvide mi contraseña</a>
           </div>
         </div>
@@ -42,7 +49,7 @@
         <!-- fin del captcha -->
 
          <!-- Botón para enviar el formulario -->
-        <button type="submit">Iniciar sesión</button> 
+        <button type="submit" class="btn-iniciar-sesion">Iniciar sesión</button> 
         <!-- Enlace para registrarse -->
         <a class="registrar" href="/auth/register">Regístrate</a> 
 
@@ -51,48 +58,76 @@
       <p class="contactos">Si tienes problemas al iniciar sesion, contáctanos aqui:</p>
       <button class="botonSoporte" id="boton_soporte" onclick="botonSoporte()">Soporte Remajud</button>
     </div>
-    </div>
-    </div>
+  </div>
+</div>
 
-
-    <!-- Importar reCAPTCHA y SweetAlert2 -->
+<!-- Importar reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <link rel="stylesheet" href="/css/login/login.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
 <!-- sweet alert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
-    <!-- sweetAlert -->
-    <script>
-      function botonSoporte() {
-        Swal.fire({
-          title: "Soporte al cliente",
-          text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
-          icon: "info",
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK"
-        }
-          )}
-          
-    </script>
+<!-- sweetAlert -->
+<script>
+  function botonSoporte() {
+    Swal.fire({
+      title: "Soporte al cliente",
+      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "OK"
+    });
+  }
+</script>
 
-    <!-- RECAPTCHA -->
-    <script>
-      document.getElementById('loginForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
-    
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (recaptchaResponse === '') {
-          Swal.fire({
-            title: 'Error',
-            text: 'Por favor, completa el captcha',
-            icon: 'error',
-          });
-          return; 
-        }
-        this.submit();
-      });
-    </script>
-    
+<!-- RECAPTCHA  -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const usuarioInput = document.getElementById('usuario');
+    const contrasenaInput = document.getElementById('contrasena');
+    const togglePasswordBtn = document.querySelector('.toggle-password');
+
+    loginForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+  
+      const recaptchaResponse = grecaptcha.getResponse();
+      if (recaptchaResponse === '') {
+        Swal.fire({
+          title: 'Error',
+          text: 'Por favor, completa el captcha',
+          icon: 'error',
+        });
+        return; 
+      }
+      this.submit();
+    });
+
+    function toggleCheckIcon(input) {
+      const checkIcon = input.nextElementSibling;
+      if (input.value.length > 0) {
+        checkIcon.style.display = 'block';
+      } else {
+        checkIcon.style.display = 'none';
+      }
+    }
+
+    usuarioInput.addEventListener('input', function() {
+      toggleCheckIcon(this);
+    });
+
+    contrasenaInput.addEventListener('input', function() {
+      toggleCheckIcon(this);
+    });
+
+    togglePasswordBtn.addEventListener('click', function() {
+      const type = contrasenaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      contrasenaInput.setAttribute('type', type);
+      this.querySelector('i').classList.toggle('bi-eye');
+      this.querySelector('i').classList.toggle('bi-eye-slash');
+    });
+  });
+</script>

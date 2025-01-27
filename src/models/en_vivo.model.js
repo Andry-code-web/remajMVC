@@ -5,34 +5,48 @@ class EnVivo {
         const query = `
             SELECT 
                 r.*,
-                CASE WHEN l.usuarios_id IS NOT NULL THEN TRUE ELSE FALSE END as liked
+                i.imagenes_inmueble as imagen,
+                a.papeles_inmuebles as anexo,
+                TRUE as liked
             FROM 
-                remates r
+                likes l
+            INNER JOIN 
+                remates r ON l.remates_id = r.id
             LEFT JOIN 
-                likes l ON r.id = l.remates_id AND l.usuarios_id = ?
+                img_inmuebles i ON r.id = i.remates_id
+            LEFT JOIN 
+                anexos a ON r.id = a.remates_id
             WHERE 
-                r.estado = 'en_curso'
+                l.usuarios_id = ?
             ORDER BY 
                 r.fecha_remate ASC, r.hora_remate ASC
         `;
+        
         const [rows] = await db.execute(query, [usuario_id]);
-        return rows;
+        
+        // Convertimos la imagen a base64 si existe
+        return rows.map(row => ({
+            ...row,
+            imagen: row.imagen ? row.imagen.toString('base64') : null
+        }));
     }
-
 
     static async getImagenesInmuebles() {
         const query = `
             SELECT 
                 id,
                 remates_id,
-                TO_BASE64(imagenes_inmueble) as imagenes_inmueble
+                imagenes_inmueble
             FROM 
                 img_inmuebles
             WHERE 
                 imagenes_inmueble IS NOT NULL
         `;
         const [rows] = await db.execute(query);
-        return rows;
+        return rows.map(row => ({
+            ...row,
+            imagenes_inmueble: row.imagenes_inmueble ? row.imagenes_inmueble.toString('base64') : null
+        }));
     }
 
     static async getAnexosAll() {
@@ -62,23 +76,20 @@ class EnVivo {
     
         rows.forEach(row => {
             if (row.archivo) {
-                // Asegurar que los enlaces absolutos no se alteren
                 if (!row.archivo.startsWith('http://') && !row.archivo.startsWith('https://')) {
-                    row.archivo = `/uploads/${row.archivo}`; // Solo agregar prefijo a archivos locales
+                    row.archivo = `/uploads/${row.archivo}`;
                 }
             }
         });
     
         return rows;
     }
-    
-    
 
     static async getInmuebles(remates_id) {
         const query = `
             SELECT 
                 i.*, 
-                TO_BASE64(img.imagenes_inmueble) AS img_inmueble
+                img.imagenes_inmueble AS img_inmueble
             FROM 
                 remajud.inmuebles AS i
             LEFT JOIN 
@@ -89,21 +100,30 @@ class EnVivo {
                 i.remates_id = ?
         `;
         const [rows] = await db.execute(query, [remates_id]);
-        return rows;
+        return rows.map(row => ({
+            ...row,
+            img_inmueble: row.img_inmueble ? row.img_inmueble.toString('base64') : null
+        }));
     }
 
     static async getImagenInmuebleById(img_inmuebles_id) {
         const query = `
             SELECT 
                 id, 
-                TO_BASE64(imagenes_inmueble) AS imagenes_inmueble 
+                imagenes_inmueble
             FROM 
                 img_inmuebles
             WHERE 
                 id = ?
         `;
         const [rows] = await db.execute(query, [img_inmuebles_id]);
-        return rows.length ? rows[0] : null;
+        if (rows.length && rows[0].imagenes_inmueble) {
+            return {
+                ...rows[0],
+                imagenes_inmueble: rows[0].imagenes_inmueble.toString('base64')
+            };
+        }
+        return null;
     }
 
     static async getCronograma(remateId) {

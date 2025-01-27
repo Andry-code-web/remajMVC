@@ -620,7 +620,7 @@ input[type="number"] {
     }
 }
 
-/* New styles for email confirmation and password visibility */
+/* check confirmacion de correo*/
 .check-icon {
     position: absolute;
     right: 0.5rem;
@@ -647,12 +647,10 @@ input[type="number"] {
     }
 }
 
-/* Ensure the check icon doesn't overlap with input content */
 .form-group input[name="confirmar_email"] {
     padding-right: 2rem;
 }
 
-/* Style for when emails match */
 .form-group input[name="confirmar_email"]:valid ~ .check-icon {
     display: block;
 }

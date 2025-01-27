@@ -12,8 +12,7 @@
   </div>
   <div class="contenedor_mensaje">
     <div class="mensaje">
-      ¿Quieres saber más sobre nuestras subastas o los inmuebles disponibles? ¡Estamos aquí para ayudarte y
-      resolver cualquier duda!
+      ¿Quieres saber más sobre nuestros Remates de inmuebles? ¡Estamos aquí para ayudarte y resolver cualquier duda!
     </div>
 
   </div>
@@ -26,12 +25,6 @@
     </a>
   </div>
 </div>
-
-<!--SLIDER INMUEBLES -->
-<!--  <div id="cartas" class="sliders_casa">
-  <div class="titulo_slider">
-    <h2 class="sub_titulo">Preguntas Frecuentes<h2></h2>
-  </div> -->
 
 <!-- PREGUNTAS FRECUENTES -->
 <div id="preguntas-frecuentes" class="sliders_casa">
@@ -367,25 +360,3 @@
 <!-- BOOTSTRAP -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<!-- modal acordion preguntas  -->
-
-<script>
-  document.addEventListener('DOMContentLoaded', (event) => {
-    var accordionButtons = document.querySelectorAll('.accordion-button');
-    accordionButtons.forEach(function(button) {
-      button.addEventListener('click', function() {
-        var target = this.getAttribute('data-bs-target');
-        var parentAccordion = this.closest('.accordion');
-        var otherCollapses = parentAccordion.querySelectorAll('.accordion-collapse');
-        otherCollapses.forEach(function(collapse) {
-          if (collapse.id !== target.replace('#', '') && collapse.classList.contains('show')) {
-            collapse.classList.remove('show');
-            var otherButton = parentAccordion.querySelector('[data-bs-target="#' + collapse.id + '"]');
-            otherButton.classList.add('collapsed');
-            otherButton.setAttribute('aria-expanded', 'false');
-          }
-        });
-      });
-    });
-  });
-</script>

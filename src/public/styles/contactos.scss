@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -37,17 +38,17 @@
 }
 
 .titulo {
-    font-size: 3.2vw;
-    font-family: $fuenteSecundaria;
+    font-size: 2.5vw;
+    /* font-family: $fuenteSecundaria; */
     font-weight: 200;
 }
 
 .mensaje {
     max-width: 51vw;
-    font-size: 1.9em;
+    font-size: 1.4em;
     padding: 0 5.5555555556vw;
     margin: 3rem auto 2.2222222222vw;
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     font-weight: 100;
 }
 
@@ -65,7 +66,7 @@
     color: $colorterciario;
     box-shadow: 3px 3px 10px #0000001a;
     border-radius: 2.5em;
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     font-size: .9em;
     display: flex;
     align-items: center;
@@ -106,8 +107,8 @@
 
 .sub_titulo {
     text-align: center;
-    font-size: 3.2vw;
-    font-family: $fuenteSecundaria;
+    font-size: 2.5vw;
+    /* font-family: $fuenteSecundaria; */
     font-weight: 100;
     margin-bottom: 2rem;
 }
@@ -124,13 +125,13 @@
 }
 
 .titulo_contactos {
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     font-weight: 100;
     font-size: 3.2vw;
 }
 
 .subtitulo_contacto {
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     font-size: 1.6vw;
     padding: 0 5.5555555556vw;
     margin: 0 auto 2.2222222222vw;
@@ -149,7 +150,7 @@
 }
 
 .sub_titulo_contactos {
-    font-family: $fuenteParrafos;
+    /* font-family: $fuenteParrafos; */
     font-weight: 700;
     font-size: 1.06vw;
     padding-bottom: 1em;
@@ -166,7 +167,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     color: $colorterciario;
     text-decoration: none;
 }
@@ -190,7 +191,7 @@
                 color .2s cubic-bezier(.445, .05, .55, .95), 
                 box-shadow .2s cubic-bezier(.445, .05, .55, .95), 
                 transform .25s cubic-bezier(.165, .84, .44, 1);
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     font-weight: 700;
     text-decoration: none;
     color: $colorterciario;
@@ -285,7 +286,7 @@
     padding: 1rem;
     width: 100%;
     text-align: left;
-    font-family: $fuenteSecundaria;
+    /* font-family: $fuenteSecundaria; */
     
     &::after {
         content: '';
@@ -326,8 +327,8 @@
 
 #preguntas-frecuentes .accordion-body {
     padding: 1rem;
-    color: $colorterciario;
-    font-family: $fuenteSecundaria;
+    color: #797979;
+    /* font-family: $fuenteSecundaria; */
 }
 
 /* Mejoras visuales adicionales */

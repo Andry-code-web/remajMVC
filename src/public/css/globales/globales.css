@@ -391,8 +391,9 @@ footer {
   margin: 0.5rem;
 }
 
-.img_footer {
-  width: 16%;
+.redes_sociales a i {
+  font-size: 1.8rem;
+  color: #fff;
 }
 
 .copy_paises {

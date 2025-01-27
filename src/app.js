@@ -33,8 +33,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('trust proxy', 1); // Confía en el proxy para HTTPS
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
@@ -42,22 +40,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
+      secure: false,
       maxAge: 3600000,
     },
   })
 );
-
-
-
-/* app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
- */
-
 
 app.use(flash());
 app.use(morgan('dev'));

@@ -44,7 +44,6 @@
             <th>Dirección</th>
             <th>Carga y/o Gravamen</th>
             <th>Porcentaje a Rematar</th>
-            <th class="imagen-column">Imagenes inmuebles</th>
           </tr>
         </thead>
 
@@ -55,8 +54,8 @@
             <td><%= inmueble.tipo_inmueble %></td>
             <td class="direccion-cell"><%= inmueble.direccion %></td>
             <td class="gravamen-cell"><%= inmueble.carga_ogravamen %></td>
-            <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %></td>
-            <td class="imagen-cell">
+            <td class="porcentaje-cell"><%= inmueble.porcentaje_rematar %> %</td>
+           <!--  <td class="imagen-cell">
               <% if (inmueble.img_inmueble) { %>
               <a
                 href="#"
@@ -66,7 +65,7 @@
               <% } else { %>
               <span>No disponible</span>
               <% } %>
-            </td>
+            </td> -->
           </tr>
           <% }); %>
         </tbody>
@@ -94,7 +93,7 @@
 <script src="/js/componentes/uvcanvas_envivo.js"></script>
 
 <!-- SCRIPT HEADER SCROLL -->
-<script>
+<!-- <script>
   let lastScrollTop = 0;
   const header = document.getElementById("header");
   const inmueblesTable = document.querySelector(".inmuebles-table");
@@ -116,10 +115,10 @@
 
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
   });
-</script>
+</script> -->
 
 <!-- SCRIPT MODAL IMAGEN -->
-<script>
+<!-- <script>
   // Función para mostrar el modal con la imagen
   function showImageModal(imageSrc) {
     document.getElementById("modalImage").src = imageSrc;
@@ -138,4 +137,4 @@
       modal.style.display = "none";
     }
   };
-</script>
+</script> -->

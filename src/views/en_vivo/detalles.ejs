@@ -1,8 +1,5 @@
 <!-- ICONOS -->
-<link
-  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-  rel="stylesheet"
-/>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 
 <!-- ESTILOS HEADER Y FOOTER -->
 <link rel="stylesheet" href="/css/globales/globales.css" />
@@ -19,15 +16,9 @@
 <main class="main-wrapper">
   <div class="detalles-container">
     <div class="navigation-tabs">
-      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active"
-        >Detalles</a
-      >
-      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link"
-        >Inmuebles</a
-      >
-      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link"
-        >Cronograma</a
-      >
+      <a href="/en_vivo/detalles/<%= auctionId %>" class="tab-link active">Detalles</a>
+      <a href="/en_vivo/inmuebles/<%= auctionId %>" class="tab-link">Inmuebles</a>
+      <a href="/en_vivo/cronograma/<%= auctionId %>" class="tab-link">Cronograma</a>
     </div>
     <% if (detalles && detalles.length > 0) { %> <% detalles.forEach(detalle =>
     { %>
@@ -35,62 +26,46 @@
       <table>
         <tbody>
           <tr>
-            <td class="label">Expediente:</td>
-            <td class="value"><%= detalle.expediente %></td>
-            <td class="label">Distrito Judicial:</td>
-            <td class="value"><%= detalle.distrito_judicial %></td>
-          </tr>
-          <tr>
-            <td class="label">N° de partida registral:</td>
+            <td class="label">Partida Registral:</td>
             <td class="value"><%= detalle.N_de_partida_registral %></td>
-            <td class="label">Instancia:</td>
-            <td class="value"><%= detalle.instancia %></td>
+            <td class="label">Ciudad:</td>
+            <td class="value"><%= detalle.distrito_judicial %></td>
           </tr>
           <tr>
             <td class="label">Distrito:</td>
             <td class="value"><%= detalle.distrito %></td>
-            <td class="label">Situación:</td>
-            <td class="value"><%= detalle.situación %></td>
-          </tr>
-          <tr>
-            <td class="label">Materia:</td>
-            <td class="value"><%= detalle.materia %></td>
-            <td class="label">Convocatoria:</td>
-            <td class="value"><%= detalle.convocatoria %></td>
-          </tr>
-          <tr>
             <td class="label">Gravamenes:</td>
             <td class="value"><%= detalle.gravámenes %></td>
-            <td class="label">Archivo:</td>
-            <td class="value">
-              <% if (detalle.archivo) { %>
-                <a href="<%= detalle.archivo %>" class="download-link" target="_blank">Descargar Archivo</a>
-              <% } else { %>
-              <span>No disponible</span>
-              <% } %>
-            </td>
           </tr>
           <tr>
             <td class="label">Convocatoria:</td>
             <td class="value"><%= detalle.nro_convocatoria %></td>
             <td class="label">Garantia:</td>
-            <td class="value"><%= detalle.garantía %></td>
+            <td class="value">
+              USD <%= parseFloat(detalle.garantía).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0}) %>
+            </td>
           </tr>
           <tr>
             <td class="label">Tasación:</td>
-            <td class="value"><%= detalle.tasacion %></td>
+            <td class="value">
+              USD <%= parseFloat(detalle.tasacion).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0}) %>
+            </td>
             <td class="label">Precio Base:</td>
-            <td class="value"><%= detalle.precio_base %></td>
+            <td class="value">
+              USD <%= parseFloat(detalle.precio_base).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0}) %>
+            </td>
           </tr>
           <tr>
             <td class="label">Incremento entre ofertas:</td>
-            <td class="value"><%= detalle.incremento_ofertas %></td>
-            <td class="label">Arancel:</td>
-            <td class="value"><%= detalle.arancel %></td>
+            <td class="value">
+              USD <%= parseFloat(detalle.incremento_ofertas).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0}) %>
+            </td>
+            <td class="label">Remate:</td>
+            <td class="value"><%= detalle.remate %> EXTRAJUDICIAL</td>
           </tr>
           <tr>
-            <td class="label">Remate:</td>
-            <td class="value"><%= detalle.remate %></td>
+            <td class="label">M<sup>2</sup>:</td>
+            <td class="value"><%= detalle.tamano_propiedad %></td>
             <td class="label">N° inscritos:</td>
             <td class="value"><%= detalle.n_inscritos %></td>
           </tr>

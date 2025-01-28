@@ -21,7 +21,7 @@
 
   <div id="active-panel" class="active-content-section active">
     <!-- Estado: En Curso -->
-   <!--  <div class="active-panel-content" id="en_curso"
+    <!--  <div class="active-panel-content" id="en_curso"
       style="display: <%= auction.estado === 'en_curso' ? 'block' : 'none' %>">
       <div class="active-user-info">
         <div class="active-user">
@@ -48,7 +48,7 @@
     </div> -->
 
     <!-- Estado: Finalizado -->
-   <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
+    <div class="finished-panel-content" style="display: <%= auction.estado === 'finalizado' ? 'block' : 'none' %>">
       <div class="finished-best-offer">
         <div class="finished-crown-label">
           <span class="finished-crown">👑</span>
@@ -58,17 +58,17 @@
         </div>
       </div>
       <% if (auction.ganador) { %>
-        <div class="finished-winner">
-          <span>Ganador:</span>
-          <span class="winner-id">
-            <%= auction.ganador %>
-          </span>
-        </div>
-        <% } %>
-    </div> 
+      <div class="finished-winner">
+        <span>Ganador:</span>
+        <span class="winner-id">
+          <%= auction.ganador %>
+        </span>
+      </div>
+      <% } %>
+    </div>
 
     <!-- Estado: Activo -->
-   <!--  <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
+    <!--  <div class="in-progress-panel-content" style="display: <%= auction.estado === 'activo' ? 'block' : 'none' %>">
       <div class="progress-user-info">
         <div class="progress-user">
           <span class="progress-label">Usuario:</span>
@@ -104,14 +104,14 @@
           <span id="countdown-timer">00:00:00</span>
         </p>
         <ul id="messages"></ul>
-  
+
         <!-- Formulario de oferta -->
         <form id="form-bid" class="message-form">
           <div class="input-container">
-            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>"/>
+            <input type="number" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>" />
             <button type="submit" class="send-btn" id="submit-btn" disabled>
               Enviar
-            </button>  
+            </button>
           </div>
         </form>
       </section>
@@ -147,7 +147,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const btnUnirse = document.getElementById('unirse');
     const chat = document.getElementById('auction-chat');
     const enCurso = document.getElementById('en_curso');
@@ -169,12 +169,14 @@
 
     function checkOpportunities() {
       return fetch('/auctions/check-opportunities', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ auctionId: '<%= auction.id %>' }),
-      }).then(response => response.json())
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            auctionId: '<%= auction.id %>'
+          }),
+        }).then(response => response.json())
         .catch(error => {
           console.error('Error al verificar validación:', error);
           Swal.fire({
@@ -319,8 +321,10 @@
 
 
 <script type="module">
-  import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
-  
+  import {
+    io
+  } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
+
   const socket = io()
   const timerDisplay = document.getElementById("countdown-timer")
   const formBid = document.getElementById("form-bid")
@@ -328,37 +332,44 @@
   const messages = document.getElementById("messages")
   const submitButton = document.getElementById("submit-btn")
   const auctionChat = document.getElementById("auction-chat1")
-  
+
   let highestAmount = 0
   let basePrice = 0
   const auctionId = <%- auction.id %>;
   const userId = "<%- user?.id || '0' %>"
   const userName = "<%- user?.usuario || 'Anónimo' %>"
-  
+
   socket.emit("join-auction", auctionId)
-  
+
   socket.on("load-messages", (loadedMessages) => {
     messages.innerHTML = ""
-    loadedMessages.forEach(({ monto, usuario }) => {
+    loadedMessages.forEach(({
+      monto,
+      usuario
+    }) => {
       addMessageToDOM(usuario, monto)
     })
     scrollToBottom()
   })
-  
-  socket.on("chat-message", ({ monto, usuario, remates_id }) => {
+
+  socket.on("chat-message", ({
+    monto,
+    usuario,
+    remates_id
+  }) => {
     if (remates_id === auctionId) {
       addMessageToDOM(usuario, monto)
       scrollToBottom()
     }
   })
-  
+
   socket.on("timer-update", (remaining) => {
     const hours = Math.floor(remaining / 3600)
     const minutes = Math.floor((remaining % 3600) / 60)
     const seconds = remaining % 60
-  
+
     timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-  
+
     if (remaining > 0) {
       auctionChat.style.display = "block"
       submitButton.disabled = false
@@ -367,24 +378,26 @@
       submitButton.disabled = true
     }
   })
-  
+
   socket.on("auction-started", (message) => {
     console.log(message)
     submitButton.disabled = false
   })
-  
+
   socket.on("chat-enabled", (enabled) => {
     submitButton.disabled = !enabled
     auctionChat.style.display = enabled ? "block" : "none"
   })
-  
+
   socket.on("auction-ended", (message) => {
     console.log(message)
     submitButton.disabled = true
     auctionChat.style.display = "none"
   })
-  
-  socket.on("alert-auction-ended", ({ message }) => {
+
+  socket.on("alert-auction-ended", ({
+    message
+  }) => {
     Swal.fire({
       title: "Subasta finalizada",
       text: message,
@@ -395,39 +408,44 @@
       window.location.reload()
     })
   })
-  
+
   socket.on("error-message", (message) => {
     showError("Error", message)
     auctionChat.style.display = "none"
   })
-  
+
   formBid.addEventListener("submit", async (e) => {
     e.preventDefault()
     if (submitButton.disabled || auctionChat.style.display === "none") {
-      return // No hacer nada si el botón está deshabilitado o el chat no está visible
+      return
     }
-    const amount = Number.parseInt(inputBid.value, 10)
-  
+
+    const amount = parseFloat(inputBid.value.replace(',', '.'))
+
+
     if (isNaN(amount) || amount <= 0) {
       showError("Entrada inválida", "Por favor, ingresa un monto válido.")
       return
     }
-  
-    const recommendedAmount = highestAmount + 100
-    let finalAmount = amount
+
+    const recommendedAmount = Math.floor(highestAmount) + 100
+
+    /* let finalAmount = amount
     if (amount <= recommendedAmount) {
       finalAmount = recommendedAmount
-    }
-  
+    } */
+
+    let finalAmount = amount < recommendedAmount ? recommendedAmount : amount
+
     const minAmount = Math.max(highestAmount, basePrice)
     if (finalAmount <= minAmount) {
       showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount}.`)
       return
     }
-  
+
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás a punto de ofertar USD$${finalAmount}.`,
+      text: `Estás a punto de ofertar USD$${finalAmount.toFixed(2)}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -441,11 +459,11 @@
           usuarios_id: userId,
           remates_id: auctionId,
         })
-        inputBid.value = finalAmount
+        inputBid.value = finalAmount.toFixed(2)
       }
     })
   })
-  
+
   function showError(title, text) {
     Swal.fire({
       title,
@@ -456,38 +474,43 @@
     })
     submitButton.disabled = true
   }
-  
+
   function addMessageToDOM(usuario, monto) {
     const isCurrentUser = usuario === userName
     const messageClass = isCurrentUser ? "sent" : "received"
-    messages.insertAdjacentHTML("beforeend", `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto}</li>`)
+    messages.insertAdjacentHTML(
+      "beforeend",
+      `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${parseFloat(monto).toFixed(2)}</li>`
+    )
+
+    // Update highest amount and set next bid value
     if (monto > highestAmount) {
-      highestAmount = monto
-      inputBid.value = highestAmount + 100
+      highestAmount = parseFloat(monto)
+      inputBid.value = (Math.floor(highestAmount) + 100).toFixed(2)
       highlightHighestAmount()
     }
   }
-  
+
   function highlightHighestAmount() {
     inputBid.classList.add("highlight")
     setTimeout(() => inputBid.classList.remove("highlight"), 1000)
   }
-  
+
   function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight
   }
-  
+
   socket.on("connect_error", (error) => {
     console.error("Socket error:", error)
     showError("Error de conexión", "Ocurrió un problema con la conexión al servidor.")
   })
-  
+
   // Initialize base price
   async function initializeBasePrice() {
     try {
       const response = await fetch(`/db/remates/precios/${auctionId}`)
       const data = await response.json()
-  
+
       if (data.success) {
         basePrice = Number.parseInt(data.precios, 10)
         const priceDisplay = document.querySelector("#chat p:first-of-type")
@@ -500,14 +523,11 @@
       showError("Error", "Ocurrió un problema al obtener el precio base.")
     }
   }
-  
-  
-  
-  </script>
-  
+</script>
+
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.active-tab');
     const contentSections = document.querySelectorAll('.active-content-section');
     tabs.forEach(tab => {

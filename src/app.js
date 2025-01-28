@@ -118,7 +118,7 @@ io.on('connection', (socket) => {
 
       // Si el remate ya está en curso, calcular tiempo restante
       if (rows[0].estado === 'en_curso') {
-        const duracionTotal = 6 * 60 * 60; // 6 horas en segundos
+        const duracionTotal = 1 * 60 * 60; // 6 horas en segundos
 
         // Obtener el tiempo transcurrido desde el inicio del remate
         const tiempoTranscurrido = Math.floor((now - fechaRemate) / 1000);
@@ -154,14 +154,14 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, remainingTime = 6 * 60 * 60) {
+  async function startAuctionTimer(remates_id, remainingTime = 1 * 60 * 60) {
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
       console.log(`⏹️ Temporizador existente cancelado para la subasta ${remates_id}`);
     }
 
     try {
-      if (remainingTime === 6 * 60 * 60) {
+      if (remainingTime === 1 * 60 * 60) {
         await db.execute(
           'UPDATE remates SET estado = ? WHERE id = ?',
           ['en_curso', remates_id]

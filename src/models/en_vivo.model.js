@@ -4,32 +4,37 @@ class EnVivo {
     static async getAll(usuario_id) {
         const query = `
             SELECT 
+                l.id AS like_id,
+                l.usuarios_id,
+                l.remates_id,
                 r.*,
-                i.imagenes_inmueble as imagen,
-                a.papeles_inmuebles as anexo,
-                TRUE as liked
+                MIN(i.imagenes_inmueble) AS imagen
             FROM 
                 likes l
             INNER JOIN 
                 remates r ON l.remates_id = r.id
             LEFT JOIN 
                 img_inmuebles i ON r.id = i.remates_id
-            LEFT JOIN 
-                anexos a ON r.id = a.remates_id
             WHERE 
                 l.usuarios_id = ?
+            GROUP BY 
+                l.id, l.usuarios_id, l.remates_id, r.id
             ORDER BY 
-                r.fecha_remate ASC, r.hora_remate ASC
+                r.fecha_remate ASC, r.hora_remate ASC;
         `;
-        
+
         const [rows] = await db.execute(query, [usuario_id]);
-        
+
         // Convertimos la imagen a base64 si existe
         return rows.map(row => ({
             ...row,
             imagen: row.imagen ? row.imagen.toString('base64') : null
         }));
     }
+
+
+
+    
 
     static async getImagenesInmuebles() {
         const query = `
@@ -73,7 +78,7 @@ class EnVivo {
     static async getDetalles(remates_id) {
         const query = "SELECT * FROM remajud.detalles WHERE remates_id = ?";
         const [rows] = await db.execute(query, [remates_id]);
-    
+
         rows.forEach(row => {
             if (row.archivo) {
                 if (!row.archivo.startsWith('http://') && !row.archivo.startsWith('https://')) {
@@ -81,7 +86,7 @@ class EnVivo {
                 }
             }
         });
-    
+
         return rows;
     }
 

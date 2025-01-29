@@ -103,19 +103,47 @@
         <p class="fecha-subasta" id="countdown1">
           <span id="countdown-timer">00:00:00</span>
         </p>
+        <p class="texto_comple">Incremento mínimo: 100 USD</p>
         <ul id="messages"></ul>
     
         <!-- Formulario de oferta -->
         <form id="form-bid" class="message-form">
+          <!-- Input principal -->
           <div class="input-container">
-            <input type="text" id="input-bid" class="input-field" placeholder="Escribe un monto" autocomplete="off" value="<%= auction.precios %>" />
-            <button type="submit" class="send-btn" id="submit-btn" disabled>
+            <input 
+              type="text" 
+              id="input-bid" 
+              class="input-field" 
+              placeholder="Escribe un monto" 
+              autocomplete="off" 
+              value="<%= auction.precios.toLocaleString() %>" />
+            <button 
+              type="submit" 
+              class="send-btn" 
+              id="submit-btn">
               Enviar
             </button>
           </div>
+          <!-- Input recomendado -->
+          <div id="enviar2" class="input-container">
+            <input 
+              type="text" 
+              id="recommended-bid" 
+              class="input-field" 
+              readonly 
+              value="USD$<%= (auction.precios + 100).toLocaleString() %>" />
+            <button 
+              type="button"  
+              class="send-btn" 
+              id="recommended-submit-btn">
+              Enviar 
+            </button>
+          </div>
         </form>
+        <p class="texto_comple">Esperar la fecha y hora para poder ofertar</p>
       </section>
     </div>
+    
     
  
   </div>
@@ -324,33 +352,32 @@
   const timerDisplay = document.getElementById("countdown-timer");
   const formBid = document.getElementById("form-bid");
   const inputBid = document.getElementById("input-bid");
+  const recommendedInput = document.getElementById("recommended-bid");
+  const recommendedButton = document.getElementById("recommended-submit-btn");
   const messages = document.getElementById("messages");
   const submitButton = document.getElementById("submit-btn");
   const auctionChat = document.getElementById("auction-chat1");
 
   let highestAmount = 0;
-  let basePrice = 0;
   const auctionId = <%- auction.id %>;
   const userId = "<%- user?.id || '0' %>";
   const userName = "<%- user?.usuario || 'Anónimo' %>";
+  let auctionStartTime = null;
 
+  // Unirse a la subasta
   socket.emit("join-auction", auctionId);
 
+  // Cargar mensajes del historial
   socket.on("load-messages", (loadedMessages) => {
     messages.innerHTML = "";
     loadedMessages.forEach(({ monto, usuario }) => {
       addMessageToDOM(usuario, monto);
     });
+    updateRecommendedAmount(); // Actualizar monto recomendado al cargar
     scrollToBottom();
   });
 
-  socket.on("chat-message", ({ monto, usuario, remates_id }) => {
-    if (remates_id === auctionId) {
-      addMessageToDOM(usuario, monto);
-      scrollToBottom();
-    }
-  });
-
+  // Actualización del temporizador
   socket.on("timer-update", (remaining) => {
     const hours = Math.floor(remaining / 3600);
     const minutes = Math.floor((remaining % 3600) / 60);
@@ -363,61 +390,44 @@
     if (remaining > 0) {
       auctionChat.style.display = "block";
       submitButton.disabled = false;
+      recommendedButton.disabled = false;
     } else {
       auctionChat.style.display = "none";
       submitButton.disabled = true;
+      recommendedButton.disabled = true;
     }
-  });
 
-  socket.on("auction-started", () => {
-    submitButton.disabled = false;
-  });
-
-  socket.on("chat-enabled", (enabled) => {
-    submitButton.disabled = !enabled;
-    auctionChat.style.display = enabled ? "block" : "none";
-  });
-
-  socket.on("auction-ended", () => {
-    submitButton.disabled = true;
-    auctionChat.style.display = "none";
-  });
-
-  socket.on("alert-auction-ended", ({ message }) => {
-    Swal.fire({
-      title: "Subasta finalizada",
-      text: message,
-      icon: "success",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Aceptar",
-    }).then(() => {
-      window.location.reload();
-    });
-  });
-
-  socket.on("error-message", (message) => {
-    showError("Error", message);
-    auctionChat.style.display = "none";
-  });
-
-  // Formatear número mientras el usuario escribe
-  inputBid.addEventListener("input", (e) => {
-    const value = e.target.value.replace(/,/g, ""); // Eliminar comas
-    if (!isNaN(value) && value !== "") {
-      e.target.value = parseInt(value, 10).toLocaleString(); // Reaplicar formato
+    // Comparar con la hora de inicio del remate
+    const now = new Date();
+    if (auctionStartTime && now < auctionStartTime) {
+      timerDisplay.classList.add("countdown-red");
     } else {
-      e.target.value = ""; // Limpiar si el valor no es válido
+      timerDisplay.classList.remove("countdown-red");
     }
   });
 
-  // Enviar el monto con formato eliminado
+  // Escuchar nuevos mensajes del chat
+  socket.on("chat-message", ({ monto, usuario, remates_id }) => {
+    if (remates_id === auctionId) {
+      addMessageToDOM(usuario, monto);
+      updateRecommendedAmount(); // Actualizar monto recomendado
+      scrollToBottom();
+    }
+  });
+
+  // Formatear el número mientras el usuario escribe
+  inputBid.addEventListener("input", (e) => {
+    const value = e.target.value.replace(/,/g, "");
+    if (!isNaN(value) && value !== "") {
+      e.target.value = parseInt(value, 10).toLocaleString();
+    } else {
+      e.target.value = "";
+    }
+  });
+
+  // Enviar oferta
   formBid.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (submitButton.disabled || auctionChat.style.display === "none") {
-      return;
-    }
-
-    // Eliminar comas para procesar el valor correctamente
     const amount = Number.parseInt(inputBid.value.replace(/,/g, ""), 10);
 
     if (isNaN(amount) || amount <= 0) {
@@ -425,24 +435,18 @@
       return;
     }
 
-    const recommendedAmount = Math.ceil(highestAmount + 100);
-    let finalAmount = amount;
-    if (amount <= recommendedAmount) {
-      finalAmount = recommendedAmount;
-    }
-
-    const minAmount = Math.max(highestAmount, basePrice);
-    if (finalAmount <= minAmount) {
+    const minAmount = Math.max(highestAmount + 100, 0);
+    if (amount < minAmount) {
       showError(
         "Oferta inválida",
-        `La oferta debe ser mayor a USD$${minAmount.toLocaleString()}.`
+        `La oferta debe ser mayor o igual a USD$${minAmount.toLocaleString()}.`
       );
       return;
     }
 
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás a punto de ofertar USD$${finalAmount.toLocaleString()}.`,
+      text: `Estás a punto de ofertar USD$${amount.toLocaleString()}.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -452,26 +456,32 @@
     }).then((result) => {
       if (result.isConfirmed) {
         socket.emit("chat-message", {
-          monto: finalAmount,
+          monto: amount,
           usuarios_id: userId,
           remates_id: auctionId,
         });
-        inputBid.value = finalAmount.toLocaleString(); // Reaplicar formato al input
+        inputBid.value = ""; // Limpiar el campo de entrada
       }
     });
   });
 
-  function showError(title, text) {
-    Swal.fire({
-      title,
-      text,
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Entendido",
-    });
-    submitButton.disabled = true;
+  // Actualizar monto recomendado
+  function updateRecommendedAmount() {
+    const recommendedAmount = Math.ceil(highestAmount + 100);
+    recommendedInput.value = `USD$${recommendedAmount.toLocaleString()}`;
   }
 
+  // Manejar botón de recomendación
+  recommendedButton.addEventListener("click", () => {
+    const recommendedAmount = recommendedInput.value.replace("USD$", "").replace(/,/g, "");
+    inputBid.value = recommendedAmount;
+
+    // Simular el envío del formulario
+    const event = new Event('submit', { bubbles: true, cancelable: true });
+    formBid.dispatchEvent(event);
+  });
+
+  // Agregar mensajes al DOM
   function addMessageToDOM(usuario, monto) {
     const isCurrentUser = usuario === userName;
     const messageClass = isCurrentUser ? "sent" : "received";
@@ -484,20 +494,35 @@
     );
     if (monto > highestAmount) {
       highestAmount = monto;
-      inputBid.value = Math.ceil(highestAmount + 100).toLocaleString();
-      highlightHighestAmount();
+      updateRecommendedAmount(); // Actualizar el monto recomendado
     }
   }
 
-  function highlightHighestAmount() {
-    inputBid.classList.add("highlight");
-    setTimeout(() => inputBid.classList.remove("highlight"), 1000);
+  // Mostrar errores con SweetAlert
+  function showError(title, text) {
+    Swal.fire({
+      title,
+      text,
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    });
+    submitButton.disabled = true;
+    recommendedButton.disabled = true;
   }
 
+  // Scroll automático al final del chat
   function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight;
   }
+
+  // Configurar la hora de inicio del remate
+  socket.on("auction-start-time", (startTime) => {
+    auctionStartTime = new Date(startTime);
+  });
 </script>
+
+
 
   
   

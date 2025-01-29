@@ -432,4 +432,13 @@ form {
   animation: fadeIn 1s ease;
 }
 
+.texto_comple {
+  color: red;
+  text-align: center;
+}
+
+.countdown-red {
+  color: red;
+}
+
 /*# sourceMappingURL=remates.css.map */

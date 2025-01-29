@@ -29,8 +29,8 @@
 .banner_remates2 {
   position: relative;
   width: 100%;
-  height: 450px;
-  background: url("/img/banner_comprar.jpg") no-repeat center center/cover;
+  height: 400px;
+  background: url("/img/banner_remates.jpg") no-repeat center center/cover;
 }
 
 .overlay {
@@ -59,7 +59,7 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 7px;
 }
 
 .parent {
@@ -242,7 +242,7 @@ form {
   max-width: 600px;
   background: linear-gradient(135deg, #ffffff, #f9f9f9);
   border-radius: 20px;
-  padding: 20px;
+  padding: 9px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
@@ -255,9 +255,9 @@ form {
   position: absolute;
   top: -50%;
   left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 76, 76, 0.15), transparent 70%);
+  width: 161%;
+  height: 193%;
+  background: radial-gradient(circle, rgba(213, 104, 104, 0.68), transparent 70%);
   transform: rotate(45deg);
   z-index: 0;
   animation: rotateBg 15s linear infinite;
@@ -283,7 +283,7 @@ form {
   padding: 10px;
   margin: 0 0 20px;
   border: 1px solid #ddd;
-  height: 400px;
+  height: 350px;
   overflow-y: auto;
   background: linear-gradient(180deg, #ffffff, #f3f4f6);
   border-radius: 15px;
@@ -309,12 +309,12 @@ form {
   margin: 8px 10px;
   padding: 12px 15px;
   border-radius: 20px 20px 0 20px;
-  background: linear-gradient(135deg, #f90000, #690002);
+  background: linear-gradient(135deg, #ff6b6b, #e02e2e);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: inline-block;
   max-width: 70%;
   word-wrap: break-word;
-  margin-left: 50%;
+  margin-left: 30%;
   animation: bounceInRight 0.3s ease-in-out;
 }
 
@@ -357,7 +357,7 @@ form {
 /* Contenedor del input y botón */
 .input-container {
   display: flex;
-  padding: 15px;
+  padding: 6px;
   border-top: 1px solid #ddd;
   background: linear-gradient(180deg, #ffffff, #f7f7f7);
   border-radius: 0 0 20px 20px;
@@ -367,10 +367,10 @@ form {
 /* Campo de entrada */
 .input-field {
   flex: 1;
-  padding: 12px;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 0.5rem;
+  font-size: 15px;
   outline: none;
   background: #f9f9f9;
   transition: all 0.3s ease;
@@ -389,7 +389,7 @@ form {
   color: #fff;
   font-weight: bold;
   border: none;
-  border-radius: 25px;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
@@ -430,6 +430,216 @@ form {
   color: #555;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease;
+}
+
+.texto_comple {
+  color: red;
+  text-align: center;
+}
+
+.countdown-red {
+  color: red;
+}
+
+.input-container2 {
+  display: flex;
+  padding: 6px;
+  border-top: 1px solid #ddd;
+  background: linear-gradient(180deg, #c5bbbb, #e1d9d9);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-field2 {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 15px;
+  outline: none;
+  background: #ebdfdf;
+  transition: all 0.3s ease;
+}
+
+/* Estilos generales */
+.banner_remates2 {
+  background-image: url("/path/to/your/banner/image.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prueva1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  position: relative;
+}
+
+.foto_casa {
+  width: 100%;
+  height: auto;
+}
+
+.etiqueta_imagen {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.info_img {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 50px;
+}
+
+.info_img_tex {
+  position: absolute;
+  bottom: 10px;
+  left: 70px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.decripcion_remates {
+  font-size: 1.5em;
+  margin: 0 0 10px;
+}
+
+.address, .price, .details {
+  margin: 5px 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .banner_remates2 {
+    height: 200px;
+  }
+  .card {
+    width: 100%;
+  }
+  .decripcion_remates {
+    font-size: 1.2em;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .card {
+    width: 45%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .card {
+    width: 30%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .card {
+    width: 22%;
+  }
+}
+/* chat y details */
+@media only screen and (max-width: 600px) {
+  .main-content {
+    margin-top: 317%;
+    width: 161%;
+  }
+  .sidebar {
+    position: absolute;
+    width: 85%;
+    margin-top: 35%;
+  }
+  #banner_chat {
+    width: 100%;
+    margin-top: 11%;
+  }
+  #letras_charremates {
+    font-size: 0.5rem;
+  }
+  .container_detalles {
+    margin-top: 10%;
+  }
+  .chat {
+    width: 100%;
+  }
+  .input-field {
+    width: 50%;
+  }
+  .input-field2 {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .main-content {
+    margin-top: 317%;
+    width: 161%;
+  }
+  #chatdesubastas {
+    position: absolute;
+    width: 85%;
+    margin-top: 35%;
+  }
+  #banner_chat {
+    width: 100%;
+    margin-top: 11%;
+  }
+  #letras_charremates {
+    font-size: 0.5rem;
+  }
+  .container_detalles {
+    margin-top: 10%;
+  }
+  .chat {
+    width: 100%;
+  }
+  .input-field {
+    width: 50%;
+  }
+  .input-field2 {
+    width: 50%;
+  }
 }
 
 /*# sourceMappingURL=remates.css.map */

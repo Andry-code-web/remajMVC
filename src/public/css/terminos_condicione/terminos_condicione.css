@@ -43,4 +43,112 @@
   justify-content: center;
 }
 
+/* Estilos generales */
+.terminoscondiciones h2 {
+  color: red;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.terminoscondiciones h1 {
+  color: red;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.terminoscondiciones h3 {
+  color: red;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.terminoscondiciones p {
+  width: 80%;
+  margin-left: 4rem;
+  font-size: 0.9rem;
+  letter-spacing: -0.05rem;
+  text-align: justify;
+  margin-top: 0.8rem;
+}
+
+.terminoscondiciones {
+  width: 50%;
+  background: #f8f8f8;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  box-shadow: 2px 3px 10px #ccc;
+}
+
+.politicasterminos {
+  width: 100%;
+  margin-top: 5.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .terminoscondiciones {
+    width: 85%;
+    padding: 1rem;
+  }
+  .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
+    font-size: 1.2rem;
+    margin-left: 0;
+  }
+  .terminoscondiciones p {
+    width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .terminoscondiciones {
+    width: 78%;
+    padding: 1.5rem;
+  }
+  .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
+    font-size: 1.4rem;
+  }
+  .terminoscondiciones p {
+    width: 90%;
+    margin-left: 2rem;
+    font-size: 1.1rem;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .terminoscondiciones {
+    width: 80%;
+    padding: 2rem;
+  }
+  .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
+    font-size: 1.6rem;
+  }
+  .terminoscondiciones p {
+    width: 85%;
+    margin-left: 3rem;
+    font-size: 1.2rem;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .terminoscondiciones {
+    width: 85%;
+    padding: 2.5rem;
+  }
+  .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
+    font-size: 1.8rem;
+  }
+  .terminoscondiciones p {
+    width: 80%;
+    margin-left: 4rem;
+    font-size: 1.3rem;
+  }
+}
+
 /*# sourceMappingURL=terminos_condicione.css.map */

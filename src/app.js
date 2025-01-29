@@ -7,7 +7,6 @@ const socketIO = require('socket.io');
 const morgan = require('morgan');
 const flash = require('connect-flash');
 const { setUserLocals } = require('./middleware/auth.middleware');
-const MySQLStore = require('express-mysql-session')(session);
 const db = require('./config/database'); // Usando la conexión pool
 require('dotenv').config();
 
@@ -16,16 +15,6 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   connectionStateRecovery: {},
 });
-
-
-const options ={
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'remajud',
-}
-
-const sessionStore = new MySQLStore(options);
 
 // Middleware
 app.use(cookieParser());
@@ -36,11 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'secret',
-    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 3600000,
     },
   })
@@ -72,7 +60,8 @@ app.use('/en_vivo', require('./routes/en_vivo.routes'));
 app.use('/terminos', require('./routes/terminoscondiciones.routes'))
 app.use('/comprar', require('./routes/comprar.routes'));
 app.use('/vender', require('./routes/vender.routes'));
-app.get('/unauthorized', (req, res) => {  
+
+app.get('/unauthorized', (req, res) => {
   res.render('unauthorized/unauthorized');
 });
 
@@ -81,7 +70,9 @@ app.get('/unauthorized', (req, res) => {
 let highestAmount = 0;
 const timers = {};
 const auctionTimers = {};
+
 // Mantener un registro global de temporizadores
+
 
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
@@ -115,6 +106,9 @@ io.on('connection', (socket) => {
 
       console.log('Fecha y hora del remate:', fechaRemate);
       console.log('Fecha y hora actual del cliente:', now);
+
+      // Enviar la hora de inicio del remate al cliente
+      socket.emit('auction-start-time', fechaRemate);
 
       // Si el remate ya está en curso, calcular tiempo restante
       if (rows[0].estado === 'en_curso') {
@@ -154,6 +148,27 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {
+    try {
+      await db.execute(
+        'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
+        [monto, usuarios_id, remates_id]
+      );
+
+      const [user] = await db.execute(
+        'SELECT usuario FROM usuarios WHERE id = ?',
+        [usuarios_id]
+      );
+
+      const usuario = user[0].usuario;
+
+      io.to(remates_id).emit('chat-message', { monto, usuario, remates_id });
+    } catch (error) {
+      console.error('❌ Error al guardar el mensaje:', error.message || error);
+      socket.emit('error-message', 'Error al guardar el mensaje');
+    }
+  });
+
   async function startAuctionTimer(remates_id, remainingTime = 6 * 60 * 60) {
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
@@ -162,108 +177,36 @@ io.on('connection', (socket) => {
 
     try {
       if (remainingTime === 6 * 60 * 60) {
-        await db.execute(
-          'UPDATE remates SET estado = ? WHERE id = ?',
-          ['en_curso', remates_id]
-        );
+        await db.execute('UPDATE remates SET estado = "en_curso" WHERE id = ?', [remates_id]);
+        console.log(`La subasta ${remates_id} ha comenzado`);
       }
+
+      auctionTimers[remates_id] = { remainingTime };
+      auctionTimers[remates_id].intervalId = setInterval(() => {
+        auctionTimers[remates_id].remainingTime -= 1;
+        io.to(remates_id).emit('timer-update', auctionTimers[remates_id].remainingTime);
+
+        // Si el tiempo se acaba, finalizar subasta
+        if (auctionTimers[remates_id].remainingTime <= 0) {
+          finalizeAuction(remates_id);
+        }
+      }, 1000);
     } catch (error) {
-      console.error(`❌ Error al actualizar el estado de la subasta ${remates_id}:`, error.message || error);
-      return;
+      console.error(`❌ Error al iniciar el temporizador para la subasta ${remates_id}: ${error.message || error}`);
     }
-
-    const intervalId = setInterval(async () => {
-      if (remainingTime > 0) {
-        io.to(remates_id).emit('timer-update', remainingTime);
-        remainingTime--;
-      } else {
-        await finalizeAuction(remates_id);
-      }
-    }, 1000);
-
-    io.to(remates_id).emit('auction-started', 'La subasta ha comenzado');
-    io.to(remates_id).emit('chat-enabled', true);
-    io.to(remates_id).emit('timer-update', remainingTime);
-
-    auctionTimers[remates_id] = { intervalId, remainingTime };
-    console.log(`⏳ Temporizador iniciado para la subasta ${remates_id}, tiempo restante: ${remainingTime} segundos`);
   }
 
   async function finalizeAuction(remates_id) {
-    clearInterval(auctionTimers[remates_id]?.intervalId);
-    const { highestAmount = 0, highestBidder: winner = null } = auctionTimers[remates_id] || {};
-
-    if (winner) {
-      try {
-        await db.execute(
-          'UPDATE remates SET estado = ?, ganador = ?, monto_venta = ? WHERE id = ?',
-          ['finalizado', winner, highestAmount, remates_id]
-        );
-        console.log(`✅ Remate ${remates_id} finalizado. Ganador: ${winner}, Monto de venta: ${highestAmount}`);
-      } catch (error) {
-        console.error(`❌ Error al actualizar el remate ${remates_id}:`, error.message || error);
-      }
-    }
-
-    io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` });
-    console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
-
-    delete auctionTimers[remates_id];
-  }
-
-  socket.on('chat-message', async ({ monto, usuarios_id, remates_id }) => {
-    if (!remates_id || !usuarios_id || monto === undefined) {
-      socket.emit('error-message', 'Datos incompletos para el mensaje');
-      return;
-    }
-
-    const [row] = await db.execute('SELECT estado, precios, hora_remate FROM remates WHERE id = ?', [remates_id]);
-
-    if (row.length === 0 || row[0].estado !== 'en_curso') {
-      socket.emit('error-message', 'El chat no está habilitado en este momento');
-      return;
-    }
-
-    const basePrice = parseFloat(row[0].precios);
-    const chatStartTime = new Date();
-    const [hour, minute, second] = row[0].hora_remate.split(':');
-    chatStartTime.setHours(hour, minute, second);
-    const currentTime = new Date();
-
-    if (currentTime < chatStartTime) {
-      socket.emit('error-message', 'El chat aún no está habilitado');
-      return;
-    }
-
-    if (monto <= basePrice) {
-      socket.emit('error-message', `La oferta debe ser mayor a USD$${basePrice}`);
-      return;
-    }
-
     try {
-      await db.execute(
-        'INSERT INTO mensajes (monto, usuarios_id, remates_id) VALUES (?, ?, ?)',
-        [monto, usuarios_id, remates_id]
-      );
-
-      const [userRows] = await db.execute('SELECT usuario FROM usuarios WHERE id = ?', [usuarios_id]);
-      const usuario = userRows.length > 0 ? userRows[0].usuario : 'Anónimo';
-
-      io.to(remates_id).emit('chat-message', { monto, usuario, remates_id });
-
-      if (auctionTimers[remates_id]) {
-        auctionTimers[remates_id].highestAmount = Math.max(monto, auctionTimers[remates_id].highestAmount || 0);
-        if (auctionTimers[remates_id].highestAmount === monto) {
-          auctionTimers[remates_id].highestBidder = usuario;
-        }
-      }
+      await db.execute('UPDATE remates SET estado = "finalizado" WHERE id = ?', [remates_id]);
+      console.log(`⏹️ Subasta ${remates_id} finalizada`);
+      io.to(remates_id).emit('auction-finished');
     } catch (error) {
-      console.error('❌ Error al guardar el mensaje:', error.message || error);
-      socket.emit('error-message', 'Error al enviar el mensaje');
+      console.error('❌ Error al finalizar subasta:', error.message || error);
     }
-  });
+  }
 });
+
 
 
 

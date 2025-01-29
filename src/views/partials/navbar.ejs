@@ -1,5 +1,100 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <header class="header" id="header">
+
+  <!-- header responsive mobile -->
+  <div class="content_mobile">
+
+    <div class="menu_mobile">
+      <button class="btn_menu_mobile" id="btn_menu_mobile">
+        <i class="ri-menu-4-line"></i>
+    </div>
+
+    <div class="content_nav_mobile">
+
+      <div class="logo-container_mobile">
+        <a href="/" class="logo">
+          <img src="/img/logo_header.jpeg" alt="">
+        </a>
+      </div>
+
+      <div class="content_links_mobile">
+        <ul>
+          <li>
+            <a href="/">INICIO</a>
+          </li>
+          <li>
+            <a href="/remates/index">REMATES</a>
+          </li>
+          <li>
+            <a href="/vender">VENDER</a>
+          </li>
+          <li>
+            <a href="/comprar">COMPRAR</a>
+          </li>
+          <li>
+            <a href="/contacto">CONTACTO</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contenedor_user_login_mobile">
+      <% if (user) { %>
+      <div class="session">
+        <button class="user_button" id="btn_menu">
+          <i class="bi bi-person-circle"></i>
+          <span class="username"><%= user.usuario %></span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <div class="menu_desplegable" id="menu_desplegable">
+          <div class="menu_header">
+            <h3>Remajud</h3>
+            <button class="close_button" id="btn_close">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="menu_content">
+            <ul class="menu_list">
+              <li>
+                <a href="/en_vivo/<%= user.usuario %> ">
+                  <i class="bi bi-heart"></i>
+                  <span>Mis remates</span>
+                </a>
+              </li>
+              <li>
+                <a href="/auth/edit-profile">
+                  <i class="bi bi-pencil"></i>
+                  <span>Editar usuario</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="user_profile">
+            <div class="profile_info">
+              <i class="bi bi-person-circle"></i>
+              <div class="user_details">
+                <span class="user_type">Cliente</span>
+                <span class="user_name"><%= user.usuario %></span>
+              </div>
+            </div>
+            <a href="/auth/logout" class="logout_button">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Cerrar Sesión</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+      <a href="/auth/login" class="login_button">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span>INICIAR SESIÓN</span>
+      </a>
+      <% } %>
+    </div>
+  </div>
+
+
   <div class="logo-container">
     <a href="#" class="logo">
       <img src="/img/logo_header.jpeg" alt="">
@@ -34,7 +129,7 @@
         <div class="menu_content">
           <ul class="menu_list">
             <li>
-              <a  href="/en_vivo/<%= user.usuario %> ">
+              <a href="/en_vivo/<%= user.usuario %> ">
                 <i class="bi bi-heart"></i>
                 <span>Mis remates</span>
               </a>
@@ -70,6 +165,7 @@
     <% } %>
   </div>
 
+
 </header>
 
 <!-- ventana desplegable -->
@@ -101,5 +197,18 @@
     menuDesplegable.addEventListener("click", (e) => {
       e.stopPropagation();
     });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnMenuMobile = document.getElementById("btn_menu_mobile");
+    const contentNavMobile = document.querySelector(".content_nav_mobile");
+
+    // Mostrar/Ocultar menú
+    btnMenuMobile.addEventListener("click", () => {
+      contentNavMobile.classList.toggle("active");
+    });
+  
   });
 </script>

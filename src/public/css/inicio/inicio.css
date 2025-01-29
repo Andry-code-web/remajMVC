@@ -1296,4 +1296,343 @@ body {
   /* Ajusta el tamaño del ícono aquí */
 }
 
+/* nueva config responsive (aun no esta al 100%) */
+@media only screen and (max-width: 600px) {
+  .banner {
+    height: 200px;
+  }
+  .carousel-item img {
+    height: 200px;
+  }
+  .slider_contenedor {
+    height: 150px;
+  }
+  .slide_img {
+    width: 150px;
+    height: 100px;
+  }
+  .slide_img a {
+    font-size: 1rem;
+  }
+  .contenidoPrincipalPagina {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .barraLateralFiltros {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  .listaSubastasDisponibles {
+    width: 100%;
+  }
+  .elementoSubastaIndividual {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .imagenPropiedadSubasta {
+    width: 100%;
+    height: 200px;
+  }
+  .contenidoInformativoSubasta {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .detallesEspecificosSubasta {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .informacionGeneralSubasta h2 {
+    font-size: 1.2rem;
+  }
+  .estadoActualSubasta {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .contenedorBotonesAccion {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .precio_remate p:first-child {
+    font-size: 0.9rem;
+  }
+  .precio_remate p:nth-child(2) {
+    font-size: 1.5rem;
+  }
+  .botonAccionSubasta {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .descripcion_remate {
+    width: 100%;
+  }
+  .contenedor-campo-formulario-ubicacion,
+  .contenedor-campo-formulario-categoria {
+    width: 100%;
+  }
+  .selector-desplegable-ubicacion,
+  .selector-desplegable-categoria {
+    width: 100%;
+  }
+  .btn_filtrar {
+    width: 100%;
+  }
+  .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+    bottom: 10px;
+    right: 10px;
+  }
+  .tarjeta-informativa-remate-contenedor {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .banner {
+    height: 300px;
+  }
+  .carousel-item img {
+    height: 300px;
+  }
+  .slider_contenedor {
+    height: 120px;
+  }
+  .slide_img {
+    width: 200px;
+    height: 120px;
+  }
+  .slide_img a {
+    font-size: 1.2rem;
+  }
+  .contenidoPrincipalPagina {
+    padding: 1.5rem;
+  }
+  .barraLateralFiltros {
+    width: 25%;
+    height: auto;
+  }
+  .listaSubastasDisponibles {
+    width: 75%;
+  }
+  .elementoSubastaIndividual {
+    flex-direction: row;
+  }
+  .imagenPropiedadSubasta {
+    width: 30%;
+    height: 250px;
+  }
+  .contenidoInformativoSubasta {
+    width: 70%;
+  }
+  .detallesEspecificosSubasta {
+    flex-direction: row;
+  }
+  .informacionGeneralSubasta h2 {
+    font-size: 1.4rem;
+  }
+  .estadoActualSubasta {
+    width: auto;
+  }
+  .contenedorBotonesAccion {
+    flex-direction: row;
+    width: 100%;
+  }
+  .precio_remate p:first-child {
+    font-size: 1rem;
+  }
+  .precio_remate p:nth-child(2) {
+    font-size: 1.8rem;
+  }
+  .botonAccionSubasta {
+    width: auto;
+    margin-right: 0.5rem;
+  }
+  .descripcion_remate {
+    width: 100%;
+  }
+  .contenedor-campo-formulario-ubicacion,
+  .contenedor-campo-formulario-categoria {
+    width: 100%;
+  }
+  .selector-desplegable-ubicacion,
+  .selector-desplegable-categoria {
+    width: 100%;
+  }
+  .btn_filtrar {
+    width: 100%;
+  }
+  .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+    bottom: 20px;
+    right: 20px;
+  }
+  .tarjeta-informativa-remate-contenedor {
+    width: 80%;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .banner {
+    height: 350px;
+  }
+  .carousel-item img {
+    height: 350px;
+  }
+  .slider_contenedor {
+    height: 130px;
+  }
+  .slide_img {
+    width: 220px;
+    height: 130px;
+  }
+  .slide_img a {
+    font-size: 1.3rem;
+  }
+  .contenidoPrincipalPagina {
+    padding: 2rem;
+  }
+  .barraLateralFiltros {
+    width: 20%;
+    height: auto;
+  }
+  .listaSubastasDisponibles {
+    width: 80%;
+  }
+  .elementoSubastaIndividual {
+    flex-direction: row;
+  }
+  .imagenPropiedadSubasta {
+    width: 25%;
+    height: 270px;
+  }
+  .contenidoInformativoSubasta {
+    width: 75%;
+  }
+  .detallesEspecificosSubasta {
+    flex-direction: row;
+  }
+  .informacionGeneralSubasta h2 {
+    font-size: 1.5rem;
+  }
+  .estadoActualSubasta {
+    width: auto;
+  }
+  .contenedorBotonesAccion {
+    flex-direction: row;
+    width: 100%;
+  }
+  .precio_remate p:first-child {
+    font-size: 1.1rem;
+  }
+  .precio_remate p:nth-child(2) {
+    font-size: 2rem;
+  }
+  .botonAccionSubasta {
+    width: auto;
+    margin-right: 0.5rem;
+  }
+  .descripcion_remate {
+    width: 100%;
+  }
+  .contenedor-campo-formulario-ubicacion,
+  .contenedor-campo-formulario-categoria {
+    width: 100%;
+  }
+  .selector-desplegable-ubicacion,
+  .selector-desplegable-categoria {
+    width: 100%;
+  }
+  .btn_filtrar {
+    width: 100%;
+  }
+  .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+    bottom: 30px;
+    right: 30px;
+  }
+  .tarjeta-informativa-remate-contenedor {
+    width: 70%;
+  }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .banner {
+    height: 400px;
+  }
+  .carousel-item img {
+    height: 400px;
+  }
+  .slider_contenedor {
+    height: 140px;
+  }
+  .slide_img {
+    width: 240px;
+    height: 140px;
+  }
+  .slide_img a {
+    font-size: 1.4rem;
+  }
+  .contenidoPrincipalPagina {
+    padding: 2.5rem;
+  }
+  .barraLateralFiltros {
+    width: 18%;
+    height: auto;
+  }
+  .listaSubastasDisponibles {
+    width: 82%;
+  }
+  .elementoSubastaIndividual {
+    flex-direction: row;
+  }
+  .imagenPropiedadSubasta {
+    width: 22%;
+    height: 300px;
+  }
+  .contenidoInformativoSubasta {
+    width: 78%;
+  }
+  .detallesEspecificosSubasta {
+    flex-direction: row;
+  }
+  .informacionGeneralSubasta h2 {
+    font-size: 1.6rem;
+  }
+  .estadoActualSubasta {
+    width: auto;
+  }
+  .contenedorBotonesAccion {
+    flex-direction: row;
+    width: 100%;
+  }
+  .precio_remate p:first-child {
+    font-size: 1.2rem;
+  }
+  .precio_remate p:nth-child(2) {
+    font-size: 2.2rem;
+  }
+  .botonAccionSubasta {
+    width: auto;
+    margin-right: 0.5rem;
+  }
+  .descripcion_remate {
+    width: 100%;
+  }
+  .contenedor-campo-formulario-ubicacion,
+  .contenedor-campo-formulario-categoria {
+    width: 100%;
+  }
+  .selector-desplegable-ubicacion,
+  .selector-desplegable-categoria {
+    width: 100%;
+  }
+  .btn_filtrar {
+    width: 100%;
+  }
+  .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta {
+    bottom: 40px;
+    right: 40px;
+  }
+  .tarjeta-informativa-remate-contenedor {
+    width: 60%;
+  }
+}
+
 /*# sourceMappingURL=inicio.css.map */

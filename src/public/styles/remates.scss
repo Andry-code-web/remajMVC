@@ -48,7 +48,7 @@
 form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 7px;
 }
 
 .parent {
@@ -235,7 +235,7 @@ form {
     max-width: 600px;
     background: linear-gradient(135deg, #ffffff, #f9f9f9);
     border-radius: 20px;
-    padding: 20px;
+    padding: 9px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
@@ -244,13 +244,13 @@ form {
 
 /* Efecto de fondo dinámico */
 #chat::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 76, 76, 0.15), transparent 70%);
+    width: 161%;
+    height: 193%;
+    background: radial-gradient(circle, rgb(213 104 104 / 68%), transparent 70%);
     transform: rotate(45deg);
     z-index: 0;
     animation: rotateBg 15s linear infinite;
@@ -277,7 +277,7 @@ form {
     padding: 10px;
     margin: 0 0 20px;
     border: 1px solid #ddd;
-    height: 400px;
+    height: 350px;
     overflow-y: auto;
     background: linear-gradient(180deg, #ffffff, #f3f4f6);
     border-radius: 15px;
@@ -354,7 +354,7 @@ form {
 /* Contenedor del input y botón */
 .input-container {
     display: flex;
-    padding: 15px;
+    padding: 6px;
     border-top: 1px solid #ddd;
     background: linear-gradient(180deg, #ffffff, #f7f7f7);
     border-radius: 0 0 20px 20px;
@@ -364,10 +364,10 @@ form {
 /* Campo de entrada */
 .input-field {
     flex: 1;
-    padding: 12px;
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 25px;
-    font-size: 16px;
+    border-radius: 0.5rem;
+    font-size: 15px;
     outline: none;
     background: #f9f9f9;
     transition: all 0.3s ease;
@@ -386,7 +386,7 @@ form {
     color: #fff;
     font-weight: bold;
     border: none;
-    border-radius: 25px;
+    border-radius: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
@@ -439,3 +439,25 @@ form {
 .countdown-red {
     color: red;
   }
+
+
+.input-container2{
+ 
+    display: flex;
+    padding: 6px;
+    border-top: 1px solid #ddd;
+    background: linear-gradient(180deg, #c5bbbb, #e1d9d9);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-field2 {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 15px;
+    outline: none;
+    background: #ebdfdf;
+    transition: all 0.3s ease;
+}

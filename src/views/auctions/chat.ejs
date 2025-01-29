@@ -115,7 +115,6 @@
               id="input-bid" 
               class="input-field" 
               placeholder="Escribe un monto" 
-              autocomplete="off" 
               value="<%= auction.precios.toLocaleString() %>" />
             <button 
               type="submit" 
@@ -125,11 +124,11 @@
             </button>
           </div>
           <!-- Input recomendado -->
-          <div id="enviar2" class="input-container">
+          <div id="enviar2" class="input-container2">
             <input 
               type="text" 
               id="recommended-bid" 
-              class="input-field" 
+              class="input-field2" 
               readonly 
               value="USD$<%= (auction.precios + 100).toLocaleString() %>" />
             <button 

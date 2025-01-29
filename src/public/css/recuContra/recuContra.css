@@ -162,7 +162,7 @@
   margin-top: 1.5rem;
 }
 
-.verify-button {
+.verify-button, .verify-button-contra {
   background: #8b0000;
   color: white;
   border: none;
@@ -175,6 +175,8 @@
   justify-content: center;
   gap: 0.5rem;
   transition: background 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
 }
 
 .help-section {
@@ -197,6 +199,12 @@
 .support-button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
+  background: #8b0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .back-button {
@@ -210,37 +218,59 @@
   border-radius: 8px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  margin: 10px;
+  margin: 10px 0;
 }
 
-.verify-button-contra {
-  background: #8b0000;
-  color: white;
-  border: none;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: background 0.3s ease;
-  margin: 10px;
-}
-
-@media (max-width: 768px) {
-  .contenedor-general {
-    padding: 1rem;
-    min-height: 100vh;
-  }
+/* phones, 600px */
+@media only screen and (max-width: 600px) {
   .contenedor-formulario {
     flex-direction: column;
+    margin-top: 6rem;
   }
-  .left-panel,
-  .right-panel {
+  .left-panel, .right-panel {
     width: 100%;
+  }
+  .left-panel {
     padding: 1.5rem;
+  }
+  .header-content h2 {
+    font-size: 1.5rem;
+  }
+  .info-box, .steps-container {
+    margin-bottom: 1rem;
+  }
+  .main-title {
+    font-size: 1.5rem;
+  }
+  .form-group input, .verify-button, .verify-button-contra {
+    font-size: 0.85rem;
+  }
+}
+/* tablets, 768px  */
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .contenedor-formulario {
+    max-width: 90%;
+  }
+  .left-panel, .right-panel {
+    padding: 1.5rem;
+  }
+  .header-content h2 {
+    font-size: 1.6rem;
+  }
+  .main-title {
+    font-size: 1.6rem;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .contenedor-formulario {
+    max-width: 95%;
+  }
+}
+/*laptops , escritorios 1200px) */
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .contenedor-formulario {
+    max-width: 1100px;
   }
 }
 

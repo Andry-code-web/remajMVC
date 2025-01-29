@@ -38,7 +38,6 @@
   margin-top: 4rem;
 }
 
-/* Panel izquierdo */
 .left-panel {
   width: 35%;
   background: linear-gradient(135deg, #8b0000 0%, #C41E3A 100%);
@@ -51,7 +50,6 @@
   text-align: center;
   margin-bottom: 2rem;
 }
-
 .header-content h2 {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
@@ -78,7 +76,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .avatar-circle i {
   font-size: 3rem;
 }
@@ -103,11 +100,9 @@
   padding: 0.5rem;
   border-radius: 5px;
 }
-
 .info-item:last-child {
   margin-bottom: 0;
 }
-
 .info-item i {
   font-size: 1.2rem;
 }
@@ -129,13 +124,11 @@
   background: rgba(255, 255, 255, 0.1);
   transition: background 0.3s ease;
 }
-
 .action-link:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
-/* Panel derecho */
 .right-panel {
   width: 65%;
   padding: 2rem;
@@ -171,11 +164,9 @@
 .form-group {
   margin-bottom: 1.25rem;
 }
-
 .form-group:last-child {
   margin-bottom: 0;
 }
-
 .form-group label {
   display: flex;
   align-items: center;
@@ -185,7 +176,6 @@
   font-weight: 500;
   font-size: 0.9rem;
 }
-
 .form-group input {
   width: 100%;
   padding: 0.75rem;
@@ -194,7 +184,6 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
 }
-
 .form-group input:focus {
   border-color: #8b0000;
   box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
@@ -206,7 +195,7 @@
   gap: 1rem;
 }
 
-.save-button, .cancel-button {
+.cancel-button, .save-button {
   flex: 1;
   display: flex;
   align-items: center;
@@ -225,7 +214,6 @@
   color: white;
   border: none;
 }
-
 .save-button:hover {
   background: #660000;
 }
@@ -235,26 +223,41 @@
   color: white;
   border: none;
 }
-
 .cancel-button:hover {
   background: #5a6268;
 }
 
-@media (max-width: 768px) {
-  .contenedor-general {
-    padding: 1rem;
-    min-height: 100vh;
-  }
+@media only screen and (max-width: 600px) {
   .contenedor_formulario {
     flex-direction: column;
+    margin-top: 5rem;
   }
-  .left-panel,
-  .right-panel {
+  .left-panel, .right-panel {
     width: 100%;
+  }
+  .left-panel {
     padding: 1.5rem;
   }
   .button-group {
     flex-direction: column;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .contenedor_formulario {
+    max-width: 90%;
+  }
+  .left-panel, .right-panel {
+    padding: 1.5rem;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .contenedor_formulario {
+    max-width: 95%;
+  }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  .contenedor_formulario {
+    max-width: 1100px;
   }
 }
 

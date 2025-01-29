@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @font-face {
   font-family: "fuentePrincipal";
   src: url("/fonts/Expressa-DemiBold.otf") format("opentype");
@@ -18,7 +17,6 @@
   box-sizing: border-box;
 }
 
-/* Estilos del Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -33,7 +31,6 @@
   background: #5a0102;
 }
 
-/* Contenedor Principal */
 .property-container {
   width: 100%;
   padding: 1rem 2rem;
@@ -44,7 +41,6 @@
   overflow-x: hidden;
 }
 
-/* Grid de Subastas */
 .auction-grid {
   width: 100%;
   max-width: 1600px;
@@ -56,7 +52,6 @@
   padding: 1rem 0;
 }
 
-/* Contenedor Grid Padre */
 .parent {
   background: white;
   border-radius: 12px;
@@ -90,7 +85,6 @@
   box-shadow: 0 4px 8px rgba(120, 1, 3, 0.1);
 }
 
-/* Áreas del Grid */
 .div1 {
   grid-area: 1/1/2/2;
 }
@@ -115,7 +109,6 @@
   grid-area: 2/4/3/5;
 }
 
-/* Sección de Imagen */
 .auction-image {
   position: relative;
   width: 100%;
@@ -160,7 +153,6 @@
   z-index: 2;
 }
 
-/* Sección de Contenido */
 .content_info_megusta {
   padding: 0 1.5rem;
 }
@@ -249,7 +241,6 @@
   font-weight: 700;
 }
 
-/* Sección de Estado */
 .contenedor-estado {
   width: 110px;
   height: 37px;
@@ -281,7 +272,6 @@
   font-size: 18px;
 }
 
-/* Botones de Acción */
 .action-btn {
   display: flex;
   align-items: center;
@@ -380,7 +370,6 @@
   animation: lightEffect 2s infinite;
 }
 
-/* Estilos del Modal */
 .modal {
   display: none;
   position: fixed;
@@ -500,7 +489,6 @@
   cursor: not-allowed;
 }
 
-/* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -519,7 +507,6 @@
     opacity: 1;
   }
 }
-/* mensaje de no resultados */
 .no-results {
   grid-column: 1/-1;
   text-align: center;
@@ -530,62 +517,97 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Diseño Responsivo */
-@media (max-width: 1800px) {
-  .auction-grid {
-    max-width: 1600px;
-  }
-}
-@media (max-width: 1400px) {
-  .auction-grid {
-    max-width: 1200px;
-  }
-}
-@media (max-width: 1200px) {
+@media only screen and (max-width: 600px) {
   .auction-grid {
     grid-template-columns: 1fr;
-    max-width: 900px;
-  }
-}
-@media (max-width: 768px) {
-  .property-container {
-    padding: 0 1rem;
   }
   .parent {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    min-height: auto;
+    grid-template-rows: auto auto auto auto;
   }
-  .parent .div1 {
-    grid-area: 1/1/2/2;
-    height: 280px;
-  }
-  .parent .div2 {
-    grid-area: 2/1/3/2;
-  }
-  .parent .div3, .parent .div4, .parent .div5, .parent .div6 {
+  .div1, .div2, .div3, .div4, .div5, .div6 {
     grid-area: auto;
   }
-  .action-btn {
+  .contenedor-estado {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .action-btn, .btn-chat {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  .action-btn.seguimiento {
     width: 100%;
   }
-  .modal-content {
-    margin: 2% auto;
-    padding: 1rem;
-    width: 95%;
+}
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
   }
-  .modal-page h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  .parent {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
   }
-  .modal-page .section-header h3 {
-    font-size: 1.2rem;
+  .div1 {
+    grid-area: 1/1/2/3;
   }
-  .nav-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+  .div2 {
+    grid-area: 2/1/3/3;
+  }
+  .div3 {
+    grid-area: 3/1/4/3;
+  }
+  .div4 {
+    grid-area: 4/1/5/2;
+  }
+  .div5 {
+    grid-area: 4/2/5/3;
+  }
+  .div6 {
+    grid-area: 5/1/6/3;
+  }
+  .action-btn, .btn-chat {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .auction-grid {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .parent {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  .div1 {
+    grid-area: 1/1/2/2;
+  }
+  .div2 {
+    grid-area: 2/1/3/2;
+  }
+  .div3 {
+    grid-area: 3/1/4/2;
+  }
+  .div4, .div5, .div6 {
+    grid-area: auto;
+  }
+  .action-btn, .btn-chat {
+    width: calc(33.33% - 1rem);
+    margin: 0.5rem;
+  }
+  .contenedor-estado {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+@keyframes lightEffect {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
   }
 }
 

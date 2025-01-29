@@ -306,7 +306,11 @@
     .seccion_hero_comercial {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        /* flex-wrap: nowrap; */
+        /* gap: 200px; */
+        align-content: stretch;
+        /* justify-content: flex-end; */
+        height: 670px;
     }
 
     .contenido_hero_izquierda {
@@ -314,9 +318,9 @@
         padding-right: 20px;
     }
 
-    .imagen_hero_derecha {
+/*     .imagen_hero_derecha {
         width: 45%;
-    }
+    } */
 
     .seccion_seleccion_productos {
         display: flex;
@@ -333,6 +337,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-content: space-around;
     }
 
     .tarjeta_modalidad_individual {
@@ -350,6 +355,7 @@
 
     .titulo_modalidades_principal {
         font-size: 24px;
+        padding: 45px;
     }
 
     .lista_caracteristicas_productos {
@@ -380,10 +386,6 @@
     .contenedor_pagina_principal {
         max-width: 960px;
         margin: 0 auto;
-    }
-
-    .tarjeta_modalidad_individual {
-        width: calc(33.333% - 13.333px);
     }
 
     .contenedor_tarjetas_beneficios {

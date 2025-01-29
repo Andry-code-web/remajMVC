@@ -208,3 +208,303 @@
     max-width: 300px;
     margin: 0 auto;
 }
+
+/* nuevos estilos para responsividad */
+
+
+@media only screen and (max-width: 600px) {
+    .contenedor_principal_pagina_comercial {
+        padding: 10px;
+    }
+
+    .seccion_principal_destacada_comercial {
+        padding: 40px 20px;
+        min-height: 300px;
+    }
+
+    .titulo_principal_destacado_comercial {
+        font-size: 2em;
+    }
+
+    .subtitulo_destacado_comercial_naranja {
+        font-size: 1.5em;
+    }
+
+    .descripcion_principal_comercial {
+        font-size: 1em;
+    }
+
+    .contenedor_numeros_estadisticas_flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item_estadistica_empresarial {
+        margin-bottom: 20px;
+    }
+
+    .numero_estadistica_destacado {
+        font-size: 2em;
+    }
+
+    .distribucion_beneficios_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elemento_beneficio_individual {
+        margin-bottom: 20px;
+    }
+
+    .circulo_icono_beneficio {
+        width: 60px;
+        height: 60px;
+    }
+
+    .titulo_beneficio_individual {
+        font-size: 1.2em;
+    }
+
+    .descripcion_beneficio_detallada {
+        font-size: 1em;
+    }
+
+    .seccion_formulario_contacto_empresarial {
+        padding: 40px 10px;
+    }
+
+    .formulario_contacto_empresarial_container {
+        max-width: 100%;
+    }
+
+    .campo_formulario_personalizado_empresarial {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .boton_enviar_formulario_morado {
+        padding: 12px;
+        font-size: 1em;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .contenedor_principal_pagina_comercial {
+        padding: 20px;
+    }
+
+    .seccion_principal_destacada_comercial {
+        padding: 50px 20px;
+        min-height: 400px;
+    }
+
+    .titulo_principal_destacado_comercial {
+        font-size: 2.2em;
+    }
+
+    .subtitulo_destacado_comercial_naranja {
+        font-size: 1.7em;
+    }
+
+    .descripcion_principal_comercial {
+        font-size: 1.1em;
+    }
+
+    .contenedor_numeros_estadisticas_flex {
+        flex-wrap: wrap;
+    }
+
+    .item_estadistica_empresarial {
+        margin: 15px;
+    }
+
+    .numero_estadistica_destacado {
+        font-size: 2.2em;
+    }
+
+    .distribucion_beneficios_grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .elemento_beneficio_individual {
+        margin: 15px;
+    }
+
+    .circulo_icono_beneficio {
+        width: 70px;
+        height: 70px;
+    }
+
+    .titulo_beneficio_individual {
+        font-size: 1.3em;
+    }
+
+    .descripcion_beneficio_detallada {
+        font-size: 1.1em;
+    }
+
+    .seccion_formulario_contacto_empresarial {
+        padding: 50px 20px;
+    }
+
+    .formulario_contacto_empresarial_container {
+        max-width: 500px;
+    }
+
+    .campo_formulario_personalizado_empresarial {
+        font-size: 1.1em;
+        padding: 12px;
+    }
+
+    .boton_enviar_formulario_morado {
+        padding: 14px;
+        font-size: 1.1em;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .contenedor_principal_pagina_comercial {
+        padding: 30px;
+    }
+
+    .seccion_principal_destacada_comercial {
+        padding: 60px 30px;
+        min-height: 500px;
+    }
+
+    .titulo_principal_destacado_comercial {
+        font-size: 2.5em;
+    }
+
+    .subtitulo_destacado_comercial_naranja {
+        font-size: 1.8em;
+    }
+
+    .descripcion_principal_comercial {
+        font-size: 1.2em;
+    }
+
+    .contenedor_numeros_estadisticas_flex {
+        flex-wrap: wrap;
+    }
+
+    .item_estadistica_empresarial {
+        margin: 20px;
+    }
+
+    .numero_estadistica_destacado {
+        font-size: 2.5em;
+    }
+
+    .distribucion_beneficios_grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .elemento_beneficio_individual {
+        margin: 20px;
+    }
+
+    .circulo_icono_beneficio {
+        width: 80px;
+        height: 80px;
+    }
+
+    .titulo_beneficio_individual {
+        font-size: 1.5em;
+    }
+
+    .descripcion_beneficio_detallada {
+        font-size: 1.2em;
+    }
+
+    .seccion_formulario_contacto_empresarial {
+        padding: 60px 30px;
+    }
+
+    .formulario_contacto_empresarial_container {
+        max-width: 600px;
+    }
+
+    .campo_formulario_personalizado_empresarial {
+        font-size: 1.2em;
+        padding: 14px;
+    }
+
+    .boton_enviar_formulario_morado {
+        padding: 16px;
+        font-size: 1.2em;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+    .contenedor_principal_pagina_comercial {
+        padding: 40px;
+    }
+
+    .seccion_principal_destacada_comercial {
+        padding: 70px 40px;
+        min-height: 550px;
+    }
+
+    .titulo_principal_destacado_comercial {
+        font-size: 2.8em;
+    }
+
+    .subtitulo_destacado_comercial_naranja {
+        font-size: 2em;
+    }
+
+    .descripcion_principal_comercial {
+        font-size: 1.3em;
+    }
+
+    .contenedor_numeros_estadisticas_flex {
+        flex-wrap: wrap;
+    }
+
+    .item_estadistica_empresarial {
+        margin: 25px;
+    }
+
+    .numero_estadistica_destacado {
+        font-size: 2.8em;
+    }
+
+    .distribucion_beneficios_grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .elemento_beneficio_individual {
+        margin: 25px;
+    }
+
+    .circulo_icono_beneficio {
+        width: 90px;
+        height: 90px;
+    }
+
+    .titulo_beneficio_individual {
+        font-size: 1.7em;
+    }
+
+    .descripcion_beneficio_detallada {
+        font-size: 1.3em;
+    }
+
+    .seccion_formulario_contacto_empresarial {
+        padding: 70px 40px;
+    }
+
+    .formulario_contacto_empresarial_container {
+        max-width: 700px;
+    }
+
+    .campo_formulario_personalizado_empresarial {
+        font-size: 1.3em;
+        padding: 16px;
+    }
+
+    .boton_enviar_formulario_morado {
+        padding: 18px;
+        font-size: 1.3em;
+    }
+}

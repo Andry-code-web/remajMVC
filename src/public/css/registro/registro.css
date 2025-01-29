@@ -560,6 +560,7 @@ input[type=number] {
     flex-direction: column;
   }
   .left-side {
+    display: none;
     width: 100%;
     height: 200px;
   }
@@ -574,6 +575,9 @@ input[type=number] {
   }
   .button-group {
     flex-direction: column;
+  }
+  .left-side .imagen-secundaria {
+    display: none;
   }
 }
 /* check confirmacion de correo*/

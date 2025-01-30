@@ -60,9 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (['12345678', '87654321'].includes(value)) {
                 return "DNI inválido: no puede ser una secuencia numérica";
             }
-            for (let i = 0; i < value.length - 3; i++) {
+            for (let i = 0; i < value.length - 5; i++) {
                 const pattern = value.slice(i, i + 6);
-                if (/(\d)\1{3}/.test(pattern)) {
+                if (/(\d)\1{5}/.test(pattern)) {
                     return "DNI inválido: no puede contener 4 números iguales consecutivos";
                 }
             }
@@ -70,7 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         celular: (value) => {
             const phoneRegex = /^9\d{8}$/;
-            return phoneRegex.test(value) ? "" : "El número debe comenzar con 9 y tener 9 dígitos en total";
+            if (!phoneRegex.test(value)) {
+                return "El número debe comenzar con 9 y tener 9 dígitos en total";
+            }
+            if (/^9{9}$/.test(value)) {
+                return "Número inválido: no puede contener todos los dígitos iguales";
+            }
+            for (let i = 0; i < value.length - 5; i++) { // Recorre el número hasta los últimos 5 dígitos
+                const pattern = value.slice(i, i + 6); // Extrae 6 dígitos consecutivos
+                if (/(\d)\1{5}/.test(pattern)) { // Verifica si hay 6 números iguales seguidos
+                    return "Número inválido: no puede contener más de 5 dígitos iguales consecutivos";
+                }
+            }
+            return "";
         },
         EMAIL: (value) => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

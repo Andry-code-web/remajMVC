@@ -461,6 +461,15 @@ form {
   transition: all 0.3s ease;
 }
 
+.letras_charremates {
+  display: flex;
+  padding: 6px;
+  border-top: 1px solid #ffffff;
+  background: linear-gradient(180deg, #ffffff, #ffffff);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Estilos generales */
 .banner_remates2 {
   background-image: url("/path/to/your/banner/image.jpg");
@@ -546,7 +555,9 @@ form {
   margin: 0 0 10px;
 }
 
-.address, .price, .details {
+.address,
+.price,
+.details {
   margin: 5px 0;
 }
 
@@ -581,64 +592,126 @@ form {
   }
 }
 /* chat y details */
+/* Chat y detalles */
 @media only screen and (max-width: 600px) {
   .main-content {
-    margin-top: 317%;
-    width: 161%;
+    margin-top: 213%;
+    width: 95%;
   }
   .sidebar {
     position: absolute;
     width: 85%;
-    margin-top: 35%;
+    margin-top: 20%;
   }
-  #banner_chat {
+  .container_detalles {
     width: 100%;
-    margin-top: 11%;
+    margin-top: 10%;
   }
   #letras_charremates {
     font-size: 0.5rem;
   }
-  .container_detalles {
-    margin-top: 10%;
-  }
   .chat {
     width: 100%;
   }
-  .input-field {
-    width: 50%;
-  }
+  .input-field,
   .input-field2 {
     width: 50%;
   }
+  .property-title {
+    font-size: 1.5rem;
+  }
+  .property-address {
+    font-size: 1rem;
+  }
+  .carousel {
+    max-width: 100%;
+  }
+  .nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  .nav-item {
+    margin-bottom: 10px;
+  }
 }
-@media only screen and (min-width: 768px) and (max-width: 992px) {
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  .property-title {
+    font-size: 1.8rem;
+  }
+  .property-address {
+    font-size: 1.1rem;
+  }
+  .carousel {
+    max-width: 720px;
+  }
+  .nav {
+    flex-direction: row;
+  }
+  .sidebar {
+    margin-top: 31%;
+    position: absolute;
+    left: 23%;
+  }
+}
+@media only screen and (min-width: 769px) and (max-width: 992px) {
   .main-content {
-    margin-top: 317%;
-    width: 161%;
+    margin-top: 102%;
   }
   #chatdesubastas {
     position: absolute;
-    width: 85%;
+    width: 54%;
+    left: 25%;
     margin-top: 35%;
+    display: flex;
+    align-items: center;
   }
+  .property-title {
+    font-size: 2rem;
+  }
+  .property-address {
+    font-size: 1.2rem;
+  }
+  .carousel {
+    max-width: 720px;
+  }
+  .nav {
+    flex-direction: row;
+  }
+  .sidebar {
+    margin-top: 20px;
+  }
+  #opciones_descripcion {
+    margin-top: 10%;
+    display: flex;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .property-title {
+    font-size: 2.2rem;
+  }
+  .property-address {
+    font-size: 1.3rem;
+  }
+  .carousel {
+    max-width: 700px;
+  }
+  .nav {
+    flex-direction: row;
+  }
+  .sidebar {
+    margin-top: 20px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
   #banner_chat {
     width: 100%;
-    margin-top: 11%;
+    margin-top: 13%;
   }
-  #letras_charremates {
-    font-size: 0.5rem;
-  }
-  .container_detalles {
-    margin-top: 10%;
-  }
-  .chat {
+}
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+  #banner_chat {
     width: 100%;
-  }
-  .input-field {
-    width: 50%;
-  }
-  .input-field2 {
-    width: 50%;
+    margin-top: 10%;
   }
 }
 

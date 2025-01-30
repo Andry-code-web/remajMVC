@@ -220,7 +220,7 @@ exports.guardarCronograma = async (req, res) => {
 exports.obtenerCronograma = async (req, res) => {
   try {
     const { remates_id } = req.query;
-    
+
     // Validar si remates_id es válido
     if (!remates_id || remates_id === 'null') {
       return res.status(400).json({ message: "El parámetro remates_id es obligatorio" });
@@ -235,6 +235,7 @@ exports.obtenerCronograma = async (req, res) => {
     res.status(500).json({ message: "Hubo un problema al obtener el cronograma" });
   }
 };
+
 /* seguimiento */
 exports.createSeguimiento = async (req, res) => {
   const {

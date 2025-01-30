@@ -692,9 +692,9 @@ form {
   .property-address {
     font-size: 1.3rem;
   }
-  .carousel {
-    max-width: 700px;
-  }
+  /*     .carousel {
+          max-width: 700px;
+      } */
   .nav {
     flex-direction: row;
   }

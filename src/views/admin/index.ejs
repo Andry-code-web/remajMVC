@@ -54,545 +54,551 @@
 
   <div class="properties-grid" id="rematesGrid">
     <% remates.forEach(function(remate) { %>
-    <div class="property-card" data-id="<%= remate.id %>">
-      <div class="auction-number-container">
-        <span class="auction-number">Remate N° <%= remate.id %> </span>
-      </div>
-
-      <div class="property-image-container">
-        <% if (remate.imagen) { %>
-        <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image" />
-        <% } else { %>
-        <img src="/img/casa2.jfif" alt="Propiedad" class="property-image" />
-        <% } %>
-        <span class="property-status <%= remate.estado === 'en_curso' ? 'status-active' : 'status-inactive' %>">
-          <%= remate.estado %>
-        </span>
-      </div>
-      <div class="property-buttons">
-        <button class="property-button" onclick="abrirModales('Seguimiento', <%= remate.id %>)">
-          Seguimiento
-        </button>
-        <button class="property-button" onclick="abrirModales('Detalles', <%= remate.id %>)">
-          Detalles
-        </button>
-        <button class="property-button" onclick="abrirModales('Inmuebles', <%= remate.id %>)">
-          Inmuebles
-        </button>
-        <button class="property-button" onclick="abrirModales('Cronograma', <%= remate.id %>)">
-          Cronograma
-          <div class="progress" style="width: 100%">
-            <div id="progress-bar-<%= remate.id %>" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </button>
-      </div>
-
-      <div class="property-content">
-        <h3 class="property-title"><%= remate.ubicacion %></h3>
-        <div class="property-price">$<%= remate.precios %></div>
-        <div class="property-details">
-          <div class="detail-item">
-            <i class="bi bi-building"></i>
-            <%= remate.categoria %>
-          </div>
-          <div class="detail-item">
-            <i class="bi bi-door-closed"></i>
-            <%= remate.N_habitacion %> hab.
-          </div>
-          <div class="detail-item">
-            <i class="bi bi-droplet"></i>
-            <%= remate.N_banos %> baños
-          </div>
-          <div class="detail-item">
-            <i class="bi bi-calendar"></i>
-            <%= new Date(remate.fecha_remate).toLocaleDateString() %>
-          </div>
+      <div class="property-card" data-id="<%= remate.id %>">
+        <div class="auction-number-container">
+          <span class="auction-number">Remate N° <%= remate.id %> </span>
         </div>
-        <p class="property-description"><%= remate.descripcion %></p>
-        <div class="property-actions">
-          <button class="action-button" onclick="abrirModalEditar('<%= remate.id %>')">
-            <i class="bi bi-pencil"></i>
-            Editar
+
+        <div class="property-image-container">
+          <% if (remate.imagen) { %>
+            <img src="data:image/jpeg;base64,<%= remate.imagen %>" alt="Propiedad" class="property-image" />
+            <% } else { %>
+              <img src="/img/casa2.jfif" alt="Propiedad" class="property-image" />
+              <% } %>
+                <span class="property-status <%= remate.estado === 'en_curso' ? 'status-active' : 'status-inactive' %>">
+                  <%= remate.estado %>
+                </span>
+        </div>
+        <div class="property-buttons">
+          <button class="property-button" onclick="abrirModales('Seguimiento', <%= remate.id %>)">
+            Seguimiento
           </button>
-          <button class="action-button" onclick="eliminarRemate('<%= remate.id %>')">
-            Eliminar
+          <button class="property-button" onclick="abrirModales('Detalles', <%= remate.id %>)">
+            Detalles
+          </button>
+          <button class="property-button" onclick="abrirModales('Inmuebles', <%= remate.id %>)">
+            Inmuebles
+          </button>
+          <button class="property-button" onclick="abrirModalcronograma(<%= remate.id %>)">Cronograma
+
+            <div class="progress" style="width: 100%">
+              <div id="progress-bar-<%= remate.id %>" class="progress-bar" role="progressbar" style="width: 0%"
+                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
           </button>
         </div>
+
+        <div class="property-content">
+          <h3 class="property-title">
+            <%= remate.ubicacion %>
+          </h3>
+          <div class="property-price">$<%= remate.precios %>
+          </div>
+          <div class="property-details">
+            <div class="detail-item">
+              <i class="bi bi-building"></i>
+              <%= remate.categoria %>
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-door-closed"></i>
+              <%= remate.N_habitacion %> hab.
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-droplet"></i>
+              <%= remate.N_banos %> baños
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-calendar"></i>
+              <%= new Date(remate.fecha_remate).toLocaleDateString() %>
+            </div>
+          </div>
+          <p class="property-description">
+            <%= remate.descripcion %>
+          </p>
+          <div class="property-actions">
+            <button class="action-button" onclick="abrirModalEditar('<%= remate.id %>')">
+              <i class="bi bi-pencil"></i>
+              Editar
+            </button>
+            <button class="action-button" onclick="eliminarRemate('<%= remate.id %>')">
+              Eliminar
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-    <% }); %>
+      <% }); %>
   </div>
 </div>
 
-<%- include(process.cwd() + '/src/views/admin/formNuevoRemate') %>
-<%- include(process.cwd() + '/src/views/admin/editarRemate') %>
-<%- include(process.cwd() + '/src/views/admin/formSeguimiento') %>
-<%- include(process.cwd() + '/src/views/admin/formDetalles') %>
-<%- include(process.cwd() + '/src/views/admin/formInmuebles') %>
-<%- include(process.cwd() + '/src/views/admin/formCronograma') %>
+<%- include(process.cwd() + '/src/views/admin/formNuevoRemate' ) %>
+  <%- include(process.cwd() + '/src/views/admin/editarRemate' ) %>
+    <%- include(process.cwd() + '/src/views/admin/formSeguimiento' ) %>
+      <%- include(process.cwd() + '/src/views/admin/formDetalles' ) %>
+        <%- include(process.cwd() + '/src/views/admin/formInmuebles' ) %>
+          <%- include(process.cwd() + '/src/views/admin/formCronograma' ) %>
 
-<script>
-  /* CERRAR MODALES */
-  function cerrarModales() {
-    const nuevoRemateModal = document.getElementById("modalNuevoRemate");
-    const editarRemateModal = document.getElementById("editModal");
+            <script>
+              /* CERRAR MODALES */
+              function cerrarModales() {
+                const nuevoRemateModal = document.getElementById("modalNuevoRemate");
+                const editarRemateModal = document.getElementById("editModal");
 
-    const seguimientoModal = document.getElementById("seguimientoModal");
-    const detallesModal = document.getElementById("tarjetaDetalles");
-    const inmueblesModal = document.getElementById("tarjetaInmuebles");
-    const cronogramaModal = document.getElementById("tarjetaCronograma");
+                const seguimientoModal = document.getElementById("seguimientoModal");
+                const detallesModal = document.getElementById("tarjetaDetalles");
+                const inmueblesModal = document.getElementById("tarjetaInmuebles");
+                const cronogramaModal = document.getElementById("tarjetaCronograma");
 
-    const modales = [
-      nuevoRemateModal,
-      editarRemateModal,
-      seguimientoModal,
-      detallesModal,
-      inmueblesModal,
-      cronogramaModal,
-    ];
+                const modales = [
+                  nuevoRemateModal,
+                  editarRemateModal,
+                  seguimientoModal,
+                  detallesModal,
+                  inmueblesModal,
+                  cronogramaModal,
+                ];
 
-    modales.forEach((modal) => {
-      if (modal) {
-        modal.style.display = "none";
-      }
-    });
-
-    // Reactivar el scroll del cuerpo
-    document.body.style.overflow = ""; // Cambiado aquí
-  }
-
-  /* ABRIR MODALES */
-  function abrirModales(modalName, remateId) {
-    const editaModal = document.getElementById("editModal");
-
-    const seguimientoModal = document.getElementById("seguimientoModal");
-    const detallesModal = document.getElementById("tarjetaDetalles");
-    const inmueblesModal = document.getElementById("tarjetaInmuebles");
-    const cronogramaModal = document.getElementById("tarjetaCronograma");
-
-    const overlay = document.createElement("div");
-    overlay.className = "modal-overlay";
-    document.body.appendChild(overlay);
-
-    let activeModal = null;
-
-    const modalMap = {
-      Seguimiento: seguimientoModal,
-      Detalles: detallesModal,
-      Inmuebles: inmueblesModal,
-      Cronograma: cronogramaModal,
-    };
-
-    function openModal(modal) {
-      if (activeModal) {
-        closeModal(activeModal);
-      }
-      modal.style.display = "block";
-      overlay.style.display = "block";
-      activeModal = modal;
-      document.body.style.overflow = "hidden";
-
-      // Agregar lógica personalizada para cada modal si es necesario
-      if (modalName === "Cronograma") {
-        console.log(`Mostrando cronograma para el remate ID: ${remateId}`);
-        // Aquí puedes inicializar la barra de progreso o cargar datos
-      }
-    }
-
-    function closeModal(modal) {
-      if (modal) {
-        modal.style.display = "none";
-        overlay.style.display = "none";
-        document.body.style.overflow = "";
-        activeModal = null;
-      }
-    }
-
-    // Cerrar la tarjeta con Escape
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape" && activeModal) {
-        closeModal(activeModal);
-      }
-    });
-
-    // Prevenir cierre del modal al hacer clic dentro de él
-    Object.values(modalMap).forEach((modal) => {
-      if (modal) {
-        modal.addEventListener("click", function(e) {
-          e.stopPropagation();
-        });
-      }
-    });
-
-    // Abrir el modal correspondiente
-    const modalToOpen = modalMap[modalName];
-    if (modalToOpen) {
-      openModal(modalToOpen);
-    } else {
-      console.error(`No se encontró el modal para el nombre: ${modalName}`);
-    }
-  }
-
-  /* cerrar nuevo remate */
-  function cerrarModalNuevoRemate() {
-    // Ocultar el modal
-    document.getElementById("modalNuevoRemate").style.display = "none";
-
-    // Limpiar el formulario y el contenedor de previsualización de imágenes
-    document.getElementById("formNuevoRemate").reset();
-    document.getElementById("image-preview-container").innerHTML = "";
-
-    // Reactivar el scroll del cuerpo
-    document.body.style.overflow = ""; // Cambiado aquí
-  }
-
-  // Gestión de métricas
-  function actualizarMetricas() {
-    const remates = document.querySelectorAll(".property-card");
-    const totalRemates = remates.length;
-    let rematesActivos = 0;
-    let montoTotal = 0;
-
-    remates.forEach((remate) => {
-      if (remate.querySelector(".status-active")) {
-        rematesActivos++;
-      }
-      const precioTexto = remate.querySelector(".property-price").textContent;
-      montoTotal += formatPrice(precioTexto);
-    });
-
-    document.getElementById("totalRemates").textContent = totalRemates;
-    document.getElementById("rematesActivos").textContent = rematesActivos;
-    document.getElementById(
-      "montoTotal"
-    ).textContent = `$${montoTotal.toLocaleString()}`;
-  }
-
-  // Gestión de búsqueda
-  function buscarRemate() {
-    const input = document.getElementById("buscador").value.toLowerCase();
-    const remates = document.querySelectorAll(".property-card");
-
-    remates.forEach((remate) => {
-      const texto = remate.textContent.toLowerCase();
-      remate.style.display = texto.includes(input) ? "block" : "none";
-    });
-
-    actualizarMetricas();
-  }
-
-  // Gestión de eliminación
-  function eliminarRemate(id) {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: `¿Quieres eliminar el remate con ID ${id}?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`/admin/eliminar-remate?deleteId=${id}`, {
-            method: "DELETE",
-          })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              const propertyCard = document.querySelector(
-                `.property-card[data-id="${id}"]`
-              );
-              if (propertyCard) {
-                propertyCard.remove();
-                actualizarMetricas();
-                Swal.fire(
-                  "Eliminado",
-                  "El remate ha sido eliminado",
-                  "success"
-                ).then(() => {
-                  location.reload();
+                modales.forEach((modal) => {
+                  if (modal) {
+                    modal.style.display = "none";
+                  }
                 });
-              } else {
-                throw new Error(
-                  "No se encontró el elemento a eliminar en el DOM."
-                );
+
+                // Reactivar el scroll del cuerpo
+                document.body.style.overflow = ""; // Cambiado aquí
               }
-            } else {
-              throw new Error(data.error || "Error al eliminar el remate");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            Swal.fire("Error", error.message, "error");
-          });
-      }
-    });
-  }
 
-  // Gestión de edición de remate no funciona cerra fuera modal
-  function abrirModalEditar(id) {
-    fetch(`/admin/editar-remate/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Asignar valores a los campos del formulario
-        document.getElementById("editId").value = data.id;
-        document.getElementById("editUbicacion").value = data.ubicacion;
-        document.getElementById("editPrecio").value = data.precios;
-        document.getElementById("editCategoria").value = data.categoria;
-        document.getElementById("editHabitaciones").value = data.N_habitacion;
-        document.getElementById("editBanos").value = data.N_banos;
-        document.getElementById("editPisos").value = data.pisos;
-        document.getElementById("editFechaRemate").value =
-          data.fecha_remate.split("T")[0];
-        document.getElementById("editHoraRemate").value = data.hora_remate;
-        document.getElementById("editEstado").value = data.estado;
-        document.getElementById("editTamañoPropiedad").value =
-          data.tamaño_propiedad;
-        document.getElementById("editPisina").value = data.pisina;
-        document.getElementById("editPatio").value = data.patio;
-        document.getElementById("editCocina").value = data.cocina;
-        document.getElementById("editCochera").value = data.cochera;
-        document.getElementById("editBalcon").value = data.balcon;
-        document.getElementById("editJardin").value = data.jardin;
-        document.getElementById("editComedor").value = data.comedor;
-        document.getElementById("editSalaStart").value = data.sala_start;
-        document.getElementById("editStudio").value = data.studio;
-        document.getElementById("editLavanderia").value = data.lavanderia;
-        document.getElementById("editDescripcion").value = data.descripcion;
+              /* ABRIR MODALES */
+              function abrirModales(modalName, remateId) {
+                const editaModal = document.getElementById("editModal");
 
-        // Mostrar el modal
-        document.getElementById("editModal").style.display = "block";
+                const seguimientoModal = document.getElementById("seguimientoModal");
+                const detallesModal = document.getElementById("tarjetaDetalles");
+                const inmueblesModal = document.getElementById("tarjetaInmuebles");
+                const cronogramaModal = document.getElementById("tarjetaCronograma");
 
-        // Deshabilitar el scroll del cuerpo
-        document.body.classList.add("body-no-scroll");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        Swal.fire("Error", "Error al cargar los datos del remate", "error");
-      });
-  }
+                const overlay = document.createElement("div");
+                overlay.className = "modal-overlay";
+                document.body.appendChild(overlay);
 
-  function cerrarModalEditar() {
-    // Ocultar el modal
-    document.getElementById("editModal").style.display = "none";
+                let activeModal = null;
 
-    // Reactivar el scroll del cuerpo
-    document.body.style.overflow = ""; // Cambiado aquí
-  }
+                const modalMap = {
+                  Seguimiento: seguimientoModal,
+                  Detalles: detallesModal,
+                  Inmuebles: inmueblesModal,
+                  Cronograma: cronogramaModal,
+                };
 
-  // Event Listeners falta cerrar fuera
-  document.addEventListener("DOMContentLoaded", () => {
-    actualizarMetricas();
+                function openModal(modal) {
+                  if (activeModal) {
+                    closeModal(activeModal);
+                  }
+                  modal.style.display = "block";
+                  overlay.style.display = "block";
+                  activeModal = modal;
+                  document.body.style.overflow = "hidden";
 
-    // Manejador para cerrar modales al hacer clic fuera
-    window.onclick = function(event) {
-      const modalNuevo = document.getElementById("modalNuevoRemate");
-      const modalEditar = document.getElementById("editModal");
+                  // Agregar lógica personalizada para cada modal si es necesario
+                  if (modalName === "Cronograma") {
+                    console.log(`Mostrando cronograma para el remate ID: ${remateId}`);
+                    // Aquí puedes inicializar la barra de progreso o cargar datos
+                  }
+                }
 
-      if (event.target === modalNuevo) {
-        cerrarModalNuevoRemate();
-      }
+                function closeModal(modal) {
+                  if (modal) {
+                    modal.style.display = "none";
+                    overlay.style.display = "none";
+                    document.body.style.overflow = "";
+                    activeModal = null;
+                  }
+                }
 
-      if (event.target === modalEditar) {
-        cerrarModalEditar();
-      }
-    };
+                // Cerrar la tarjeta con Escape
+                document.addEventListener("keydown", function (e) {
+                  if (e.key === "Escape" && activeModal) {
+                    closeModal(activeModal);
+                  }
+                });
 
-    // Manejador para la carga de imágenes
-    document
-      .getElementById("file-upload")
-      .addEventListener("change", function(event) {
-        const files = event.target.files;
-        const minFiles = 1;
-        const maxFiles = 10;
+                // Prevenir cierre del modal al hacer clic dentro de él
+                Object.values(modalMap).forEach((modal) => {
+                  if (modal) {
+                    modal.addEventListener("click", function (e) {
+                      e.stopPropagation();
+                    });
+                  }
+                });
 
-        if (files.length < minFiles || files.length > maxFiles) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
-          });
-          event.target.value = "";
-          return;
-        }
+                // Abrir el modal correspondiente
+                const modalToOpen = modalMap[modalName];
+                if (modalToOpen) {
+                  openModal(modalToOpen);
+                } else {
+                  console.error(`No se encontró el modal para el nombre: ${modalName}`);
+                }
+              }
 
-        const imagePreviewContainer = document.getElementById(
-          "image-preview-container"
-        );
-        imagePreviewContainer.innerHTML = "";
+              /* cerrar nuevo remate */
+              function cerrarModalNuevoRemate() {
+                // Ocultar el modal
+                document.getElementById("modalNuevoRemate").style.display = "none";
 
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const reader = new FileReader();
+                // Limpiar el formulario y el contenedor de previsualización de imágenes
+                document.getElementById("formNuevoRemate").reset();
+                document.getElementById("image-preview-container").innerHTML = "";
 
-          reader.onload = function(e) {
-            const img = document.createElement("img");
-            img.src = e.target.result;
-            img.className = "preview-img";
-            imagePreviewContainer.appendChild(img);
-          };
+                // Reactivar el scroll del cuerpo
+                document.body.style.overflow = ""; // Cambiado aquí
+              }
 
-          reader.readAsDataURL(file);
-        }
-      });
+              // Gestión de métricas
+              function actualizarMetricas() {
+                const remates = document.querySelectorAll(".property-card");
+                const totalRemates = remates.length;
+                let rematesActivos = 0;
+                let montoTotal = 0;
 
-    // Obtener parámetros de URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const success = urlParams.get("success");
+                remates.forEach((remate) => {
+                  if (remate.querySelector(".status-active")) {
+                    rematesActivos++;
+                  }
+                  const precioTexto = remate.querySelector(".property-price").textContent;
+                  montoTotal += formatPrice(precioTexto);
+                });
 
-    // Mostrar la alerta si la variable de éxito está presente
-    if (success === "true") {
-      Swal.fire({
-        title: "¡Éxito!",
-        text: "Remate creado exitosamente",
-        icon: "success",
-      });
-    } else if (success === "false") {
-      Swal.fire({
-        title: "Error",
-        text: "Hubo un problema al crear el remate",
-        icon: "error",
-      });
-    }
+                document.getElementById("totalRemates").textContent = totalRemates;
+                document.getElementById("rematesActivos").textContent = rematesActivos;
+                document.getElementById(
+                  "montoTotal"
+                ).textContent = `$${montoTotal.toLocaleString()}`;
+              }
 
-    // Botón de cancelar en el modal de edición
-    document
-      .querySelector(".boton_cancelar_formulario_editar")
-      .addEventListener("click", cerrarModalEditar);
-  });
-</script>
+              // Gestión de búsqueda
+              function buscarRemate() {
+                const input = document.getElementById("buscador").value.toLowerCase();
+                const remates = document.querySelectorAll(".property-card");
 
-<!-- sweat alert cronograma  -->
+                remates.forEach((remate) => {
+                  const texto = remate.textContent.toLowerCase();
+                  remate.style.display = texto.includes(input) ? "block" : "none";
+                });
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-  const form = document.getElementById("formularioCronograma");
+                actualizarMetricas();
+              }
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+              // Gestión de eliminación
+              function eliminarRemate(id) {
+                Swal.fire({
+                  title: "¿Estás seguro?",
+                  text: `¿Quieres eliminar el remate con ID ${id}?`,
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Sí, eliminar",
+                  cancelButtonText: "Cancelar",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    fetch(`/admin/eliminar-remate?deleteId=${id}`, {
+                      method: "DELETE",
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        if (data.success) {
+                          const propertyCard = document.querySelector(
+                            `.property-card[data-id="${id}"]`
+                          );
+                          if (propertyCard) {
+                            propertyCard.remove();
+                            actualizarMetricas();
+                            Swal.fire(
+                              "Eliminado",
+                              "El remate ha sido eliminado",
+                              "success"
+                            ).then(() => {
+                              location.reload();
+                            });
+                          } else {
+                            throw new Error(
+                              "No se encontró el elemento a eliminar en el DOM."
+                            );
+                          }
+                        } else {
+                          throw new Error(data.error || "Error al eliminar el remate");
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error:", error);
+                        Swal.fire("Error", error.message, "error");
+                      });
+                  }
+                });
+              }
 
-    const remateId = document.getElementById("remate_id").value;
-    const fase = document.getElementById("nombre").value;
-    const fechaInicio = document.getElementById("fecha_inicio").value;
-    const fechaFin = document.getElementById("fecha_fin").value;
-    
+              // Gestión de edición de remate no funciona cerra fuera modal
+              function abrirModalEditar(id) {
+                fetch(`/admin/editar-remate/${id}`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    // Asignar valores a los campos del formulario
+                    document.getElementById("editId").value = data.id;
+                    document.getElementById("editUbicacion").value = data.ubicacion;
+                    document.getElementById("editPrecio").value = data.precios;
+                    document.getElementById("editCategoria").value = data.categoria;
+                    document.getElementById("editHabitaciones").value = data.N_habitacion;
+                    document.getElementById("editBanos").value = data.N_banos;
+                    document.getElementById("editPisos").value = data.pisos;
+                    document.getElementById("editFechaRemate").value =
+                      data.fecha_remate.split("T")[0];
+                    document.getElementById("editHoraRemate").value = data.hora_remate;
+                    document.getElementById("editEstado").value = data.estado;
+                    document.getElementById("editTamañoPropiedad").value =
+                      data.tamaño_propiedad;
+                    document.getElementById("editPisina").value = data.pisina;
+                    document.getElementById("editPatio").value = data.patio;
+                    document.getElementById("editCocina").value = data.cocina;
+                    document.getElementById("editCochera").value = data.cochera;
+                    document.getElementById("editBalcon").value = data.balcon;
+                    document.getElementById("editJardin").value = data.jardin;
+                    document.getElementById("editComedor").value = data.comedor;
+                    document.getElementById("editSalaStart").value = data.sala_start;
+                    document.getElementById("editStudio").value = data.studio;
+                    document.getElementById("editLavanderia").value = data.lavanderia;
+                    document.getElementById("editDescripcion").value = data.descripcion;
 
-    // Verificar si remateId es null o vacío
-    if (!remateId) {
-      Swal.fire("Error", "El ID del remate es obligatorio", "error");
-      return;
-    }
+                    // Mostrar el modal
+                    document.getElementById("editModal").style.display = "block";
 
-    const mensaje = `
+                    // Deshabilitar el scroll del cuerpo
+                    document.body.classList.add("body-no-scroll");
+                  })
+                  .catch((error) => {
+                    console.error("Error:", error);
+                    Swal.fire("Error", "Error al cargar los datos del remate", "error");
+                  });
+              }
+
+              function cerrarModalEditar() {
+                // Ocultar el modal
+                document.getElementById("editModal").style.display = "none";
+
+                // Reactivar el scroll del cuerpo
+                document.body.style.overflow = ""; // Cambiado aquí
+              }
+
+              // Event Listeners falta cerrar fuera
+              document.addEventListener("DOMContentLoaded", () => {
+                actualizarMetricas();
+
+                // Manejador para cerrar modales al hacer clic fuera
+                window.onclick = function (event) {
+                  const modalNuevo = document.getElementById("modalNuevoRemate");
+                  const modalEditar = document.getElementById("editModal");
+
+                  if (event.target === modalNuevo) {
+                    cerrarModalNuevoRemate();
+                  }
+
+                  if (event.target === modalEditar) {
+                    cerrarModalEditar();
+                  }
+                };
+
+                // Manejador para la carga de imágenes
+                document
+                  .getElementById("file-upload")
+                  .addEventListener("change", function (event) {
+                    const files = event.target.files;
+                    const minFiles = 1;
+                    const maxFiles = 10;
+
+                    if (files.length < minFiles || files.length > maxFiles) {
+                      Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: `Debes subir entre ${minFiles} y ${maxFiles} fotos.`,
+                      });
+                      event.target.value = "";
+                      return;
+                    }
+
+                    const imagePreviewContainer = document.getElementById(
+                      "image-preview-container"
+                    );
+                    imagePreviewContainer.innerHTML = "";
+
+                    for (let i = 0; i < files.length; i++) {
+                      const file = files[i];
+                      const reader = new FileReader();
+
+                      reader.onload = function (e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.className = "preview-img";
+                        imagePreviewContainer.appendChild(img);
+                      };
+
+                      reader.readAsDataURL(file);
+                    }
+                  });
+
+                // Obtener parámetros de URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const success = urlParams.get("success");
+
+                // Mostrar la alerta si la variable de éxito está presente
+                if (success === "true") {
+                  Swal.fire({
+                    title: "¡Éxito!",
+                    text: "Remate creado exitosamente",
+                    icon: "success",
+                  });
+                } else if (success === "false") {
+                  Swal.fire({
+                    title: "Error",
+                    text: "Hubo un problema al crear el remate",
+                    icon: "error",
+                  });
+                }
+
+                // Botón de cancelar en el modal de edición
+                document
+                  .querySelector(".boton_cancelar_formulario_editar")
+                  .addEventListener("click", cerrarModalEditar);
+              });
+            </script>
+
+            <!-- sweat alert cronograma  -->
+
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById("formularioCronograma");
+
+                form.addEventListener("submit", function (event) {
+                  event.preventDefault();
+
+                  const remateId = document.getElementById("remate_id").value;
+                  const fase = document.getElementById("nombre").value;
+                  const fechaInicio = document.getElementById("fecha_inicio").value;
+                  const fechaFin = document.getElementById("fecha_fin").value;
+
+
+                  // Verificar si remateId es null o vacío
+                  if (!remateId) {
+                    Swal.fire("Error", "El ID del remate es obligatorio", "error");
+                    return;
+                  }
+
+                  const mensaje = `
       ID del Remate: ${remateId}<br>
       Fase: ${fase}<br>
       Fecha Inicio: ${fechaInicio}<br>
       Fecha Fin: ${fechaFin}
     `;
 
-    Swal.fire({
-      title: "Se subirán los siguientes cambios:",
-      html: mensaje,
-      showCancelButton: true,
-      showDenyButton: true,
-      confirmButtonText: "Aceptar",
-      denyButtonText: "Retroceder",
-      cancelButtonText: "Cancelar",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      allowEnterKey: false
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch("/admin/guardar-cronograma", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            remates_id: remateId,
-            nombre: fase,
-            fecha_inicio: fechaInicio,
-            fecha_fin: fechaFin
-          })
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.message === "Cronograma guardado exitosamente") {
-            actualizarProgreso(remateId);
-            cerrarModalCronograma();
-          } else {
-            Swal.fire("Error", data.message, "error");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          Swal.fire(
-            "Error",
-            "Hubo un problema al guardar el cronograma",
-            "error"
-          );
-        });
-      } else if (result.isDenied) {
-        // No hacer nada, el usuario quiere retroceder
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        cerrarModalCronograma();
-      }
-    });
-  });
+                  Swal.fire({
+                    title: "Se subirán los siguientes cambios:",
+                    html: mensaje,
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    confirmButtonText: "Aceptar",
+                    denyButtonText: "Retroceder",
+                    cancelButtonText: "Cancelar",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      fetch("/admin/guardar-cronograma", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                          remates_id: remateId,
+                          nombre: fase,
+                          fecha_inicio: fechaInicio,
+                          fecha_fin: fechaFin
+                        })
+                      })
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.message === "Cronograma guardado exitosamente") {
+                            actualizarProgreso(remateId);
+                            cerrarModalCronograma();
+                          } else {
+                            Swal.fire("Error", data.message, "error");
+                          }
+                        })
+                        .catch((error) => {
+                          console.error("Error:", error);
+                          Swal.fire(
+                            "Error",
+                            "Hubo un problema al guardar el cronograma",
+                            "error"
+                          );
+                        });
+                    } else if (result.isDenied) {
+                      // No hacer nada, el usuario quiere retroceder
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      cerrarModalCronograma();
+                    }
+                  });
+                });
 
-  // Obtener el estado actual del cronograma al cargar la página
-  document.querySelectorAll(".property-button").forEach((button) => {
-    const remateId = button.getAttribute("data-remate-id");
+                // Obtener el estado actual del cronograma al cargar la página
+                document.querySelectorAll(".property-button").forEach((button) => {
+                  const remateId = button.getAttribute("data-remate-id");
 
-    // Verificar si remateId es null o vacío
-    if (!remateId) {
-      console.error("Remate ID no disponible");
-      return;
-    }
+                  // Verificar si remateId es null o vacío
+                  if (!remateId) {
+                    console.error("Remate ID no disponible");
+                    return;
+                  }
 
-    fetch(`/admin/obtener-cronograma?remates_id=${remateId}`)
-      .then((response) => response.json())
-      .then((cronograma) => {
-        if (cronograma.length > 0) {
-          actualizarProgreso(remateId);
-        }
-      })
-      .catch((error) => {
-        console.error("Error al obtener el cronograma:", error);
-      });
-  });
-});
-</script>
+                  fetch(`/admin/obtener-cronograma?remates_id=${remateId}`)
+                    .then((response) => response.json())
+                    .then((cronograma) => {
+                      if (cronograma.length > 0) {
+                        actualizarProgreso(remateId);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("Error al obtener el cronograma:", error);
+                    });
+                });
+              });
+            </script>
 
-<!-- script seguimiento -->
+            <!-- script seguimiento -->
 
-<script>
-  async function guardarCambios(event) {
-    event.preventDefault();
-    const form = document.getElementById("seguimientoForm");
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+            <script>
+              async function guardarCambios(event) {
+                event.preventDefault();
+                const form = document.getElementById("seguimientoForm");
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
 
-    try {
-      const response = await fetch("/admin/crear-seguimiento", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+                try {
+                  const response = await fetch("/admin/crear-seguimiento", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                  });
 
-      if (!response.ok) {
-        throw new Error("Error al crear el seguimiento");
-      }
+                  if (!response.ok) {
+                    throw new Error("Error al crear el seguimiento");
+                  }
 
-      const result = await response.json();
-      alert(result.message);
-      cerrarModales();
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error al crear el seguimiento");
-    }
-  }
-</script>
+                  const result = await response.json();
+                  alert(result.message);
+                  cerrarModales();
+                } catch (error) {
+                  console.error("Error:", error);
+                  alert("Error al crear el seguimiento");
+                }
+              }
+            </script>

@@ -88,6 +88,11 @@
     z-index: 1;
 }
 
+.contenedor-botones {
+    width: 100%;
+
+}
+
 // Sección derecha - Formulario
 .fondo {
     width: 55%; 
@@ -285,14 +290,30 @@
             margin-bottom: 1.5rem;
         }
     }
-
+    .contactos {
+        margin-top: 1rem;
+    }
     .input-wrapper input {
         height: 40px;
+        border: 1px solid #bdb4b4 ;
     }
 
     .botonSoporte {
         min-width: 160px;
         font-size: 0.9rem;
+    }
+
+    .olvide {
+    color: #780103;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    }
+    .contenedor-botones {
+        width: 62%;
+        margin-left: 4rem;
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 
@@ -309,12 +330,33 @@
     .input-wrapper {
         margin-bottom: 1.2rem;
     }
+
+    .olvide {
+        color: #780103;
+        text-decoration: none;
+        display: block;
+        text-align: right;
+        }
+    
+        .input-wrapper input {
+            border: 1px solid #bdb4b4 ;
+        }
+        .contenedor-botones {
+            width: 62%;
+            margin-left: 4rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
 }
 
 // iPad Mini (768x1024)
 @media screen and (min-width: 768px) and (max-width: 820px) {
     .imagen-contenedor {
         width: 40%;
+    }
+    .contenedor_form {
+        transform: scale(1.20);
+        /* padding: 1rem 0.5rem; */
     }
 
     .fondo {
@@ -335,14 +377,27 @@
         left: 8rem;
         top: 25rem;
     }
+    .input-wrapper input {
+        border: 1px solid #bdb4b4 ;
+    }
+    .contenedor-botones {
+        width: 62%;
+        margin-left: 4rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 // iPad Air/Pro (820x1180)
  @media screen and (min-width: 820px) and (max-width: 1024px) {
     .imagen-contenedor {
+        display: none;
         width: 45%;
     }
 
+    .contenedor_form {
+        transform: scale(1.5);
+}
     .fondo {
         width: 55%;
     }
@@ -352,10 +407,24 @@
     }
 
     .imagen_fondo {
+        display: none;
         width: 460px;
         height: 350px;
         left: 5rem;
         margin-top: 20rem;
+    }
+    .input-wrapper input {
+        border: 1px solid #bdb4b4 ;
+    }
+
+    .contenedor_contraseña {
+        margin: 0;
+    }
+    .contenedor-botones {
+        width: 62%;
+        margin-left: 4rem;
+        display: flex;
+        flex-wrap: wrap;
     }
 }
  
@@ -366,6 +435,7 @@
     }
 
     .imagen-contenedor {
+        display: flex;
         width: 50%;
         height: 100%;
     }
@@ -376,10 +446,9 @@
     }
 
     .contenedor_form {
-        transform: scale(0.75);
-        margin: 0;
-        padding: 1rem;
-        
+        transform: scale(0.90);
+        margin-top: 4rem;
+
         h2 {
             font-size: 1.8rem;
             margin-bottom: 0.8rem;
@@ -387,18 +456,17 @@
     }
 
     .contenedor-titulo {
-        margin-bottom: 17rem;
-        margin-top: 0;
-        
-        .tittle-frase {
-            font-size: 1.6rem;
+        display: flex;
+        width: 85%;
+        margin-bottom: 0rem;
+        flex-wrap: wrap;
         }
-        
-        .parrafo {
-            font-size: 0.9rem;
-        }
-    }
 
+        .contenedor-titulo .tittle-frase {
+            text-align: left;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
     .imagen_fondo {
         width: 420px;
         height: 235px;
@@ -410,9 +478,6 @@
         margin-bottom: 0.8rem;
     }
 
-    .contenedor_contraseña {
-        margin-bottom: 0.8rem;
-    }
 
     .mt-1 {
         margin-top: 0;
@@ -449,13 +514,21 @@
     }
 
     .input-wrapper input {
+        border-color: #bdb4b4;
         height: 35px;
+    }
+    .contenedor-botones {
+        width: 62%;
+        margin-left: 4rem;
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 // Nest Hub Max (1280x800)
 @media screen and (min-width: 1280px) and (max-height: 800px) {
     .contenedor {
         overflow: hidden;
+        margin-top: 1rem;
     }
 
     .imagen-contenedor {
@@ -467,39 +540,44 @@
     }
 
     .contenedor_form {
-        transform: scale(0.95);
-        margin-top: 4rem;
-    }
+        transform: scale(1.05);
+}
 
     .contenedor-titulo {
-        margin-bottom: 20rem;
-    }
+        display: flex;
+        width: 85%;
+        margin-bottom: 0rem;
+        flex-wrap: wrap;
+        }
 
     .imagen_fondo {
+        display: none;
         width: 520px;
         height: 320px;
         left: 12rem;
         top: 28rem;
     }
+    
+    .input-wrapper input {
+        border-color: #bdb4b4;
+        }
+
+        .contenedor_contraseña {
+            margin: 0; 
+        }
+
+        .contactos {
+            margin-top: 1rem;
+        }
+
+        .contenedor-botones {
+            width: 62%;
+            margin-left: 4rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
 }
 
-// Desktop/Laptop (1366x768 y superior)
-@media screen and (min-width: 1366px) {
-    .contenedor-titulo {
-        margin-bottom: 26rem;
-    }
-
-    .imagen_fondo {
-        width: 715px;
-        height: 430px;
-        left: 12rem;
-        top: 27rem;
-    }
-
-    .contenedor_form {
-        max-width: 450px;
-    }
-}
 
 // Ajustes generales para dispositivos móviles
 @media only screen and (max-width: 992px) {
@@ -516,11 +594,10 @@
     }
 }
 
-// Ajustes para dispositivos muy pequeños
+// Samsung galaxy s8
 @media only screen and (max-width: 480px) {
     .contenedor_form {
-        padding: 1.5rem 1rem;
-        min-width: 280px;
+        transform: scale(0.9);
         margin-top: 3rem;
     }
 
@@ -529,5 +606,18 @@
     .botonSoporte {
         height: 40px;
         font-size: 0.9rem;
+    }
+
+    .input-wrapper input {
+        border-color: #bdb4b4;
+    }
+    .contenedor_contraseña {
+        margin-bottom: 0rem;
+    }
+    .contenedor-botones {
+        width: 62%;
+        margin-left: 4rem;
+        display: flex;
+        flex-wrap: wrap;
     }
 }

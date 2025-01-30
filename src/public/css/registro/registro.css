@@ -660,7 +660,7 @@ input[type=number] {
     width: 100%;
   }
   .form-container {
-    padding: 1rem;
+    padding: 0rem;
   }
   .form-row.two-columns,
   .form-row.three-columns {
@@ -670,6 +670,15 @@ input[type=number] {
   .button-group {
     flex-direction: column;
     gap: 1rem;
+  }
+  .progress-bar {
+    width: 100%;
+  }
+  .step.active .step-circle {
+    transform: scale(0.7);
+  }
+  .step .step-circle {
+    transform: scale(0.7);
   }
 }
 /* iPad Mini */
@@ -684,7 +693,7 @@ input[type=number] {
   .right-side {
     width: 100%;
     max-width: 600px;
-    margin: 1.5rem auto;
+    margin: auto auto;
     padding: 1.5rem;
   }
   .seccion {
@@ -728,7 +737,7 @@ input[type=number] {
   .right-side {
     width: 100%;
     max-width: 700px;
-    margin: 2rem auto;
+    margin: auto auto;
     padding: 2rem;
   }
   .seccion {
@@ -761,6 +770,15 @@ input[type=number] {
   .button-group {
     margin-top: 1.5rem;
   }
+  .registration-form {
+    transform: scale(1.11);
+    width: 100%;
+    height: 360px;
+    -webkit-transform: scale(1.11);
+    -moz-transform: scale(1.11);
+    -ms-transform: scale(1.11);
+    -o-transform: scale(1.11);
+  }
 }
 /* iPad Pro */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -774,7 +792,7 @@ input[type=number] {
   .right-side {
     width: 100%;
     max-width: 800px;
-    margin: 2rem auto;
+    margin: auto auto;
     padding: 2rem;
   }
   .seccion {
@@ -820,7 +838,7 @@ input[type=number] {
     overflow: hidden;
   }
   .left-side {
-    width: 30%;
+    width: 59%;
     height: 100vh;
     padding: 1rem;
     display: flex;
@@ -829,7 +847,7 @@ input[type=number] {
   }
   .left-side .contenedor-titulo {
     max-width: 100%;
-    margin-top: 4.8rem;
+    margin-top: 13.8rem;
   }
   .left-side .contenedor-titulo .tittle-frase {
     font-size: 1.6rem;
@@ -841,18 +859,19 @@ input[type=number] {
     line-height: 1.3;
   }
   .left-side .imagen-secundaria {
-    width: 250px;
-    height: auto;
-    left: 1.5rem;
-    margin-top: 0.8rem;
+    display: none;
   }
   .right-side {
     line-height: 17px;
-    width: 70%;
-    padding: 1rem 1rem;
+    width: 102%;
+    /* padding: 1rem 1rem; */
     margin: 0;
-    height: 100vh;
-    overflow-y: auto;
+    /* height: 100vh; */
+    /* overflow-y: auto; */
+  }
+  .registration-form {
+    width: 64%;
+    margin-left: 8rem;
   }
   .seccion {
     width: 100%;
@@ -863,6 +882,7 @@ input[type=number] {
   }
   .form-container {
     padding: 0.5rem;
+    margin: 0;
   }
   .form-title {
     font-size: 1.3rem;
@@ -912,25 +932,15 @@ input[type=number] {
   }
   .left-side .contenedor-titulo {
     max-width: 100%;
-    margin-top: 5rem;
-  }
-  .left-side .contenedor-titulo .tittle-frase {
-    font-size: 2.2rem;
-    line-height: 1.2;
-    margin-bottom: 0.8rem;
-  }
-  .left-side .contenedor-titulo .parrafo {
-    font-size: 0.9rem;
-    line-height: 1.4;
+    margin-top: 18rem;
+    display: flex;
+    flex-wrap: wrap;
   }
   .left-side .imagen-secundaria {
-    width: 450px;
-    height: auto;
-    left: 2rem;
-    margin-top: 5rem;
+    display: none;
   }
   .right-side {
-    width: 60%;
+    width: 69%;
     padding: 1.5rem 2rem;
     margin: 0;
     height: 100vh;
@@ -992,6 +1002,12 @@ input[type=number] {
   .form-group select {
     font-size: 0.95rem;
     padding: 0.6rem 0.8rem;
+  }
+  .step.active .step-circle {
+    transform: scale(0.7);
+  }
+  .step.active .step-circle {
+    transform: scale(0.7);
   }
 }
 

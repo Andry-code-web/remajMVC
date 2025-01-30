@@ -1,48 +1,152 @@
-<!-- script cronograma -->
-<script src="/js/scriptsadmin/modalcronograma.js"></script>
-
 <% remates.forEach(function(remate) { %>
-<div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades" style="display: none;">
-  <form id="formularioCronograma" method="POST" action="/admin/guardar-cronograma" class="formulario_sistema_remates_personalizado">
-    <h2 class="titulo_formulario_sistema_remates">Cronograma de Actividades</h2>
-    <div class="campo_formulario_sistema_remates">
-      <label for="remate_id" class="etiqueta_campo_sistema_remates">ID del Remate:</label>
-      <select name="remate_id" id="remate_id" class="entrada_campo_sistema_remates"></select>
-      <option value="remate_id">"<%= remate.id %>"</option>
-    </div>
-    <div class="campo_formulario_sistema_remates">
-      <label for="nombre" class="etiqueta_campo_sistema_remates">Fase:</label>
-      <select id="nombre" name="nombre" class="entrada_campo_sistema_remates" required>
-        <option value="#">Escoge la fase</option>
-        <option value="Publicación e Inscripción">Publicación e Inscripción</option>
-        <option value="Validación de Inscripción">Validación de Inscripción</option>
-        <option value="Presentación de Ofertas">Presentación de Ofertas</option>
-        <option value="Pago Saldo">Pago Saldo</option>
-        <option value="Validación del Saldo">Validación del Saldo</option>
-      </select>
-    </div>
-    <div class="campo_formulario_sistema_remates">
-      <label for="fecha_inicio" class="etiqueta_campo_sistema_remates">Fecha Inicio:</label>
-      <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" class="entrada_campo_sistema_remates" required />
-    </div>
-    <div class="campo_formulario_sistema_remates">
-      <label for="fecha_fin" class="etiqueta_campo_sistema_remates">Fecha Fin:</label>
-      <input type="datetime-local" id="fecha_fin" name="fecha_fin" class="entrada_campo_sistema_remates" required />
-    </div>
-    <div class="contenedor_botones_sistema_remates">
-      <button type="button" class="button boton_cancelar_sistema_remates" onclick="cerrarModales()">
-        <span class="button_lg">
-          <span class="button_sl"></span>
-          <span class="button_text">Cancelar</span>
-        </span>
-      </button>
-      <button type="submit" class="button boton_guardar_sistema_remates">
-        <span class="button_lg">
-          <span class="button_sl"></span>
-          <span class="button_text">Guardar</span>
-        </span>
-      </button>
-    </div>
-  </form>
-</div>
-<% }); %>
+  <div id="tarjetaCronograma" class="tarjeta_formulario_cronograma_actividades" style="display: none;">
+    <form id="formularioCronograma" method="POST" action="/admin/guardar-cronograma"
+      class="formulario_sistema_remates_personalizado">
+      <h2 class="titulo_formulario_sistema_remates">Cronograma de Actividades</h2>
+      <div class="campo_formulario_sistema_remates">
+        <label for="identificador_remate_asociado" class="etiqueta_campo_formulario_cronograma">ID REMATE</label>
+        <input type="text" id="identificador_remate_asociado" name="remates_id"
+          class="entrada_texto_formulario_cronograma" value="<%= remate.id %>" readonly required>
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="nombre" class="etiqueta_campo_sistema_remates">Fase:</label>
+        <select id="nombre" name="nombre" class="entrada_campo_sistema_remates" required>
+          <option value="#">Escoge la fase</option>
+          <option value="Publicación e Inscripción">Publicación e Inscripción</option>
+          <option value="Validación de Inscripción">Validación de Inscripción</option>
+          <option value="Presentación de Ofertas">Presentación de Ofertas</option>
+          <option value="Pago Saldo">Pago Saldo</option>
+          <option value="Validación del Saldo">Validación del Saldo</option>
+        </select>
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="fecha_inicio" class="etiqueta_campo_sistema_remates">Fecha Inicio:</label>
+        <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" class="entrada_campo_sistema_remates"
+          required />
+      </div>
+      <div class="campo_formulario_sistema_remates">
+        <label for="fecha_fin" class="etiqueta_campo_sistema_remates">Fecha Fin:</label>
+        <input type="datetime-local" id="fecha_fin" name="fecha_fin" class="entrada_campo_sistema_remates" required />
+      </div>
+      <div class="contenedor_botones_sistema_remates">
+        <button type="button" class="button boton_cancelar_sistema_remates" onclick="cerrarModales()">
+          <span class="button_lg">
+            <span class="button_sl"></span>
+            <span class="button_text">Cancelar</span>
+          </span>
+        </button>
+        <button type="submit" class="button boton_guardar_sistema_remates">
+          <span class="button_lg">
+            <span class="button_sl"></span>
+            <span class="button_text">Guardar</span>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <% }); %>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Obtener referencias a elementos del DOM
+        const tarjetaCronograma = document.getElementById('tarjetaCronograma');
+        const btnCancelarRegistro = document.querySelector('#tarjetaCronograma .boton_cancelar_sistema_remates');
+        const btnGuardarCronograma = document.getElementById('formularioCronograma');
+        const formularioCronograma = document.getElementById('formularioCronograma');
+
+        // Función para abrir el modal de cronograma
+        window.abrirModalcronograma = function (remateId) {
+          document.getElementById('identificador_remate_asociado').value = remateId;
+          tarjetaCronograma.style.display = 'block';
+        };
+
+        // Función para ocultar el formulario de registro
+        function ocultarFormularioRegistro() {
+          tarjetaCronograma.style.display = 'none';
+        }
+
+        // Función para guardar el cronograma inicial
+        function guardarCronograma(e) {
+          e.preventDefault();
+          const idRemate = document.getElementById('identificador_remate_asociado').value;
+          const fase = document.getElementById('nombre').value;
+          const fechaInicio = document.getElementById('fecha_inicio').value;
+          const fechaFin = document.getElementById('fecha_fin').value;
+
+          Swal.fire({
+            title: '¿Estás seguro?',
+            html: `¿Quieres subir los siguientes cambios?<br><br>
+    <strong>ID Remate:</strong> ${idRemate}<br><br>
+    <strong>Fase:</strong> ${fase}<br>
+    <strong>Fecha Inicio:</strong> ${fechaInicio}<br>
+    <strong>Fecha Fin:</strong> ${fechaFin}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Estoy de acuerdo',
+            cancelButtonText: 'Cancelar',
+            showDenyButton: true,
+            denyButtonText: 'Retroceder',
+            denyButtonColor: '#6c757d',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetch("/admin/guardar-cronograma", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  remates_id: idRemate,
+                  nombre: fase,
+                  fecha_inicio: fechaInicio,
+                  fecha_fin: fechaFin
+                })
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.message === "Cronograma guardado exitosamente") {
+                    actualizarProgreso(idRemate);
+                    ocultarFormularioRegistro();
+                  } else {
+                    Swal.fire("Error", data.message, "error");
+                  }
+                })
+                /* remate creado */
+                .catch((error) => {
+                  console.error("success:");
+                  Swal.fire(
+                    "Success",
+                    "Cronograma guardado exitosamente",
+                    "success"
+                  );
+                });
+            } else if (result.isDenied) {
+              // No hacer nada, solo cerrar el SweetAlert
+            } else {
+              ocultarFormularioRegistro();
+            }
+          });
+        }
+
+        // Event Listeners
+        if (btnCancelarRegistro) {
+          btnCancelarRegistro.addEventListener('click', ocultarFormularioRegistro);
+        }
+        if (btnGuardarCronograma) {
+          btnGuardarCronograma.addEventListener('submit', guardarCronograma);
+        }
+
+        // Cerrar la tarjeta al hacer clic fuera de ella
+        window.addEventListener('click', function (event) {
+          if (event.target === tarjetaCronograma) {
+            ocultarFormularioRegistro();
+          }
+        });
+
+        // Prevenir envío de formulario por defecto
+        if (formularioCronograma) {
+          formularioCronograma.addEventListener('submit', (e) => e.preventDefault());
+        }
+      });
+    </script>

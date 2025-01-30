@@ -143,7 +143,7 @@
     border-radius: 999px;
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -228,15 +228,15 @@
     }
 }
 
-.step[data-step="1"].active~.progress-line::before {
+.step[data-step="1"].active ~ .progress-line::before {
     width: 0%;
 }
 
-.step[data-step="2"].active~.progress-line::before {
+.step[data-step="2"].active ~ .progress-line::before {
     width: 50%;
 }
 
-.step[data-step="3"].active~.progress-line::before {
+.step[data-step="3"].active ~ .progress-line::before {
     width: 100%;
 }
 
@@ -331,10 +331,10 @@
         background: white;
     }
 
-    input:focus~label,
-    input:not(:placeholder-shown)~label,
-    select:focus~label,
-    select:not([value=""])~label {
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label,
+    select:focus ~ label,
+    select:not([value=""]) ~ label {
         top: 0;
         font-size: 0.85rem;
         color: #780103;
@@ -515,8 +515,8 @@ input.error {
             font-size: 1rem;
         }
 
-        input:focus~label,
-        input:not(:placeholder-shown)~label {
+        input:focus ~ label,
+        input:not(:placeholder-shown) ~ label {
             font-size: 0.9rem;
         }
     }
@@ -607,8 +607,8 @@ input[type="number"] {
 .form-group {
     position: relative;
 
-    input[type="email"]:valid~.check-icon,
-    input[name="confirmar_email"]:valid~.check-icon {
+    input[type="email"]:valid ~ .check-icon,
+    input[name="confirmar_email"]:valid ~ .check-icon {
         opacity: 1;
     }
 
@@ -690,9 +690,6 @@ input[type="number"] {
     }
 }
 
-
-
-
 /* Samsung Galaxy S8, S20 Ultra (móviles) */
 @media screen and (max-width: 743px) {
     .form-wrapper {
@@ -716,7 +713,7 @@ input[type="number"] {
     }
 
     .form-container {
-        padding: 1rem;
+        padding: 0rem;
     }
 
     .form-row.two-columns,
@@ -729,6 +726,18 @@ input[type="number"] {
         flex-direction: column;
         gap: 1rem;
     }
+    
+    .progress-bar {
+        width: 100%;
+}
+
+.step.active .step-circle {
+    transform: scale(0.70);
+}
+.step .step-circle {
+    transform: scale(0.70);
+}
+
 }
 
 /* iPad Mini */
@@ -745,7 +754,7 @@ input[type="number"] {
     .right-side {
         width: 100%;
         max-width: 600px;
-        margin: 1.5rem auto;
+        margin: auto auto;
         padding: 1.5rem;
     }
 
@@ -800,7 +809,7 @@ input[type="number"] {
     .right-side {
         width: 100%;
         max-width: 700px;
-        margin: 2rem auto;
+        margin: auto auto;
         padding: 2rem;
     }
 
@@ -841,6 +850,15 @@ input[type="number"] {
     .button-group {
         margin-top: 1.5rem;
     }
+    .registration-form {
+        transform: scale(1.11);
+        width: 100%;
+        height: 360px;
+        -webkit-transform: scale(1.11);
+        -moz-transform: scale(1.11);
+        -ms-transform: scale(1.11);
+        -o-transform: scale(1.11);
+}
 }
 
 /* iPad Pro */
@@ -857,7 +875,7 @@ input[type="number"] {
     .right-side {
         width: 100%;
         max-width: 800px;
-        margin: 2rem auto;
+        margin: auto auto;
         padding: 2rem;
     }
 
@@ -913,7 +931,7 @@ input[type="number"] {
     }
 
     .left-side {
-        width: 30%;
+        width: 59%;
         height: 100vh;
         padding: 1rem;
         display: flex;
@@ -922,7 +940,7 @@ input[type="number"] {
 
         .contenedor-titulo {
             max-width: 100%;
-            margin-top: 4.8rem;
+            margin-top: 13.8rem;
 
             .tittle-frase {
                 font-size: 1.6rem;
@@ -937,22 +955,23 @@ input[type="number"] {
         }
 
         .imagen-secundaria {
-            width: 250px;
-            height: auto;
-            left: 1.5rem;
-            margin-top: 0.8rem;
+            display: none;
         }
     }
 
     .right-side {
         line-height: 17px;
-        width: 70%;
-        padding: 1rem 1rem;
+        width: 102%;
+        /* padding: 1rem 1rem; */
         margin: 0;
-        height: 100vh;
-        overflow-y: auto;
+        /* height: 100vh; */
+        /* overflow-y: auto; */
     }
 
+    .registration-form {
+        width: 64%;
+        margin-left: 8rem;
+    }
     .seccion {
         width: 100%;
         max-width: 450px;
@@ -963,6 +982,7 @@ input[type="number"] {
 
     .form-container {
         padding: 0.5rem;
+        margin: 0;
     }
 
     .form-title {
@@ -1021,30 +1041,18 @@ input[type="number"] {
 
         .contenedor-titulo {
             max-width: 100%;
-            margin-top: 5rem;
-
-            .tittle-frase {
-                font-size: 2.2rem;
-                line-height: 1.2;
-                margin-bottom: 0.8rem;
-            }
-
-            .parrafo {
-                font-size: 0.9rem;
-                line-height: 1.4;
-            }
+            margin-top: 18rem;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .imagen-secundaria {
-            width: 450px;
-            height: auto;
-            left: 2rem;
-            margin-top: 5rem;
+            display: none;
         }
     }
 
     .right-side {
-        width: 60%;
+        width: 69%;
         padding: 1.5rem 2rem;
         margin: 0;
         height: 100vh;
@@ -1122,5 +1130,13 @@ input[type="number"] {
             font-size: 0.95rem;
             padding: 0.6rem 0.8rem;
         }
+    }
+
+    .step.active .step-circle {
+        transform: scale(0.70);
+    }
+    
+    .step.active .step-circle {
+        transform: scale(0.70);
     }
 }

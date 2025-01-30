@@ -318,7 +318,7 @@
         padding-right: 20px;
     }
 
-/*     .imagen_hero_derecha {
+    /*     .imagen_hero_derecha {
         width: 45%;
     } */
 
@@ -391,6 +391,21 @@
     .contenedor_tarjetas_beneficios {
         grid-template-columns: repeat(4, 1fr);
     }
+    .casilla-de-verificacion-me-gusta+.contenedor-boton-me-gusta {
+        position: absolute;
+        bottom: 90px;
+        right: 21%;
+        top: 82%;
+        z-index: 1;
+        background: #780103;
+        border-radius: 10px;
+        width: 75px;
+        height: 35px;
+    }
+
+    element.style {
+        text-align: right;
+    }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1440px) {
@@ -409,5 +424,8 @@
 
     .titulo_modalidades_principal {
         font-size: 30px;
+    }
+    .btn_acciones{
+        text-align:center;
     }
 }

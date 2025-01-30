@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return "DNI inválido: no puede ser una secuencia numérica";
             }
             for (let i = 0; i < value.length - 3; i++) {
-                const pattern = value.slice(i, i + 4);
+                const pattern = value.slice(i, i + 6);
                 if (/(\d)\1{3}/.test(pattern)) {
                     return "DNI inválido: no puede contener 4 números iguales consecutivos";
                 }

@@ -748,9 +748,15 @@ form {
   .property-address {
     font-size: 1.3rem;
   }
+<<<<<<< HEAD
   /*  .carousel {
       max-width: 700px;
   } */
+=======
+  /*     .carousel {
+          max-width: 700px;
+      } */
+>>>>>>> ca84880ddb86d3e6079a05d3ec482e70e2b44bab
   .nav {
     flex-direction: row;
   }

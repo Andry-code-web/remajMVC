@@ -239,7 +239,7 @@ exports.obtenerCronograma = async (req, res) => {
 /* seguimiento */
 exports.createSeguimiento = async (req, res) => {
   const {
-    expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria,
+    expediente, distrito_judicial, instancia, especialidad, nro_convocatoria,
     fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id
   } = req.body;
 
@@ -247,7 +247,6 @@ exports.createSeguimiento = async (req, res) => {
     expediente || null,
     distrito_judicial || null,
     instancia || null,
-    organo_juridiccional || null,
     especialidad || null,
     nro_convocatoria || null,
     fecha_registro || null,
@@ -260,7 +259,7 @@ exports.createSeguimiento = async (req, res) => {
 
   try {
     const query = `
-      INSERT INTO seguimiento (expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+      INSERT INTO seguimiento (expediente, distrito_judicial, instancia, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const [guardarSeguimiento] = await db.execute(query, datosSeguimiento);
@@ -272,7 +271,6 @@ exports.createSeguimiento = async (req, res) => {
 };
 
 
-/* CONTROLLER CLIENTES */
 /* CONTROLLER CLIENTES */
 exports.getClientes = async (req, res) => {
   try {
@@ -439,27 +437,32 @@ exports.obtenerCatalogo = async (req, res) => {
 
 
 // Controlador para insertar un nuevo inmueble
+const checkRemateExists = async (remate_id) => {
+  const query = `SELECT id FROM remates WHERE id = ?`;
+  const [rows] = await db.query(query, [remate_id]);
+  return rows.length > 0;
+};
+
 exports.crearInmueble = async (req, res) => {
   const { remate_id, partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar } = req.body;
 
-  console.log('Datos recibidos:', req.body); // Registro de depuración
-
-  const datosInmueble = [
-    partida_registral || null,
-    tipo_inmueble || null,
-    direccion || null,
-    carga_ogravamen || null,
-    porcentaje_rematar || null,
-    remate_id || null
-  ];
-
   try {
-    const newInmuebleId = await insertInmueble(datosInmueble);
-    if (newInmuebleId) {
-      res.json({ success: true, message: 'Inmueble creado exitosamente', inmuebleId: newInmuebleId });
-    } else {
-      res.json({ success: false, message: 'Error al crear el inmueble' });
+    const exists = await checkRemateExists(remate_id);
+    if (!exists) {
+      return res.json({ success: false, message: `El remate con ID ${remate_id} no existe.` });
     }
+
+    const datosInmueble = [
+      partida_registral || null,
+      tipo_inmueble || null,
+      direccion || null,
+      carga_ogravamen || null,
+      porcentaje_rematar || null,
+      remate_id || null
+    ];
+
+    const newInmuebleId = await insertInmueble(datosInmueble);
+    res.json({ success: true, message: 'Inmueble creado exitosamente', inmuebleId: newInmuebleId });
   } catch (error) {
     console.error('Error al crear el inmueble:', error);
     res.json({ success: false, error: error.message });
@@ -467,10 +470,12 @@ exports.crearInmueble = async (req, res) => {
 };
 
 
+
+
 // Controlador para crear nuevos detalles de remate
 exports.crearDetalles = async (req, res) => {
   const {
-    remate_id, expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+    remate_id, expediente, distrito_judicial, instancia, juez, especialista,
     materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
     incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo
   } = req.body;
@@ -478,7 +483,6 @@ exports.crearDetalles = async (req, res) => {
   const datosDetalles = [
     expediente || null,
     distrito_judicial || null,
-    organo_juridiccional || null,
     instancia || null,
     juez || null,
     especialista || null,

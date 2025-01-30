@@ -269,7 +269,7 @@ const getCatalogoClientes = async () => {
 
 const createSeguimiento = async (datosSeguimiento) => {
   const query = `
-    INSERT INTO seguimiento (expediente, distrito_judicial, instancia, organo_juridiccional, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+    INSERT INTO seguimiento (expediente, distrito_judicial, instancia especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   const [result] = await db.query(query, datosSeguimiento);
@@ -288,6 +288,7 @@ const insertInmueble = async (datosInmueble) => {
 
   try {
     const [result] = await db.query(query, [partida_registral, tipo_inmueble, direccion, carga_ogravamen, porcentaje_rematar, remate_id]);
+    console.log('Inmueble insertado con ID:', result.insertId);
     return result.insertId;
   } catch (error) {
     throw new Error('Error al insertar el inmueble: ' + error.message);
@@ -296,16 +297,18 @@ const insertInmueble = async (datosInmueble) => {
 
 
 
+
+
 // Función para insertar nuevos detalles de remate
 const insertDetalles = async (datosDetalles) => {
   const [
-    expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+    expediente, distrito_judicial, instancia, juez, especialista,
     materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
     incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
   ] = datosDetalles;
 
   const query = `
-    INSERT INTO detalles (expediente, distrito_judicial, organo_juridiccional, instancia, juez,
+    INSERT INTO detalles (expediente, distrito_judicial, instancia, juez,
       especialista, materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion,
       precio_base, incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remates_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -313,7 +316,7 @@ const insertDetalles = async (datosDetalles) => {
 
   try {
     const [result] = await db.query(query, [
-      expediente, distrito_judicial, organo_juridiccional, instancia, juez, especialista,
+      expediente, distrito_judicial, instancia, juez, especialista,
       materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
       incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
     ]);

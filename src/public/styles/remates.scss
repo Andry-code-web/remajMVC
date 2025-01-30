@@ -311,7 +311,7 @@ form {
     display: inline-block;
     max-width: 70%;
     word-wrap: break-word;
-    margin-left: 30%;
+    margin-left: 45%;
     animation: bounceInRight 0.3s ease-in-out;
 }
 
@@ -534,6 +534,7 @@ form {
     padding: 5px 10px;
     border-radius: 4px;
     text-decoration: none;
+    width: 50%;
 }
 
 .info_img {
@@ -545,13 +546,14 @@ form {
 
 .info_img_tex {
     position: absolute;
-    bottom: 10px;
+    bottom: 1.2rem;
     left: 70px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 5px 10px;
     border-radius: 4px;
     margin: 0;
+    top: 74%;
 }
 
 .card-content {
@@ -571,41 +573,109 @@ form {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .banner_remates2 {
-        height: 200px;
+    .card {
+        width: 80%;
+        font-size: 2.4rem;
+        height: 37vh;
     }
 
-    .card {
+    .image-container {
+        height: auto;
         width: 100%;
     }
 
-    .decripcion_remates {
-        font-size: 1.2em;
+    h2.decripcion_remates {
+        font-size: 1.5rem;
+    }
+
+    .info_img_tex {
+        top: 87%;
+        font-size: 1.9rem;
+        left: 10%;
+    }
+
+    .etiqueta_imagen {
+        font-size: 2.4rem;
     }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) and (max-width: 992px) {
     .card {
-        width: 45%;
+        width: 80%;
+        font-size: 1.8rem;
+        height: auto;
+        top: 26px;
+    }
+
+    .image-container {
+        height: auto;
+        width: 100%;
+    }
+
+    h2.decripcion_remates {
+        font-size: 1.5rem;
+    }
+
+    .info_img_tex {
+        top: 85%;
+        font-size: 1.5rem;
+    }
+
+    .etiqueta_imagen {
+        font-size: 1.4rem;
+    }
+
+    .overlay {
+        /*    margin-top: 7%; */
+        top: 58px;
     }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .card {
-        width: 30%;
+        width: 45%;
+        font-size: 1.8rem;
+        height: auto;
+    }
+
+    .image-container {
+        height: auto;
+        width: 100%;
+    }
+
+    h2.decripcion_remates {
+        font-size: 1.5rem;
+    }
+
+    .info_img_tex {
+        top: 85%;
+        font-size: 1.5rem;
+    }
+
+    .etiqueta_imagen {
+        font-size: 1.4rem;
     }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) and (max-width: 1440px) {
     .card {
-        width: 22%;
+        width: 31%;
+        height: auto;
+    }
+
+    h2.decripcion_remates {
+        font-size: 1.5rem;
+    }
+
+    .enlaces_carta {
+        font-size: 1.5rem;
     }
 }
 
-/* chat y details */
+
 /* Chat y detalles */
 
 @media only screen and (max-width: 600px) {
@@ -733,16 +803,47 @@ form {
         font-size: 1.3rem;
     }
 
-    .carousel {
+    /*  .carousel {
         max-width: 700px;
-    }
+    } */
 
     .nav {
         flex-direction: row;
     }
 
     .sidebar {
-        margin-top: 20px;
+        margin-top: -7%;
+    }
+
+    #messages {
+        height: 220px;
+        font-size: 0.8rem;
+    }
+
+    #submit-btn {
+        margin-left: 6px;
+        padding: 7px 17px;
+    }
+
+    #recommended-submit-btn {
+        margin-left: 6px;
+        padding: 7px 17px;
+    }
+
+   
+    #textos_extra{
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+
+    #countdown1 {
+        font-size: 1.5rem;
+    }
+    #input-bid{
+        font-size: 0.9rem;
+    }
+    #recommended-bid{
+        font-size: 0.9rem;
     }
 }
 

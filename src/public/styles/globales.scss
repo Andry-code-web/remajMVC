@@ -313,12 +313,12 @@
 }
 
 
-.nav {
+.nav_header {
   display: flex;
   gap: 2rem;
 }
 
-.nav a {
+.nav_header a {
   text-decoration: none;
   color: white;
   font-weight: bold;
@@ -495,7 +495,7 @@ footer {
 @media only screen and (max-width: 600px) {
 
   .logo-container,
-  .nav,
+  .nav_header,
   .contenedor_user_login {
     display: none !important;
   }
@@ -790,7 +790,7 @@ footer {
 @media only screen and (min-width: 768px) and (max-width: 992px) {
 
   .logo-container,
-  .nav,
+  .nav_header,
   .contenedor_user_login {
     display: none !important;
   }

@@ -34,7 +34,7 @@
           <a href="/auctions/<%= remate.id %>" class="etiqueta_imagen">más información</a>
   
           <!-- Imagen de estado de la propiedad -->
-          <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info">
+          <!-- <img class="info_img" src="/img/imagen_pequeña_casa.png" alt="Info"> -->
           <h6 class="info_img_tex">
             <%= remate.estado %>
           </h6>
@@ -42,9 +42,11 @@
         <a class="enlaces_carta" href="/auctions/<%= remate.id %>">
           <div class="card-content">
             <!-- Título y descripción del remate -->
+             <div class="descripcion_tamaño">
             <h2 class="decripcion_remates">
               <%= remate.descripcion %>
             </h2>
+          </div>
             <p class="address">
               <%= remate.ubicacion %>
             </p>

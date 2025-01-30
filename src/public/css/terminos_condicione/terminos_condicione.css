@@ -124,30 +124,30 @@
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   .terminoscondiciones {
     width: 80%;
-    padding: 2rem;
+    padding: 0.8rem;
   }
   .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
-    font-size: 1.6rem;
+    font-size: 0.8rem;
   }
   .terminoscondiciones p {
     width: 85%;
     margin-left: 3rem;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
   }
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) and (max-width: 1440px) {
   .terminoscondiciones {
-    width: 85%;
-    padding: 2.5rem;
+    width: 80%;
+    padding: 0.8rem;
   }
   .terminoscondiciones h1, .terminoscondiciones h2, .terminoscondiciones h3 {
-    font-size: 1.8rem;
+    font-size: 0.8rem;
   }
   .terminoscondiciones p {
-    width: 80%;
-    margin-left: 4rem;
-    font-size: 1.3rem;
+    width: 85%;
+    margin-left: 3rem;
+    font-size: 0.8rem;
   }
 }
 

@@ -8,14 +8,15 @@
 
 /* efecto de entrada */
 @keyframes slideInFromLeft {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .contenedor-general {
@@ -34,7 +35,7 @@
 .left-side {
     width: 45%;
     position: relative;
-    background: linear-gradient(90deg, #500001,#a70104,red);
+    background: linear-gradient(90deg, #500001, #a70104, red);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -63,8 +64,9 @@
         }
     }
 
-    /* Imagen cambiante */
+    /* imagen */
     .imagen-secundaria {
+        display: block;
         position: relative;
         width: 700px;
         height: 420px;
@@ -83,11 +85,11 @@
 /* contenedor de titulo y parrafo */
 .contenedor-titulo {
     font-family: $fuenteSecundaria;
-    text-align: center; 
-    max-width: 600px; 
+    text-align: center;
+    max-width: 600px;
     margin: 0 auto;
     color: white;
-    padding: 20px 10px; 
+    padding: 20px 10px;
     position: relative;
     margin-bottom: 2rem;
 
@@ -165,7 +167,7 @@
     position: relative;
     width: 50px;
     text-align: center;
-    
+
     .step-circle {
         width: 50px;
         height: 50px;
@@ -226,22 +228,22 @@
     }
 }
 
-.step[data-step="1"].active ~ .progress-line::before {
+.step[data-step="1"].active~.progress-line::before {
     width: 0%;
 }
 
-.step[data-step="2"].active ~ .progress-line::before {
+.step[data-step="2"].active~.progress-line::before {
     width: 50%;
 }
 
-.step[data-step="3"].active ~ .progress-line::before {
+.step[data-step="3"].active~.progress-line::before {
     width: 100%;
 }
 
 /* Formulario */
 .form-container {
     font-family: "Segoe UI";
-    max-width: none; 
+    max-width: none;
     margin: 0 auto;
     padding: 2rem 1rem;
     display: flex;
@@ -284,7 +286,7 @@
     select {
         width: 100%;
         padding: 0.75rem 1rem;
-        border: 1px solid #cbd5e0; 
+        border: 1px solid #cbd5e0;
         border-radius: 6px;
         font-size: 0.95rem;
         background-color: transparent;
@@ -293,7 +295,7 @@
 
         &:focus {
             outline: none;
-            border-color: #780103; 
+            border-color: #780103;
         }
     }
 
@@ -307,7 +309,7 @@
 
         option {
             background-color: white;
-            color: #2d3748; 
+            color: #2d3748;
             padding: 0.5rem;
 
             &:hover {
@@ -329,13 +331,13 @@
         background: white;
     }
 
-    input:focus ~ label,
-    input:not(:placeholder-shown) ~ label,
-    select:focus ~ label,
-    select:not([value=""]) ~ label {
+    input:focus~label,
+    input:not(:placeholder-shown)~label,
+    select:focus~label,
+    select:not([value=""])~label {
         top: 0;
         font-size: 0.85rem;
-        color: #780103; 
+        color: #780103;
         transform: translateY(-50%) scale(0.85);
     }
 }
@@ -351,7 +353,7 @@
     .form-control {
         width: 100%;
         padding: 0.75rem 1rem;
-        border: 1px solid #cbd5e0; 
+        border: 1px solid #cbd5e0;
         border-radius: 6px;
         background: white;
     }
@@ -361,7 +363,7 @@
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        background: #780103; 
+        background: #780103;
         color: white;
         border: none;
         padding: 0.5rem 1rem;
@@ -370,7 +372,7 @@
         transition: all 0.3s ease;
 
         &:hover {
-            background: #a01417; 
+            background: #a01417;
         }
     }
 }
@@ -379,7 +381,7 @@
     display: none;
     padding: 1rem;
     background: #f8f9fa;
-    border: 1px solid #e2e8f0; 
+    border: 1px solid #e2e8f0;
     border-radius: 6px;
     margin-top: 1rem;
 
@@ -391,18 +393,18 @@
     .copy-btn {
         background: none;
         border: none;
-        color: #780103; 
+        color: #780103;
         cursor: pointer;
         padding: 0.25rem;
         margin-left: 0.5rem;
 
         &:hover {
-            color: #a01417; 
+            color: #a01417;
         }
     }
 }
 
-/* Terms and conditions */
+/* Condiciones */
 .terms-container {
     display: flex;
     align-items: flex-start;
@@ -413,15 +415,15 @@
         margin-top: 0.25rem;
         width: 16px;
         height: 16px;
-        accent-color: #780103; 
+        accent-color: #780103;
     }
 
     label {
         font-size: 0.9rem;
-        color: #2d3748; 
+        color: #2d3748;
 
         a {
-            color: #780103; 
+            color: #780103;
             text-decoration: none;
             font-weight: 500;
 
@@ -452,19 +454,19 @@
 
     &.siguiente,
     &.finalizar {
-        background: #780103; 
+        background: #780103;
         color: #fff;
         flex: 1;
 
         &:hover {
-            background: #a01417; 
+            background: #a01417;
         }
     }
 
     &.anterior {
         background: transparent;
-        color: #780103; 
-        border: 1px solid #780103; 
+        color: #780103;
+        border: 1px solid #780103;
         flex: 1;
 
         &:hover {
@@ -473,7 +475,7 @@
     }
 }
 
-/* Error messages */
+/* mensaje de error */
 .error-message {
     color: #dc2626;
     font-size: 0.85rem;
@@ -490,32 +492,32 @@ input.error {
     opacity: 0;
     transform: scale(1.05);
     filter: blur(10px);
-    min-width: 650px; 
-    max-width: 100%; 
+    min-width: 650px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
 /* Ajustes para cada sección */
 .seccion1 {
-    width: 100%; 
+    width: 100%;
 }
 
 .seccion2 {
-    min-width: 200px; 
+    min-width: 200px;
 
     .form-group {
         input {
-            padding: 1.05rem 2rem; 
-            font-size: 1rem; 
+            padding: 1.05rem 2rem;
+            font-size: 1rem;
         }
 
         label {
-            font-size: 1rem; 
+            font-size: 1rem;
         }
 
-        input:focus ~ label,
-        input:not(:placeholder-shown) ~ label {
-            font-size: 0.9rem; 
+        input:focus~label,
+        input:not(:placeholder-shown)~label {
+            font-size: 0.9rem;
         }
     }
 
@@ -525,7 +527,7 @@ input.error {
 }
 
 .seccion3 {
-    min-width: 395px; 
+    min-width: 395px;
 }
 
 .seccion.active {
@@ -551,9 +553,9 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
+    -moz-appearance: textfield;
+    /* Firefox */
 }
 
 @keyframes dissolveIn {
@@ -562,6 +564,7 @@ input[type="number"] {
         transform: scale(1.05);
         filter: blur(10px);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);
@@ -575,10 +578,103 @@ input[type="number"] {
         transform: scale(1);
         filter: blur(0);
     }
+
     100% {
         opacity: 0;
         transform: scale(0.95);
         filter: blur(10px);
+    }
+}
+
+.check-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #22c55e;
+    font-size: 1.25rem;
+    z-index: 2;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.form-group {
+    position: relative;
+
+    input[type="email"]:valid~.check-icon,
+    input[name="confirmar_email"]:valid~.check-icon {
+        opacity: 1;
+    }
+
+    input[name="confirmar_email"],
+    input[type="password"] {
+        padding-right: 40px;
+    }
+}
+
+.password-group {
+    position: relative;
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.25rem;
+        color: #666;
+        z-index: 2;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #780103;
+        }
+    }
+}
+
+.form-title {
+    color: #780103;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    label {
+        color: #333;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    input,
+    select {
+        border: 2px solid #cbd5e0;
+        color: #333;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+            border-color: #780103;
+            box-shadow: 0 0 0 3px rgba(120, 1, 3, 0.1);
+        }
+
+        &::placeholder {
+            color: #9ca3af;
+        }
     }
 }
 
@@ -587,30 +683,42 @@ input[type="number"] {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+
+
+
+/* Samsung Galaxy S8, S20 Ultra (móviles) */
+@media screen and (max-width: 743px) {
     .form-wrapper {
         flex-direction: column;
+        min-height: 100vh;
     }
 
     .left-side {
         display: none;
-        width: 100%;
-        height: 200px;
     }
 
     .right-side {
-
         width: 100%;
+        margin: 1rem auto;
         padding: 1rem;
     }
-    
+
+    .seccion {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .form-container {
+        padding: 1rem;
+    }
+
     .form-row.two-columns,
     .form-row.three-columns {
         grid-template-columns: 1fr;
@@ -619,42 +727,400 @@ input[type="number"] {
 
     .button-group {
         flex-direction: column;
-    }
-    .left-side .imagen-secundaria { 
-    display: none;
-}
-}
-/* check confirmacion de correo*/
-.check-icon {
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #28a745;
-    font-size: 1.2rem;
-    display: none;
-}
-
-.password-group {
-    position: relative;
-
-    .toggle-password {
-        position: absolute;
-        right: 0.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1.2rem;
-        color: #666;
+        gap: 1rem;
     }
 }
 
-.form-group input[name="confirmar_email"] {
-    padding-right: 2rem;
+/* iPad Mini */
+@media screen and (min-width: 744px) and (max-width: 767px) {
+    .form-wrapper {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .left-side {
+        display: none;
+    }
+
+    .right-side {
+        width: 100%;
+        max-width: 600px;
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+    }
+
+    .seccion {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        input,
+        select {
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
+    }
+
+    .button-group {
+        margin-top: 1.5rem;
+    }
 }
 
-.form-group input[name="confirmar_email"]:valid ~ .check-icon {
-    display: block;
+/* iPad Air */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .form-wrapper {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .left-side {
+        display: none;
+    }
+
+    .right-side {
+        width: 100%;
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .seccion {
+        min-width: auto;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        input,
+        select {
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
+    }
+
+    .button-group {
+        margin-top: 1.5rem;
+    }
+}
+
+/* iPad Pro */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .form-wrapper {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .left-side {
+        display: none;
+    }
+
+    .right-side {
+        width: 100%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .seccion {
+        min-width: auto;
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .form-container {
+        padding: 2rem;
+    }
+
+    .form-title {
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        input,
+        select {
+            padding: 1rem 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+    }
+
+    .button-group {
+        margin-top: 1.5rem;
+    }
+}
+
+/* Nest Hub (1024 x 600) */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+    .form-wrapper {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .left-side {
+        width: 30%;
+        height: 100vh;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .contenedor-titulo {
+            max-width: 100%;
+            margin-top: 4.8rem;
+
+            .tittle-frase {
+                font-size: 1.6rem;
+                line-height: 1.2;
+                margin-bottom: 0.6rem;
+            }
+
+            .parrafo {
+                font-size: 0.75rem;
+                line-height: 1.3;
+            }
+        }
+
+        .imagen-secundaria {
+            width: 250px;
+            height: auto;
+            left: 1.5rem;
+            margin-top: 0.8rem;
+        }
+    }
+
+    .right-side {
+        line-height: 17px;
+        width: 70%;
+        padding: 1rem 1rem;
+        margin: 0;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .seccion {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+        transform: scale(0.75);
+        transform-origin: top center;
+    }
+
+    .form-container {
+        padding: 0.5rem;
+    }
+
+    .form-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-row {
+        margin-bottom: 0.6rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.4rem;
+
+        input,
+        select {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.75rem;
+        }
+
+        label {
+            font-size: 0.7rem;
+        }
+    }
+
+    .button-group {
+        margin-top: 1rem;
+    }
+
+    .error-message {
+        color: #dc2626;
+        font-size: 0.65rem;
+        margin-top: -3px;
+    }
+}
+
+/* Nest Hub Max (1280 x 800) */
+@media screen and (min-width: 1280px) {
+    .form-wrapper {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .left-side {
+        width: 40%;
+        height: 100vh;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .contenedor-titulo {
+            max-width: 100%;
+            margin-top: 5rem;
+
+            .tittle-frase {
+                font-size: 2.2rem;
+                line-height: 1.2;
+                margin-bottom: 0.8rem;
+            }
+
+            .parrafo {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+
+        .imagen-secundaria {
+            width: 450px;
+            height: auto;
+            left: 2rem;
+            margin-top: 5rem;
+        }
+    }
+
+    .right-side {
+        width: 60%;
+        padding: 1.5rem 2rem;
+        margin: 0;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .seccion {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+
+    .form-container {
+        padding: 1rem;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.7rem;
+
+        input,
+        select {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+        }
+    }
+
+    .button-group {
+        margin-top: 1.5rem;
+    }
+}
+
+/* Ajustes para dispositivos muy pequeños */
+@media screen and (max-width: 320px) {
+    .right-side {
+        padding: 0.75rem;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-bar {
+        width: 100%;
+        margin: 1.5rem auto;
+    }
+
+    .step .step-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .form-group {
+        label {
+            font-size: 0.9rem;
+        }
+
+        input,
+        select {
+            font-size: 0.95rem;
+            padding: 0.6rem 0.8rem;
+        }
+    }
 }

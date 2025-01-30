@@ -594,65 +594,188 @@
   }
 }
 
-@media only screen and (min-width: 600px) and (max-width: 992px) {
+
+/* iPad Mini and Air (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
   .auction-grid {
     grid-template-columns: 1fr;
-  }
-
-  .parent {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
-  }
-
-  .div1 { grid-area: 1 / 1 / 2 / 3; }
-  .div2 { grid-area: 2 / 1 / 3 / 3; }
-  .div3 { grid-area: 3 / 1 / 4 / 3; }
-  .div4 { grid-area: 4 / 1 / 5 / 2; }
-  .div5 { grid-area: 4 / 2 / 5 / 3; }
-  .div6 { grid-area: 5 / 1 / 6 / 3; }
-
-  .action-btn, .btn-chat {
-    width: 100%;
-    margin: 0.5rem 0;
-  }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
-  .auction-grid {
-    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1rem;
     max-width: 800px;
     margin: 0 auto;
   }
 
   .parent {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    width: 785px;
+    grid-template-columns: 45% 1fr;
+    grid-template-rows: auto 60px;
+    min-height: 500px; 
+    gap: 1rem;
   }
 
   .div1 { grid-area: 1 / 1 / 2 / 2; }
-  .div2 { grid-area: 2 / 1 / 3 / 2; }
-  .div3 { grid-area: 3 / 1 / 4 / 2; }
-  .div4, .div5, .div6 {
-    grid-area: auto;
+  .div2 { 
+    min-height: 440px;
+    overflow-y: auto; 
+  }
+  
+  /* Align buttons in a single row like desktop */
+  .div3 { grid-area: 2 / 1 / 3 / 2; }
+  .div4 { grid-area: 2 / 2 / 3 / 3; }
+  .div5 { grid-area: 2 / 3 / 3 / 4; }
+  .div6 { grid-area: 2 / 4 / 3 / 5; }
+
+  .auction-image {
+    height: 100%;
+    width: 350px;
   }
 
-  .action-btn, .btn-chat {
-    width: calc(33.33% - 1rem);
-    margin: 0.5rem;
+  .auction-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content_info_megusta .auction-details {
+    width: 342px;
+    margin-left: -1rem;
+  }
+
+  .content_info_megusta .auction-info {
+    width: 342px;
+    margin-bottom: 1.5rem;
+}
+}
+
+/* iPad Pro (1024px - 1366px) */
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  .auction-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+  .parent {
+    grid-template-columns: 45% 1fr;
+    grid-template-rows: auto 60px;
+    min-height: 600px;
+  }
+
+  .div1 { grid-area: 1 / 1 / 2 / 2; }
+  .div2 { 
+    grid-area: 1 / 2 / 2 / 3;
+    min-height: 540px;
+    overflow-y: auto;
+  }
+  
+  .div3 { grid-area: 2 / 1 / 3 / 2; }
+  .div4 { grid-area: 2 / 2 / 3 / 3; }
+  .div5 { grid-area: 2 / 3 / 3 / 4; }
+  .div6 { grid-area: 2 / 4 / 3 / 5; }
+
+  .auction-image {
+    height: 100%;
+  }
+
+  .auction-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+/* Nest Hub (1024px) and Nest Hub Max (1280px) */
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .property-container {
+    padding: 1rem;
+  }
+
+  .auction-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .parent {
+    grid-template-columns: 45% repeat(3, 1fr);
+    grid-template-rows: auto 50px;
+    min-height: 380px; /* Adjusted height for better fit */
+  }
+
+  .div1 { grid-area: 1 / 1 / 2 / 2; }
+  .div2 { grid-area: 1 / 2 / 2 / 5; }
+  .div3 { grid-area: 2 / 1 / 3 / 2; }
+  .div4 { grid-area: 2 / 2 / 3 / 3; }
+  .div5 { grid-area: 2 / 3 / 3 / 4; }
+  .div6 { grid-area: 2 / 4 / 3 / 5; }
+
+  .auction-image {
+    height: 100%;
   }
 
   .contenedor-estado {
-    margin-right: 0;
-    margin-bottom: 1rem;
+    margin: 0 auto;
+    margin-bottom: -36px;
+    margin-right: 194px;
+  }
+
+  .btn-chat {
+    margin: 0 auto;
+    margin-right: 50px;
+  }
+
+  /* Smaller buttons for better fit */
+  .action-btn {
+    width: 85px;
+    font-size: 11px;
+    padding: 0.5rem;
+    margin: 0 auto;
   }
 }
 
-// Animación para el efecto de luz en el botón de chat
-@keyframes lightEffect {
-  0% {
-    left: -50%;
+/* Larger screens (1441px+) */
+@media screen and (min-width: 1441px) {
+  .auction-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    max-width: 1600px;
   }
-  100% {
-    left: 150%;
+
+  .parent {
+    grid-template-columns: 45% repeat(3, 1fr);
+    grid-template-rows: auto 50px;
+    min-height: 400px;
+  }
+
+  .div1 { grid-area: 1 / 1 / 2 / 2; }
+  .div2 { grid-area: 1 / 2 / 2 / 5; }
+  .div3 { grid-area: 2 / 1 / 3 / 2; }
+  .div4 { grid-area: 2 / 2 / 3 / 3; }
+  .div5 { grid-area: 2 / 3 / 3 / 4; }
+  .div6 { grid-area: 2 / 4 / 3 / 5; }
+
+  .auction-image {
+    height: 100%;
+  }
+
+  .contenedor-estado {
+    margin: 0 auto;
+    margin-bottom: -36px;
+    margin-right: 194px;
+  }
+
+  .btn-chat {
+    margin: 0 auto;
+    margin-right: 50px;
+  }
+
+  .action-btn {
+    width: 90px;
+    font-size: 11px;
+    padding: 0.6rem;
+    margin: 0 auto;
   }
 }

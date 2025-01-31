@@ -437,7 +437,11 @@ form {
   text-align: center;
 }
 
-.countdown-red {
+#countdown-timer {
+  color: black;
+}
+
+#countdown-timer.red {
   color: red;
 }
 

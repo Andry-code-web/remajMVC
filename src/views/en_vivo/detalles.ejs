@@ -10,9 +10,7 @@
 <!-- HEADER -->
 <%- include('../partials/navbar.ejs') %>
 
-<!-- CANVAS -->
-<!-- <canvas id="background-canvas"></canvas>
- -->
+
 <main class="main-wrapper">
   <div class="detalles-container">
     <div class="navigation-tabs">
@@ -39,7 +37,7 @@
           </tr>
           <tr>
             <td class="label">Convocatoria:</td>
-            <td class="value"><%= detalle.nro_convocatoria %></td>
+            <td class="value"><%= detalle.convocatoria %></td>
             <td class="label">Garantia:</td>
             <td class="value">
               USD <%= parseFloat(detalle.garantía).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0}) %>

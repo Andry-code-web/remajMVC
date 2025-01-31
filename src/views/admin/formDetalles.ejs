@@ -2,18 +2,19 @@
   <div id="tarjetaDetalles" class="tarjeta_formulario_detalles" style="display: none">
     <h2 class="titulo_formulario_detalles">Detalles de Remate</h2>
     <form method="post" action="/admin/crear-detalles" id="formulario_detalles">
-      <input type="hidden" name="remate_id" value="<%= remate.id %>">
+      <input name="remate_id" value="<%= remate.id %>">
   
-      <!-- Expediente -->
+  
+      <!-- N_partida_registral -->
       <div class="fila_campos_formulario_detalles">
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="expediente" class="etiqueta_campo_formulario_detalles">Expediente</label>
-            <input type="text" id="expediente" name="expediente" class="entrada_texto_formulario_detalles" required>
+            <label for="N_de_partida_registral" class="etiqueta_campo_formulario_detalles">N° partida Registral</label>
+            <input type="text" id="N_de_partida_registral" name="N_de_partida_registral" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
   
-        <!-- Distrito Judicial -->
+      <!-- Distrito Judicial -->
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
             <label for="distrito_judicial" class="etiqueta_campo_formulario_detalles">Distrito Judicial</label>
@@ -22,92 +23,42 @@
         </div>
       </div>
   
-      <!-- Organo Jurisdiccional -->
+      
+      <!-- Distrito -->
       <div class="fila_campos_formulario_detalles">
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <!-- <label for="organo_juridiccional" class="etiqueta_campo_formulario_detalles">Órgano Jurisdiccional</label>
-            <input type="text" id="organo_juridiccional" name="organo_juridiccional" class="entrada_texto_formulario_detalles" required> -->
+            <label for="distrito" class="etiqueta_campo_formulario_detalles">Distrito</label>
+            <input type="text" id="distrito" name="distrito" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
   
-        <!-- Instancia -->
+  
+      <!-- Gravámenes -->
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="instancia" class="etiqueta_campo_formulario_detalles">Instancia</label>
-            <input type="text" id="instancia" name="instancia" class="entrada_texto_formulario_detalles" required>
+            <label for="gravámenes" class="etiqueta_campo_formulario_detalles">Gravámenes</label>
+            <input type="text" id="gravámenes" name="gravámenes" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
       </div>
   
-      <!-- Juez -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <!-- <label for="juez" class="etiqueta_campo_formulario_detalles">Juez</label>
-            <input type="text" id="juez" name="juez" class="entrada_texto_formulario_detalles" required> -->
-          </div>
-        </div>
-  
-        <!-- Especialista -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <!-- <label for="especialista" class="etiqueta_campo_formulario_detalles">Especialista</label>
-            <input type="text" id="especialista" name="especialista" class="entrada_texto_formulario_detalles" required> -->
-          </div>
-        </div>
-      </div>
-  
-      <!-- Materia -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="materia" class="etiqueta_campo_formulario_detalles">Materia</label>
-            <input type="text" id="materia" name="materia" class="entrada_texto_formulario_detalles" required>
-          </div>
-        </div>
-  
-        <!-- Resolución -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <!-- <label for="resolucion" class="etiqueta_campo_formulario_detalles">Resolución</label>
-            <textarea id="resolucion" name="resolucion" class="entrada_texto_formulario_detalles" required></textarea> -->
-          </div>
-        </div>
-      </div>
-  
-      <!-- Fecha Resolución -->
-      <div class="fila_campos_formulario_detalles">
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="fecha_resolucion" class="etiqueta_campo_formulario_detalles">Fecha Resolución</label>
-            <input type="date" id="fecha_resolucion" name="fecha_resolucion" class="entrada_fecha_formulario_detalles" required>
-          </div>
-        </div>
-  
-        <!-- Enlace PDF -->
-        <div class="columna_campo_formulario_detalles">
-          <div class="grupo_campo_formulario_detalles">
-            <label for="archivo" class="etiqueta_campo_formulario_detalles">Enlace PDF</label>
-            <input type="text" id="archivo" name="archivo" class="entrada_texto_formulario_detalles" required>
-          </div>
-        </div>
-      </div>
   
       <!-- Convocatoria -->
       <div class="fila_campos_formulario_detalles">
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="nro_convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
-            <input type="text" id="nro_convocatoria" name="nro_convocatoria" class="entrada_texto_formulario_detalles" required>
+            <label for="convocatoria" class="etiqueta_campo_formulario_detalles">Convocatoria</label>
+            <input type="text" id="convocatoria" name="convocatoria" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
   
-        <!-- Tipo Cambio -->
+  
+      <!-- Garantía -->
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="tipo_cambio" class="etiqueta_campo_formulario_detalles">Tipo Cambio</label>
-            <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.0001" class="entrada_numero_formulario_detalles" required>
+            <label for="garantía" class="etiqueta_campo_formulario_detalles">Garantía</label>
+            <input type="text" id="garantía" name="garantía" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
       </div>
@@ -121,7 +72,7 @@
           </div>
         </div>
   
-        <!-- Precio Base -->
+      <!-- Precio Base -->
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
             <label for="precio_base" class="etiqueta_campo_formulario_detalles">Precio Base</label>
@@ -139,25 +90,37 @@
           </div>
         </div>
   
-        <!-- Arancel -->
+      <!-- Remate -->
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="arancel" class="etiqueta_campo_formulario_detalles">Arancel</label>
-            <input type="number" id="arancel" name="arancel" step="0.01" class="entrada_numero_formulario_detalles" required>
+            <label for="remate" class="etiqueta_campo_formulario_detalles">Remate</label>
+            <input type="text" id="remate" name="remate" class="entrada_texto_formulario_detalles" required>
           </div>
         </div>
       </div>
   
-      <!-- Oblaje -->
+  
+      <!-- Tamaño de propiedad -->
       <div class="fila_campos_formulario_detalles">
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
-            <label for="oblaje" class="etiqueta_campo_formulario_detalles">Oblaje</label>
-            <input type="number" id="oblaje" name="oblaje" step="0.01" class="entrada_numero_formulario_detalles" required>
+            <label for="tamano_propiedad" class="etiqueta_campo_formulario_detalles">Tamaño de propiedad</label>
+            <input type="number" id="tamano_propiedad" name="tamano_propiedad" class="entrada_numero_formulario_detalles" required>
           </div>
         </div>
   
-        <!-- Descripción de Detalles -->
+      <!-- N inscritos -->
+        <div class="columna_campo_formulario_detalles">
+          <div class="grupo_campo_formulario_detalles">
+            <label for="n_inscritos" class="etiqueta_campo_formulario_detalles">N inscritos</label>
+            <input type="number" id="n_inscritos" name="n_inscritos" class="entrada_numero_formulario_detalles" required>
+          </div>
+        </div>
+      </div>
+  
+  
+      <!-- Descripción de Detalles -->
+      <div class="fila_campos_formulario_detalles">
         <div class="columna_campo_formulario_detalles">
           <div class="grupo_campo_formulario_detalles">
             <label for="descripcion_de_detalles" class="etiqueta_campo_formulario_detalles">Descripción de Detalles</label>
@@ -174,4 +137,5 @@
     </form>
   </div>
   <% }); %>
+  
   

@@ -475,32 +475,47 @@ exports.crearInmueble = async (req, res) => {
 // Controlador para crear nuevos detalles de remate
 exports.crearDetalles = async (req, res) => {
   const {
-    remate_id, expediente, distrito_judicial, instancia,
-    materia, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
-    incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo
+    N_de_partida_registral,
+    distrito_judicial,
+    distrito,
+    gravámenes,
+    convocatoria,
+    garantía,
+    tasacion,
+    precio_base,
+    incremento_ofertas,
+    remate,
+    tamano_propiedad,
+    n_inscritos,
+    descripcion_de_detalles,
+    remate_id
   } = req.body;
-
+  console.log('requerido del formulario', req.body.remate_id)
   const datosDetalles = [
-    expediente || null, distrito_judicial || null, instancia ||  null, 
-    materia || null, fecha_resolucion || null, 
-    nro_convocatoria || null, tipo_cambio || null, tasacion || null, precio_base || null, 
-    incremento_ofertas || null, arancel || null, oblaje || null, 
-    descripcion_de_detalles || null, archivo || null, remate_id || null
+    N_de_partida_registral,
+    distrito_judicial,
+    distrito,
+    gravámenes,
+    convocatoria,
+    garantía,
+    tasacion,
+    precio_base,
+    incremento_ofertas,
+    remate,
+    tamano_propiedad,
+    n_inscritos,
+    descripcion_de_detalles,
+    remate_id
   ];
-
+  console.log('requerido de detalles', datosDetalles[13]); // Index 13 es el último elemento
   try {
-    // Verificar si el remate existe
-    const exists = await checkRemateExists(remate_id);
-    if (!exists) {
-      return res.json({ success: false, message: `El remate con ID ${remate_id} no existe.` });
-    }
-
-    const newDetalleId = await insertDetalles(datosDetalles);
-    if (newDetalleId) {
-      res.json({ success: true, message: 'Detalles creados exitosamente', detalleId: newDetalleId });
+    const detalleId = await insertDetalles(datosDetalles);
+    if (detalleId) {
+      res.json({ success: true, message: 'Detalles creados exitosamente', detalleId });
     } else {
       res.json({ success: false, message: 'Error al crear los detalles' });
     }
+    
   } catch (error) {
     console.error('Error al crear los detalles:', error);
     res.json({ success: false, error: error.message });

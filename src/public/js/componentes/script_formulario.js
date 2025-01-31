@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (/^(\d)\1{7}$/.test(value)) {
                 return "DNI inválido: no puede contener todos los dígitos iguales";
             }
-            if (['12345678', '87654321'].includes(value)) {
+            if (['12345678','98765432', '87654321', '32165498', '36925814' ].includes(value)) {
                 return "DNI inválido: no puede ser una secuencia numérica";
             }
             for (let i = 0; i < value.length - 5; i++) {

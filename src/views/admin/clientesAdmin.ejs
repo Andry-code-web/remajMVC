@@ -177,11 +177,13 @@
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          alert(data.message); // Mejora con SweetAlert2 si lo prefieres
+          /* alert(data.message); */ // Mejora con SweetAlert2 si lo prefieres
           Swal.fire({
             icon: 'success',
             title: 'Cliente validado',
             text: data.message,
+          }).then(() => {
+            location.reload(); // Recargar la página
           });
           event.target.classList.toggle("text-danger"); // Cambia la clase visualmente
         }

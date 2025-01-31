@@ -762,10 +762,10 @@ form {
   .sidebar {
     margin-top: -7%;
   }
-  #messages {
-    height: 220px;
-    font-size: 0.8rem;
-  }
+  /*   #messages {
+        height: 220px;
+        font-size: 0.8rem;
+    } */
   #submit-btn {
     margin-left: 6px;
     padding: 7px 17px;

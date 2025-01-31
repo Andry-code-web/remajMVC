@@ -1444,7 +1444,8 @@ body {
         grid-template-columns: 1fr 60%;
         column-gap: 1rem;
     }
-    .casilla-de-verificacion-me-gusta + .contenedor-boton-me-gusta{
+
+    .casilla-de-verificacion-me-gusta+.contenedor-boton-me-gusta {
         position: relative;
         margin-top: 70px;
         /* z-index: 10; */
@@ -1536,12 +1537,12 @@ body {
 
     .contenedor-campo-formulario-ubicacion,
     .contenedor-campo-formulario-categoria {
-        width: 100%;
+        width: 33%;
     }
 
     .selector-desplegable-ubicacion,
     .selector-desplegable-categoria {
-        width: 100%;
+        width: 99%;
     }
 
     .btn_filtrar {
@@ -1583,11 +1584,17 @@ body {
 
     .contenidoPrincipalPagina {
         padding: 1.5rem;
+        display: grid;
     }
 
     .barraLateralFiltros {
-        width: 30%;
-        height: 550px;
+        width: 103%;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: flex-start;
+        flex-wrap: wrap;
     }
 
     .listaSubastasDisponibles {
@@ -1596,6 +1603,7 @@ body {
 
     .elementoSubastaIndividual {
         flex-direction: row;
+        width: 137%;
     }
 
     .imagenPropiedadSubasta {
@@ -1617,6 +1625,7 @@ body {
 
     .estadoActualSubasta {
         width: auto;
+        margin-right: -114px;
     }
 
     .contenedorBotonesAccion {
@@ -1655,7 +1664,8 @@ body {
     }
 
     .detallesEspecificosSubasta {
-        display: grid;
+        /*         display: grid;
+ */
         justify-content: center;
         justify-items: end;
     }
@@ -1663,12 +1673,36 @@ body {
     .btn_acciones {
         display: grid;
         gap: 10px;
+        margin-right: -6px;
+        justify-items: end;
+        justify-content: space-evenly;
+        align-content: space-around;
+        align-items: end;
     }
+
     .casilla-de-verificacion-me-gusta+.contenedor-boton-me-gusta {
         position: relative;
-        margin-top: -10px;
+        margin-top: 219px;
         margin-right: -10px;
         margin-left: 10px;
     }
 
+    .form_filtro {
+        display: flex;
+        /* flex-direction: row; */
+        align-items: center;
+    }
+
+    .btn_filtrar {
+        width: 100px;
+        margin-top: 30px;
+        margin-right: 40px;
+    }
+
+    .imputsContenedor {
+        display: flex;
+        flex-direction: row;
+        width: 47%;
+        gap: 20px;
+    }
 }

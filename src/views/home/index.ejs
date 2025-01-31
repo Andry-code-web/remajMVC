@@ -116,65 +116,69 @@
     <h4>FILTROS</h4>
     <hr>
     <form action="/filtrar/" method="post" class="form_filtro">
-      <div>
-        <label for="numeroIdentificacionRemate">Número de Remate</label>
-        <input type="text" id="numeroIdentificacionRemate" name="id">
+      <div class="imputsContenedor">
+        <div class="imputnumeroIdentificacionRemate">
+          <label for="numeroIdentificacionRemate">Número de Remate</label>
+          <input type="text" id="numeroIdentificacionRemate" name="id">
+        </div>
+        <div class="imputnumeroIdentificacionRemate">
+          <label for="numeroExpedienteJudicial">Partida registral</label>
+          <input type="text" id="numeroExpedienteJudicial" name="partida_registral">
+        </div>
+        <div class="imputnumeroIdentificacionRemate">
+          <label for="valorBasePropiedad">Precio Base</label>
+          <input type="text" id="valorBasePropiedad" name="precio">
+        </div>
       </div>
-      <div>
-        <label for="numeroExpedienteJudicial">Partida registral</label>
-        <input type="text" id="numeroExpedienteJudicial" name="partida_registral">
+      <div class="imputsContenedor">
+        <div class="contenedor-campo-formulario-ubicacion">
+          <label for="ubicacionGeograficaPropiedad">Ubicación</label>
+          <select name="ubicacion" id="ubicacionGeograficaPropiedad" class="selector-desplegable-ubicacion">
+            <option value="">Selecciona una ubicación</option>
+            <option value="Amazonas">Amazonas</option>
+            <option value="Ancash">Áncash</option>
+            <option value="Apurimac">Apurímac</option>
+            <option value="Arequipa">Arequipa</option>
+            <option value="Ayacucho">Ayacucho</option>
+            <option value="Cajamarca">Cajamarca</option>
+            <option value="Callao">Callao</option>
+            <option value="Cusco">Cusco</option>
+            <option value="Huancavelica">Huancavelica</option>
+            <option value="Huanuco">Huánuco</option>
+            <option value="Ica">Ica</option>
+            <option value="Junin">Junín</option>
+            <option value="La Libertad">La Libertad</option>
+            <option value="Lambayeque">Lambayeque</option>
+            <option value="Lima">Lima</option>
+            <option value="Loreto">Loreto</option>
+            <option value="Madre de Dios">Madre de Dios</option>
+            <option value="Moquegua">Moquegua</option>
+            <option value="Pasco">Pasco</option>
+            <option value="Piura">Piura</option>
+            <option value="Puno">Puno</option>
+            <option value="San Martin">San Martín</option>
+            <option value="Tacna">Tacna</option>
+            <option value="Tumbes">Tumbes</option>
+            <option value="Ucayali">Ucayali</option>
+          </select>
+        </div>
+        <div class="contenedor-campo-formulario-categoria">
+          <label for="categoria">Categoría</label>
+          <select name="categoria" id="categoria" class="selector-desplegable-categoria">
+            <option value="">Selecciona una categoria</option>
+            <option value="departamento">Departamento</option>
+            <option value="cochera">Cochera</option>
+            <option value="terreno">Terreno</option>
+            <option value="residencial">Residencial</option>
+            <option value="casa">Casa</option>
+            <option value="local">Local</option>
+            <option value="casa_playa">Casa de Playa</option>
+            <option value="terreno_urbano">Terreno Urbano</option>
+            <option value="terraza">Aires y Azoteas</option>
+          </select>
+        </div>
+        <button type="submit" class="btn_filtrar">Buscar</button>
       </div>
-      <div>
-        <label for="valorBasePropiedad">Precio Base</label>
-        <input type="text" id="valorBasePropiedad" name="precio">
-      </div>
-      <div class="contenedor-campo-formulario-ubicacion">
-        <label for="ubicacionGeograficaPropiedad">Ubicación</label>
-        <select name="ubicacion" id="ubicacionGeograficaPropiedad" class="selector-desplegable-ubicacion">
-          <option value="">Selecciona una ubicación</option>
-          <option value="Amazonas">Amazonas</option>
-          <option value="Ancash">Áncash</option>
-          <option value="Apurimac">Apurímac</option>
-          <option value="Arequipa">Arequipa</option>
-          <option value="Ayacucho">Ayacucho</option>
-          <option value="Cajamarca">Cajamarca</option>
-          <option value="Callao">Callao</option>
-          <option value="Cusco">Cusco</option>
-          <option value="Huancavelica">Huancavelica</option>
-          <option value="Huanuco">Huánuco</option>
-          <option value="Ica">Ica</option>
-          <option value="Junin">Junín</option>
-          <option value="La Libertad">La Libertad</option>
-          <option value="Lambayeque">Lambayeque</option>
-          <option value="Lima">Lima</option>
-          <option value="Loreto">Loreto</option>
-          <option value="Madre de Dios">Madre de Dios</option>
-          <option value="Moquegua">Moquegua</option>
-          <option value="Pasco">Pasco</option>
-          <option value="Piura">Piura</option>
-          <option value="Puno">Puno</option>
-          <option value="San Martin">San Martín</option>
-          <option value="Tacna">Tacna</option>
-          <option value="Tumbes">Tumbes</option>
-          <option value="Ucayali">Ucayali</option>
-        </select>
-      </div>
-      <div class="contenedor-campo-formulario-categoria">
-        <label for="categoria">Categoría</label>
-        <select name="categoria" id="categoria" class="selector-desplegable-categoria">
-          <option value="">Selecciona una categoria</option>
-          <option value="departamento">Departamento</option>
-          <option value="cochera">Cochera</option>
-          <option value="terreno">Terreno</option>
-          <option value="residencial">Residencial</option>
-          <option value="casa">Casa</option>
-          <option value="local">Local</option>
-          <option value="casa_playa">Casa de Playa</option>
-          <option value="terreno_urbano">Terreno Urbano</option>
-          <option value="terraza">Aires y Azoteas</option>
-        </select>
-      </div>
-      <button type="submit" class="btn_filtrar">Buscar</button>
     </form>
   </aside>
   <main class="listaSubastasDisponibles">

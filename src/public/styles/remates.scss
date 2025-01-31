@@ -243,7 +243,7 @@ form {
 }
 
 /* Efecto de fondo dinámico */
-#chat::before {
+/* #chat::before {
     content: "";
     position: absolute;
     top: -50%;
@@ -265,7 +265,7 @@ form {
     100% {
         transform: rotate(360deg);
     }
-}
+} */
 
 #chat * {
     position: relative;
@@ -303,15 +303,15 @@ form {
 #messages .sent {
     color: #fff;
     text-align: right;
-    margin: 8px 10px;
-    padding: 12px 15px;
+    margin: 7px 13px;
+    padding: 5px 56px;
     border-radius: 20px 20px 0 20px;
     background: linear-gradient(135deg, #ff6b6b, #e02e2e);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: inline-block;
-    max-width: 70%;
+    max-width: 83%;
     word-wrap: break-word;
-    margin-left: 45%;
+    margin-left: 12%;
     animation: bounceInRight 0.3s ease-in-out;
 }
 
@@ -818,10 +818,10 @@ form {
         margin-top: -7%;
     }
 
-    #messages {
+  /*   #messages {
         height: 220px;
         font-size: 0.8rem;
-    }
+    } */
 
     #submit-btn {
         margin-left: 6px;

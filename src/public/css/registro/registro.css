@@ -955,7 +955,7 @@ input[type=number] {
     overflow: hidden;
   }
   .left-side {
-    width: 40%;
+    width: 45%;
     height: 100vh;
     padding: 1.5rem;
     display: flex;
@@ -964,7 +964,7 @@ input[type=number] {
   }
   .left-side .contenedor-titulo {
     max-width: 100%;
-    margin-top: 18rem;
+    margin-top: 15rem;
     display: flex;
     flex-wrap: wrap;
   }
@@ -1010,8 +1010,8 @@ input[type=number] {
     margin-top: 1.5rem;
   }
   .registration-form {
-    width: 64%;
-    margin-left: 8rem;
+    width: 80%;
+    margin-left: 3rem;
   }
 }
 

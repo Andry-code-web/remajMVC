@@ -301,30 +301,23 @@ const insertInmueble = async (datosInmueble) => {
 
 // Función para insertar nuevos detalles de remate
 const insertDetalles = async (datosDetalles) => {
-  const [
-    expediente, distrito_judicial, instancia, juez, especialista,
-    materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
-    incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
-  ] = datosDetalles;
-
   const query = `
-    INSERT INTO detalles (expediente, distrito_judicial, instancia, juez,
-      especialista, materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion,
-      precio_base, incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remates_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO detalles (
+      expediente, distrito_judicial, instancia, materia,
+      fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base, incremento_ofertas, 
+      arancel, oblaje, descripcion_de_detalles, archivo, remates_id
+    ) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)
   `;
 
   try {
-    const [result] = await db.query(query, [
-      expediente, distrito_judicial, instancia, juez, especialista,
-      materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
-      incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo, remate_id
-    ]);
+    const [result] = await db.query(query, datosDetalles);
     return result.insertId;
   } catch (error) {
     throw new Error('Error al insertar los detalles: ' + error.message);
   }
 };
+
 module.exports = {
   getCronograma,
   getAllRemates,

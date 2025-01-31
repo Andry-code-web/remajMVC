@@ -475,33 +475,26 @@ exports.crearInmueble = async (req, res) => {
 // Controlador para crear nuevos detalles de remate
 exports.crearDetalles = async (req, res) => {
   const {
-    remate_id, expediente, distrito_judicial, instancia, juez, especialista,
-    materia, resolucion, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
+    remate_id, expediente, distrito_judicial, instancia,
+    materia, fecha_resolucion, nro_convocatoria, tipo_cambio, tasacion, precio_base,
     incremento_ofertas, arancel, oblaje, descripcion_de_detalles, archivo
   } = req.body;
 
   const datosDetalles = [
-    expediente || null,
-    distrito_judicial || null,
-    instancia || null,
-    juez || null,
-    especialista || null,
-    materia || null,
-    resolucion || null,
-    fecha_resolucion || null,
-    nro_convocatoria || null,
-    tipo_cambio || null,
-    tasacion || null,
-    precio_base || null,
-    incremento_ofertas || null,
-    arancel || null,
-    oblaje || null,
-    descripcion_de_detalles || null,
-    archivo || null,
-    remate_id || null
+    expediente || null, distrito_judicial || null, instancia ||  null, 
+    materia || null, fecha_resolucion || null, 
+    nro_convocatoria || null, tipo_cambio || null, tasacion || null, precio_base || null, 
+    incremento_ofertas || null, arancel || null, oblaje || null, 
+    descripcion_de_detalles || null, archivo || null, remate_id || null
   ];
 
   try {
+    // Verificar si el remate existe
+    const exists = await checkRemateExists(remate_id);
+    if (!exists) {
+      return res.json({ success: false, message: `El remate con ID ${remate_id} no existe.` });
+    }
+
     const newDetalleId = await insertDetalles(datosDetalles);
     if (newDetalleId) {
       res.json({ success: true, message: 'Detalles creados exitosamente', detalleId: newDetalleId });

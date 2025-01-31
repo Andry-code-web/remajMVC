@@ -73,11 +73,11 @@
   line-height: 1.5;
 }
 .left-side .imagen-secundaria {
-  display: block;
+  display: flex;
   position: relative;
   width: 700px;
   height: 420px;
-  top: 1rem;
+  top: -3rem;
   left: 13rem;
   animation: slideInFromLeft 0.8s ease-out forwards;
   opacity: 0;
@@ -641,6 +641,38 @@ input[type=number] {
     transform: translateY(0);
   }
 }
+/* Ajustes para dispositivos muy pequeños */
+@media screen and (max-width: 320px) {
+  .right-side {
+    padding: 0.75rem;
+  }
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .progress-bar {
+    width: 100%;
+    margin: 1.5rem auto;
+  }
+  .step .step-circle {
+    width: 40px;
+    height: 40px;
+  }
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  .form-group input,
+  .form-group select {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.8rem;
+  }
+  .step.active .step-circle {
+    transform: scale(0.7);
+  }
+  .step.active .step-circle {
+    transform: scale(0.7);
+  }
+}
 /* Samsung Galaxy S8, S20 Ultra (móviles) */
 @media screen and (max-width: 743px) {
   .form-wrapper {
@@ -864,10 +896,10 @@ input[type=number] {
   .right-side {
     line-height: 17px;
     width: 102%;
-    /* padding: 1rem 1rem; */
+    padding: 1rem 1rem;
     margin: 0;
-    /* height: 100vh; */
-    /* overflow-y: auto; */
+    height: 100vh;
+    overflow-y: auto;
   }
   .registration-form {
     width: 64%;
@@ -911,8 +943,8 @@ input[type=number] {
     margin-top: -3px;
   }
 }
-/* Nest Hub Max (1280 x 800) */
-@media screen and (min-width: 1280px) {
+/* Nest Hub Max  */
+@media screen and (min-width: 1280px) and (max-width: 1366px) {
   .form-wrapper {
     flex-direction: row;
     align-items: center;
@@ -977,37 +1009,9 @@ input[type=number] {
   .button-group {
     margin-top: 1.5rem;
   }
-}
-/* Ajustes para dispositivos muy pequeños */
-@media screen and (max-width: 320px) {
-  .right-side {
-    padding: 0.75rem;
-  }
-  .form-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .progress-bar {
-    width: 100%;
-    margin: 1.5rem auto;
-  }
-  .step .step-circle {
-    width: 40px;
-    height: 40px;
-  }
-  .form-group label {
-    font-size: 0.9rem;
-  }
-  .form-group input,
-  .form-group select {
-    font-size: 0.95rem;
-    padding: 0.6rem 0.8rem;
-  }
-  .step.active .step-circle {
-    transform: scale(0.7);
-  }
-  .step.active .step-circle {
-    transform: scale(0.7);
+  .registration-form {
+    width: 64%;
+    margin-left: 8rem;
   }
 }
 

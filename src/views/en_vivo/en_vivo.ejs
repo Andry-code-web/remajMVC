@@ -87,29 +87,30 @@
             </div>
           </div>
           <% } %>
-
-          <div class="content_btn_chat">
-            <a href="/auctions/<%= auction.id %>" class="btn-chat">
-              <i class="fas fa-sign-in-alt"></i> Ingresar
-            </a>
-          </div>
         </div>
-
-        <div class="div4 content_btn_seguimiento">
-          <button class="action-btn seguimiento">
+        <!-- area botones -->
+         <div class="contenedor-botones">
+        <div class="div4 content_btn_chat">
+          <a href="/auctions/<%= auction.id %>" class="action-btn">
+            <i class="fas fa-sign-in-alt"></i> Ingresar
+          </a>
+        </div>
+        <div class="div5 content_btn_bases_remate">
+          <button type="button" class="action-btn seguimiento">
             <i class="fas fa-file-alt"></i> Bases de remate
           </button>
         </div>
-        <div class="div5 content_btn_detalles">
+        <div class="div6 content_btn_detalles">
           <a href="/en_vivo/detalles/<%= auction.id %>" class="action-btn detalles">
             <i class="fas fa-search-plus"></i> Detalles
           </a>
         </div>
-        <div class="div6 content_btn_aviso">
+        <div class="div7 content_btn_aviso">
           <a href="<%= auction.anexo || '#' %>"
             class="action-btn aviso <%= auction.anexo ? '' : 'disabled' %>" target="_blank">
             <i class="fas fa-bullhorn"></i> Aviso
           </a>
+        </div>
         </div>
       </div>
 
@@ -122,118 +123,119 @@
     </div>
   </section>
 
-  <!-- Modal -->
-  <div id="infoModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
+ <!-- Modal -->
+ <div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
 
-      <!-- Página 1 -->
-      <div class="modal-page" data-page="1">
-        <h2>Información del Remate</h2>
-        <div class="section-header">
-          <i class="ri-book-open-line"></i>
-          <h3>Definiciones</h3>
-        </div>
-        <div class="definitions">
-          <p><strong>ADJUDICADO:</strong> Postor ganador del lote en atención a su mejor oferta.</p>
-          <p><strong>LOTE:</strong> Bien inmueble en el remate virtual.</p>
-          <p><strong>OFERTA:</strong> Propuesta(s) de compra ingresadas en el portal de REMAJUD.</p>
-          <p><strong>VENDEDOR:</strong> Empresa dueña de los activos, contrata a REMAJUD para llevar a cabo el servicio de
-            venta por el portal.</p>
-          <p><strong>PARTICIPANTE Y/O POSTOR:</strong> Usuario (persona natural o jurídica) que acepta los Términos y
-            Condiciones para el remate virtual y realiza una o más ofertas en la plataforma de remates de REMAJUD.</p>
-          <p><strong>USUARIO:</strong> Persona Individual, Persona Jurídica y/o Extranjero debidamente registrada en el
-            sistema de REMAJUD.</p>
-          <p><strong>PRECIO BASE:</strong> Todo lote o bien mostrado en la web, iniciará con un valor que no implica la
-            aceptación de venta por parte del vendedor (EXISTE UN PRECIO DE RESERVA).</p>
-        </div>
+    <!-- Página 1 -->
+    <div class="modal-page" data-page="1">
+      <h2>Información del Remate</h2>
+      <div class="section-header">
+        <i class="ri-book-open-line"></i>
+        <h3>Definiciones</h3>
       </div>
-
-      <!-- Página 2 -->
-      <div class="modal-page" data-page="2" style="display: none;">
-        <h2>Información del Remate</h2>
-        <div class="section-header">
-          <i class="ri-auction-line"></i>
-          <h3>Durante el Remate</h3>
-        </div>
-        <div class="durante-remate">
-          <p>El remate tendrá una fecha y horario previsto de cierre que se indica en el portal de REMAJUD (para tal
-            efecto, existe un reloj en el Portal REMAJUD). REMAJUD se reserva el derecho de anular y/o aplazar el remate
-            por inconvenientes técnicos que se puedan suscitar.</p>
-          <ul>
-            <li>Se recomienda a los interesados ingresar su oferta con un mínimo de 20 segundos antes que el reloj llegue a
-              cero.</li>
-            <li>Los ofertantes no podrán solicitar eliminar ofertas una vez ejecutadas en nuestro sistema.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Página 3 -->
-      <div class="modal-page" data-page="3" style="display: none;">
-        <h2>Información del Remate</h2>
-        <div class="section-header">
-          <i class="ri-line-chart-line"></i>
-          <h3>Desarrollo de la Oferta "En Vivo"</h3>
-        </div>
-        <div class="desarrollo-oferta">
-          <p>Todo usuario interesado en participar en una oferta "En vivo", reconoce y acepta que:</p>
-          <ol>
-            <li>Una oferta "En Vivo" se activa en la fecha en la que esta es publicada en el Portal, solo pudiéndose
-              recibir ofertas durante el proceso "En Vivo" en la sala.</li>
-            <li>El acceso a sala se habilita 12 horas antes de la hora de inicio programada, la misma que se indica en el
-              detalle de la oferta. Es responsabilidad de cada participante acceder oportunamente.</li>
-            <li>Llegada la hora de inicio, se validará que la cuota mínima de participación se cumpla para iniciar el
-              proceso "En Vivo".</li>
-          </ol>
-        </div>
-      </div>
-
-      <!-- Página 4 -->
-      <div class="modal-page" data-page="4" style="display: none;">
-        <h2>Información del Remate</h2>
-        <div class="section-header">
-          <i class="ri-bank-card-line"></i>
-          <h3>Pagos</h3>
-        </div>
-        <div class="pagos">
-          <p>En caso de que se acepte la oferta del Mejor Ofertante y posterior al pago de la totalidad a EL VENDEDOR,
-            REMAJUD procederá a facturar el 3% de garantía retenida como concepto de comisión de intermediación de la
-            venta.</p>
-          <p>El precio final del bien deberá pagarse a EL VENDEDOR, a más tardar, 48 horas posterior a la comunicación de
-            REMAJUD, vía correo electrónico registrado del usuario ganador.</p>
-          <p>El pago será mediante depósito, transferencia bancaria o Cheque de Gerencia a las siguientes cuentas:</p>
-          <ul>
-            <li>Banco: BANCO DE CRÉDITO DEL PERÚ</li>
-            <li>Cuenta Corriente Soles:</li>
-            <li>Código de Cuenta Interbancaria:</li>
-            <li>Cuenta Corriente Dólares:</li>
-            <li>Código de Cuenta Interbancaria:</li>
-            <li>Titular:</li>
-            <li>RUC:</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Página 5 -->
-      <div class="modal-page" data-page="5" style="display: none;">
-        <h2>Información del Remate</h2>
-        <div class="section-header">
-          <i class="ri-error-warning-line"></i>
-          <h3>Incumplimiento</h3>
-        </div>
-        <div class="incumplimiento">
-          <p>Si el adjudicatario o ganador del lote desiste de su oferta terminada el remate, será retenido el 100% de la
-            garantía, no será devuelta y quedará en poder de REMAJUD como penalidad por los perjuicios que se ocasionan en
-            virtud de la retractación.</p>
-        </div>
-      </div>
-
-      <div class="modal-navigation">
-        <button class="nav-btn prev" id="prevBtn">Anterior</button>
-        <button class="nav-btn next" id="nextBtn">Siguiente</button>
+      <div class="definitions">
+        <p><strong>ADJUDICADO:</strong> Postor ganador del lote en atención a su mejor oferta.</p>
+        <p><strong>LOTE:</strong> Bien inmueble en el remate virtual.</p>
+        <p><strong>OFERTA:</strong> Propuesta(s) de compra ingresadas en el portal de REMAJUD.</p>
+        <p><strong>VENDEDOR:</strong> Empresa dueña de los activos, contrata a REMAJUD para llevar a cabo el servicio de
+          venta por el portal.</p>
+        <p><strong>PARTICIPANTE Y/O POSTOR:</strong> Usuario (persona natural o jurídica) que acepta los Términos y
+          Condiciones para el remate virtual y realiza una o más ofertas en la plataforma de remates de REMAJUD.</p>
+        <p><strong>USUARIO:</strong> Persona Individual, Persona Jurídica y/o Extranjero debidamente registrada en el
+          sistema de REMAJUD.</p>
+        <p><strong>PRECIO BASE:</strong> Todo lote o bien mostrado en la web, iniciará con un valor que no implica la
+          aceptación de venta por parte del vendedor (EXISTE UN PRECIO DE RESERVA).</p>
       </div>
     </div>
+
+    <!-- Página 2 -->
+    <div class="modal-page" data-page="2" style="display: none;">
+      <h2>Información del Remate</h2>
+      <div class="section-header">
+        <i class="ri-auction-line"></i>
+        <h3>Durante el Remate</h3>
+      </div>
+      <div class="durante-remate">
+        <p>El remate tendrá una fecha y horario previsto de cierre que se indica en el portal de REMAJUD (para tal
+          efecto, existe un reloj en el Portal REMAJUD). REMAJUD se reserva el derecho de anular y/o aplazar el remate
+          por inconvenientes técnicos que se puedan suscitar.</p>
+        <ul>
+          <li>Se recomienda a los interesados ingresar su oferta con un mínimo de 20 segundos antes que el reloj llegue a
+            cero.</li>
+          <li>Los ofertantes no podrán solicitar eliminar ofertas una vez ejecutadas en nuestro sistema.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Página 3 -->
+    <div class="modal-page" data-page="3" style="display: none;">
+      <h2>Información del Remate</h2>
+      <div class="section-header">
+        <i class="ri-line-chart-line"></i>
+        <h3>Desarrollo de la Oferta "En Vivo"</h3>
+      </div>
+      <div class="desarrollo-oferta">
+        <p>Todo usuario interesado en participar en una oferta "En vivo", reconoce y acepta que:</p>
+        <ol>
+          <li>Una oferta "En Vivo" se activa en la fecha en la que esta es publicada en el Portal, solo pudiéndose
+            recibir ofertas durante el proceso "En Vivo" en la sala.</li>
+          <li>El acceso a sala se habilita 12 horas antes de la hora de inicio programada, la misma que se indica en el
+            detalle de la oferta. Es responsabilidad de cada participante acceder oportunamente.</li>
+          <li>Llegada la hora de inicio, se validará que la cuota mínima de participación se cumpla para iniciar el
+            proceso "En Vivo".</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Página 4 -->
+    <div class="modal-page" data-page="4" style="display: none;">
+      <h2>Información del Remate</h2>
+      <div class="section-header">
+        <i class="ri-bank-card-line"></i>
+        <h3>Pagos</h3>
+      </div>
+      <div class="pagos">
+        <p>En caso de que se acepte la oferta del Mejor Ofertante y posterior al pago de la totalidad a EL VENDEDOR,
+          REMAJUD procederá a facturar el 3% de garantía retenida como concepto de comisión de intermediación de la
+          venta.</p>
+        <p>El precio final del bien deberá pagarse a EL VENDEDOR, a más tardar, 48 horas posterior a la comunicación de
+          REMAJUD, vía correo electrónico registrado del usuario ganador.</p>
+        <p>El pago será mediante depósito, transferencia bancaria o Cheque de Gerencia a las siguientes cuentas:</p>
+        <ul>
+          <li>Banco: BANCO DE CRÉDITO DEL PERÚ</li>
+          <li>Cuenta Corriente Soles:</li>
+          <li>Código de Cuenta Interbancaria:</li>
+          <li>Cuenta Corriente Dólares:</li>
+          <li>Código de Cuenta Interbancaria:</li>
+          <li>Titular:</li>
+          <li>RUC:</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Página 5 -->
+    <div class="modal-page" data-page="5" style="display: none;">
+      <h2>Información del Remate</h2>
+      <div class="section-header">
+        <i class="ri-error-warning-line"></i>
+        <h3>Incumplimiento</h3>
+      </div>
+      <div class="incumplimiento">
+        <p>Si el adjudicatario o ganador del lote desiste de su oferta terminada el remate, será retenido el 100% de la
+          garantía, no será devuelta y quedará en poder de REMAJUD como penalidad por los perjuicios que se ocasionan en
+          virtud de la retractación.</p>
+      </div>
+    </div>
+
+    <div class="modal-navigation">
+      <button class="nav-btn prev" id="prevBtn">Anterior</button>
+      <button class="nav-btn next" id="nextBtn">Siguiente</button>
+    </div>
   </div>
+</div>
+
 
   <!-- SCRIPTS -->
   <script src="/js/script_en_vivo.js"></script>
@@ -259,6 +261,7 @@
     });
   </script>
 
+  <!-- modal -->
 <script>
   // Funcionalidad del Modal
 document.addEventListener('DOMContentLoaded', function() {

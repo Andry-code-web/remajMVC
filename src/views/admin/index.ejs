@@ -70,7 +70,7 @@
                 </span>
         </div>
         <div class="property-buttons">
-          <button class="property-button" onclick="abrirModales('Seguimiento', <%= remate.id %>)">
+          <button class="property-button" onclick="abrirModales(<%= remate.id %>)">
             Seguimiento
           </button>
           <button class="property-button" onclick="abrirModales('Detalles', <%= remate.id %>)">
@@ -602,3 +602,83 @@
                 }
               }
             </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function abrirModales(remateId) {
+    document.getElementById('remateId').value = remateId;
+    const modal = document.getElementById('seguimientoModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  }
+
+  function cerrarModal() {
+    const modal = document.getElementById('seguimientoModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  function cerrarModales() {
+    cerrarModal();
+  }
+
+  document.getElementById('seguimientoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Seguimiento creado exitosamente',
+          html: `
+            <strong>ID del Remate:</strong> ${result.data.remates_id}<br>
+            <strong>Expediente:</strong> ${result.data.expediente}<br>
+            <strong>Distrito Judicial:</strong> ${result.data.distrito_judicial}<br>
+            <strong>Instancia:</strong> ${result.data.instancia}<br>
+            <strong>Especialidad:</strong> ${result.data.especialidad}<br>
+            <strong>Nro Convocatoria:</strong> ${result.data.nro_convocatoria}<br>
+            <strong>Fecha Registro:</strong> ${result.data.fecha_registro}<br>
+            <strong>Procesado Por:</strong> ${result.data.procesado_por}<br>
+            <strong>Reanudado:</strong> ${result.data.reanudado}<br>
+            <strong>Fase Convocatoria:</strong> ${result.data.fase_convocatoria}<br>
+            <strong>Estado Convocatoria:</strong> ${result.data.estado_convocatoria}
+          `,
+          confirmButtonText: 'Cerrar'
+        }).then(() => {
+          cerrarModal();
+          form.reset();
+          location.reload(); // Recargar la página
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear el seguimiento',
+          text: result.message,
+          confirmButtonText: 'Cerrar'
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la solicitud',
+        text: 'Ocurrió un error al procesar la solicitud',
+        confirmButtonText: 'Cerrar'
+      });
+    });
+  });
+</script>
+

@@ -266,16 +266,14 @@ const getCatalogoClientes = async () => {
 }
 
 /* seguimiento */
-
 const createSeguimiento = async (datosSeguimiento) => {
   const query = `
-    INSERT INTO seguimiento (expediente, distrito_judicial, instancia especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO seguimiento (expediente, distrito_judicial, instancia, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   const [result] = await db.query(query, datosSeguimiento);
   return result.insertId;
 };
-
 
 // Función para insertar un nuevo inmueble
 const insertInmueble = async (datosInmueble) => {

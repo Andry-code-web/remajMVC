@@ -237,6 +237,7 @@ exports.obtenerCronograma = async (req, res) => {
 };
 
 /* seguimiento */
+
 exports.createSeguimiento = async (req, res) => {
   const {
     expediente, distrito_judicial, instancia, especialidad, nro_convocatoria,
@@ -260,15 +261,33 @@ exports.createSeguimiento = async (req, res) => {
   try {
     const query = `
       INSERT INTO seguimiento (expediente, distrito_judicial, instancia, especialidad, nro_convocatoria, fecha_registro, procesado_por, reanudado, fase_convocatoria, estado_convocatoria, remates_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const [guardarSeguimiento] = await db.execute(query, datosSeguimiento);
-    res.status(201).json({ id: guardarSeguimiento.insertId, message: 'Seguimiento creado exitosamente' });
+    res.status(201).json({
+      success: true,
+      message: 'Seguimiento creado exitosamente',
+      data: {
+        id: guardarSeguimiento.insertId,
+        expediente,
+        distrito_judicial,
+        instancia,
+        especialidad,
+        nro_convocatoria,
+        fecha_registro,
+        procesado_por,
+        reanudado,
+        fase_convocatoria,
+        estado_convocatoria,
+        remates_id
+      }
+    });
   } catch (error) {
     console.error('Error al crear el seguimiento:', error);
-    res.status(500).json({ error: 'Error al crear el seguimiento' });
+    res.status(500).json({ success: false, message: 'Error al crear el seguimiento' });
   }
 };
+
 
 
 /* CONTROLLER CLIENTES */

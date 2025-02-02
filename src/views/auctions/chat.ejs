@@ -63,6 +63,7 @@
         <span class="winner-id">
           <%= auction.ganador %>
         </span>
+        <p>felisicades  <%= auction.ganador %> nos comunicaresmos en 24 horas </p>
       </div>
       <% } %>
     </div>
@@ -105,28 +106,27 @@
       <span id="countdown-timer">00:00:00</span>
     </p>
     <p class="texto_comple">Incremento mínimo: 100 USD</p>
-    <ul id="messages"></ul>
+    <ul class="chat-general" id="messages"></ul>
 
     <!-- Formulario de oferta -->
     <form id="form-bid" class="message-form">
-      <!-- Input principal -->
-      <div class="input-container">
-        <input
-          type="text"
-          id="input-bid"
-          class="input-field"
-          placeholder="Escribe un monto"
-          autocomplete="off"
-          value="<%= auction.precios %>"
-          pattern="\d*"
-          title="Por favor, ingresa solo números." />
-        <button
-          type="submit"
-          class="send-btn"
-          id="submit-btn">
-          Enviar
-        </button>
-      </div>
+ <!-- Input principal -->
+<div class="input-container">
+  <input
+    type="text"
+    id="input-bid"
+    class="input-field"
+    placeholder="Escribe un monto"
+    value="<%= auction.precios %>"
+    pattern="\d*"
+    title="Por favor, ingresa solo números." />
+  <button
+    type="submit"
+    class="send-btn"
+    id="submit-btn">
+    Enviar
+  </button>
+</div>
       <!-- Input recomendado -->
       <div id="enviar2" class="input-container">
         <input
@@ -146,6 +146,7 @@
     <p class="texto_comple">Esperar la fecha y hora para poder ofertar</p>
   </section>
 </div>
+
 
 
 
@@ -350,8 +351,6 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-
-
 <script type="module">
   import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
@@ -413,37 +412,56 @@
   });
 
   socket.on("timer-update", (remaining) => {
-  const auctionChat = document.getElementById("auction-chat1");
-  const timerDisplay = document.getElementById("countdown-timer");
+    // Selecciona los elementos necesarios
+    const auctionChat = document.getElementById("auction-chat1");
+    const timerDisplay = document.getElementById("countdown-timer");
 
-  const hours = Math.floor(remaining / 3600);
-  const minutes = Math.floor((remaining % 3600) / 60);
-  const seconds = remaining % 60;
+    // Calcula horas, minutos y segundos a partir del tiempo restante
+    const hours = Math.floor(remaining / 3600);
+    const minutes = Math.floor((remaining % 3600) / 60);
+    const seconds = remaining % 60;
 
-  timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    // Actualiza el contenido del temporizador
+    timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
-  // Si el tiempo restante es 0, el chat está inhabilitado
-  if (remaining <= 0) {
-    timerDisplay.style.color = "red"; // Color rojo cuando el chat está inhabilitado
-  } else {
-    timerDisplay.style.color = "black"; // Color negro cuando el chat está habilitado
-  }
+    // Cambia el color del temporizador a rojo si el tiempo restante es menor a 1 hora
+    if (remaining <= 3600) {
+      timerDisplay.classList.add("red");
+    } else {
+      timerDisplay.classList.remove("red");
+    }
 
-  // Si el tiempo restante es mayor o igual a 0, mostrar el chat
-  if (remaining >= 0) {
-    auctionChat.style.display = "block";
-  }
-});
+    // Si el tiempo restante llega a 0, oculta el chat
+    if (remaining >= 0) {
+      auctionChat.style.display = "block";
+    }
+  });
 
+  // Nueva funcionalidad para mostrar/ocultar alerta de chat deshabilitado
+  socket.on("chat-enabled", (enabled) => {
+    if (!enabled) {
+      Swal.fire({
+        title: "Chat deshabilitado",
+        text: "El chat no está habilitado en este momento.",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    } else {
+      Swal.close();
+    }
+  });
+
+  // Alerta cuando la subasta finaliza
   socket.on("alert-auction-ended", ({ message }) => {
     Swal.fire({
       title: "Subasta finalizada",
-      text: message,
+      text: message, // Aquí se mostrará "Felicidades (usuario), nos comunicaremos en 24 horas"
       icon: "success",
       confirmButtonColor: "#3085d6",
       confirmButtonText: "Aceptar",
     }).then(() => {
-      window.location.reload("index");
+      window.location.reload(); // Recargar la página o redirigir al usuario
     });
   });
 
@@ -502,39 +520,11 @@
     });
   });
 
-  // Manejar el botón de oferta sugerida
-  recommendedSubmitBtn.addEventListener("click", async () => {
-    const recommendedAmount = highestAmount + 100;
-
-    // Validar que el monto final sea mayor al monto más alto y al precio base
-    const minAmount = Math.max(highestAmount, basePrice);
-    if (recommendedAmount <= minAmount) {
-      showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount.toLocaleString()}.`);
-      return;
-    }
-
-    // Confirmación antes de enviar la oferta
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: `Estás a punto de ofertar USD$${recommendedAmount.toLocaleString()}.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, ofertar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        socket.emit("chat-message", {
-          monto: recommendedAmount,
-          usuarios_id: userId,
-          remates_id: auctionId,
-        });
-        inputBid.value = recommendedAmount; // Actualizar el campo de entrada con el monto final
-        updateInputDisplay(recommendedAmount); // Actualizar la visualización del input
-        recommendedBid.value = `USD$${recommendedAmount.toLocaleString()}`; // Actualizar el campo de entrada recomendado
-      }
-    });
+  // Evento de clic para el botón de oferta recomendada
+  recommendedSubmitBtn.addEventListener("click", () => {
+    const recommendedAmount = parseInt(recommendedBid.value.replace(/[^0-9]/g, ''), 10);
+    inputBid.value = recommendedAmount; // Actualizar el valor del input principal
+    formBid.dispatchEvent(new Event('submit')); // Enviar el formulario
   });
 
   // Función para mostrar mensajes de error
@@ -598,12 +588,7 @@
   function updateInputDisplay(value) {
     inputBid.setAttribute('data-value', value.toLocaleString());
   }
-
 </script>
-
-
-
-
 
 
 

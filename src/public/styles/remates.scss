@@ -331,14 +331,15 @@ form {
 /* Mensajes recibidos de otros usuarios */
 #messages .received {
     text-align: left;
-    margin: 8px 10px;
-    padding: 12px 15px;
+    margin: 7px 13px;
+    padding: 5px 56px;
     border-radius: 20px 20px 20px 0;
     background: linear-gradient(135deg, #a1ffce, #61d2a4);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: inline-block;
-    max-width: 70%;
+    max-width: 83%;
     word-wrap: break-word;
+    margin-left: 12%;
     animation: bounceInLeft 0.3s ease-in-out;
 }
 
@@ -443,11 +444,11 @@ form {
 
 #countdown-timer {
     color: black;
-  }
-  #countdown-timer.red {
-    color: red;
-  }
+}
 
+#countdown-timer.red {
+    color: red;
+}
 
 .input-container2 {
 
@@ -797,60 +798,54 @@ form {
     }
 }
 
-@media only screen and (min-width: 993px) {
-    .property-title {
-        font-size: 2.2rem;
+@media (max-width: 993px) {
+    #chat {
+        max-width: 90%; /* Reducir el ancho máximo del chat */
+        padding: 5px; /* Reducir el padding */
     }
 
-    .property-address {
-        font-size: 1.3rem;
+    #messages {
+        height: 250px; /* Reducir la altura del contenedor de mensajes */
     }
 
-/*     .carousel {
-        max-width: 700px;
-    } */
-
-    .nav {
-        flex-direction: row;
+    .input-container, .input-container2 {
+        flex-direction: column; /* Cambiar la dirección de los inputs a columna */
+        gap: 10px; /* Añadir espacio entre los elementos */
     }
 
-    .sidebar {
-        margin-top: -7%;
+    .input-field, .input-field2, .send-btn {
+        width: 100%; /* Hacer que los inputs y botones ocupen el 100% del ancho */
+        margin-left: 0; /* Eliminar el margen izquierdo del botón */
     }
 
-  /*   #messages {
-        height: 220px;
-        font-size: 0.8rem;
-    } */
+    .send-btn {
+        padding: 7px 25px;
+        }
 
-    #submit-btn {
-        margin-left: 6px;
-        padding: 7px 17px;
+    .texto_comple {
+        font-size: 0.9rem; /* Reducir el tamaño de la fuente del texto */
     }
 
-    #recommended-submit-btn {
-        margin-left: 6px;
-        padding: 7px 17px;
+    #countdown {
+        font-size: 2rem; /* Reducir el tamaño de la fuente del contador */
     }
 
-   
-    #textos_extra{
-        font-size: 0.9rem;
-        margin-bottom: 0.8rem;
+    .fecha-subasta {
+        font-size: 1.7rem; /* Reducir el tamaño de la fuente de la fecha */
     }
-
-    #countdown1 {
-        font-size: 1.5rem;
+    .chat-general{
+        height: 290px;
     }
-    #input-bid{
+    .sent{
         font-size: 0.9rem;
     }
-    #recommended-bid{
+    .input-field{
         font-size: 0.9rem;
     }
+    
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
+@media only screen and (min-width: 994px) and (max-width: 1200px) {
     #banner_chat {
         width: 100%;
         margin-top: 13%;

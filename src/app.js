@@ -17,7 +17,7 @@ const io = socketIO(server, {
   connectionStateRecovery: {},
 });
 
-const options ={
+const options = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
@@ -83,7 +83,6 @@ const timers = {};
 const auctionTimers = {};
 
 // Mantener un registro global de temporizadores
-
 io.on('connection', (socket) => {
   console.log('🔵 Nuevo cliente conectado:', socket.id);
 
@@ -119,7 +118,7 @@ io.on('connection', (socket) => {
 
       // Si el remate ya está en curso, calcular tiempo restante
       if (rows[0].estado === 'en_curso') {
-        const duracionTotal = 0.005 * 60 * 60; // 6 horas en segundos
+        const duracionTotal = 6 * 60 * 60; // 6 horas en segundos
 
         // Obtener el tiempo transcurrido desde el inicio del remate
         const tiempoTranscurrido = Math.floor((now - fechaRemate) / 1000);
@@ -155,14 +154,14 @@ io.on('connection', (socket) => {
     }
   });
 
-  async function startAuctionTimer(remates_id, remainingTime = 0.005 * 60 * 60) {
+  async function startAuctionTimer(remates_id, remainingTime = 6 * 60 * 60) {
     if (auctionTimers[remates_id]?.intervalId) {
       clearInterval(auctionTimers[remates_id].intervalId);
       console.log(`⏹️ Temporizador existente cancelado para la subasta ${remates_id}`);
     }
 
     try {
-      if (remainingTime === 0.005 * 60 * 60) {
+      if (remainingTime === 6 * 60 * 60) {
         await db.execute(
           'UPDATE remates SET estado = ? WHERE id = ?',
           ['en_curso', remates_id]
@@ -206,8 +205,12 @@ io.on('connection', (socket) => {
       }
     }
 
+    // Enviar mensaje de felicitaciones al ganador
     io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
-    io.to(remates_id).emit('alert-auction-ended', { message: `Felicidades ${winner}, nos comunicaremos en 24 horas` });
+    io.to(remates_id).emit('alert-auction-ended', { 
+      message: `Felicidades ${winner}, nos comunicaremos en 24 horas` 
+    });
+    io.to(remates_id).emit('chat-enabled', false); // Deshabilitar el chat al finalizar la subasta
     console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
 
     delete auctionTimers[remates_id];
@@ -223,6 +226,7 @@ io.on('connection', (socket) => {
 
     if (row.length === 0 || row[0].estado !== 'en_curso') {
       socket.emit('error-message', 'El chat no está habilitado en este momento');
+      socket.emit('chat-enabled', false); // Notificar al cliente que el chat está deshabilitado
       return;
     }
 
@@ -234,6 +238,7 @@ io.on('connection', (socket) => {
 
     if (currentTime < chatStartTime) {
       socket.emit('error-message', 'El chat aún no está habilitado');
+      socket.emit('chat-enabled', false); // Notificar al cliente que el chat está deshabilitado
       return;
     }
 

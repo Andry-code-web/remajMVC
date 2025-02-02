@@ -97,7 +97,6 @@ io.on('connection', (socket) => {
     console.log(`Cliente ${socket.id} se unió al remate ${remates_id}`);
 
     try {
-      // Obtener la fecha y hora del remate y el estado actual
       const [rows] = await db.execute(
         'SELECT fecha_remate, hora_remate, estado FROM remates WHERE id = ?',
         [remates_id]
@@ -113,34 +112,24 @@ io.on('connection', (socket) => {
       fechaRemate.setHours(hour, minute, second);
       const now = new Date();
 
-      console.log('Fecha y hora del remate:', fechaRemate);
-      console.log('Fecha y hora actual del cliente:', now);
-
-      // Si el remate ya está en curso, calcular tiempo restante
       if (rows[0].estado === 'en_curso') {
         const duracionTotal = 6 * 60 * 60; // 6 horas en segundos
-
-        // Obtener el tiempo transcurrido desde el inicio del remate
         const tiempoTranscurrido = Math.floor((now - fechaRemate) / 1000);
         const tiempoRestante = Math.max(0, duracionTotal - tiempoTranscurrido);
 
         if (tiempoRestante > 0) {
           startAuctionTimer(remates_id, tiempoRestante);
         } else {
-          // Si ya pasó el tiempo, finalizar la subasta
           await finalizeAuction(remates_id);
         }
       } else if (now >= fechaRemate && rows[0].estado !== 'finalizado') {
-        // Si es hora de iniciar y no ha iniciado, comenzar nuevo temporizador
         startAuctionTimer(remates_id);
       } else if (rows[0].estado !== 'finalizado') {
-        // Programar inicio futuro
         const timeDiff = fechaRemate - now;
         console.log(`⏳ Temporizador programado para iniciar en ${timeDiff / 1000} segundos`);
         setTimeout(() => startAuctionTimer(remates_id), timeDiff);
       }
 
-      // Cargar mensajes persistentes del chat
       const [messages] = await db.execute(
         'SELECT m.monto, u.usuario FROM mensajes m INNER JOIN usuarios u ON m.usuarios_id = u.id WHERE m.remates_id = ? ORDER BY m.id ASC',
         [remates_id]
@@ -205,12 +194,11 @@ io.on('connection', (socket) => {
       }
     }
 
-    // Enviar mensaje de felicitaciones al ganador
     io.to(remates_id).emit('auction-ended', 'La subasta ha finalizado');
     io.to(remates_id).emit('alert-auction-ended', { 
       message: `Felicidades ${winner}, nos comunicaremos en 24 horas` 
     });
-    io.to(remates_id).emit('chat-enabled', false); // Deshabilitar el chat al finalizar la subasta
+    io.to(remates_id).emit('chat-enabled', false);
     console.log(`⏰ Subasta ${remates_id} finalizada, chat deshabilitado`);
 
     delete auctionTimers[remates_id];
@@ -226,7 +214,7 @@ io.on('connection', (socket) => {
 
     if (row.length === 0 || row[0].estado !== 'en_curso') {
       socket.emit('error-message', 'El chat no está habilitado en este momento');
-      socket.emit('chat-enabled', false); // Notificar al cliente que el chat está deshabilitado
+      socket.emit('chat-enabled', false);
       return;
     }
 
@@ -238,12 +226,23 @@ io.on('connection', (socket) => {
 
     if (currentTime < chatStartTime) {
       socket.emit('error-message', 'El chat aún no está habilitado');
-      socket.emit('chat-enabled', false); // Notificar al cliente que el chat está deshabilitado
+      socket.emit('chat-enabled', false);
       return;
     }
 
     if (monto <= basePrice) {
       socket.emit('error-message', `La oferta debe ser mayor a USD$${basePrice.toLocaleString()}`);
+      return;
+    }
+
+    // Verificar si el monto ya ha sido ofertado en esta subasta
+    const [existingBids] = await db.execute(
+      'SELECT monto FROM mensajes WHERE remates_id = ? AND monto = ?',
+      [remates_id, monto]
+    );
+
+    if (existingBids.length > 0) {
+      socket.emit('error-message', `El monto USD$${monto.toLocaleString()} ya ha sido ofertado.`);
       return;
     }
 
@@ -270,7 +269,6 @@ io.on('connection', (socket) => {
     }
   });
 });
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5050;

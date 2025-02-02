@@ -368,6 +368,9 @@
   const userId = "<%- user?.id || '0' %>";
   const userName = "<%- user?.usuario || 'Anónimo' %>";
 
+  // Conjunto para almacenar montos enviados
+  const sentAmounts = new Set();
+
   // Función para obtener el precio base desde la base de datos
   async function getBasePrice() {
     try {
@@ -375,8 +378,7 @@
       const data = await response.json();
 
       if (data.success) {
-        basePrice = parseInt(data.precios, 10); // Asegurarse de que el precio base sea un entero
-        // Actualiza el precio base en el DOM
+        basePrice = parseInt(data.precios, 10);
         const priceDisplay = document.querySelector("#chat p:first-of-type");
         priceDisplay.textContent = `Precio base: S/${basePrice.toLocaleString()}`;
       } else {
@@ -412,32 +414,26 @@
   });
 
   socket.on("timer-update", (remaining) => {
-    // Selecciona los elementos necesarios
     const auctionChat = document.getElementById("auction-chat1");
     const timerDisplay = document.getElementById("countdown-timer");
 
-    // Calcula horas, minutos y segundos a partir del tiempo restante
     const hours = Math.floor(remaining / 3600);
     const minutes = Math.floor((remaining % 3600) / 60);
     const seconds = remaining % 60;
 
-    // Actualiza el contenido del temporizador
     timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
-    // Cambia el color del temporizador a rojo si el tiempo restante es menor a 1 hora
     if (remaining <= 3600) {
       timerDisplay.classList.add("red");
     } else {
       timerDisplay.classList.remove("red");
     }
 
-    // Si el tiempo restante llega a 0, oculta el chat
     if (remaining >= 0) {
       auctionChat.style.display = "block";
     }
   });
 
-  // Nueva funcionalidad para mostrar/ocultar alerta de chat deshabilitado
   socket.on("chat-enabled", (enabled) => {
     if (!enabled) {
       Swal.fire({
@@ -452,52 +448,55 @@
     }
   });
 
-  // Alerta cuando la subasta finaliza
   socket.on("alert-auction-ended", ({ message }) => {
     Swal.fire({
       title: "Subasta finalizada",
-      text: message, // Aquí se mostrará "Felicidades (usuario), nos comunicaremos en 24 horas"
+      text: message,
       icon: "success",
       confirmButtonColor: "#3085d6",
       confirmButtonText: "Aceptar",
     }).then(() => {
-      window.location.reload(); // Recargar la página o redirigir al usuario
+      window.location.reload();
     });
   });
 
   formBid.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const amount = parseInt(inputBid.value.replace(/,/g, ''), 10); // Asegurarse de que el monto sea un entero
+    const amount = parseInt(inputBid.value.replace(/,/g, ''), 10);
 
-    // Validar que el monto sea un número válido
     if (isNaN(amount) || amount <= 0) {
       showError("Entrada inválida", "Por favor, ingresa un monto válido.");
       return;
     }
 
-    // Validar que el monto ingresado manualmente sea mayor al último monto enviado
     if (amount <= highestAmount) {
       showError("Oferta inválida", `La oferta debe ser mayor a USD$${highestAmount.toLocaleString()}.`);
       return;
     }
 
-    // Calcular la oferta recomendada
+    // Verificar si el monto ya ha sido enviado
+    if (sentAmounts.has(amount)) {
+      showError("Monto ya enviado", `El monto USD$${amount.toLocaleString()} ya ha sido enviado.`);
+      return;
+    }
+
     const recommendedAmount = highestAmount + 100;
 
-    // Determinar el monto final a enviar
     let finalAmount = amount;
     if (amount <= recommendedAmount) {
       finalAmount = recommendedAmount;
     }
 
-    // Validar que el monto final sea mayor al monto más alto y al precio base
     const minAmount = Math.max(highestAmount, basePrice);
     if (finalAmount <= minAmount) {
       showError("Oferta inválida", `La oferta debe ser mayor a USD$${minAmount.toLocaleString()}.`);
       return;
     }
 
-    // Confirmación antes de enviar la oferta
+    // Deshabilitar el botón de envío
+    const submitButton = formBid.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
     Swal.fire({
       title: "¿Estás seguro?",
       text: `Estás a punto de ofertar USD$${finalAmount.toLocaleString()}.`,
@@ -514,20 +513,23 @@
           usuarios_id: userId,
           remates_id: auctionId,
         });
-        inputBid.value = finalAmount; // Actualizar el campo de entrada con el monto final
-        updateInputDisplay(finalAmount); // Actualizar la visualización del input
+        sentAmounts.add(finalAmount); // Agregar el monto al conjunto de montos enviados
+        inputBid.value = finalAmount;
+        updateInputDisplay(finalAmount);
       }
+      // Rehabilitar el botón después de un tiempo
+      setTimeout(() => {
+        submitButton.disabled = false;
+      }, 2000); // 2 segundos
     });
   });
 
-  // Evento de clic para el botón de oferta recomendada
   recommendedSubmitBtn.addEventListener("click", () => {
     const recommendedAmount = parseInt(recommendedBid.value.replace(/[^0-9]/g, ''), 10);
-    inputBid.value = recommendedAmount; // Actualizar el valor del input principal
-    formBid.dispatchEvent(new Event('submit')); // Enviar el formulario
+    inputBid.value = recommendedAmount;
+    formBid.dispatchEvent(new Event('submit'));
   });
 
-  // Función para mostrar mensajes de error
   function showError(title, text) {
     Swal.fire({
       title,
@@ -538,53 +540,47 @@
     });
   }
 
-  // Función para agregar mensajes al DOM
   function addMessageToDOM(usuario, monto) {
-    const isCurrentUser = usuario === userName;
-    const messageClass = isCurrentUser ? "sent" : "received";
+    const isCurrentUser   = usuario === userName;
+    const messageClass = isCurrentUser   ? "sent" : "received";
     messages.insertAdjacentHTML(
       "beforeend",
       `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto.toLocaleString()}</li>`
     );
     if (monto > highestAmount) {
       highestAmount = monto;
-      inputBid.value = (highestAmount + 100); // Actualizar el valor del input con el monto más alto + 100
-      updateInputDisplay(highestAmount + 100); // Actualizar la visualización del input
-      recommendedBid.value = `USD$${(highestAmount + 100).toLocaleString()}`; // Actualizar el campo de entrada recomendado
+      inputBid.value = (highestAmount + 100);
+      updateInputDisplay(highestAmount + 100);
+      recommendedBid.value = `USD$${(highestAmount + 100).toLocaleString()}`;
       highlightHighestAmount();
     }
   }
 
-  // Resaltar el monto más alto
   function highlightHighestAmount() {
     inputBid.classList.add("highlight");
     setTimeout(() => inputBid.classList.remove("highlight"), 1000);
   }
 
-  // Función para desplazarse al último mensaje
   function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight;
   }
 
-  // Manejo de errores de conexión con Socket.io
   socket.on("connect_error", (error) => {
     console.error("Socket error:", error);
     showError("Error de conexión", "Ocurrió un problema con la conexión al servidor.");
   });
 
-  // Asegurarse de que el input solo acepte números y mantenga el formato de miles
   inputBid.addEventListener("input", (e) => {
-    let value = e.target.value.replace(/[^0-9]/g, ''); // Eliminar cualquier carácter que no sea un número
+    let value = e.target.value.replace(/[^0-9]/g, '');
     if (value) {
-      value = parseInt(value, 10); // Convertir a número entero
-      e.target.value = value; // Mantener el valor interno como un número
-      updateInputDisplay(value); // Actualizar la visualización del input
+      value = parseInt(value, 10);
+      e.target.value = value;
+      updateInputDisplay(value);
     } else {
-      e.target.value = ''; // Si el valor es vacío, dejar el input vacío
+      e.target.value = '';
     }
   });
 
-  // Función para actualizar la visualización del input con formato de miles
   function updateInputDisplay(value) {
     inputBid.setAttribute('data-value', value.toLocaleString());
   }

@@ -748,41 +748,56 @@ form {
   }
 }
 @media (max-width: 993px) {
+  /* Ajustes generales para el chat */
   #chat {
-    max-width: 90%; /* Reducir el ancho máximo del chat */
-    padding: 5px; /* Reducir el padding */
+    max-width: 100%; /* Asegúrate de que el chat ocupe el 100% del ancho disponible */
+    padding: 15px; /* Aumenta el padding para un mejor espaciado */
   }
+  /* Ajustes para la lista de mensajes */
   #messages {
-    height: 250px; /* Reducir la altura del contenedor de mensajes */
+    height: 250px; /* Reduce la altura para que se ajuste mejor en pantallas más pequeñas */
   }
-  .input-container, .input-container2 {
-    flex-direction: column; /* Cambiar la dirección de los inputs a columna */
-    gap: 10px; /* Añadir espacio entre los elementos */
+  /* Ajustes para el temporizador */
+  #countdown-timer {
+    font-size: 2rem; /* Reduce el tamaño de la fuente */
   }
-  .input-field, .input-field2, .send-btn {
-    width: 100%; /* Hacer que los inputs y botones ocupen el 100% del ancho */
-    margin-left: 0; /* Eliminar el margen izquierdo del botón */
-  }
-  .send-btn {
-    padding: 7px 25px;
-  }
-  .texto_comple {
-    font-size: 0.9rem; /* Reducir el tamaño de la fuente del texto */
-  }
-  #countdown {
-    font-size: 2rem; /* Reducir el tamaño de la fuente del contador */
-  }
-  .fecha-subasta {
-    font-size: 1.7rem; /* Reducir el tamaño de la fuente de la fecha */
-  }
-  .chat-general {
-    height: 290px;
-  }
-  .sent {
-    font-size: 0.9rem;
+  /* Ajustes para los inputs y botones */
+  .input-container {
+    flex-direction: column; /* Cambia a columna para que los elementos se apilen */
+    align-items: stretch; /* Asegúrate de que los elementos ocupen el ancho completo */
   }
   .input-field {
-    font-size: 0.9rem;
+    margin-bottom: 10px; /* Añade un margen inferior para separar los inputs */
+  }
+  .send-btn {
+    width: 100%; /* Asegúrate de que el botón ocupe el ancho completo */
+    padding: 10px; /* Ajusta el padding para que se vea bien */
+  }
+  /* Ajustes para el input recomendado */
+  #enviar2 {
+    margin-top: 10px; /* Añade un margen superior para separar del input anterior */
+  }
+  /* Ajustes para el texto complementario */
+  .texto_comple {
+    font-size: 0.9rem; /* Reduce el tamaño de la fuente */
+  }
+  /* Ajustes para la grid de cards */
+  .prueva1 {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las cards se envuelvan */
+    justify-content: center; /* Centra las cards */
+  }
+  .card {
+    width: 100%; /* Asegúrate de que las cards ocupen el 100% del ancho */
+    max-width: 300px; /* Limita el ancho máximo para que no se estiren demasiado */
+    margin: 10px; /* Añade un margen para separar las cards */
+  }
+  /* Ajustes para el banner */
+  .banner_remates2 {
+    height: 250px; /* Reduce la altura del banner */
+  }
+  .overlay h1 {
+    font-size: 2rem; /* Reduce el tamaño de la fuente del título */
   }
 }
 @media only screen and (min-width: 994px) and (max-width: 1200px) {

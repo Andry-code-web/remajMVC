@@ -690,278 +690,239 @@ input[type="number"] {
     }
 }
 
-/* Ajustes para dispositivos muy pequeños */
-@media screen and (max-width: 320px) {
-    .right-side {
-        padding: 0.75rem;
-    }
-
-    .form-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .progress-bar {
-        width: 100%;
-        margin: 1.5rem auto;
-    }
-
-    .step .step-circle {
-        width: 40px;
-        height: 40px;
-    }
-
-    .form-group {
-        label {
-            font-size: 0.9rem;
-        }
-
-        input,
-        select {
-            font-size: 0.95rem;
-            padding: 0.6rem 0.8rem;
-        }
-    }
-
-    .step.active .step-circle {
-        transform: scale(0.70);
-    }
-    
-    .step.active .step-circle {
-        transform: scale(0.70);
-    }
-}
-
-/* Samsung Galaxy S8, S20 Ultra (móviles) */
-@media screen and (max-width: 743px) {
+// Samsung Galaxy S8 
+@media screen and (max-width: 480px) {
     .form-wrapper {
-        flex-direction: column;
-        min-height: 100vh;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
+  
     .left-side {
-        display: none;
+      display: none;
     }
-
+  
     .right-side {
-        width: 100%;
-        margin: 1rem auto;
-        padding: 1rem;
+      width: 100%;
+      margin: 1rem auto;
+      padding: 1rem;
     }
-
+  
     .seccion {
-        min-width: auto;
-        width: 100%;
+      min-width: auto;
+      width: 100%;
     }
-
+  
     .form-container {
-        padding: 0rem;
+      padding: 0rem;
     }
-
+  
     .form-row.two-columns,
     .form-row.three-columns {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
-
+  
     .button-group {
-        flex-direction: column;
-        gap: 1rem;
+      flex-direction: column;
+      gap: 1rem;
     }
-    
+  
     .progress-bar {
-        width: 100%;
-}
-
-.step.active .step-circle {
-    transform: scale(0.70);
-}
-.step .step-circle {
-    transform: scale(0.70);
-}
-
-}
-
-/* iPad Mini */
-@media screen and (min-width: 744px) and (max-width: 767px) {
+      width: 100%;
+    }
+  
+    .step.active .step-circle,
+    .step .step-circle {
+      transform: scale(0.70);
+    }
+  }
+  
+  // Samsung S20 Ultra
+  @media screen and (min-width: 400px) and (max-width: 420px) {
     .form-wrapper {
-        flex-direction: column;
-        min-height: 100vh;
+      flex-direction: column;
     }
-
+  
     .left-side {
-        display: none;
+      display: none;
     }
-
+  
     .right-side {
-        width: 100%;
-        max-width: 600px;
-        margin: auto auto;
-        padding: 1.5rem;
+      width: 100%;
+      padding: 1rem;
     }
-
+  
     .seccion {
-        min-width: auto;
-        width: 100%;
+      min-width: auto;
+      width: 100%;
     }
-
+  
     .form-container {
-        padding: 1.5rem;
+      padding: 0.5rem;
     }
-
+  
+    .progress-bar {
+      width: 90%;
+    }
+  
+    .step.active .step-circle {
+      transform: scale(0.75);
+    }
+  }
+  
+  // iPad Mini 
+  @media screen and (min-width: 768px) and (max-width: 820px) {
+    .form-wrapper {
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  
+    .left-side {
+      display: none;
+    }
+  
+    .right-side {
+      width: 100%;
+      max-width: 600px;
+      margin: auto auto;
+      padding: 1.5rem;
+    }
+  
+    .seccion {
+      min-width: auto;
+      width: 100%;
+    }
+  
+    .form-container {
+      padding: 1.5rem;
+    }
+  
+    .form-title {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+    }
+  
+    .form-row {
+      margin-bottom: 1.5rem;
+    }
+  
+    .form-group {
+      margin-bottom: 1rem;
+  
+      input,
+      select {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+      }
+  
+      label {
+        font-size: 0.9rem;
+      }
+    }
+  
+    .button-group {
+      margin-top: 1.5rem;
+    }
+  }
+  
+  // iPad Air 
+  @media screen and (min-width: 820px) and (max-width: 1024px) {
+    .form-wrapper {
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  
+    .left-side {
+      display: none;
+    }
+  
+    .right-side {
+        height: 100vh;
+      width: 100%;
+      max-width: 700px;
+      margin-top: 6rem;
+      padding: 2rem;
+    }
+  
+    .seccion {
+      min-width: auto;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  
+    .registration-form {
+      transform: scale(1.11);
+      width: 100%;
+      height: 360px;
+    }
     .form-title {
         font-size: 1.8rem;
-        margin-bottom: 2rem;
+        margin-bottom: 5rem;
     }
-
-    .form-row {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-
-        input,
-        select {
-            padding: 0.8rem 1rem;
-            font-size: 1rem;
-        }
-
-        label {
-            font-size: 0.9rem;
-        }
-    }
-
-    .button-group {
-        margin-top: 1.5rem;
-    }
-}
-
-/* iPad Air */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+  }
+  
+  // iPad Pro 
+  @media screen and (min-width: 1024px) and (max-width: 1366px) {
     .form-wrapper {
-        flex-direction: column;
-        min-height: 100vh;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
+  
     .left-side {
-        display: none;
+      display: none;
     }
-
+  
     .right-side {
-        width: 100%;
-        max-width: 700px;
-        margin: auto auto;
-        padding: 2rem;
+        margin-top: 9rem;
+        margin-left: 7rem;
+      width: 100%;
+      height: 100vh;;
+      max-width: 800px;
+/*       margin: auto auto;
+ */      padding: 2rem;
     }
-
+  
     .seccion {
-        min-width: auto;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
+      min-width: auto;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
     }
-
+  
     .form-container {
-        padding: 1.5rem;
+      margin-top: -3rem;
     }
-
+  
     .form-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .form-row {
-        margin-bottom: 1.5rem;
-    }
-
+      font-size: 2.2rem;
+      margin-top: 1rem;
+      padding: 1rem;
+/*       margin-bottom: 2rem;
+ */    }
+  
     .form-group {
-        margin-bottom: 1rem;
-
-        input,
-        select {
-            padding: 0.8rem 1rem;
-            font-size: 1rem;
-        }
-
-        label {
-            font-size: 0.9rem;
-        }
-    }
-
-    .button-group {
-        margin-top: 1.5rem;
+      input,
+      select {
+        padding: 1rem 1.2rem;
+        font-size: 1.1rem;
+      }
+  
+      label {
+        font-size: 1rem;
+      }
     }
     .registration-form {
-        transform: scale(1.11);
+        transform: scale(1.21);
         width: 100%;
-        height: 360px;
-        -webkit-transform: scale(1.11);
-        -moz-transform: scale(1.11);
-        -ms-transform: scale(1.11);
-        -o-transform: scale(1.11);
-}
-}
-
-/* iPad Pro */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .form-wrapper {
-        flex-direction: column;
-        min-height: 100vh;
     }
-
-    .left-side {
-        display: none;
+    .contenedor-progreso {
+        width: 70%;
     }
-
-    .right-side {
-        width: 100%;
-        max-width: 800px;
-        margin: auto auto;
-        padding: 2rem;
-    }
-
-    .seccion {
-        min-width: auto;
-        width: 100%;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .form-container {
-        padding: 2rem;
-    }
-
-    .form-title {
-        font-size: 2.2rem;
-        margin-bottom: 2rem;
-    }
-
-    .form-row {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-
-        input,
-        select {
-            padding: 1rem 1.2rem;
-            font-size: 1.1rem;
-        }
-
-        label {
-            font-size: 1rem;
-        }
-    }
-
-    .button-group {
-        margin-top: 1.5rem;
-    }
-}
-
-/* Nest Hub (1024 x 600) */
- @media screen and (min-width: 1024px) and (max-width: 1279px) {
+  }
+  
+// Nest Hub 
+@media screen and (min-width: 1024px) and (max-height: 600px) {
     .form-wrapper {
         flex-direction: row;
         align-items: center;
@@ -973,25 +934,27 @@ input[type="number"] {
     }
 
     .left-side {
-        width: 59%;
+        width: 40%; 
         height: 100vh;
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center; 
+        align-items: center; 
+        text-align: center;
 
         .contenedor-titulo {
             max-width: 100%;
-            margin-top: 13.8rem;
+            margin: auto auto;
 
             .tittle-frase {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
                 line-height: 1.2;
                 margin-bottom: 0.6rem;
             }
 
             .parrafo {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 line-height: 1.3;
             }
         }
@@ -1002,67 +965,96 @@ input[type="number"] {
     }
 
     .right-side {
-        line-height: 17px;
-        width: 102%;
-        padding: 1rem 1rem; 
+        width: 60%; 
+        padding: 0.5rem; 
         margin: 0;
-         height: 100vh; 
-        overflow-y: auto; 
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .contenedor-progreso {
+        width: 100%;
+        margin-top: 2.2rem;
+        position: relative;
+        text-align: center;
+        transform: scale(0.6);
+        margin-bottom: -0.5rem;
     }
 
     .registration-form {
-        width: 64%;
-        margin-left: 8rem;
+        width: 100%;
+        height: auto;
+        margin-top: -3rem;
+        /* width: 100%; */
+        /* margin-left: 0; */
     }
+    
+
     .seccion {
         width: 100%;
-        max-width: 450px;
+        max-width: 420px; 
         margin: 0 auto;
-        transform: scale(0.75);
+        transform: scale(0.8); 
         transform-origin: top center;
     }
 
     .form-container {
-        padding: 0.5rem;
+        padding: 0.25rem; 
         margin: 0;
     }
 
     .form-title {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        /* margin: auto auto; */
+        margin-top: -2rem;
     }
 
     .form-row {
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.4rem; 
     }
 
     .form-group {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.2rem; 
 
         input,
         select {
-            padding: 0.4rem 0.6rem;
-            font-size: 0.75rem;
+            padding: 0.3rem 1.5rem; 
+            font-size: 0.7rem; 
         }
 
         label {
-            font-size: 0.7rem;
+            font-size: 0.65rem; 
         }
     }
 
     .button-group {
-        margin-top: 1rem;
+        margin-top: 0.5rem; 
+    }
+
+    .btn {
+        padding: 0.3rem 0.6rem; 
+        font-size: 0.7rem; 
+        height: auto; 
     }
 
     .error-message {
         color: #dc2626;
-        font-size: 0.65rem;
-        margin-top: -3px;
+        font-size: 0.6rem; 
+        margin-top: -2px;
     }
-}  
 
-/* Nest Hub Max  */
- @media screen and (min-width: 1280px) and (max-width: 1366px) {
+    .form-row.two-columns, .form-row.three-columns {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+
+
+
+// Nest Hub Max 
+@media screen and (min-width: 1280px) and (max-height: 800px) {
     .form-wrapper {
         flex-direction: row;
         align-items: center;
@@ -1094,8 +1086,8 @@ input[type="number"] {
     }
 
     .right-side {
-        width: 69%;
-        padding: 1.5rem 2rem;
+        width: 55%;
+        padding: 1rem;
         margin: 0;
         height: 100vh;
         overflow-y: auto;
@@ -1103,9 +1095,9 @@ input[type="number"] {
 
     .seccion {
         width: 100%;
-        max-width: 600px;
+        max-width: 500px;
         margin: 0 auto;
-        transform: scale(0.9);
+        transform: scale(0.8);
         transform-origin: top center;
     }
 
@@ -1114,35 +1106,65 @@ input[type="number"] {
     }
 
     .form-title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .form-row {
+        font-size: 1.4rem;
         margin-bottom: 1rem;
     }
 
+    .form-row {
+        margin-bottom: 0.8rem;
+    }
+
     .form-group {
-        margin-bottom: 0.7rem;
+        margin-bottom: 0.5rem;
 
         input,
         select {
-            padding: 0.6rem 0.8rem;
-            font-size: 0.9rem;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.8rem;
         }
 
         label {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
     }
 
     .button-group {
-        margin-top: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
     }
 
     .registration-form {
+        width: 90%;
+        margin-left: 1rem;
+        margin-top: 3rem;
+    }
+
+    .contenedor-progreso {
+        width: 100%;
+        margin-top: 1rem;
+        position: relative;
+        text-align: center;
+    }
+
+    .progress-bar {
         width: 80%;
-        margin-left: 3rem;
+        margin-top: 3rem;
+    }
+
+    .progress-steps {
+        transform: scale(0.8);
+    }
+
+    .progress-label {
+        margin-top: -0.5rem;
+    }
+    .form-row.two-columns, .form-row.three-columns {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 0.5rem;
     }
 }
- 

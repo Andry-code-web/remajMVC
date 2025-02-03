@@ -43,9 +43,11 @@
         </div>
 
         <!-- Añadido: Div para el captcha -->
-        <div class="mt-1 mx-2">
-          <div class="g-recaptcha" data-sitekey="6LdPuLoqAAAAACCaJURWz8HVYuzYbGVrmsegdg8t"></div> 
-        </div> 
+         <div class="contenedor-captcha">
+          <div class="mt-1 mx-2">
+            <div class="g-recaptcha" data-sitekey="6LdPuLoqAAAAACCaJURWz8HVYuzYbGVrmsegdg8t"></div> 
+          </div> 
+         </div>
         <!-- fin del captcha -->
 
          <!-- Botón para enviar el formulario -->
@@ -78,7 +80,7 @@
   function botonSoporte() {
     Swal.fire({
       title: "Soporte al cliente",
-      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.sbs, con el asunto (recuperar cuenta).",
+      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.com con el asunto (recuperar cuenta).",
       icon: "info",
       confirmButtonColor: "#3085d6",
       confirmButtonText: "OK"

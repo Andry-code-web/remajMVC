@@ -265,36 +265,31 @@
   margin-right: 0.5rem;
 }
 
-@media screen and (min-width: 360px) and (max-width: 380px) {
+@media only screen and (max-width: 480px) {
   .contenedor_form {
-    padding: 1rem;
+    transform: scale(0.9);
+    margin-top: 3rem;
   }
-  .contenedor_form h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-  .contactos {
-    margin-top: 1rem;
-  }
-  .input-wrapper input {
-    height: 40px;
-    border: 1px solid #bdb4b4;
-  }
+  .btn-iniciar-sesion,
+  .registrar,
   .botonSoporte {
-    min-width: 160px;
+    height: 40px;
     font-size: 0.9rem;
   }
-  .olvide {
-    color: #780103;
-    text-decoration: none;
-    display: block;
-    text-align: right;
+  .input-wrapper input {
+    border-color: #bdb4b4;
+  }
+  .contenedor_contraseña {
+    margin-bottom: 0rem;
   }
   .contenedor-botones {
     width: 62%;
     margin-left: 4rem;
     display: flex;
     flex-wrap: wrap;
+  }
+  .rc-anchor-normal .rc-anchor-p {
+    padding-right: 30px;
   }
 }
 @media screen and (min-width: 400px) and (max-width: 420px) {
@@ -321,6 +316,23 @@
     margin-left: 4rem;
     display: flex;
     flex-wrap: wrap;
+  }
+  .rc-anchor-normal .rc-anchor-p {
+    padding-right: 30px;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .imagen-contenedor {
+    display: none;
+  }
+  .fondo {
+    width: 100%;
+  }
+  .contenedor_form {
+    padding: 2rem 1.5rem;
+  }
+  .rc-anchor-normal .rc-anchor-p {
+    padding-right: 30px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 820px) {
@@ -388,6 +400,15 @@
     margin-left: 4rem;
     display: flex;
     flex-wrap: wrap;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  .imagen-contenedor {
+    display: none;
+  }
+  .contenedor_form {
+    transform: scale(1.5);
+    margin: auto auto;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 600px) {
@@ -468,6 +489,9 @@
     display: flex;
     flex-wrap: wrap;
   }
+  .rc-anchor-light.rc-anchor-normal, .rc-anchor-light.rc-anchor-compact {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 1280px) and (max-height: 800px) {
   .contenedor {
@@ -475,6 +499,7 @@
     margin-top: 1rem;
   }
   .imagen-contenedor {
+    display: flex;
     width: 50%;
   }
   .fondo {
@@ -507,44 +532,12 @@
   }
   .contenedor-botones {
     width: 62%;
-    margin-left: 4rem;
+    margin: auto auto;
     display: flex;
     flex-wrap: wrap;
   }
-}
-@media only screen and (max-width: 992px) {
-  .imagen-contenedor {
-    display: none;
-  }
-  .fondo {
+  .rc-anchor-light.rc-anchor-normal, .rc-anchor-light.rc-anchor-compact {
     width: 100%;
-  }
-  .contenedor_form {
-    padding: 2rem 1.5rem;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .contenedor_form {
-    transform: scale(0.9);
-    margin-top: 3rem;
-  }
-  .btn-iniciar-sesion,
-  .registrar,
-  .botonSoporte {
-    height: 40px;
-    font-size: 0.9rem;
-  }
-  .input-wrapper input {
-    border-color: #bdb4b4;
-  }
-  .contenedor_contraseña {
-    margin-bottom: 0rem;
-  }
-  .contenedor-botones {
-    width: 62%;
-    margin-left: 4rem;
-    display: flex;
-    flex-wrap: wrap;
   }
 }
 

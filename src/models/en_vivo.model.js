@@ -81,19 +81,25 @@ class EnVivo {
     }
 
     static async getDetalles(remates_id) {
-        const query = "SELECT * FROM remajud.detalles WHERE remates_id = ?";
-        const [rows] = await db.execute(query, [remates_id]);
-
-        rows.forEach(row => {
-            if (row.archivo) {
-                if (!row.archivo.startsWith('http://') && !row.archivo.startsWith('https://')) {
-                    row.archivo = `/uploads/${row.archivo}`;
-                }
-            }
+        // Consulta principal de detalles del remate
+        const detallesQuery = "SELECT * FROM remajud.detalles WHERE remates_id = ?";
+        const [detalles] = await db.execute(detallesQuery, [remates_id]);
+    
+        // Consulta de inscritos validados
+        const clin_validadosQuery = "SELECT * FROM usuario_remate WHERE remate_id = ? AND validado = 1";
+        const [clin_validados] = await db.execute(clin_validadosQuery, [remates_id]);
+    
+        // Contar los validados
+        const num_validados = clin_validados.length;
+    
+        // Agregar el conteo de inscritos en el detalle
+        detalles.forEach(row => {
+            row.n_inscritos = num_validados;
         });
-
-        return rows;
+    
+        return detalles;
     }
+    
 
     static async getInmuebles(remates_id) {
         const query = `

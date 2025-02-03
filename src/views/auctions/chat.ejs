@@ -1,8 +1,22 @@
 <!-- views/auctions/details.ejs -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="/css/metodopago/metodopago.css">
 <link rel="stylesheet" href="/css/remates/remates.css">
+
+<div class="info_remate">
+  <p>
+    Precio base ($):
+    <%= auction.precios.toLocaleString('es-PE') %>
+  </p>
+  <i class="fa-solid fa-gavel fa-beat icono-precio"></i>
+  <p>
+    Precio tasación ($):
+    <%= auction.tasación.toLocaleString('es-PE') %>
+  </p>
+</div>
+
 
 <div class="active-auction-card">
   <!-- <div class="active-auction-header">
@@ -98,55 +112,37 @@
     </div>
  -->
 
-<!-- Chat (inicialmente oculto) -->
-<div id="auction-chat1" class="chat" style="display: none;">
-  <section id="chat">
-    <!-- Contenedor de la barra de progreso -->
-    <p class="fecha-subasta" id="countdown1">
-      <span id="countdown-timer">00:00:00</span>
-    </p>
-    <p class="texto_comple">Incremento mínimo: 100 USD</p>
-    <ul class="chat-general" id="messages"></ul>
+    <!-- Chat (inicialmente oculto) -->
+    <div id="auction-chat1" class="chat" style="display: none;">
+      <section id="chat">
+        <!-- Contenedor de la barra de progreso -->
+        <p class="fecha-subasta" id="countdown1">
+          <span id="countdown-timer">00:00:00</span>
+        </p>
+        <p class="texto_comple">Incremento mínimo: 100 USD</p>
+        <ul class="chat-general" id="messages"></ul>
 
-    <!-- Formulario de oferta -->
-    <form id="form-bid" class="message-form">
- <!-- Input principal -->
-<div class="input-container">
-  <input
-    type="text"
-    id="input-bid"
-    class="input-field"
-    placeholder="Escribe un monto"
-    value="<%= auction.precios %>"
-    pattern="\d*"
-    title="Por favor, ingresa solo números." />
-  <button
-    type="submit"
-    class="send-btn"
-    id="submit-btn">
-    Enviar
-  </button>
-</div>
-      <!-- Input recomendado -->
-      <div id="enviar2" class="input-container">
-        <input
-          type="text"
-          id="recommended-bid"
-          class="input-field"
-          readonly
-          value="USD$<%= (auction.precios + 100).toLocaleString() %>" />
-        <button
-          type="button"
-          class="send-btn"
-          id="recommended-submit-btn">
-          Enviar
-        </button>
-      </div>
-    </form>
-    <p class="texto_comple">Aguarde la fecha y hora programadas para ofertar.</p>
-    <p class="informacion_extra">El remate dará inicio en 06:00:00.</p>
-  </section>
-</div>
+        <!-- Formulario de oferta -->
+        <form id="form-bid" class="message-form">
+          <!-- Input principal -->
+          <div class="input-container">
+            <input type="text" id="input-bid" class="input-field" placeholder="Escribe un monto" value="<%= auction.precios %>" pattern="\d*" title="Por favor, ingresa solo números." />
+            <button type="submit" class="send-btn" id="submit-btn">
+              Enviar
+            </button>
+          </div>
+          <!-- Input recomendado -->
+          <div id="enviar2" class="input-container">
+            <input type="text" id="recommended-bid" class="input-field" readonly value="USD$<%= (auction.precios + 100).toLocaleString() %>" />
+            <button type="button" class="send-btn" id="recommended-submit-btn">
+              Enviar
+            </button>
+          </div>
+        </form>
+        <p class="texto_comple">Espere la fecha y hora programadas para ofertar.</p>
+        <p class="informacion_extra">El remate inicia 9:00 am finaliza 2:00pm</p>
+      </section>
+    </div>
 
 
 
@@ -353,7 +349,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script type="module">
-  import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+  import {
+    io
+  } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
   const socket = io();
   const timerDisplay = document.getElementById("countdown-timer");
@@ -401,13 +399,20 @@
 
   socket.on("load-messages", (loadedMessages) => {
     messages.innerHTML = "";
-    loadedMessages.forEach(({ monto, usuario }) => {
+    loadedMessages.forEach(({
+      monto,
+      usuario
+    }) => {
       addMessageToDOM(usuario, monto);
     });
     scrollToBottom();
   });
 
-  socket.on("chat-message", ({ monto, usuario, remates_id }) => {
+  socket.on("chat-message", ({
+    monto,
+    usuario,
+    remates_id
+  }) => {
     if (remates_id === auctionId) {
       addMessageToDOM(usuario, monto);
       scrollToBottom();
@@ -443,7 +448,9 @@
     }
   });
 
-  socket.on("alert-auction-ended", ({ message }) => {
+  socket.on("alert-auction-ended", ({
+    message
+  }) => {
     Swal.fire({
       title: "Subasta finalizada",
       text: message,
@@ -536,15 +543,15 @@
   }
 
   function addMessageToDOM(usuario, monto) {
-    const isCurrentUser   = usuario === userName;
-    const messageClass = isCurrentUser   ? "sent" : "received";
+    const isCurrentUser = usuario === userName;
+    const messageClass = isCurrentUser ? "sent" : "received";
     messages.insertAdjacentHTML(
       "beforeend",
       `<li class="${messageClass}"><strong>${usuario}:</strong> USD$${monto.toLocaleString()}</li>`
     );
     if (monto > highestAmount) {
       highestAmount = monto;
-   
+
       updateInputDisplay(highestAmount + 100);
       recommendedBid.value = `USD$${(highestAmount + 100).toLocaleString()}`;
       highlightHighestAmount();

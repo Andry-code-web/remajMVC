@@ -1,4 +1,17 @@
 @charset "UTF-8";
+.info_remate {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.info_remate p {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
 /* Active auction specific styles */
 .active-auction-card {
   width: 100%;

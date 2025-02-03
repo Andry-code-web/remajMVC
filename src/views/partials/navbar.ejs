@@ -204,11 +204,36 @@
   document.addEventListener("DOMContentLoaded", () => {
     const btnMenuMobile = document.getElementById("btn_menu_mobile");
     const contentNavMobile = document.querySelector(".content_nav_mobile");
+    const userButton = document.querySelector(".contenedor_user_login_mobile .user_button");
+    const menuDesplegableMobile = document.querySelector(".contenedor_user_login_mobile .menu_desplegable");
+    const btnCloseMobile = document.querySelector(".contenedor_user_login_mobile .close_button");
 
-    // Mostrar/Ocultar menú
+    // Mostrar/Ocultar menú de navegación mobile
     btnMenuMobile.addEventListener("click", () => {
       contentNavMobile.classList.toggle("active");
     });
-  
+
+    // Mostrar/Ocultar menú de usuario mobile
+    userButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menuDesplegableMobile.classList.toggle("active");
+    });
+
+    // Cerrar menú de usuario con botón de cierre
+    btnCloseMobile.addEventListener("click", () => {
+      menuDesplegableMobile.classList.remove("active");
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener("click", (e) => {
+      if (!menuDesplegableMobile.contains(e.target) && !userButton.contains(e.target)) {
+        menuDesplegableMobile.classList.remove("active");
+      }
+    });
+
+    // Prevenir cierre al hacer clic dentro del menú
+    menuDesplegableMobile.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
   });
 </script>

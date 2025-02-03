@@ -144,6 +144,7 @@
       </div>
     </form>
     <p class="texto_comple">Esperar la fecha y hora para poder ofertar</p>
+    <p>el remate inicia en 06:00:00</p>
   </section>
 </div>
 
@@ -423,12 +424,6 @@
 
     timerDisplay.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
-    if (remaining <= 3600) {
-      timerDisplay.classList.add("red");
-    } else {
-      timerDisplay.classList.remove("red");
-    }
-
     if (remaining >= 0) {
       auctionChat.style.display = "block";
     }
@@ -549,7 +544,7 @@
     );
     if (monto > highestAmount) {
       highestAmount = monto;
-      inputBid.value = (highestAmount + 100);
+   
       updateInputDisplay(highestAmount + 100);
       recommendedBid.value = `USD$${(highestAmount + 100).toLocaleString()}`;
       highlightHighestAmount();

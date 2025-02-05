@@ -79,9 +79,7 @@ exports.login = async (req, res) => {
     const { usuario, contrasena } = req.body;
 
     if (!usuario || !contrasena) {
-      return res
-        .status(400)
-        .json({ message: "Usuario y contraseña son requeridos." });
+      return res.status(400).json({ message: "Usuario y contraseña son requeridos." });
     }
 
     const user = await User.findByUsername(usuario);
@@ -102,12 +100,14 @@ exports.login = async (req, res) => {
 
     console.log("Usuario guardado en la sesión:", req.session.user);
 
-    res.redirect("/");
+    
+    res.status(200).json({ 
+      message: "Login exitoso",
+      usuario: user.usuario 
+    });
   } catch (error) {
     console.error("Error en el login:", error);
-    res
-      .status(500)
-      .json({ message: "Error en el login.", error: error.message });
+    res.status(500).json({ message: "Error en el login.", error: error.message });
   }
 };
 

@@ -931,7 +931,19 @@ input[type=number] {
   .form-row.two-columns, .form-row.three-columns {
     display: grid;
     gap: 1.5rem;
+    height: 40px;
     margin-bottom: 0.5rem;
+  }
+  .seccion2 .form-group input {
+    padding: 0.05rem 1rem;
+    font-size: 12px;
+    height: 33px;
+  }
+  .seccion2 {
+    width: 50%;
+  }
+  .seccion3 {
+    width: 50%;
   }
 }
 @media screen and (min-width: 1280px) and (max-height: 800px) {
@@ -990,7 +1002,7 @@ input[type=number] {
   }
   .form-group input,
   .form-group select {
-    padding: 0.5rem 0.7rem;
+    padding: 0.5rem 1.8rem;
     font-size: 0.8rem;
   }
   .form-group label {
@@ -1028,6 +1040,16 @@ input[type=number] {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 0.5rem;
+  }
+  .seccion2 .form-group input {
+    height: 30px;
+    padding: 1.05rem 1rem;
+    font-size: 12px;
+  }
+  .seccion3 {
+    margin: auto auto;
+    width: 114%;
+    margin-top: 3rem;
   }
 }
 

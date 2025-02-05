@@ -60,7 +60,8 @@
       <div class="contenedor-contactos">
       <!-- contactos -->
       <p class="contactos">Si tienes problemas al iniciar sesion, contáctanos aqui:</p>
-      <button class="botonSoporte" id="boton_soporte" onclick="botonSoporte()">Soporte Remajud</button>
+<!--       <button class="botonSoporte" id="boton_soporte" onclick="botonSoporte()">Soporte Remajud</button>
+ -->      <a class="botonSoporte" id="boton_soporte" href="https://api.whatsapp.com/send?phone=51992386251&text=Hola%2C%20quiero%20subastar%20mi%20vehiculo%20en%20la%20plataforma%20SubastaSur.%20Estoy%20interesado%20en%20conocer%20el%20proceso%2C%20los%20requisitos%20y%20los%20beneficios%20que%20ofrecen.%20%C2%BFPodr%C3%ADan%20ayudarme%20con%20m%C3%A1s%20informaci%C3%B3n%3F">Soporte Remajud</a>
     </div>
     </div>
   </div>
@@ -75,18 +76,7 @@
 <!-- sweet alert  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- sweetAlert -->
-<script>
-  function botonSoporte() {
-    Swal.fire({
-      title: "Soporte al cliente",
-      text: "Para validar si eres cliente, necesitamos los siguientes datos registrados en remajud (DNI, CORREO, CELULAR, FECHA DE NACIMIENTO) y enviarlos al correo soporte@remajud.com con el asunto (recuperar cuenta).",
-      icon: "info",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "OK"
-    });
-  }
-</script>
+
 
 <!-- RECAPTCHA  -->
 <script>
@@ -108,7 +98,64 @@
         });
         return; 
       }
-      this.submit();
+
+      try {
+        const formData = new FormData(this);
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            usuario: formData.get('usuario'),
+            contrasena: formData.get('contrasena')
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          // Manejo de errores específicos
+          if (response.status === 401) {
+            if (data.message === "Usuario no encontrado.") {
+              await Swal.fire({
+                title: 'Error',
+                text: 'Usuario no encontrado',
+                icon: 'error',
+                confirmButtonColor: '#3085d6'
+              });
+            } else if (data.message === "Contraseña incorrecta.") {
+              await Swal.fire({
+                title: 'Error',
+                text: 'Contraseña incorrecta',
+                icon: 'error',
+                confirmButtonColor: '#3085d6'
+              });
+            }
+            return;
+          }
+          throw new Error(data.message);
+        }
+
+        // Login exitoso con mensaje personalizado y redirección automática
+        Swal.fire({
+          title: '¡Bienvenido!',
+          text: `Bienvenido ${data.usuario}`,
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          window.location.href = '/';
+        });
+
+      } catch (error) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error durante el login',
+          icon: 'error',
+          confirmButtonColor: '#3085d6'
+        });
+      }
     });
 
     function toggleCheckIcon(input) {
@@ -136,11 +183,6 @@
     });
   });
 </script>
-
-
-
-
-
 
 
 

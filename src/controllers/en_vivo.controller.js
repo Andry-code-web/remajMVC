@@ -41,7 +41,6 @@ exports.getSeguimiento = async (req, res) => {
         });
     }
 };
-
 exports.getDetalles = async (req, res) => {
     try {
         const auctionId = req.params.id;
@@ -49,7 +48,8 @@ exports.getDetalles = async (req, res) => {
 
         res.render("en_vivo/detalles", {
             detalles: detalles || [],
-            auctionId
+            auctionId,
+            n_validados: detalles.length > 0 ? detalles[0].n_validados : 0 // Número de validados
         });
     } catch (error) {
         console.error('Error en getDetalles:', error);
@@ -59,6 +59,7 @@ exports.getDetalles = async (req, res) => {
         });
     }
 };
+
 
 exports.getInmuebles = async (req, res) => {
     try {

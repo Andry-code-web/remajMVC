@@ -37,8 +37,8 @@
           <% cronograma.forEach(fase => { %>
           <tr>
             <td><%= fase.nombre %></td>
-            <td><%= new Date(fase.fecha_inicio).toLocaleString() %></td>
-            <td><%= new Date(fase.fecha_fin).toLocaleString() %></td>
+           <td><%= new Date(fase.fecha_inicio).toLocaleString('es-ES') %></td>
+<td><%= new Date(fase.fecha_fin).toLocaleString('es-ES') %></td>
           </tr>
           <% }); %>
         </tbody>

@@ -5,16 +5,22 @@ class Home {
     try {
       const [rows] = await db.query(
         `SELECT DISTINCT
-            r.*,
-            i.id AS imagen_id,
-            i.imagenes_inmueble
-          FROM
-            remates r
-          LEFT JOIN
-            img_inmuebles i ON r.id = i.remates_id
-          GROUP BY r.id
-          ORDER BY r.id
-          LIMIT ${limit} OFFSET ${offset}`
+    r.*,
+    i.id AS imagen_id,
+    i.imagenes_inmueble,
+    d.convocatoria
+FROM
+    remates r
+LEFT JOIN
+    img_inmuebles i ON r.id = i.remates_id
+LEFT JOIN
+    detalles d ON r.id = d.remates_id  -- Ajusta la clave foránea si es diferente
+GROUP BY
+    r.id
+ORDER BY
+    r.id
+LIMIT ${limit} OFFSET ${offset};
+`
       );
       return rows;
     } catch (error) {
@@ -135,7 +141,7 @@ class Home {
 
 
 
-/* funciones de dar likes */
+  /* funciones de dar likes */
   static async hasLiked(userId, remateId) {
     const [rows] = await db.execute(
       'SELECT * FROM remajud.likes WHERE usuarios_id = ? AND remates_id = ?',

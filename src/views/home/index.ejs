@@ -224,12 +224,12 @@
         <div class="detallesEspecificosSubasta">
           <a id="informacion_general_subasta" href="javascript:void(0);" class="informacionGeneralSubasta" onclick="mostrarAlerta(<%= remate.id %>)">
 
-            <h2>Remate N° <%= String(remate.id).padStart(4, '0') %></h2>
-            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Judicial</p>
+            <h2>Remate N° <%= String(remate.id).padStart(4, '0') %> <%= remate.convocatoria %> </h2>
+            <p class="tipo_remate"><strong>TIPO DE REMATE:</strong> Extrajudicial</p>
             <p class="lugar"><strong>LUGAR:</strong>
               <%= remate.ubicacion %> Perú
             </p>
-            <h3>Presentación de Ofertas</h3>
+            <h3><strong>Presentación de Ofertas</strong></h3>
             <p class="hora_remate">
               <i class="ri-calendar-line"></i>
               <%= new Date(remate.fecha_remate).toLocaleDateString('es-PE', {
@@ -240,7 +240,13 @@
             </p>
             <p class="hora_remate">
               <i class="ri-time-line"></i>
-              <%= remate.hora_remate %>
+              <% 
+  let [hours, minutes, seconds] = remate.hora_remate.split(':'); 
+  let date = new Date();
+  date.setHours(hours, minutes, seconds);
+%>
+<%= date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+
             </p>
             <p class="descripcion_remate"><%= remate.descripcion %></p>
           </a>

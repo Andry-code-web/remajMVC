@@ -37,7 +37,7 @@ exports.getAllRemates = async (req, res) => {
     res.render('layouts/main', {
       content: 'home/index',
       remates: rematesList,
-      pagination
+      pagination,
     });
 
   } catch (error) {

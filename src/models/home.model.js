@@ -51,6 +51,20 @@ LIMIT ${limit} OFFSET ${offset};
     return anexosRows;
   }
 
+  static async getImagenes(rematesId) {
+    try {
+        const [rows] = await db.query(
+            `SELECT imagenes_inmueble FROM img_inmuebles WHERE remates_id = ?`, 
+            [rematesId]
+        );
+        return rows;
+    } catch (error) {
+        console.error('Error en Home.getImagenes:', error);
+        throw error;
+    }
+}
+
+
   static async getFiltro(filtro) {
     // Consulta base para obtener resultados
     let query = `

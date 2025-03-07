@@ -12,17 +12,14 @@ exports.getAllRemates = async (req, res) => {
 
     const rematesData = await Home.getAll({ limit, offset });
 
-    // Obtener anexos para cada remate
     for (const remate of rematesData) {
       const anexos = await Home.getAnexos(remate.id);
       remate.anexos = anexos;
-    }
 
-    const rematesList = rematesData.map(remate => ({
-      ...remate,
-      imagen: remate.imagenes_inmueble ? Buffer.from(remate.imagenes_inmueble).toString('base64') : null,
-      anexos: remate.anexos // Asegúrate de pasar los anexos
-    }));
+      // 🔥 Obtener TODAS las imágenes de cada remate
+      const imagenes = await Home.getImagenes(remate.id);
+      remate.imagenes = imagenes.map(img => Buffer.from(img.imagenes_inmueble).toString('base64'));
+    }
 
     const pagination = {
       currentPage: page,
@@ -36,7 +33,7 @@ exports.getAllRemates = async (req, res) => {
 
     res.render('layouts/main', {
       content: 'home/index',
-      remates: rematesList,
+      remates: rematesData,
       pagination,
     });
 

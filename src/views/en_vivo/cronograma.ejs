@@ -37,8 +37,26 @@
           <% cronograma.forEach(fase => { %>
           <tr>
             <td><%= fase.nombre %></td>
-           <td><%= new Date(fase.fecha_inicio).toLocaleString('es-ES') %></td>
-<td><%= new Date(fase.fecha_fin).toLocaleString('es-ES') %></td>
+            <td><%= new Date(fase.fecha_inicio).toLocaleString('es-ES', { 
+              day: '2-digit', 
+              month: '2-digit', 
+              year: 'numeric', 
+              hour: '2-digit', 
+              minute: '2-digit', 
+              second: '2-digit', 
+              hour12: true 
+          }).replace('a. m.', 'AM').replace('p. m.', 'PM') %></td>
+          
+          <td><%= new Date(fase.fecha_fin).toLocaleString('es-ES', { 
+              day: '2-digit', 
+              month: '2-digit', 
+              year: 'numeric', 
+              hour: '2-digit', 
+              minute: '2-digit', 
+              second: '2-digit', 
+              hour12: true 
+          }).replace('a. m.', 'AM').replace('p. m.', 'PM') %></td>
+          
           </tr>
           <% }); %>
         </tbody>
